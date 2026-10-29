@@ -10,3 +10,6 @@ dist/
 
 # 本地验证截图（可由 shot.py 重新生成）
 shots-*.png
+.vercel
+.env*
+.env.local
