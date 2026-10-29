@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>六候选缩略图 · 前端进阶之路</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#DDD; font-family:'Noto Sans SC',sans-serif; display:grid; grid-template-columns:repeat(2,500px); gap:24px; padding:24px; justify-content:center; }
+  .cell { }
+  .cell h3 { font-size:13px; color:#333; margin:0 0 6px 2px; font-weight:500; }
+  .thumb { width:500px; height:320px; overflow:hidden; position:relative; box-shadow:0 2px 10px rgba(0,0,0,.15); }
+
+  /* ── T1 · Experimental Jetset：清单即系统 ── */
+  .t1 { background:#FBFBF8; color:#111; padding:22px 26px; }
+  .t1 .band { border-bottom:3px solid #000; padding-bottom:10px; display:flex; justify-content:space-between; align-items:baseline; }
+  .t1 h1 { font-size:30px; letter-spacing:-.5px; font-weight:900; }
+  .t1 .mono { font-family:'JetBrains Mono',monospace; font-size:10px; color:#555; }
+  .t1 .rule { display:grid; grid-template-columns:1fr 1fr; column-gap:24px; margin-top:12px; }
+  .t1 .row { display:flex; justify-content:space-between; border-bottom:1px solid #D8D8D4; padding:6px 0; font-size:12.5px; }
+  .t1 .row b { font-weight:700; }
+  .t1 .row .no { font-family:'JetBrains Mono',monospace; color:#0000EE; font-size:11px; margin-right:8px; }
+  .t1 .row .t { color:#0000EE; text-decoration:underline; }
+
+  /* ── T2 · 吕敬人：书页与朱砂 ── */
+  .t2 { background:#F4EFE4; color:#1C1A17; position:relative; }
+  .t2 .binding { position:absolute; left:0; top:0; bottom:0; width:10px; background:linear-gradient(90deg,#D8CFBC,#F4EFE4); }
+  .t2 .page { position:absolute; left:34px; top:26px; }
+  .t2 .big { font-family:'Noto Serif SC',serif; font-weight:900; font-size:150px; line-height:1; }
+  .t2 .seal { position:absolute; width:26px; height:26px; background:#B03A2E; left:196px; top:40px; }
+  .t2 .sub { font-family:'Noto Serif SC',serif; font-size:15px; margin-top:6px; letter-spacing:6px; }
+  .t2 .note { position:absolute; right:20px; top:30px; width:170px; border-left:1px solid #C9BFA8; padding-left:14px; }
+  .t2 .note p { font-family:'Noto Serif SC',serif; font-size:12px; line-height:2; color:#3A362E; }
+  .t2 .note .h { font-family:'Noto Sans SC',sans-serif; font-size:10px; letter-spacing:3px; color:#8A8271; margin-bottom:8px; }
+
+  /* ── T3 · Tailwind Docs：彩虹分类文档 ── */
+  .t3 { background:#FFF; display:grid; grid-template-columns:120px 1fr 74px; font-size:10.5px; }
+  .t3 .side { background:#F8FAFC; border-right:1px solid #E2E8F0; padding:12px 10px; }
+  .t3 .side .sh { font-size:9px; letter-spacing:1px; color:#94A3B8; font-weight:700; margin:6px 0 4px; }
+  .t3 .side .si { padding:3px 6px; border-radius:4px; color:#475569; display:flex; gap:5px; align-items:center; }
+  .t3 .side .dot { width:6px; height:6px; border-radius:2px; }
+  .t3 .side .on { background:#E0F2FE; color:#0369A1; font-weight:700; }
+  .t3 .main { padding:14px 16px; }
+  .t3 .crumb { font-family:'JetBrains Mono',monospace; font-size:9px; color:#38BDF8; font-weight:700; }
+  .t3 h1 { font-size:19px; color:#0F172A; margin:5px 0 6px; }
+  .t3 .meta { font-size:10px; color:#64748B; margin-bottom:8px; }
+  .t3 .code { background:#0F172A; border-radius:8px; padding:10px 12px; font-family:'JetBrains Mono',monospace; font-size:9.5px; line-height:1.7; color:#E2E8F0; }
+  .t3 .code .k { color:#38BDF8; } .t3 .code .c { color:#64748B; } .t3 .code .f { color:#A5B4FC; }
+  .t3 .toc { padding:12px 8px; color:#94A3B8; border-left:1px solid #E2E8F0; }
+  .t3 .toc div { padding:2px 0; }
+  .t3 .toc .on2 { color:#0284C7; font-weight:700; border-left:2px solid #38BDF8; margin-left:-9px; padding-left:7px; }
+
+  /* ── T4 · roadmap.sh：路径即品牌 ── */
+  .t4 { background:#F5F5F5; }
+  .t4 .nav { background:#0F1722; height:38px; display:flex; align-items:center; padding:0 16px; gap:14px; }
+  .t4 .nav .lg { color:#FFF; font-weight:900; font-size:13px; }
+  .t4 .nav span { color:#9BA3AF; font-size:10px; }
+  .t4 .nav .up { color:#F5B83D; font-weight:700; }
+  .t4 .hero { padding:18px 22px 8px; }
+  .t4 h1 { font-size:30px; font-weight:900; color:#16181D; letter-spacing:-.5px; }
+  .t4 .sub { font-size:11.5px; color:#6B7280; margin-top:4px; }
+  .t4 .path { position:relative; margin:16px 20px 0; }
+  .t4 .stage { background:#FDE68A; border:1.5px solid #16181D; border-radius:8px; padding:7px 12px; font-size:11.5px; font-weight:700; color:#16181D; display:inline-block; box-shadow:2px 2px 0 #16181D; }
+  .t4 .stage.b { background:#BFDBFE; } .t4 .stage.c { background:#FBCFE8; }
+  .t4 .lane { display:flex; flex-direction:column; gap:10px; }
+  .t4 .row2 { display:flex; align-items:center; gap:0; }
+  .t4 .dash { flex:1; border-top:2px dashed #9CA3AF; }
+
+  /* ── T5 · 像素闯关：三关三色 ── */
+  .t5 { background:#0D0B14; display:flex; flex-direction:column; }
+  .t5 .hud { height:34px; background:#07060B; display:flex; align-items:center; padding:0 14px; justify-content:space-between; }
+  .t5 .hud span { font-family:'Press Start 2P','JetBrains Mono',monospace; font-size:8px; color:#F2E14C; }
+  .t5 .hud .hp { color:#FF5A1F; }
+  .t5 .worlds { display:grid; grid-template-columns:1fr 1fr 1fr; flex:1; }
+  .t5 .w { position:relative; overflow:hidden; }
+  .t5 .w .lv { font-family:'Press Start 2P',monospace; font-size:7px; color:#F7E96B; margin:12px 0 6px 14px; }
+  .t5 .w h2 { font-family:'Noto Sans SC',sans-serif; font-weight:900; font-size:20px; color:#FFF; margin-left:14px; text-shadow:2px 2px 0 rgba(0,0,0,.5); }
+  .t5 .w p { font-family:'JetBrains Mono',monospace; font-size:8px; color:rgba(255,255,255,.85); margin:6px 0 0 14px; }
+  .t5 .ground { position:absolute; bottom:0; left:0; right:0; height:34%; image-rendering:pixelated; }
+  .t5 .w1 { background:#4FA3E0; } .t5 .w1 .ground { background:linear-gradient(#57B14C 30%,#2E7D32 30%); }
+  .t5 .w2 { background:#2C2A4A; } .t5 .w2 .ground { background:linear-gradient(#8D4A2F 30%,#5D2F1B 30%); }
+  .t5 .w3 { background:#17A88B; } .t5 .w3 .ground { background:linear-gradient(#7BD1C0 30%,#2E8B77 30%); }
+  .t5 .px { position:absolute; }
+  .t5 .cap { background:#141021; padding:9px 14px; display:flex; justify-content:space-between; align-items:center; border-top:2px solid #F2E14C; }
+  .t5 .cap b { color:#FFF; font-size:11px; font-weight:700; }
+  .t5 .cap small { color:#8B84B8; font-size:9px; }
+  .t5 .btn { background:#F2E14C; color:#141021; font-family:'Press Start 2P',monospace; font-size:7px; padding:6px 10px; box-shadow:0 3px 0 #B8A62E; }
+
+  /* ── T6 · 实验汉字海报：上岸的「上」 ── */
+  .t6 { background:#F2EEE6; display:grid; grid-template-columns:1fr 190px; color:#111; }
+  .t6 .art { position:relative; }
+  .t6 .label { position:absolute; left:20px; top:16px; font-family:'JetBrains Mono',monospace; font-size:8.5px; letter-spacing:2px; color:#555; }
+  .t6 .right { padding:16px 18px; border-left:1px solid #D9D2C4; }
+  .t6 h1 { font-family:'Noto Sans SC',sans-serif; font-weight:900; font-size:23px; line-height:1.3; margin:8px 0 10px; }
+  .t6 h1 .r { color:#E4351E; }
+  .t6 p { font-size:10.5px; line-height:1.8; color:#444; }
+  .t6 .strokes { display:flex; gap:8px; margin-top:12px; border-top:1px solid #111; padding-top:10px; }
+  .t6 .st { text-align:center; font-size:9px; color:#666; }
+  .t6 .st i { display:block; font-style:normal; font-family:'Noto Serif SC',serif; color:#C9C2B2; font-size:22px; font-weight:900; }
+</style>
+</head>
+<body>
+
+<!-- T1 -->
+<div class="cell"><h3>T1 · 最佳设计师｜Experimental Jetset —— 清单即系统</h3>
+<div class="thumb t1">
+  <div class="band"><h1>前端进阶之路</h1><div class="mono">19 SERIES / 158 POSTS</div></div>
+  <div class="rule">
+    <div>
+      <div class="row"><span><span class="no">01</span><span class="t">JavaScript 深入系列</span></span><b>12</b></div>
+      <div class="row"><span><span class="no">02</span>JavaScript 核心系列</span><b>9</b></div>
+      <div class="row"><span><span class="no">03</span>CSS 深入系列</span><b>10</b></div>
+      <div class="row"><span><span class="no">04</span>DOM 与事件系列</span><b>6</b></div>
+      <div class="row"><span><span class="no">05</span>浏览器基础系列</span><b>6</b></div>
+      <div class="row"><span><span class="no">06</span>异步编程系列</span><b>8</b></div>
+      <div class="row"><span><span class="no">07</span>ES6+ 系列</span><b>10</b></div>
+    </div>
+    <div>
+      <div class="row"><span><span class="no">08</span>网络与浏览器系列</span><b>10</b></div>
+      <div class="row"><span><span class="no">09</span>Vue 原理系列</span><b>8</b></div>
+      <div class="row"><span><span class="no">10</span>React 原理系列</span><b>8</b></div>
+      <div class="row"><span><span class="no">11</span>前端工程化系列</span><b>8</b></div>
+      <div class="row"><span><span class="no">12</span>性能优化系列</span><b>8</b></div>
+      <div class="row"><span><span class="no">13</span>V8 底层系列</span><b>8</b></div>
+      <div class="row"><span><span class="no">19</span>算法与数据结构</span><b>10</b></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- T2 -->
+<div class="cell"><h3>T2 · 最佳设计师｜吕敬人 —— 书页与朱砂</h3>
+<div class="thumb t2">
+  <div class="binding"></div>
+  <div class="page">
+    <div class="big">进</div>
+    <div class="seal"></div>
+    <div class="sub">前端进阶之路</div>
+  </div>
+  <div class="note">
+    <div class="h">系列 · 目录</div>
+    <p> JavaScript 深入（十二篇）<br>异步编程（八篇）<br>性能优化（八篇）<br>V8 底层（八篇）</p>
+    <p style="margin-top:10px">三阶段，一百五十八篇。<br>每篇一道思考题，<br>读完即练。</p>
+  </div>
+</div></div>
+
+<!-- T3 -->
+<div class="cell"><h3>T3 · 现实参照｜Tailwind Docs —— 彩虹分类文档</h3>
+<div class="thumb t3">
+  <div class="side">
+    <div class="sh">进阶路线</div>
+    <div class="si on"><span class="dot" style="background:#38BDF8"></span>JavaScript 深入</div>
+    <div class="si"><span class="dot" style="background:#A855F7"></span>异步编程</div>
+    <div class="si"><span class="dot" style="background:#10B981"></span>网络与浏览器</div>
+    <div class="si"><span class="dot" style="background:#EC4899"></span>Vue 原理</div>
+    <div class="si"><span class="dot" style="background:#F59E0B"></span>React 原理</div>
+    <div class="si"><span class="dot" style="background:#EF4444"></span>性能优化</div>
+    <div class="sh">高级进阶</div>
+    <div class="si"><span class="dot" style="background:#14B8A6"></span>V8 底层</div>
+    <div class="si"><span class="dot" style="background:#6366F1"></span>TypeScript</div>
+  </div>
+  <div class="main">
+    <div class="crumb">JS-DEEP / 005 · ★★★★ 面试高频</div>
+    <h1>JavaScript 深入之闭包</h1>
+    <div class="meta">18 min 阅读 · 闭包 · 作用域链 · 内存管理</div>
+    <div class="code"><span class="c">// 闭包捕获的是环境（引用），不是值的快照</span><br><span class="k">function</span> <span class="f">counter</span>() {<br>&nbsp;&nbsp;<span class="k">let</span> count = <span class="f">0</span>;<br>&nbsp;&nbsp;<span class="k">return</span> () =&gt; ++count; <span class="c">// +1</span><br>}</div>
+  </div>
+  <div class="toc"><div>定义三说</div><div class="on2">[[Environment]]</div><div>内存语义</div><div>四大应用</div><div>思考题</div></div>
+</div></div>
+
+<!-- T4 -->
+<div class="cell"><h3>T4 · 现实参照｜roadmap.sh —— 路径即品牌</h3>
+<div class="thumb t4">
+  <div class="nav"><span class="lg">前端进阶之路</span><span>路线</span><span>系列</span><span>题库</span><span class="up">上岸offer</span></div>
+  <div class="hero"><h1>前端进阶之路</h1><div class="sub">19 个系列 · 158 篇 · 300+ 张原理图，一步步走到能讲给面试官听</div></div>
+  <div class="path">
+    <div class="lane">
+      <div class="row2"><span class="stage">P1 夯实基础 · 43 篇</span><div class="dash"></div><span class="stage b">JS 深入 · 闭包</span><div class="dash"></div><span class="stage b">原型与原型链</span></div>
+      <div class="row2" style="margin-left:40px"><span class="stage b">作用域链</span><div class="dash"></div><span class="stage c">异步编程 · 事件循环</span><div class="dash"></div><span class="stage c">手写 Promise</span></div>
+      <div class="row2" style="margin-left:80px"><span class="stage c">V8 内存与 GC</span><div class="dash"></div><span class="stage">P3 高级进阶 · 55 篇</span></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- T5 -->
+<div class="cell"><h3>T5 · 轮盘｜web09 像素游戏 —— 闯关式学习</h3>
+<div class="thumb t5">
+  <div class="hud"><span>前端进阶之路 · 158 篇</span><span class="hp">HP ■■■□</span><span>已读 032/158</span><span>TIME 42H</span></div>
+  <div class="worlds">
+    <div class="w w1"><div class="lv">LEVEL 1</div><h2>夯实基础</h2><p>43 POSTS</p><div class="ground"></div></div>
+    <div class="w w2"><div class="lv">LEVEL 2</div><h2>知识进阶</h2><p>60 POSTS</p><div class="ground"></div></div>
+    <div class="w w3"><div class="lv">LEVEL 3</div><h2>高级进阶</h2><p>55 POSTS</p><div class="ground"></div></div>
+  </div>
+  <div class="cap"><div><b>三关，一条进阶路</b><br><small>从执行上下文出发，走到架构权衡。</small></div><div class="btn">▶ START</div></div>
+</div></div>
+
+<!-- T6 -->
+<div class="cell"><h3>T6 · 轮盘｜east05 实验汉字 —— 上岸的「上」</h3>
+<div class="thumb t6">
+  <div class="art">
+    <div class="label">SHANG · 3 STROKES · 上岸之路</div>
+    <svg width="270" height="300" viewBox="0 0 270 300" style="position:absolute;left:14px;top:12px">
+      <rect x="118" y="26" width="26" height="232" fill="#111"/>
+      <rect x="140" y="84" width="118" height="24" fill="#E4351E"/>
+      <rect x="22" y="228" width="232" height="30" fill="#111"/>
+    </svg>
+  </div>
+  <div class="right">
+    <h1>一个「上」字，<br>走完<span class="r">上岸</span>之路</h1>
+    <p>19 个系列、158 篇、300+ 张原理图。从执行上下文走到架构权衡，每篇都能讲给面试官听。</p>
+    <div class="strokes">
+      <div class="st"><i>上</i>竖 · 1</div>
+      <div class="st"><i>上</i>短横 · 2</div>
+      <div class="st"><i>上</i>长横 · 3</div>
+    </div>
+  </div>
+</div></div>
+
+</body>
+</html>

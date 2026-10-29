@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>前端进阶之路 · 目录</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4EFE4; --ink:#1C1A17; --cinnabar:#B03A2E; --hair:#CDC4AF; --muted:#6E675A;
+  --serif:'Noto Serif SC',serif; --sans:'Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:2}
+::selection{background:var(--cinnabar);color:var(--paper)}
+
+/* 订口：装订的凹陷 */
+.binding{position:fixed;left:0;top:0;bottom:0;width:14px;z-index:9;
+  background:linear-gradient(90deg,#B9AF97 0,#DDD5C2 45%,rgba(244,239,228,0) 100%)}
+.page{max-width:1020px;margin:0 auto;padding:0 72px 0 96px}
+
+/* 书眉 */
+.masthead{display:flex;justify-content:space-between;align-items:baseline;
+  padding:26px 0 14px;border-bottom:1px solid var(--ink);font-family:var(--sans)}
+.masthead .wordmark{font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:2px}
+.masthead nav{display:flex;gap:26px;font-size:13.5px;color:var(--muted)}
+.masthead nav a{color:inherit;text-decoration:none}
+.masthead nav a:hover{color:var(--cinnabar)}
+.masthead .aux{font-family:var(--mono);font-size:12px;letter-spacing:1px}
+
+/* 扉页式首屏：深墨函套（碑拓气），版心上提，天头小地脚大 */
+.front{padding:56px 72px 150px 96px;position:relative;background:var(--ink);color:var(--paper);
+  margin:0 -72px 0 -96px}
+.front .kicker{font-family:var(--sans);font-size:12px;letter-spacing:6px;color:#A69C86;margin-bottom:26px}
+.front .giant{font-family:var(--serif);font-weight:900;font-size:210px;line-height:.95;letter-spacing:6px;color:var(--paper)}
+.front .seal{position:absolute;width:74px;height:74px;background:var(--cinnabar);
+  left:330px;top:52px;display:flex;align-items:center;justify-content:center}
+.front .seal span{font-family:var(--serif);font-weight:900;color:var(--paper);font-size:30px;line-height:1.1;
+  writing-mode:vertical-rl;letter-spacing:2px}
+.front .sub{font-family:var(--serif);font-size:19px;letter-spacing:10px;margin-top:18px;color:var(--paper)}
+.front .colophon{position:absolute;right:0;bottom:56px;font-family:var(--sans);font-size:14px;
+  color:#A69C86;text-align:left;line-height:2.1}
+.front .colophon b{color:var(--paper);font-family:var(--mono);font-size:15px}
+
+/* 章节通用 */
+.section{border-top:1px solid var(--ink);padding:34px 0 90px}
+.section .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:30px}
+.section .head h2{font-family:var(--serif);font-weight:900;font-size:30px;letter-spacing:4px}
+.section .head .en{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:2px}
+
+/* 目录：两栏书式 */
+.toc{display:grid;grid-template-columns:1fr 1fr;column-gap:56px}
+.toc .entry{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--hair);font-size:15.5px}
+.toc .entry .no{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.toc .entry .name{font-weight:700}
+.toc .entry .name:hover{color:var(--cinnabar);cursor:pointer}
+.toc .entry .dots{flex:1;border-bottom:1px dotted var(--hair);transform:translateY(-5px)}
+.toc .entry .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.toc .stage-gap{grid-column:1/-1;padding:18px 0 4px;font-family:var(--sans);font-size:12px;
+  letter-spacing:4px;color:var(--muted)}
+
+/* 精选：书页 + 旁注 */
+.feature{display:grid;grid-template-columns:1fr 236px;gap:40px}
+.feature .body h3{font-family:var(--serif);font-weight:900;font-size:26px;line-height:1.4;margin-bottom:8px}
+.feature .meta{font-family:var(--sans);font-size:13px;color:var(--muted);margin-bottom:22px}
+.feature .meta .star{color:var(--cinnabar)}
+.feature pre{font-family:var(--mono);font-size:14px;line-height:1.85;background:#EFE8D8;
+  border:1px solid var(--hair);padding:22px 26px;overflow-x:auto;line-height:1.7}
+.feature .read{display:inline-block;margin-top:22px;font-family:var(--sans);font-size:14px;font-weight:700;
+  color:var(--paper);background:var(--ink);padding:11px 30px;text-decoration:none;letter-spacing:3px}
+.feature .read:hover{background:var(--cinnabar)}
+aside.notes{border-left:1px solid var(--hair);padding-left:22px;font-family:var(--sans);font-size:13.5px;line-height:2}
+aside.notes .h{font-size:11px;letter-spacing:4px;color:var(--muted);margin-bottom:14px}
+aside.notes p{margin-bottom:18px}
+aside.notes p b{color:var(--cinnabar);font-weight:700}
+
+/* 三阶段：章节扉页 */
+.stages{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.stage{padding:34px 30px 44px;border-left:1px solid var(--hair)}
+.stage:first-child{border-left:none;padding-left:0}
+.stage .num{font-family:var(--serif);font-weight:900;font-size:84px;line-height:1}
+.stage h3{font-family:var(--serif);font-weight:900;font-size:21px;margin:14px 0 6px;letter-spacing:2px}
+.stage .cnt{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px}
+.stage p{font-family:var(--sans);font-size:14px;line-height:2;color:var(--muted)}
+.stage .list{margin-top:16px;font-family:var(--sans);font-size:14px;line-height:2.1}
+.stage:nth-child(2) .num{color:var(--cinnabar)}
+
+/* 页脚 */
+footer{border-top:1px solid var(--ink);padding:26px 0 60px;display:flex;justify-content:space-between;
+  font-family:var(--sans);font-size:13px;color:var(--muted)}
+footer b{color:var(--ink)}
+
+@media (max-width:900px){
+  .page{padding:0 28px 0 44px}
+  .front{margin:0 -28px 0 -44px;padding-left:44px;padding-right:28px}
+  .front .giant{font-size:120px}
+  .front .seal{left:200px;top:30px;width:54px;height:54px}
+  .front .seal span{font-size:21px}
+  .front .colophon{position:static;margin-top:30px}
+  .toc,.stages,.feature{grid-template-columns:1fr}
+  .stage{border-left:none;border-top:1px solid var(--hair);padding-left:0}
+  aside.notes{border-left:none;padding-left:0;border-top:1px solid var(--hair);padding-top:18px}
+}
+</style>
+</head>
+<body>
+<div class="binding"></div>
+<div class="page">
+
+  <header class="masthead">
+    <div class="wordmark">前端进阶之路</div>
+    <nav><a href="#toc">目录</a><a href="#feature">精读</a><a href="#stages">三阶段</a><a href="#about">关于</a></nav>
+    <div class="aux">上岸offer · 2026</div>
+  </header>
+
+  <section class="front">
+    <div class="kicker">一 套 体 系 化 的 前 端 进 阶 课 程</div>
+    <div class="giant">进</div>
+    <div class="seal"><span>上岸</span></div>
+    <div class="sub">前 端 进 阶 之 路</div>
+    <div class="colophon">
+      <b>19</b> 个系列 · <b>158</b> 篇 · <b>300+</b> 张原理图<br>
+      每篇一道思考题，读完即练<br>
+      与小程序「上岸offer」题库联动
+    </div>
+  </section>
+
+  <section class="section" id="toc">
+    <div class="head"><h2>目　录</h2><span class="en">CONTENTS · 19 SERIES</span></div>
+    <div class="toc">
+      <div class="stage-gap">壹 · 夯实基础</div>
+      <div class="entry"><span class="no">01</span><span class="name">JavaScript 深入系列</span><span class="dots"></span><span class="n">12 篇</span></div>
+      <div class="entry"><span class="no">02</span><span class="name">JavaScript 核心系列</span><span class="dots"></span><span class="n">9 篇</span></div>
+      <div class="entry"><span class="no">03</span><span class="name">CSS 深入系列</span><span class="dots"></span><span class="n">10 篇</span></div>
+      <div class="entry"><span class="no">04</span><span class="name">DOM 与事件系列</span><span class="dots"></span><span class="n">6 篇</span></div>
+      <div class="entry"><span class="no">05</span><span class="name">浏览器基础系列</span><span class="dots"></span><span class="n">6 篇</span></div>
+      <div class="stage-gap">贰 · 知识进阶</div>
+      <div class="entry"><span class="no">06</span><span class="name">异步编程系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="entry"><span class="no">07</span><span class="name">ES6+ 系列</span><span class="dots"></span><span class="n">10 篇</span></div>
+      <div class="entry"><span class="no">08</span><span class="name">网络与浏览器系列</span><span class="dots"></span><span class="n">10 篇</span></div>
+      <div class="entry"><span class="no">09</span><span class="name">Vue 原理系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="entry"><span class="no">10</span><span class="name">React 原理系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="entry"><span class="no">11</span><span class="name">前端工程化系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="entry"><span class="no">12</span><span class="name">性能优化系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="stage-gap">叁 · 高级进阶</div>
+      <div class="entry"><span class="no">13</span><span class="name">V8 与底层系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="entry"><span class="no">14</span><span class="name">渲染原理系列</span><span class="dots"></span><span class="n">6 篇</span></div>
+      <div class="entry"><span class="no">15</span><span class="name">手写源码系列</span><span class="dots"></span><span class="n">12 篇</span></div>
+      <div class="entry"><span class="no">16</span><span class="name">TypeScript 系列</span><span class="dots"></span><span class="n">8 篇</span></div>
+      <div class="entry"><span class="no">17</span><span class="name">前端架构系列</span><span class="dots"></span><span class="n">6 篇</span></div>
+      <div class="entry"><span class="no">18</span><span class="name">前端安全系列</span><span class="dots"></span><span class="n">5 篇</span></div>
+      <div class="entry"><span class="no">19</span><span class="name">算法与数据结构</span><span class="dots"></span><span class="n">10 篇</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="feature">
+    <div class="head"><h2>精　读</h2><span class="en">FEATURED · JS-DEEP-005</span></div>
+    <div class="feature">
+      <div class="body">
+        <h3>JavaScript 深入之闭包</h3>
+        <div class="meta">18 分钟 · ★★★★★ 面试高频 · 闭包 / 作用域链 / 内存管理</div>
+        <pre>    function foo() {                ┌─────────────────────────┐
+      var a = 2;                    │     bar 函数对象         │
+      function bar() {…}  ─创建─▶   │ [[Environment]] ──────┐ │
+      return bar;                   └───────────────────────│─┘
+    }                                                       ▼
+    foo() 出栈，但词法环境（含 a = 2）仍被引用，无法回收</pre>
+        <a class="read" href="#">开始阅读</a>
+      </div>
+      <aside class="notes">
+        <div class="h">旁 注</div>
+        <p><b>为什么先读它</b>：闭包是作用域链、执行上下文与内存管理的交汇处，往前往后都通。</p>
+        <p><b>读完即练</b>：篇末 4 道思考题已同步小程序题库。</p>
+        <p><b>下一篇</b>：深入之 this —— 调用与定义的正交。</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="stages">
+    <div class="head"><h2>三　阶　段</h2><span class="en">THREE STAGES</span></div>
+    <div class="stages">
+      <div class="stage">
+        <div class="num">壹</div>
+        <h3>夯实基础</h3>
+        <div class="cnt">43 篇 · 5 系列</div>
+        <p>把「会用」变成「懂原理」：执行上下文、原型链、盒模型、事件流。</p>
+        <div class="list">JS 深入 · JS 核心 · CSS 深入<br>DOM 事件 · 浏览器基础</div>
+      </div>
+      <div class="stage">
+        <div class="num">贰</div>
+        <h3>知识进阶</h3>
+        <div class="cnt">60 篇 · 7 系列</div>
+        <p>异步、网络、框架原理与工程化成体系，社招跳槽的四梁八柱。</p>
+        <div class="list">异步 · ES6+ · 网络 · Vue<br>React · 工程化 · 性能</div>
+      </div>
+      <div class="stage">
+        <div class="num">叁</div>
+        <h3>高级进阶</h3>
+        <div class="cnt">55 篇 · 7 系列</div>
+        <p>引擎与渲染底层、手写源码、架构与安全——高级岗的深水区。</p>
+        <div class="list">V8 · 渲染 · 手写源码<br>TS · 架构 · 安全 · 算法</div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="about">
+    <div><b>前端进阶之路</b> · 一套写给前端开发者的进阶课程 · 风格对标冴羽的博客</div>
+    <div>题库联动：小程序「上岸offer」 · 思考题解析陆续录入</div>
+  </footer>
+
+</div>
+</body>
+</html>

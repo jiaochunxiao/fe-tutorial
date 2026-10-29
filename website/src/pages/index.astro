@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Chrome from '../layouts/Chrome.astro';
+import { SERIES, STAGES, PATH_FLOWS, FEATURED, type SeriesMeta } from '../data/series';
+
+const entries = await getCollection('articles');
+const total = entries.length;
+
+const countBySeries = new Map<string, number>();
+const countByStage = new Map<string, number>();
+for (const e of entries) {
+  countBySeries.set(e.data.seriesId, (countBySeries.get(e.data.seriesId) ?? 0) + 1);
+  const s = SERIES.find((m) => m.id === e.data.seriesId)?.stage;
+  if (s) countByStage.set(s, (countByStage.get(s) ?? 0) + 1);
+}
+
+const stageName = Object.fromEntries(STAGES.map((s) => [s.key, s.name]));
+const stageTag = { P1: 'p1', P2: 'p2', P3: 'p3' } as const;
+
+const featuredHref = `/articles/${FEATURED.id}/`;
+const diagram = `    function foo() {              ┌──────────────────┐
+      var a = 2;                  │   bar 函数对象    │
+      function bar() {…} ─创建─▶  │ [[Environment]]┐ │
+      return bar;                 └────────────────┼─┘
+    }                                              ▼
+    // foo() 出栈，词法环境仍被引用，无法回收`;
+---
+<Chrome title="首页" desc="19 个系列、158 篇、300+ 张原理图。从「执行上下文」走到「架构权衡」，每篇都能讲给面试官听。">
+<div class="wrap">
+
+  <section class="hero">
+    <h1>前端进阶之路</h1>
+    <p class="sub">19 个系列、158 篇、300+ 张原理图。从「执行上下文」走到「架构权衡」，每篇都能讲给面试官听。</p>
+    <div class="chips">
+      <span class="chip"><b>{countBySeries.size}</b> 系列</span>
+      <span class="chip"><b>{total}</b> 篇</span>
+      <span class="chip"><b>300+</b> 原理图</span>
+      <span class="chip"><b>{STAGES.length}</b> 阶段</span>
+      <a class="chip link" href="/path#fast-track"><b>25</b> 篇校招速通路线 ↓</a>
+    </div>
+  </section>
+
+  {PATH_FLOWS.map((flow) => {
+    const meta = SERIES.find((m) => m.id === Object.keys({}) ) ; void meta;
+    const stageMeta = STAGES.find((s) => s.key === flow.stage)!;
+    return (
+      <section class={`stage-block ${stageTag[flow.stage]}`} id={flow.stage === 'P1' ? 'path' : undefined}>
+        <div class="stage-head">
+          <span class="tag">{stageMeta.en}</span>
+          <h2>{stageMeta.name}</h2>
+          <small>{countByStage.get(flow.stage) ?? 0} 篇 · {countBySeries.size >= 0 ? SERIES.filter((m) => m.stage === flow.stage).length : 0} 系列</small>
+        </div>
+        <div class="flow">
+          {flow.nodes.map((n, i) => (
+            <>
+              {i > 0 && <div class="conn"></div>}
+              <a class="node" href={n.href}><b>{n.label}</b><small>{n.sub}</small></a>
+            </>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+
+  <section class="feature" id="feature">
+    <div class="txt">
+      <span class="kind">本周精读 · JS-DEEP-005</span>
+      <h2>{FEATURED.title}</h2>
+      <div class="meta">{FEATURED.meta}</div>
+      <p>{FEATURED.desc}</p>
+      <a class="go" href={featuredHref}>开始阅读 →</a>
+    </div>
+    <div class="diagram">{diagram}</div>
+  </section>
+
+  <div class="section-h" id="all"><h2>全部系列</h2><span>19 SERIES · {total} POSTS</span></div>
+  <div class="grid">
+    {SERIES.map((m: SeriesMeta) => (
+      <a class="card" href={`/series/${m.id}/`}>
+        <span class="ic">
+          {m.icon.type === 'logo'
+            ? <img src={`/logos/${m.icon.file}.svg`} alt={m.icon.name} style="width:22px;height:22px;filter:invert(1)" />
+            : m.icon.char}
+        </span>
+        <div><b>{m.id === 'js-deep' ? 'JavaScript 深入系列' : m.id === 'js-core' ? 'JavaScript 核心系列' : m.id === 'js-async' ? '异步编程系列' : m.id === 'es6' ? 'ES6+ 系列' : m.id === 'network' ? '网络与浏览器系列' : m.id === 'vue' ? 'Vue 原理系列' : m.id === 'react' ? 'React 原理系列' : m.id === 'engineering' ? '前端工程化系列' : m.id === 'performance' ? '性能优化系列' : m.id === 'v8' ? 'V8 与底层系列' : m.id === 'rendering' ? '渲染原理系列' : m.id === 'handwritten' ? '手写源码系列' : m.id === 'ts' ? 'TypeScript 系列' : m.id === 'architecture' ? '前端架构系列' : m.id === 'security' ? '前端安全系列' : m.id === 'algorithm' ? '算法与数据结构' : m.id === 'css-deep' ? 'CSS 深入系列' : m.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</b>
+          <small>{m.en} · {m.blurb}</small></div>
+        <span class="n">{countBySeries.get(m.id) ?? 0}</span>
+      </a>
+    ))}
+  </div>
+
+</div>
+</Chrome>

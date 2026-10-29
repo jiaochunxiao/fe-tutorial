@@ -1,0 +1,33 @@
+---
+import Reading from '../layouts/Reading.astro';
+import { SERIES } from '../data/series';
+---
+<Reading title="关于">
+  <article>
+    <header class="article-head">
+      <div class="kicker">ABOUT · 2026</div>
+      <h1>关于「前端进阶之路」</h1>
+      <div class="meta">
+        <span>19 系列</span><span>158 篇</span><span>300+ 张原理图</span><span>3 个阶段</span>
+      </div>
+    </header>
+
+    <div class="prose">
+      <h2>这是什么</h2>
+      <p>一套面向前端开发者的<strong>体系化进阶课程</strong>，风格对标「冴羽的博客」深入系列：例子先行、由浅入深、剖析原理、面向面试。全部内容产自本仓库 <code>frontend-mastery/</code> 的 158 篇 Markdown 源文，站点由 Astro 构建为纯静态站点。</p>
+
+      <h2>怎么读</h2>
+      <p>三条人群路线（见<a href="/#path">学习路线</a>）：<strong>校招速通</strong>约 25 篇、6~8 周；<strong>社招进阶</strong>约 30 篇、3 个月；或按 roadmap 顺序系统学习。每篇文章末尾有思考题，解析同步录入小程序题库——<strong>读完即练</strong>。</p>
+
+      <h2>题库联动</h2>
+      <p>本站与小程序「<strong>前端面试刷题助手 上岸offer</strong>」共用内容源：文章元数据见 <code>/api/index.json</code>，思考题语料见 <code>/api/questions.json</code>——两个端共享同一份真相。</p>
+
+      <h2>全部系列</h2>
+      <ul>
+        {SERIES.map((m) => (
+          <li><a href={`/series/${m.id}/`}>{m.id === 'js-deep' ? 'JavaScript 深入系列' : m.id === 'js-core' ? 'JavaScript 核心系列' : m.id === 'js-async' ? '异步编程系列' : m.id === 'es6' ? 'ES6+ 系列' : m.id === 'network' ? '网络与浏览器系列' : m.id === 'vue' ? 'Vue 原理系列' : m.id === 'react' ? 'React 原理系列' : m.id === 'engineering' ? '前端工程化系列' : m.id === 'performance' ? '性能优化系列' : m.id === 'v8' ? 'V8 与底层系列' : m.id === 'rendering' ? '渲染原理系列' : m.id === 'handwritten' ? '手写源码系列' : m.id === 'ts' ? 'TypeScript 系列' : m.id === 'architecture' ? '前端架构系列' : m.id === 'security' ? '前端安全系列' : m.id === 'algorithm' ? '算法与数据结构' : m.id === 'css-deep' ? 'CSS 深入系列' : m.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</a></li>
+        ))}
+      </ul>
+    </div>
+  </article>
+</Reading>

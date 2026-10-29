@@ -1,0 +1,95 @@
+---
+import Chrome from '../layouts/Chrome.astro';
+---
+<Chrome title="搜索" desc="搜索《前端进阶之路》158 篇文章——支持中文全文检索。">
+<div class="wrap">
+
+  <section class="search-hero">
+    <h1>搜索</h1>
+    <p class="sub">158 篇文章全文检索：标题、正文、代码与思考题都在索引里。输入即搜，结果按相关度排序。</p>
+  </section>
+
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="搜索文章：闭包、事件循环、BFC、Fiber…" autocomplete="off" autofocus>
+  </div>
+  <div id="results" aria-live="polite"></div>
+
+  <div class="tips">
+    <span class="tips-h">试试这些</span>
+    <a class="chip" href="/search?q=闭包">闭包</a>
+    <a class="chip" href="/search?q=事件循环">事件循环</a>
+    <a class="chip" href="/search?q=垃圾回收">垃圾回收</a>
+    <a class="chip" href="/search?q=nextTick">nextTick</a>
+  </div>
+
+</div>
+
+<style>
+  .search-hero{padding:52px 0 26px}
+  .search-hero h1{font-weight:900;font-size:42px;letter-spacing:-1px;color:#F2F4F6}
+  .search-hero .sub{font-size:15px;color:var(--c-muted);margin-top:10px;max-width:600px}
+  .searchbar input{width:100%;background:var(--c-panel2);border:1.5px solid var(--c-line);
+    border-radius:12px;color:var(--c-text);font-family:var(--f-sans);font-size:17px;
+    padding:16px 20px;outline:none}
+  .searchbar input:focus{border-color:var(--c-amber)}
+  .searchbar input::placeholder{color:var(--c-muted)}
+  #results{margin-top:18px}
+  #results .qrow{margin-bottom:10px}
+  #results .qrow b{flex:none;max-width:46%}
+  #results .ex{font-size:13px;color:var(--c-muted);line-height:1.9;display:-webkit-box;
+    -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  #results .ex mark{background:rgba(243,201,63,.22);color:var(--c-amber);padding:0 2px;border-radius:3px}
+  #results .none{color:var(--c-muted);font-size:14px;padding:18px 0}
+  .tips{display:flex;gap:10px;align-items:center;margin-top:26px;flex-wrap:wrap}
+  .tips-h{font-family:var(--f-mono);font-size:12px;letter-spacing:2px;color:var(--c-muted)}
+  .tips .chip{border:1px solid var(--c-line);border-radius:999px;padding:5px 14px;font-size:12.5px;
+    background:var(--c-panel);color:var(--c-text)}
+  .tips .chip:hover{border-color:var(--c-amber);color:var(--c-amber)}
+</style>
+
+<script is:inline type="module">
+  // Pagefind 运行时由构建期生成在 /pagefind/（浏览器原生加载，绕开打包）
+  const pagefind = await import('/pagefind/pagefind.js');
+  await pagefind.options({ baseUrl: '/' });
+
+  const input = document.getElementById('q');
+  const out = document.getElementById('results');
+  let timer = null;
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  async function run() {
+    const q = input.value.trim();
+    clearTimeout(timer);
+    if (!q) { out.innerHTML = ''; return; }
+    out.innerHTML = '<p class="none">正在搜索「' + esc(q) + '」…</p>';
+    const r = await pagefind.search(q);
+    const top = r.results.slice(0, 20);
+    const items = await Promise.all(top.map((res) => res.data()));
+    out.innerHTML = '';
+    if (!items.length) {
+      out.innerHTML = '<p class="none">没有找到与「' + esc(q) + '」相关的文章。</p>';
+      return;
+    }
+    for (const item of items) {
+      const a = document.createElement('a');
+      a.className = 'qrow';
+      a.href = item.url;
+      a.innerHTML = '<b>' + esc(item.meta.title) + '</b>' +
+        '<span class="ex">' + item.excerpt + '</span>' +
+        '<span class="n">' + esc(item.meta.word_count ?? '') + '</span>';
+      out.appendChild(a);
+    }
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(run, 120);
+  });
+
+  const q0 = new URLSearchParams(location.search).get('q');
+  if (q0) { input.value = q0; run(); }
+</script>
+</Chrome>

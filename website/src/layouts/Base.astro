@@ -1,0 +1,33 @@
+---
+interface Props { title: string; desc?: string }
+const { title, desc = '19 个系列 · 158 篇 · 300+ 张原理图——一套体系化的前端进阶课程，从执行上下文走到架构权衡。' } = Astro.props;
+import '../styles/tokens.css';
+import '../styles/chrome.css';
+import '../styles/reading.css';
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title} · 前端进阶之路</title>
+  <meta name="description" content={desc}>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!--
+  监控接入点（architecture-005）：
+  1. Cloudflare Web Analytics —— 开通后取消注释并填 token：
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_TOKEN"}' is:inline></script>
+  -->
+  <script is:inline>
+    // 错误监听（一期：console 留痕；接 Sentry/自建时替换 console.warn 为上报）
+    window.addEventListener('error', (e) => console.warn('[monitor] js_error', e.message, e.filename + ':' + e.lineno));
+    window.addEventListener('unhandledrejection', (e) => console.warn('[monitor] unhandled_rejection', String(e.reason)));
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>

@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import Chrome from '../layouts/Chrome.astro';
+import { SERIES, STAGES } from '../data/series';
+
+const entries = await getCollection('articles');
+const byId = new Map(entries.map((e) => [e.data.id, e]));
+
+// 校招速通路线（roadmap.md 路径 A 的可点击版，约 25 篇 + 两个二选一）
+const FAST_TRACK = [
+  { group: '① JavaScript 深入 · 12 篇全刷', note: '面试的脊柱，先啃完', hrefs: [
+    ['执行上下文栈', 'js-deep-001'], ['变量对象与提升', 'js-deep-002'], ['词法作用域', 'js-deep-003'],
+    ['作用域链', 'js-deep-004'], ['闭包 ★', 'js-deep-005'], ['this', 'js-deep-006'],
+    ['call/apply/bind', 'js-deep-007'], ['new', 'js-deep-008'], ['原型与原型链', 'js-deep-009'],
+    ['继承', 'js-deep-010'], ['总串讲', 'js-deep-011'], ['面试题精讲', 'js-deep-012'],
+  ]},
+  { group: '② 异步与事件循环 · 3 篇', note: '手写 Promise 前必读', hrefs: [
+    ['Promise 基础', 'js-async-002'], ['手写 Promise', 'js-async-003'], ['事件循环 ★', 'js-async-005'],
+  ]},
+  { group: '③ 网络三连 · 3 篇', note: '缓存与跨域是必考', hrefs: [
+    ['浏览器缓存', 'network-006'], ['跨域 CORS', 'network-007'], ['HTTP/2', 'network-003'],
+  ]},
+  { group: '④ ES6 两连 · 2 篇', hrefs: [
+    ['Proxy 与 Reflect', 'es6-008'], ['Set 与 Map', 'es6-007'],
+  ]},
+  { group: '⑤ 框架二选一', hrefs: [
+    ['Vue 原理系列', '@series:vue'], ['React 原理系列', '@series:react'],
+  ]},
+  { group: '⑥ 手写六连 · 6 篇', hrefs: [
+    ['call/apply/bind', 'handwritten-001'], ['new/instanceof', 'handwritten-002'],
+    ['深拷贝', 'handwritten-003'], ['Promise/A+', 'handwritten-004'],
+    ['防抖节流', 'handwritten-005'], ['EventEmitter', 'handwritten-006'],
+  ]},
+  { group: '⑦ 收官二选一', hrefs: [
+    ['URL 到页面（基础版）', 'browser-basic-003'], ['URL 到页面（完整版）', 'network-010'],
+  ]},
+];
+
+const stageName = { P1: '夯实基础', P2: '知识进阶', P3: '高级进阶' };
+const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+function titleOf(meta, id) {
+  const names = {
+    'js-deep': 'JavaScript 深入系列', 'js-core': 'JavaScript 核心系列', 'css-deep': 'CSS 深入系列',
+    'dom-events': 'DOM 与事件系列', 'browser-basic': '浏览器基础系列', 'js-async': '异步编程系列',
+    'es6': 'ES6+ 系列', 'network': '网络与浏览器系列', 'vue': 'Vue 原理系列', 'react': 'React 原理系列',
+    'engineering': '前端工程化系列', 'performance': '性能优化系列', 'v8': 'V8 与底层系列',
+    'rendering': '渲染原理系列', 'handwritten': '手写源码系列', 'ts': 'TypeScript 系列',
+    'architecture': '前端架构系列', 'security': '前端安全系列', 'algorithm': '算法与数据结构',
+  };
+  return names[meta.id] ?? meta.id;
+}
+const nameOf = (sid) => { const m = SERIES.find((x) => x.id === sid); return m ? titleOf(m, sid) : sid; };
+---
+<Chrome title="学习路线" desc="三条走法：校招速通约 25 篇、社招进阶约 30 篇追加、系统学习全量 158 篇——每条路都有可点击的每一篇。">
+<div class="wrap">
+
+  <section class="hero">
+    <h1>学习路线</h1>
+    <p class="sub">同一套内容，三种走法。<b style="color:var(--c-amber)">校招速通</b>按面试权重挑约 25 篇；<b style="color:var(--c-amber)">社招进阶</b>在校招之上按方向追加；<b style="color:var(--c-amber)">系统学习</b>从第一篇走到第 158 篇。</p>
+    <div class="chips">
+      <a class="chip link" href="#fast-track"><b>25</b> 篇校招速通</a>
+      <a class="chip" href="#part-time"><b>+30</b> 篇社招追加</a>
+      <a class="chip" href="#full"><b>158</b> 篇系统全量</a>
+    </div>
+  </section>
+
+  <section class="stage-block" id="fast-track">
+    <div class="stage-head"><span class="tag p1">FAST TRACK</span><h2>校招速通</h2><small>约 25 篇 · 6~8 周 · 面试权重排序</small></div>
+    {FAST_TRACK.map((g) => (
+      <div class="pgroup">
+        <div class="pg-h"><b>{g.group}</b><span>{g.note ?? ''}</span></div>
+        <div class="flow">
+          {g.hrefs.map(([label, ref]) => (
+            ref.startsWith('@series:')
+              ? <a class="node choice" href={`/series/${ref.slice(7)}/`}><b>{label}</b><small>整个系列 · 二选一</small></a>
+              : <a class="node" href={`/articles/${ref}/`}><b>{label}</b><small>{ref}</small></a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="stage-block" id="part-time">
+    <div class="stage-head"><span class="tag p2">PART-TIME</span><h2>社招进阶</h2><small>校招路线之上 · 约 30 篇追加 · 3 个月</small></div>
+    <div class="addcard">
+      <p>在速通路线之上，按方向追加四个全系列与一组渲染三篇——社招面试必问<b>工程化</b>与<b>框架原理</b>，性能与渲染是高级感来源。</p>
+      <div class="addgrid">
+        <a class="node" href="/series/js-async/"><b>异步编程 · 全系列</b><small>js-async · 8 篇</small></a>
+        <a class="node" href="/series/network/"><b>网络与浏览器 · 全系列</b><small>network · 10 篇</small></a>
+        <a class="node" href="/series/vue/"><b>Vue 原理 · 全系列</b><small>vue · 8 篇</small></a>
+        <a class="node" href="/series/react/"><b>React 原理 · 全系列</b><small>react · 8 篇</small></a>
+        <a class="node" href="/series/engineering/"><b>前端工程化 · 全系列</b><small>engineering · 8 篇</small></a>
+        <a class="node" href="/series/performance/"><b>性能优化 · 001-006</b><small>performance · 6 篇</small></a>
+        <a class="node" href="/series/rendering/"><b>渲染原理 · 001-003</b><small>rendering · 3 篇</small></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage-block" id="full">
+    <div class="stage-head"><span class="tag p3">FULL ROUTE</span><h2>系统学习全路线</h2><small>158 篇 · 按序读完 · 每篇思考题做完再走</small></div>
+
+    {STAGES.map((stage) => (
+      <div>
+        <div class="fs-h"><b>{stage.key} · {stage.name}</b></div>
+        {SERIES.filter((m) => m.stage === stage.key).map((meta) => (
+          <div class="fs-series">
+            <div class="fs-sh"><a href={`/series/${meta.id}/`}>{nameOf(meta)}</a><span>{meta.en}</span></div>
+            {entries
+              .filter((e) => e.data.seriesId === meta.id)
+              .sort((a, b) => a.data.id.localeCompare(b.data.id))
+              .map((e) => (
+                <a class="qrow" href={`/articles/${e.data.id}/`}>
+                  <span class="no">{e.data.id}</span>
+                  <b>{e.data.title}</b>
+                  <span class="stars">{stars(e.data.difficulty)}</span>
+                  <span class="t">{e.data.readingTime} min</span>
+                </a>
+              ))}
+          </div>
+        ))}
+      </div>
+    ))}
+  </section>
+
+</div>
+</Chrome>
+
+<style>
+  .pgroup{margin-bottom:26px}
+  .pg-h{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+  .pg-h b{font-size:15px;font-weight:800;color:#F2F4F6}
+  .pg-h span{font-family:var(--f-mono);font-size:11.5px;color:var(--c-muted)}
+  .node.choice{background:var(--c-panel2)}
+  .node.choice b{color:var(--c-sky)}
+  .addcard{background:var(--c-panel);border:1.5px solid var(--c-line);border-radius:14px;padding:26px 30px}
+  .addcard p{font-size:14px;color:#C8D2DC;max-width:640px;margin-bottom:20px}
+  .addcard p b{color:var(--c-amber)}
+  .addgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .fs-h{font-family:var(--f-mono);font-size:12px;letter-spacing:2px;color:var(--c-amber);
+    border-top:1px solid var(--c-line);padding:26px 0 4px}
+  .fs-series{margin-bottom:26px}
+  .fs-sh{display:flex;justify-content:space-between;align-items:baseline;margin:10px 0 10px}
+  .fs-sh a{font-weight:900;font-size:19px;color:#F2F4F6}
+  .fs-sh a:hover{color:var(--c-amber)}
+  .fs-sh span{font-family:var(--f-mono);font-size:11px;color:var(--c-muted);letter-spacing:2px}
+</style>

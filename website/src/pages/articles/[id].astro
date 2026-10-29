@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import Reading from '../../layouts/Reading.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('articles');
+  const byId = new Map(entries.map((e) => [e.data.id, e]));
+  return entries.map((entry) => ({
+    params: { id: entry.data.id },
+    props: {
+      entry,
+      prev: entry.data.prev ? byId.get(entry.data.prev) ?? null : null,
+      next: entry.data.next ? byId.get(entry.data.next) ?? null : null,
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const d = entry.data;
+const stars = '★'.repeat(d.difficulty) + '☆'.repeat(5 - d.difficulty);
+const seriesMeta = (await import('../../data/series')).SERIES.find((m) => m.id === d.seriesId);
+---
+<Reading title={d.title} seriesName={d.series} seriesHref={`/series/${d.seriesId}/`}>
+  <article>
+    <header class="article-head">
+      <div class="kicker">
+        <span>{d.id}</span> · <span>{seriesMeta?.stage ?? ''} {seriesMeta?.en ?? ''}</span> ·
+        <span class="star">{stars}</span>
+        {d.difficulty >= 4 && <span> 面试高频</span>}
+      </div>
+      <h1>{d.title}</h1>
+      <div class="meta">
+        <span>{d.readingTime} 分钟阅读</span>
+        <span>{d.createdAt}</span>
+        {d.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    </header>
+
+    <div class="article-cols">
+      <div class="prose" data-pagefind-body>
+        <Content />
+      </div>
+
+      {toc.length > 0 && (
+        <aside class="toc">
+          <div class="h">本篇目录 · TOC</div>
+          {toc.map((h) => (
+            <a href={`#${h.slug}`} class={h.depth === 3 ? 'l3' : ''}>{h.text}</a>
+          ))}
+        </aside>
+      )}
+    </div>
+
+    <script>
+      // 思考题折叠（渐进增强）：把「## 思考题」及其后继内容包进 <details>，
+      // 无 JS 时保持展开可读。
+      const h2 = document.querySelector('.prose h2[id="思考题"]');
+      if (h2 && !h2.closest('details')) {
+        const siblings = [];
+        let s = h2.nextSibling;
+        while (s && !(s.nodeType === 1 && s.tagName === 'H2')) {
+          siblings.push(s);
+          s = s.nextSibling;
+        }
+        const details = document.createElement('details');
+        details.className = 'thoughts';
+        const summary = document.createElement('summary');
+        const t = document.createElement('span');
+        t.className = 't';
+        t.textContent = '思考题';
+        const hint = document.createElement('span');
+        hint.className = 'hint';
+        hint.textContent = '读完即练 · 点击展开';
+        summary.append(t, hint);
+        h2.parentNode.insertBefore(details, h2);   // 先落位，再移入（避免父子环）
+        details.append(summary, h2);
+        siblings.forEach((n) => details.appendChild(n));
+      }
+    </script>
+
+    <nav class="pager">
+      {prev
+        ? <a href={`/articles/${prev.data.id}/`} class="prev-item"><span class="dir">← 上一篇</span><span class="t">{prev.data.title}</span></a>
+        : <span class="empty">已是本系列第一篇</span>}
+      {next
+        ? <a href={`/articles/${next.data.id}/`} class="next-item next"><span class="dir">下一篇 →</span><span class="t">{next.data.title}</span></a>
+        : <span class="empty next">已是本系列最后一篇</span>}
+    </nav>
+  </article>
+</Reading>

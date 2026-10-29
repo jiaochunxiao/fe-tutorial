@@ -1,0 +1,30 @@
+---
+import Base from './Base.astro';
+interface Props { title: string; seriesName?: string; seriesHref?: string }
+const { title, seriesName, seriesHref } = Astro.props;
+---
+<Base title={title} desc={title + ' —— 前端进阶之路'}>
+  <div class="read-shell">
+    <div class="brand-strip">
+      <a class="mark" href="/">前端进阶之路</a>
+      <span>
+        {seriesName && seriesHref && <a href={seriesHref}>{seriesName}</a>}
+        <a href="/about" style="margin-left:18px">关于</a>
+      </span>
+    </div>
+    <div class="binding"></div>
+    <div class="read-wrap">
+      <header class="masthead">
+        <a class="crumb" href={seriesHref ?? '/'}>{seriesName ?? '前端进阶之路'}</a>
+        <nav><a href="/#toc">目录</a><a href="/#stages">三阶段</a><a href="/about">关于</a></nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="read-footer">
+        <div><b>前端进阶之路</b> · 一套写给前端开发者的进阶课程</div>
+        <div>题库联动：小程序「上岸offer」</div>
+      </footer>
+    </div>
+  </div>
+</Base>

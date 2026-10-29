@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>前端进阶之路 · 学习路线（深夜版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* 色彩论证：底色取「深夜书桌的屏幕」的暖灰黑 #0F141B（刻意避开 #0D1117 蓝黑禁区）；
+   节点琥珀 #F3C93F 采自 roadmap.sh 的里程碑节点语义（金 = 上岸）；
+   三阶段的蓝/玫瑰在暗底上降饱和提亮度，保持可区分。 */
+:root{
+  --bg:#0F141B; --panel:#171E27; --panel2:#0B0F15; --line:#2A323C;
+  --text:#E9ECEF; --muted:#A6ADB5;
+  --amber:#F3C93F; --sky:#A9C9F2; --rose:#F3B8CE;
+  --sans:'Inter','Noto Sans SC',sans-serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65}
+::selection{background:var(--amber);color:#16181D}
+a{color:inherit;text-decoration:none}
+
+.nav{background:#0A0E14;border-bottom:1px solid var(--line);color:#E9ECEF;
+  display:flex;align-items:center;gap:26px;padding:15px 34px}
+.nav .mark{font-weight:900;font-size:16px;letter-spacing:.5px}
+.nav nav{display:flex;gap:20px;font-size:13.5px;color:var(--muted)}
+.nav nav a:hover{color:var(--amber)}
+.nav .offer{margin-left:auto;background:var(--amber);color:#16181D;font-weight:800;
+  font-size:12.5px;padding:7px 14px;border-radius:999px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 34px}
+
+.hero{padding:58px 0 34px}
+.hero h1{font-weight:900;font-size:56px;letter-spacing:-1.5px;line-height:1.15;color:#F2F4F6}
+.hero .sub{font-size:16.5px;color:var(--muted);margin-top:12px;max-width:640px}
+.chips{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;
+  font-weight:600;background:var(--panel);color:var(--text)}
+.chip b{font-family:var(--mono);font-size:14px;color:var(--amber)}
+.chip.progress{background:var(--amber);border-color:var(--amber);color:#16181D}
+.chip.progress b{color:#16181D}
+
+.stage-block{padding:34px 0 8px}
+.stage-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.stage-head .tag{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:2px;
+  padding:4px 10px;border-radius:6px;color:#16181D}
+.stage-head h2{font-weight:900;font-size:23px;color:#F2F4F6}
+.stage-head small{color:var(--muted);font-size:13px}
+.p1 .tag{background:var(--amber)} .p2 .tag{background:var(--sky)} .p3 .tag{background:var(--rose)}
+
+.flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding:10px 2px 20px}
+.node{flex:none;background:var(--panel);border:1.5px solid #000;border-radius:10px;
+  padding:10px 16px;box-shadow:3px 3px 0 #000, 0 0 0 1px rgba(255,255,255,.1);
+  min-width:122px;position:relative}
+.node:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #000, 0 0 0 1px rgba(255,255,255,.14)}
+.node b{display:block;font-size:13.5px;font-weight:800;line-height:1.3;color:#F2F4F6}
+.node small{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.node.here{background:var(--amber)}
+.node.here b,.node.here small{color:#16181D}
+.node.here::after{content:"你在这里";position:absolute;top:-24px;left:8px;
+  font-family:var(--mono);font-size:12px;font-weight:700;color:#F2F4F6;
+  background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 8px}
+.conn{flex:none;width:34px;border-top:2.5px dashed #3A424C;align-self:center}
+
+.feature{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;
+  box-shadow:5px 5px 0 #000;display:grid;grid-template-columns:1.2fr 1fr;overflow:hidden;margin:44px 0}
+.feature .txt{padding:30px 34px}
+.feature .kind{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:2px;color:#16181D;
+  background:var(--amber);display:inline-block;padding:3px 10px;border-radius:5px}
+.feature h2{font-weight:900;font-size:27px;margin:14px 0 8px;color:#F2F4F6}
+.feature .meta{font-size:13px;color:var(--muted);margin-bottom:16px}
+.feature p{font-size:14px;color:#C8D2DC}
+.feature .go{display:inline-block;margin-top:22px;background:var(--amber);color:#16181D;font-weight:800;
+  font-size:14px;padding:11px 26px;border-radius:10px}
+.feature .go:hover{background:#FFF}
+.feature .code{background:var(--panel2);border-left:1px solid var(--line);padding:30px;
+  font-family:var(--mono);font-size:14px;line-height:1.9;color:#C8D2DC;white-space:pre;
+  overflow-x:auto;display:flex;flex-direction:column;justify-content:center}
+.feature .code .c{color:#7BA37B}
+
+.section-h{display:flex;justify-content:space-between;align-items:baseline;margin:52px 0 22px}
+.section-h h2{font-weight:900;font-size:25px;color:#F2F4F6}
+.section-h span{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:2px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:18px 20px;
+  display:flex;gap:14px;align-items:center}
+.card:hover{border-color:var(--amber)}
+.card .ic{width:40px;height:40px;flex:none;border:1px solid var(--line);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;
+  background:var(--panel2);color:var(--amber)}
+.card .ic svg{width:22px;height:22px;fill:currentColor}
+.card b{font-size:14.5px;font-weight:800;display:block;line-height:1.35;color:#F2F4F6}
+.card small{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.card .n{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:15px;color:var(--amber)}
+
+footer{background:#0A0E14;border-top:1px solid var(--line);color:var(--muted);margin-top:64px;
+  padding:30px 34px;display:flex;justify-content:space-between;font-size:13px}
+footer b{color:#F2F4F6}
+
+@media (max-width:900px){
+  .hero h1{font-size:38px}
+  .feature{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+  .wrap{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <span class="mark">前端进阶之路</span>
+  <nav><a href="#path">路线</a><a href="#all">系列</a><a href="#feature">精读</a><a href="#">题库 · 即将上线</a></nav>
+  <a class="offer" href="#">上岸offer ↗</a>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <h1>前端进阶之路</h1>
+    <p class="sub">19 个系列、158 篇、300+ 张原理图。从「执行上下文」走到「架构权衡」，每篇都能讲给面试官听。</p>
+    <div class="chips">
+      <span class="chip"><b>19</b> 系列</span>
+      <span class="chip"><b>158</b> 篇</span>
+      <span class="chip"><b>300+</b> 原理图</span>
+      <span class="chip"><b>3</b> 阶段</span>
+      <span class="chip progress">已读 32 / 158</span>
+    </div>
+  </section>
+
+  <section class="stage-block p1" id="path">
+    <div class="stage-head"><span class="tag">STAGE 1</span><h2>夯实基础</h2><small>43 篇 · 5 系列 · 把「会用」变成「懂原理」</small></div>
+    <div class="flow">
+      <div class="node"><b>执行上下文栈</b><small>js-deep · 001</small></div><div class="conn"></div>
+      <div class="node"><b>变量对象与提升</b><small>js-deep · 002</small></div><div class="conn"></div>
+      <div class="node"><b>作用域链</b><small>js-deep · 004</small></div><div class="conn"></div>
+      <div class="node here"><b>闭包 ★</b><small>js-deep · 005 · 18min</small></div><div class="conn"></div>
+      <div class="node"><b>this 与原型链</b><small>js-deep · 006-009</small></div><div class="conn"></div>
+      <div class="node"><b>DOM 与事件流</b><small>dom-events · 6 篇</small></div>
+    </div>
+  </section>
+
+  <section class="stage-block p2">
+    <div class="stage-head"><span class="tag">STAGE 2</span><h2>知识进阶</h2><small>60 篇 · 7 系列 · 社招的四梁八柱</small></div>
+    <div class="flow">
+      <div class="node"><b>回调 → Promise</b><small>js-async · 001-002</small></div><div class="conn"></div>
+      <div class="node"><b>事件循环 ★</b><small>js-async · 005</small></div><div class="conn"></div>
+      <div class="node"><b>HTTPS 与缓存</b><small>network · 005-006</small></div><div class="conn"></div>
+      <div class="node"><b>Vue 响应式</b><small>vue · 001</small></div><div class="conn"></div>
+      <div class="node"><b>Fiber 架构</b><small>react · 003</small></div><div class="conn"></div>
+      <div class="node"><b>Vite 为什么快</b><small>engineering · 005</small></div>
+    </div>
+  </section>
+
+  <section class="stage-block p3">
+    <div class="stage-head"><span class="tag">STAGE 3</span><h2>高级进阶</h2><small>55 篇 · 7 系列 · 高级岗的深水区</small></div>
+    <div class="flow">
+      <div class="node"><b>V8 执行流水线</b><small>v8 · 001</small></div><div class="conn"></div>
+      <div class="node"><b>隐藏类与 IC</b><small>v8 · 002</small></div><div class="conn"></div>
+      <div class="node"><b>内存与 GC</b><small>v8 · 005</small></div><div class="conn"></div>
+      <div class="node"><b>渲染管线</b><small>rendering · 001</small></div><div class="conn"></div>
+      <div class="node"><b>微前端沙箱</b><small>architecture · 003</small></div>
+    </div>
+  </section>
+
+  <section class="feature" id="feature">
+    <div class="txt">
+      <span class="kind">本周精读 · JS-DEEP-005</span>
+      <h2>JavaScript 深入之闭包</h2>
+      <div class="meta">18 分钟 · ★★★★★ 面试高频 · 闭包 / 作用域链 / 内存管理</div>
+      <p>从一段 for + setTimeout 的输出题切入，用 [[Environment]] 内部槽讲清闭包的机制本质，再到内存代价与四大应用——读完能把它讲给面试官听。</p>
+      <a class="go" href="#">开始阅读 →</a>
+    </div>
+    <div class="code"><span>    function foo() {              ┌──────────────────┐</span>
+<span>      var a = 2;                  │   bar 函数对象    │</span>
+<span>      function bar() {…} ─创建─▶  │ [[Environment]]┐ │</span>
+<span>      return bar;                 └────────────────┼─┘</span>
+<span>    }                                              ▼</span>
+<span class="c">    // foo() 出栈，词法环境仍被引用，无法回收</span></div>
+  </section>
+
+  <div class="section-h" id="all"><h2>全部系列</h2><span>19 SERIES · 158 POSTS</span></div>
+  <div class="grid">
+    <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg></span><div><b>JavaScript 深入系列</b><small>STAGE 1 · 面试核心</small></div><span class="n">12</span></div>
+    <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg></span><div><b>JavaScript 核心系列</b><small>STAGE 1 · 语言地基</small></div><span class="n">9</span></div>
+    <div class="card"><span class="ic">C</span><div><b>CSS 深入系列</b><small>STAGE 1 · 布局与渲染</small></div><span class="n">10</span></div>
+    <div class="card"><span class="ic">D</span><div><b>DOM 与事件系列</b><small>STAGE 1 · 交互地基</small></div><span class="n">6</span></div>
+    <div class="card"><span class="ic">B</span><div><b>浏览器基础系列</b><small>STAGE 1 · 全景模型</small></div><span class="n">6</span></div>
+    <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg></span><div><b>异步编程系列</b><small>STAGE 2 · 事件循环</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic">6+</span><div><b>ES6+ 系列</b><small>STAGE 2 · 语法演进</small></div><span class="n">10</span></div>
+    <div class="card"><span class="ic">N</span><div><b>网络与浏览器系列</b><small>STAGE 2 · 全链路</small></div><span class="n">10</span></div>
+    <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24,1.61H14.06L12,5.16,9.94,1.61H0L12,22.39ZM12,14.08,5.16,2.23H9.59L12,6.41l2.41-4.18h4.43Z"/></svg></span><div><b>Vue 原理系列</b><small>STAGE 2 · 框架原理</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/></svg></span><div><b>React 原理系列</b><small>STAGE 2 · 框架原理</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic">W</span><div><b>前端工程化系列</b><small>STAGE 2 · 构建/部署</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic">P</span><div><b>性能优化系列</b><small>STAGE 2 · 指标与实战</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic">V8</span><div><b>V8 与底层系列</b><small>STAGE 3 · 引擎视角</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic">R</span><div><b>渲染原理系列</b><small>STAGE 3 · 像素的诞生</small></div><span class="n">6</span></div>
+    <div class="card"><span class="ic">H</span><div><b>手写源码系列</b><small>STAGE 3 · 面试武器库</small></div><span class="n">12</span></div>
+    <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></svg></span><div><b>TypeScript 系列</b><small>STAGE 3 · 类型系统</small></div><span class="n">8</span></div>
+    <div class="card"><span class="ic">A</span><div><b>前端架构系列</b><small>STAGE 3 · 决策权衡</small></div><span class="n">6</span></div>
+    <div class="card"><span class="ic">S</span><div><b>前端安全系列</b><small>STAGE 3 · 纵深防御</small></div><span class="n">5</span></div>
+    <div class="card"><span class="ic">∑</span><div><b>算法与数据结构</b><small>STAGE 3 · 前端向</small></div><span class="n">10</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <div><b>前端进阶之路</b> · 与小程序「上岸offer」题库联动 · 思考题解析陆续录入</div>
+  <div>19 系列 · 158 篇 · 300+ 原理图</div>
+</footer>
+
+</body>
+</html>

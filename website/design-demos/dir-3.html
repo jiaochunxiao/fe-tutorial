@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>前端进阶之路 · 一个「上」字，走完上岸之路</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2EEE6; --ink:#141414; --red:#E4351E; --hair:#D9D2C4; --meta:#6A644E;
+  --sans:'Noto Sans SC',sans-serif; --serif:'Noto Serif SC',serif; --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75}
+::selection{background:var(--red);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+
+.topline{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--ink);
+  font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--meta)}
+.topline b{color:var(--ink)}
+
+/* 海报首屏：左巨字 + 右信息栏 */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;padding:36px 0 64px}
+.poster{position:relative;min-height:520px}
+.poster .cap{position:absolute;left:4px;top:2px;font-family:var(--mono);font-size:14px;
+  letter-spacing:3px;color:var(--meta)}
+.poster svg{width:100%;height:auto;margin-top:26px}
+.poster .caption{position:absolute;left:4px;bottom:-8px;font-family:var(--serif);font-weight:900;
+  font-size:20px;letter-spacing:8px}
+.hero .info h1{font-weight:900;font-size:44px;line-height:1.25;letter-spacing:1px;margin:10px 0 20px}
+.hero .info h1 .r{color:var(--red)}
+.hero .info>p{font-size:15px;color:#444;max-width:44ch}
+.stats{display:flex;gap:0;margin:30px 0 34px}
+.stat{flex:1;border-top:4px solid var(--red);padding:10px 16px 0 0}
+.stat:nth-child(2){border-top-color:var(--ink)}
+.stat:nth-child(3){border-top-color:var(--meta)}
+.stat:nth-child(4){border-top-color:var(--ink)}
+.stat b{display:block;font-family:var(--mono);font-weight:700;font-size:30px;line-height:1.2}
+.stat span{font-size:12px;color:var(--meta)}
+.toc-h{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--meta);
+  border-bottom:1px solid var(--ink);padding-bottom:8px;margin-bottom:4px}
+.dir-row{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--hair);
+  padding:9px 2px;font-size:14px;font-weight:500}
+.dir-row:hover{background:#EAE4D8}
+.dir-row .no{font-family:var(--mono);font-size:12px;color:var(--meta);width:24px}
+.dir-row .n{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--meta)}
+.dir-row .st{font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--paper);
+  background:var(--ink);padding:2px 8px}
+.dir-row .st.r{background:#C22B15}
+.cta{display:flex;gap:14px;margin-top:30px}
+.cta .b1{background:var(--ink);color:var(--paper);font-weight:700;font-size:14.5px;
+  padding:14px 34px;letter-spacing:2px}
+.cta .b1:hover{background:var(--red)}
+.cta .b2{border:1.5px solid var(--ink);font-weight:700;font-size:14.5px;padding:14px 26px;letter-spacing:2px}
+
+/* 三笔画 = 三阶段 */
+.tri{border-top:1px solid var(--ink);padding:40px 0 56px}
+.tri .h{font-family:var(--mono);font-size:14px;letter-spacing:3px;color:var(--meta);margin-bottom:26px}
+.tri .h b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.col{border-left:1px solid var(--hair);padding:0 30px}
+.col:first-child{border-left:none;padding-left:0}
+.col .glyph{height:64px;display:flex;align-items:flex-end;gap:6px;margin-bottom:16px}
+.col .glyph i{display:block;background:var(--ink)}
+.col:nth-child(2) .glyph i{background:var(--red)}
+.col h3{font-weight:900;font-size:19px;margin-bottom:2px}
+.col .en{font-family:var(--mono);font-size:14px;letter-spacing:2px;color:var(--meta);margin-bottom:12px}
+.col p{font-size:14px;color:#444;line-height:1.9;margin-bottom:12px}
+.col ul{list-style:none;font-size:14px;line-height:2.1;font-weight:500}
+.col ul b{font-family:var(--mono);color:var(--meta);font-weight:400;margin-right:8px}
+
+/* 精读：黑底反白 */
+.read{background:var(--ink);color:var(--paper);padding:44px 48px;display:grid;
+  grid-template-columns:1fr 1.1fr;gap:48px;margin-bottom:56px}
+.read .kind{font-family:var(--mono);font-size:14px;letter-spacing:3px;color:#FF6A55;margin-bottom:14px}
+.read h2{font-weight:900;font-size:30px;margin-bottom:10px}
+.read .meta{font-size:13px;color:#9B968B;margin-bottom:18px}
+.read p{font-size:14.5px;color:#CFCABF}
+.read .more{display:inline-block;margin-top:24px;border:1.5px solid var(--paper);
+  padding:11px 28px;font-weight:700;font-size:14px;letter-spacing:2px}
+.read .more:hover{background:var(--red);border-color:var(--red)}
+.read pre{font-family:var(--mono);font-size:14px;line-height:1.9;color:var(--paper);
+  border-left:3px solid var(--red);padding-left:24px;align-self:center;white-space:pre;overflow-x:auto}
+
+footer{border-top:1px solid var(--ink);padding:20px 0 56px;display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--meta)}
+footer b{color:var(--ink)}
+
+@media (max-width:980px){
+  .hero,.read{grid-template-columns:1fr}
+  .cols{grid-template-columns:1fr}
+  .col{border-left:none;padding:0 0 26px}
+  .wrap{padding:0 22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topline"><span><b>前端进阶之路</b> · SHANG · 3 STROKES</span><span>2026 · 上岸OFFER 联动</span></div>
+
+  <section class="hero">
+    <div class="poster">
+      <div class="cap">SHANG · 3 STROKES · FRONTEND MASTERY</div>
+      <svg viewBox="0 0 280 320">
+        <rect x="118" y="26" width="26" height="234" fill="#141414"/>
+        <rect x="140" y="84" width="120" height="26" fill="#E4351E"/>
+        <rect x="22" y="230" width="234" height="30" fill="#141414"/>
+      </svg>
+      <div class="caption">前 端 进 阶 之 路</div>
+    </div>
+    <div class="info">
+      <h1>一个「上」字，<br>走完<span style="color:var(--red)">上岸</span>之路</h1>
+      <p>19 个系列、158 篇、300+ 张原理图。从「执行上下文」走到「架构权衡」——竖是主线，横是台阶，每一篇都能讲给面试官听。</p>
+      <div class="stats">
+        <div class="stat"><b>19</b><span>系列</span></div>
+        <div class="stat"><b>158</b><span>篇</span></div>
+        <div class="stat"><b>300+</b><span>原理图</span></div>
+        <div class="stat"><b>3</b><span>阶段</span></div>
+      </div>
+      <div class="toc-h">系列目录 · 19 SERIES</div>
+      <a class="dir-row" href="#"><span class="no">01</span>JavaScript 深入系列<span class="st r">高频</span><span class="n">12</span></a>
+      <a class="dir-row" href="#"><span class="no">02</span>JavaScript 核心系列<span class="n">9</span></a>
+      <a class="dir-row" href="#"><span class="no">03</span>CSS 深入系列<span class="n">10</span></a>
+      <a class="dir-row" href="#"><span class="no">04</span>DOM 与事件系列<span class="n">6</span></a>
+      <a class="dir-row" href="#"><span class="no">05</span>浏览器基础系列<span class="n">6</span></a>
+      <a class="dir-row" href="#"><span class="no">06</span>异步编程系列<span class="st">高频</span><span class="n">8</span></a>
+      <a class="dir-row" href="#"><span class="no">11</span>前端工程化系列<span class="n">8</span></a>
+      <a class="dir-row" href="#"><span class="no">16</span>TypeScript 系列<span class="n">8</span></a>
+      <div class="cta">
+        <a class="b1" href="#">从第一篇开始</a>
+        <a class="b2" href="#">校招速通路线 · 25 篇</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="tri">
+    <div class="h">三 笔 画 ＝ 三 个 阶 段 —— <b>竖 是 主 线 ， 横 是 台 阶</b></div>
+    <div class="cols">
+      <div class="col">
+        <div class="glyph"><i style="width:14px;height:58px"></i></div>
+        <h3>壹 · 竖 —— 主线立起来</h3>
+        <div class="en">STAGE 1 · 43 POSTS · 5 SERIES</div>
+        <p>先立主线：执行上下文、作用域链、闭包、this、原型链——面试的脊柱。</p>
+        <ul><li><b>01</b>JavaScript 深入系列</li><li><b>02</b>JavaScript 核心系列</li><li><b>03</b>CSS 深入系列</li></ul>
+      </div>
+      <div class="col">
+        <div class="glyph"><i style="width:44px;height:12px;margin-left:22px"></i><i style="width:14px;height:58px"></i></div>
+        <h3>贰 · 短横 —— 第一级台阶</h3>
+        <div class="en">STAGE 2 · 60 POSTS · 7 SERIES</div>
+        <p>往上迈一步：异步、网络、框架原理与工程化，社招的四梁八柱。</p>
+        <ul><li><b>06</b>异步编程系列</li><li><b>08</b>网络与浏览器系列</li><li><b>11</b>前端工程化系列</li></ul>
+      </div>
+      <div class="col">
+        <div class="glyph"><i style="width:64px;height:12px;margin-left:12px"></i><i style="width:14px;height:58px"></i><i style="width:74px;height:12px;margin-left:-8px"></i></div>
+        <h3>叁 · 长横 —— 托住全部</h3>
+        <div class="en">STAGE 3 · 55 POSTS · 7 SERIES</div>
+        <p>托底的一横：引擎与渲染底层、手写源码、架构与安全。</p>
+        <ul><li><b>13</b>V8 与底层系列</li><li><b>15</b>手写源码系列</li><li><b>17</b>前端架构系列</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="read">
+    <div>
+      <div class="kind">FEATURED · JS-DEEP-005 · 18 MIN</div>
+      <h2>JavaScript 深入之闭包</h2>
+      <div class="meta">★★★★★ 面试高频 · 闭包 / 作用域链 / 内存管理</div>
+      <p>从一段 for + setTimeout 的输出题切入，用 [[Environment]] 内部槽讲清闭包的机制本质，再到内存代价与四大应用——读完能把它讲给面试官听。</p>
+      <a class="more" href="#">开始阅读</a>
+    </div>
+    <pre>    function foo() {              ┌──────────────────┐
+      var a = 2;                  │   bar 函数对象    │
+      function bar() {…} ─创建─▶  │ [[Environment]]┐ │
+      return bar;                 └────────────────┼─┘
+    }                                              ▼
+    // foo() 出栈，词法环境仍被引用，无法回收</pre>
+  </section>
+
+  <footer>
+    <span><b>前端进阶之路</b> × 上岸OFFER · 题库联动</span>
+    <span>EST. 2026 · 158 POSTS</span>
+  </footer>
+
+</div>
+</body>
+</html>

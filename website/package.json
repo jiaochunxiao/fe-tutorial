@@ -1,0 +1,21 @@
+{
+  "name": "frontend-mastery-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "shot": "node scripts/shot.mjs",
+    "index": "pagefind --site dist"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
+  }
+}

@@ -1,0 +1,28 @@
+---
+import Base from './Base.astro';
+interface Props { title: string; desc?: string }
+const { title, desc } = Astro.props;
+---
+<Base title={title} desc={desc}>
+  <div class="chrome-root">
+    <header class="nav">
+      <a class="mark" href="/">前端进阶之路</a>
+    <nav>
+      <a href="/path">路线</a>
+      <a href="/#all">系列</a>
+      <a href="/search">搜索</a>
+      <a href="/#feature">精读</a>
+      <a href="/about">关于</a>
+      <a href="#">题库 · 即将上线</a>
+    </nav>
+      <a class="offer" href="#">上岸offer ↗</a>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div><b>前端进阶之路</b> · 与小程序「上岸offer」题库联动 · 思考题解析陆续录入</div>
+      <div>19 系列 · 158 篇 · 300+ 原理图</div>
+    </footer>
+  </div>
+</Base>

@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import Chrome from '../../layouts/Chrome.astro';
+import { SERIES } from '../../data/series';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('articles');
+  const bySeries = new Map<string, typeof entries>();
+  for (const e of entries) {
+    const list = bySeries.get(e.data.seriesId) ?? [];
+    list.push(e);
+    bySeries.set(e.data.seriesId, list);
+  }
+  return SERIES.map((meta, i) => ({
+    params: { seriesId: meta.id },
+    props: {
+      meta,
+      count: bySeries.get(meta.id)?.length ?? 0,
+      articles: (bySeries.get(meta.id) ?? []).sort((a, b) =>
+        a.data.id.localeCompare(b.data.id)),
+      prev: SERIES[i - 1] ?? null,
+      next: SERIES[i + 1] ?? null,
+    },
+  }));
+}
+
+const { meta, count, articles, prev, next } = Astro.props;
+const stageNames = { P1: '夯实基础', P2: '知识进阶', P3: '高级进阶' };
+const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
+---
+<Chrome title={meta.id === 'js-deep' ? 'JavaScript 深入系列' : meta.id === 'js-core' ? 'JavaScript 核心系列' : meta.id === 'js-async' ? '异步编程系列' : meta.id === 'es6' ? 'ES6+ 系列' : meta.id === 'network' ? '网络与浏览器系列' : meta.id === 'vue' ? 'Vue 原理系列' : meta.id === 'react' ? 'React 原理系列' : meta.id === 'engineering' ? '前端工程化系列' : meta.id === 'performance' ? '性能优化系列' : meta.id === 'v8' ? 'V8 与底层系列' : meta.id === 'rendering' ? '渲染原理系列' : meta.id === 'handwritten' ? '手写源码系列' : meta.id === 'ts' ? 'TypeScript 系列' : meta.id === 'architecture' ? '前端架构系列' : meta.id === 'security' ? '前端安全系列' : meta.id === 'algorithm' ? '算法与数据结构' : meta.id === 'css-deep' ? 'CSS 深入系列' : meta.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}
+      desc={meta.intro}>
+<div class="wrap">
+
+  <section class="series-hero">
+    <span class="kind">{meta.en} · {meta.stage} {stageNames[meta.stage]}</span>
+    <h1>{meta.id === 'js-deep' ? 'JavaScript 深入系列' : meta.id === 'js-core' ? 'JavaScript 核心系列' : meta.id === 'js-async' ? '异步编程系列' : meta.id === 'es6' ? 'ES6+ 系列' : meta.id === 'network' ? '网络与浏览器系列' : meta.id === 'vue' ? 'Vue 原理系列' : meta.id === 'react' ? 'React 原理系列' : meta.id === 'engineering' ? '前端工程化系列' : meta.id === 'performance' ? '性能优化系列' : meta.id === 'v8' ? 'V8 与底层系列' : meta.id === 'rendering' ? '渲染原理系列' : meta.id === 'handwritten' ? '手写源码系列' : meta.id === 'ts' ? 'TypeScript 系列' : meta.id === 'architecture' ? '前端架构系列' : meta.id === 'security' ? '前端安全系列' : meta.id === 'algorithm' ? '算法与数据结构' : meta.id === 'css-deep' ? 'CSS 深入系列' : meta.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</h1>
+    <p>{meta.intro}</p>
+    <div class="counts">
+      <span class="chip"><b>{count}</b> 篇</span>
+      <span class="chip"><b>{meta.stage}</b> {stageNames[meta.stage]}</span>
+    </div>
+  </section>
+
+  <div class="qlist">
+    {articles.map((a, i) => (
+      <a class="qrow" href={`/articles/${a.data.id}/`}>
+        <span class="no">{String(i + 1).padStart(2, '0')}</span>
+        <b>{a.data.title}</b>
+        <span class="stars">{stars(a.data.difficulty)}</span>
+        <span class="t">{a.data.readingTime} min</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="series-nav">
+    {prev
+      ? <a href={`/series/${prev.id}/`}><span>← 上一个系列</span><b>{prev.id === 'js-deep' ? 'JavaScript 深入系列' : prev.id === 'js-core' ? 'JavaScript 核心系列' : prev.id === 'js-async' ? '异步编程系列' : prev.id === 'es6' ? 'ES6+ 系列' : prev.id === 'network' ? '网络与浏览器系列' : prev.id === 'vue' ? 'Vue 原理系列' : prev.id === 'react' ? 'React 原理系列' : prev.id === 'engineering' ? '前端工程化系列' : prev.id === 'performance' ? '性能优化系列' : prev.id === 'v8' ? 'V8 与底层系列' : prev.id === 'rendering' ? '渲染原理系列' : prev.id === 'handwritten' ? '手写源码系列' : prev.id === 'ts' ? 'TypeScript 系列' : prev.id === 'architecture' ? '前端架构系列' : prev.id === 'security' ? '前端安全系列' : prev.id === 'algorithm' ? '算法与数据结构' : prev.id === 'css-deep' ? 'CSS 深入系列' : prev.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</b></a>
+      : <span />}
+    {next
+      ? <a href={`/series/${next.id}/`}><span>下一个系列 →</span><b>{next.id === 'js-deep' ? 'JavaScript 深入系列' : next.id === 'js-core' ? 'JavaScript 核心系列' : next.id === 'js-async' ? '异步编程系列' : next.id === 'es6' ? 'ES6+ 系列' : next.id === 'network' ? '网络与浏览器系列' : next.id === 'vue' ? 'Vue 原理系列' : next.id === 'react' ? 'React 原理系列' : next.id === 'engineering' ? '前端工程化系列' : next.id === 'performance' ? '性能优化系列' : next.id === 'v8' ? 'V8 与底层系列' : next.id === 'rendering' ? '渲染原理系列' : next.id === 'handwritten' ? '手写源码系列' : next.id === 'ts' ? 'TypeScript 系列' : next.id === 'architecture' ? '前端架构系列' : next.id === 'security' ? '前端安全系列' : next.id === 'algorithm' ? '算法与数据结构' : next.id === 'css-deep' ? 'CSS 深入系列' : next.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</b></a>
+      : <span />}
+  </div>
+
+</div>
+</Chrome>
