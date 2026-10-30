@@ -156,3 +156,9 @@
 @media (max-width:760px){
   .nav .offer{font-size:11px;padding:6px 10px;white-space:nowrap}
 }
+
+/* ≤760 完整名徽章单行化：缩 mark 与徽章字号，防止换行 */
+@media (max-width:760px){
+  .nav .mark{font-size:15px}
+  .nav .offer{font-size:10.5px;padding:5px 9px;white-space:nowrap}
+}
