@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 export const prerender = true;
 
 // 思考题抽取：从每篇文章 body 中截取「## 思考题」小节的原始 Markdown，
-// 供小程序「上岸offer」题库同步（本站与小程序共享同一份内容真相）。
+// 供小程序「前端面试刷题助手 上岸offer」题库同步（本站与小程序共享同一份内容真相）。
 function extractQuestions(body: string): { raw: string; count: number } {
   const head = body.indexOf('## 思考题');
   if (head === -1) return { raw: '', count: 0 };

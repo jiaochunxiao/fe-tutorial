@@ -151,3 +151,8 @@
   .feature .txt{padding:22px 20px}
   .flow{padding:8px 2px 14px}
 }
+
+/* 完整小程序名的徽章在窄屏下的字号微调 */
+@media (max-width:760px){
+  .nav .offer{font-size:11px;padding:6px 10px;white-space:nowrap}
+}
