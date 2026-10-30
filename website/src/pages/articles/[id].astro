@@ -39,6 +39,17 @@ const seriesMeta = (await import('../../data/series')).SERIES.find((m) => m.id =
       </div>
     </header>
 
+    {toc.length > 0 && (
+      <details class="toc-m">
+        <summary>本篇目录 · {toc.length} 节</summary>
+        <nav>
+          {toc.map((h) => (
+            <a href={`#${h.slug}`} class={h.depth === 3 ? 'l3' : ''}>{h.text}</a>
+          ))}
+        </nav>
+      </details>
+    )}
+
     <div class="article-cols">
       <div class="prose" data-pagefind-body>
         <Content />

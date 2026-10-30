@@ -26,7 +26,7 @@
 
 /* 正文排印 */
 .prose{max-width:46em;font-size:16px;line-height:2.15;letter-spacing:.2px;
-  font-family:var(--f-serif)}
+  font-family:var(--f-serif);overflow-wrap:break-word}
 .prose > h1:first-child{display:none}   /* 页头已有标题，隐藏 md 自带的 h1 */
 .prose h2{font-family:var(--f-serif);font-weight:900;font-size:26px;line-height:1.5;
   margin:2.4em 0 .9em;border-top:1px solid var(--r-ink);padding-top:1.2em}
@@ -76,13 +76,14 @@
 
 /* 双栏：正文 + 目录侧栏（桌面），窄栏收起 */
 .article-cols{display:grid;grid-template-columns:minmax(0,1fr) 224px;gap:52px;align-items:start}
+.article-cols > .prose{min-width:0}
 .toc{position:sticky;top:24px;border-left:1px solid var(--r-hair);padding-left:16px;
   max-height:calc(100vh - 48px);overflow:auto;font-family:var(--f-sans)}
 .toc .h{font-family:var(--f-mono);font-size:12px;letter-spacing:2px;color:var(--r-muted);margin-bottom:10px}
 .toc a{display:block;font-size:13px;color:var(--r-muted);padding:4px 0;line-height:1.6}
 .toc a:hover{color:var(--r-cinnabar)}
 .toc a.l3{padding-left:14px;font-size:12.5px;color:#8A8271}
-@media (max-width:1200px){.article-cols{grid-template-columns:1fr}.toc{display:none}}
+@media (max-width:1200px){.article-cols{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
 
 /* 思考题折叠（渐进增强：无 JS 时保持展开） */
 .prose details.thoughts{border:1px solid var(--r-hair);background:var(--r-paper-deep);
@@ -95,3 +96,34 @@
 .prose details.thoughts summary h2{display:none}   /* 标题由 summary 呈现，避免重复 */
 .prose details.thoughts[open]{padding-bottom:16px}
 .prose details.thoughts[open] summary{border-bottom:1px solid var(--r-hair);margin-bottom:1.2em}
+
+/* ── 移动端适配（375 基准）── */
+@media (max-width:600px){
+  .brand-strip{padding:9px 18px;font-size:12px}
+  .read-wrap{padding:0 20px 0 34px}
+  .masthead{flex-wrap:wrap;row-gap:2px}
+  .masthead nav{gap:14px}
+  .article-head{padding:30px 0 26px}
+  .article-head h1{font-size:26px;line-height:1.4}
+  .article-head .meta{gap:10px}
+  .prose{font-size:16px}
+  .prose h2{font-size:22px}
+  .prose h3{font-size:18px}
+  .prose pre{padding:16px 18px}
+  .prose table{display:block;overflow-x:auto}
+  .read-footer{flex-direction:column;gap:6px}
+}
+
+/* 移动端目录（≤1200 桌面侧栏隐藏时启用） */
+.toc-m{display:none;border:1px solid var(--r-hair);border-radius:2px;
+  background:var(--r-paper-deep);padding:4px 18px;margin:0 0 1.6em}
+.toc-m summary{cursor:pointer;list-style:none;font-family:var(--f-sans);
+  font-size:14px;font-weight:700;padding:10px 0}
+.toc-m summary::-webkit-details-marker{display:none}
+.toc-m summary::after{content:"▾";float:right;color:var(--r-muted)}
+.toc-m[open] summary::after{content:"▴"}
+.toc-m a{display:block;font-size:14px;color:var(--r-ink);padding:7px 0;
+  border-bottom:1px dashed var(--r-hair);line-height:1.7}
+.toc-m a.l3{padding-left:14px;color:var(--r-muted)}
+.toc-m a:hover{color:var(--r-cinnabar)}
+@media (max-width:1200px){.toc-m{display:block}}

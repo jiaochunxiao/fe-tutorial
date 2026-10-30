@@ -93,3 +93,15 @@ import Chrome from '../layouts/Chrome.astro';
   if (q0) { input.value = q0; run(); }
 </script>
 </Chrome>
+
+<style>
+  /* 移动端适配 */
+  @media (max-width:600px){
+    .search-hero{padding:36px 0 20px}
+    .search-hero h1{font-size:30px}
+    .search-hero .sub{font-size:14.5px}
+    .searchbar input{font-size:15px;padding:13px 16px}
+    #results .qrow{flex-direction:column;align-items:flex-start;gap:6px;padding:14px 16px}
+    #results .qrow b{max-width:100%}
+  }
+</style>

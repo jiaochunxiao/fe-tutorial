@@ -145,3 +145,13 @@ const nameOf = (sid) => { const m = SERIES.find((x) => x.id === sid); return m ?
   .fs-sh a:hover{color:var(--c-amber)}
   .fs-sh span{font-family:var(--f-mono);font-size:11px;color:var(--c-muted);letter-spacing:2px}
 </style>
+
+<style>
+  /* 移动端适配 */
+  @media (max-width:600px){
+    .pg-h{flex-wrap:wrap;row-gap:2px}
+    .addcard{padding:20px 18px}
+    .addgrid{grid-template-columns:1fr}
+    .hero h1{font-size:32px}
+  }
+</style>

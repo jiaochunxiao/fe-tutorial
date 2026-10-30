@@ -114,3 +114,40 @@
   .grid{grid-template-columns:1fr}
   .nav{flex-wrap:wrap;gap:12px}
 }
+
+/* ── 移动端适配（375 基准）── */
+.nav{position:relative}
+.burger{display:none;margin-left:auto;background:none;border:0;cursor:pointer;
+  padding:10px 6px;flex-direction:column;gap:5px}
+.burger span{display:block;width:20px;height:2px;background:#E9ECEF;
+  transition:transform .2s,opacity .2s}
+
+@media (max-width:760px){
+  .burger{display:flex}
+  .nav nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:30;
+    flex-direction:column;gap:0;background:#0A0E14;border-bottom:1px solid var(--c-line);
+    padding:8px 20px 14px}
+  .nav.nav-open nav{display:flex}
+  .nav nav a{padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:15px;color:#E9ECEF}
+  .nav nav a:last-child{border-bottom:none}
+  .nav .offer{padding:7px 12px;font-size:12px}
+  .nav.nav-open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav.nav-open .burger span:nth-child(2){opacity:0}
+  .nav.nav-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+
+@media (max-width:600px){
+  .wrap{padding:0 18px}
+  .hero{padding:40px 0 26px}
+  .hero h1{font-size:32px}
+  .hero .sub{font-size:14.5px}
+  .series-hero h1{font-size:29px}
+  .section-h h2{font-size:21px}
+  .stage-head{flex-wrap:wrap;row-gap:4px}
+  .site-footer{flex-direction:column;gap:8px;padding:24px 20px}
+  .qrow{flex-wrap:wrap;row-gap:3px}
+  .qrow b{flex-basis:100%}
+  .feature .txt{padding:22px 20px}
+  .flow{padding:8px 2px 14px}
+}
