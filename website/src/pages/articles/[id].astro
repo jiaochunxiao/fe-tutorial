@@ -34,7 +34,6 @@ const seriesMeta = (await import('../../data/series')).SERIES.find((m) => m.id =
       <h1>{d.title}</h1>
       <div class="meta">
         <span>{d.readingTime} 分钟阅读</span>
-        <span>{d.createdAt}</span>
         {d.tags.map((t) => <span class="tag">{t}</span>)}
       </div>
     </header>
