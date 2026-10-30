@@ -1,5 +1,7 @@
 # 前端进阶之路 · 学习网站
 
+**🌐 线上地址：https://fe-tutorial.vercel.app** ｜ 仓库：https://github.com/jiaochunxiao/fe-tutorial
+
 《前端进阶之路》158 篇文章的官方网站。**UI 混合方案已选定**：夜航路径（暗底 + 琥珀路径节点）做主视觉，墨纸书卷（暖纸衬线 + 朱砂一点）做文章阅读页——设计稿与选型过程见 `design-demos/` 与 [PROPOSAL.md](./PROPOSAL.md)。
 
 ## 快速开始

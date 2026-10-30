@@ -1,7 +1,34 @@
 # 部署指南
 
 > 构建产物为纯静态 `dist/`（含 Pagefind 索引），无后端。
-> **当前方案：Vercel**（仓库根已含 `vercel.json`，导入即部署）；Cloudflare Pages 为备选（见文末）。
+> **当前方案：Vercel**（✅ 已上线：https://fe-tutorial.vercel.app ，仓库根含 `vercel.json`）；Cloudflare Pages 为备选（见文末）。
+
+## Vercel（当前方案 · 已上线）
+
+- **生产地址**：https://fe-tutorial.vercel.app（项目名 fe-tutorial，Vercel 账号 jiaochunxiao）
+- **仓库**：https://github.com/jiaochunxiao/fe-tutorial（main 分支）
+
+### CLI 部署（当前流程，已验证）
+
+```bash
+cd frontend-mastery                # 仓库根（vercel.json 所在）
+vercel deploy --prod --yes         # 拉取仓库 → install → astro build + pagefind → 上线
+```
+
+### 方式 A：Git 连接（push 即部署，推荐开启）
+
+1. Vercel Dashboard → Add New Project → Import `jiaochunxiao/fe-tutorial`
+2. Framework 与其他设置保持默认（根级 vercel.json 已声明 install/build/output）
+3. Deploy —— 之后每次 push 自动重新部署
+
+### 注意
+
+- `astro.config.mjs` 的 `site` 已指向生产地址（影响 sitemap/RSS 的绝对链接），换域名时同步修改
+- 监控接入点：`src/layouts/Base.astro`（Web Analytics token 占位 + 错误监听）
+- **国内直连 `*.vercel.app` 可能不稳定**：如需稳定访问，绑定自定义域名
+  （Dashboard → 项目 → Domains → 添加域名并 CNAME 到 `cname.vercel-dns.com`）
+
+## Cloudflare Pages（备选方案）
 
 ## Vercel（当前方案）
 
