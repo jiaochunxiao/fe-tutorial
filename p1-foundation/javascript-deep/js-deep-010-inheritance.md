@@ -191,39 +191,9 @@ Dog.prototype.__proto__ === Animal.prototype;      // ② 原型链：实例方�
 1. 派生类 constructor 中，**使用 this 之前必须先调用 super()**（this 由父类构造「初始化」后才存在——规范中派生类的 this 绑定发生在 super 调用时）；
 2. `super(...)` 当函数调用（调父构造）、`super.x` 当对象使用（沿原型链取父类成员，且方法内绑定 this）。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="寄生组合式继承：Dog 实例沿原型链委托 Animal.prototype">
-  <defs>
-    <marker id="i10-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="i10-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="60" y="196" width="150" height="58" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="135" y="222" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">实例 d</text>
-  <text x="135" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">name · breed</text>
-  <rect x="300" y="196" width="150" height="58" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="375" y="222" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">Dog.prototype</text>
-  <text x="375" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">bark</text>
-  <rect x="540" y="196" width="150" height="58" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="615" y="222" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">Animal.prototype</text>
-  <text x="615" y="242" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">eat</text>
-  <path d="M 135 196 V 146 H 298" fill="none" stroke="#1C1A17" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#i10-ink)"/>
-  <text x="176" y="136" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">__proto__</text>
-  <path d="M 375 196 V 130 H 613" fill="none" stroke="#1C1A17" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#i10-ink)"/>
-  <text x="416" y="120" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">__proto__（Object.create 建）</text>
-  <path d="M 375 118 V 84 H 560" fill="none" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#i10-red)"/>
-  <text x="392" y="74" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">Animal.call(this, name) — 属性继承</text>
-  <rect x="540" y="42" width="150" height="44" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.6"/>
-  <text x="615" y="70" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">function Animal</text>
-  <text x="135" y="286" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">属性在实例</text>
-  <text x="375" y="286" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">bark 在子原型</text>
-  <text x="615" y="286" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">eat 沿链共享</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 寄生组合式继承——虚线是原型委托（找方法），红线是构造调用（拿属性），两条通路各司其职</figcaption>
-</figure>
+![寄生组合式继承：Dog 实例沿原型链委托 Animal.prototype](../../assets/svg/js-deep-010-inheritance.svg)
+
+*图 · 寄生组合式继承——虚线是原型委托（找方法），红线是构造调用（拿属性），两条通路各司其职*
 
 ## 五代方案对比总结 ⭐
 
@@ -265,6 +235,10 @@ class Dog extends Animal {
 `d instanceof Dog/Animal`？数据是否各自独立？方法是否共享一份？父构造调用几次？——任何继承方案都能用这四问快速体检。
 
 ## 图解总结
+
+![继承之后的两条链：实例链与静态链](../../assets/svg/js-deep-010-two-chains.svg)
+
+*图 · 看着像一条，其实是两条，中间的桥是 Dog.prototype*
 
 ```
 寄生组合式 / class 的目标链路：

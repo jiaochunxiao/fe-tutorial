@@ -37,6 +37,10 @@ createdAt: 2026-10-26
 
 WebSocket 复用 HTTP 端口，靠 HTTP 的**协议升级机制**完成身份转换：
 
+![WebSocket 的 HTTP 升级握手](../../assets/svg/network-009-websocket-handshake.svg)
+
+*图 · 借 HTTP 的升级机制换协议：101 之后同一条 TCP 连接改说 WebSocket 语，Sec-WebSocket-Accept 的哈希用来证明对端真的懂这套协议*
+
 ```
 客户端                                   服务器
   │ ── GET /chat HTTP/1.1 ─────────────▶ │
@@ -95,6 +99,10 @@ es.onerror = () => { /* 浏览器自动重连（自带重试与 Last-Event-ID �
 
 ### 四、选型决策树 ⭐
 
+![先问「要不要主动推」，再问「双向是不是真双向」](../../assets/svg/network-009-decision.svg)
+
+*图 · 先问「要不要主动推」，再问「双向是不是真双向」*
+
 ```
 需要客户端 → 服务器 的主动推送吗（聊天、游戏、协同）？
  ├─ 否（只要服务器单向推：行情/通知/AI 流式输出）──▶ SSE ✅
@@ -118,6 +126,10 @@ es.onerror = () => { /* 浏览器自动重连（自带重试与 Last-Event-ID �
 **3. 调试工具**：DevTools → Network → WS 过滤 → Messages 标签页实时看帧；`wscat` 命令行直连调试。
 
 ## 图解总结
+
+![五种形态，差的只是「谁先开口、能不能主动开口」](../../assets/svg/network-009-compare.svg)
+
+*图 · 五种形态，差的只是「谁先开口、能不能主动开口」*
 
 ```
 HTTP:        客户端 ──请求──▶ 服务器 ──响应──▶ （对话永远客户端先开口）

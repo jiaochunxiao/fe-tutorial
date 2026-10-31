@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 740 212" width="100%" role="img" aria-labelledby="jit3t jit3d">
+  <title id="jit3t">V8 的 JIT 梯队与 deopt 回退</title>
+  <desc id="jit3d">函数先由 Ignition 解释字节码执行，跑热之后升级到 Sparkplug 编译基线机器码，更热再由 TurboFan 做投机优化。一旦某个类型假设崩塌，就 deopt 退回解释器恢复现场，之后还可以再优化，但会更保守。</desc>
+
+  <style>
+    .jit3-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .jit3-hot{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.6}
+    .jit3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .jit3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .jit3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="jit3-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="jit3-cin" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="jit3-box" x="60" y="70" width="170" height="76" rx="3"/>
+  <text class="jit3-mono" x="145" y="96" font-size="11" text-anchor="middle">Ignition</text>
+  <text class="jit3-s" x="145" y="118" font-size="9.5" text-anchor="middle">字节码解释执行</text>
+  <text class="jit3-s" x="145" y="136" font-size="9.5" text-anchor="middle">冷启动就走这条</text>
+
+  <line x1="234" y1="108" x2="281" y2="108" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#jit3-ink)"/>
+  <text class="jit3-s" x="257" y="100" font-size="9" text-anchor="middle">温</text>
+
+  <rect class="jit3-box" x="285" y="70" width="170" height="76" rx="3"/>
+  <text class="jit3-mono" x="370" y="96" font-size="11" text-anchor="middle">Sparkplug</text>
+  <text class="jit3-s" x="370" y="118" font-size="9.5" text-anchor="middle">基线机器码</text>
+  <text class="jit3-s" x="370" y="136" font-size="9.5" text-anchor="middle">不做假设，稳</text>
+
+  <line x1="459" y1="108" x2="506" y2="108" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#jit3-ink)"/>
+  <text class="jit3-s" x="482" y="100" font-size="9" text-anchor="middle">热</text>
+
+  <rect class="jit3-hot" x="510" y="70" width="170" height="76" rx="3"/>
+  <text class="jit3-mono" x="595" y="96" font-size="11" text-anchor="middle">TurboFan</text>
+  <text class="jit3-s" x="595" y="118" font-size="9.5" text-anchor="middle">投机优化</text>
+  <text class="jit3-s" x="595" y="136" font-size="9.5" text-anchor="middle">按类型反馈下注</text>
+
+  <path d="M595 146 V196 H145 V150" fill="none" stroke="#B03A2E" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#jit3-cin)"/>
+  <text class="jit3-s" x="370" y="190" font-size="9.5" text-anchor="middle" style="fill:#B03A2E">假设崩塌 → deopt，回解释器恢复现场</text>
+
+  <text class="jit3-s" x="60" y="238" font-size="9.5">调用计数与循环回边超阈值才会升温；函数越小、越单一，升温越快</text>
+
+</svg>

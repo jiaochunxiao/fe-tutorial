@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 372" width="100%" role="img" aria-labelledby="h4t h4d">
+  <title id="h4t">V8 堆内分区与堆外的三块内存</title>
+  <desc id="h4d">堆内按对象寿命分区：新生代只有 MB 级，分 From 与 To 两半由 Scavenger 复制；老生代是 GB 级，用标记清除与标记整理；超过 500KB 的对象直接进大对象空间；另有代码空间放 JIT 机器码、Map 空间放隐藏类。堆外还有三块容易被误认为堆的内存：栈、External（ArrayBuffer 的数据块）和磁盘代码缓存。</desc>
+
+  <style>
+    .h4-region{fill:none;stroke:#1C1A17;stroke-width:1.4}
+    .h4-cell{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .h4-out{fill:#FBF7EE;stroke:#6E675A;stroke-width:1.2}
+    .h4-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .h4-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="h4-mono" x="40" y="38" font-size="11">堆内 · 受 GC 管</text>
+  <text class="h4-mono" x="500" y="38" font-size="11">堆外 · GC 不管</text>
+
+  <rect class="h4-region" x="40" y="48" width="430" height="272" rx="3"/>
+
+  <text class="h4-mono" x="58" y="70" font-size="11">新生代 · MB 级</text>
+  <rect class="h4-cell" x="58" y="80" width="186" height="52" rx="2"/>
+  <text class="h4-mono" x="72" y="104" font-size="11.5">From</text>
+  <text class="h4-small" x="72" y="124" font-size="9.5">分配中</text>
+  <rect class="h4-cell" x="262" y="80" width="186" height="52" rx="2"/>
+  <text class="h4-mono" x="276" y="104" font-size="11.5">To</text>
+  <text class="h4-small" x="276" y="124" font-size="9.5">复制目标 · 与 From 互换</text>
+
+  <text class="h4-mono" x="58" y="158" font-size="11">老生代 · GB 级</text>
+  <rect class="h4-cell" x="58" y="168" width="390" height="52" rx="2"/>
+  <text class="h4-mono" x="72" y="192" font-size="10.5">Mark-Sweep / Mark-Compact</text>
+  <text class="h4-small" x="72" y="212" font-size="9.5">--max-old-space-size 管的就是这一块</text>
+
+  <rect class="h4-cell" x="58" y="232" width="186" height="68" rx="2"/>
+  <text class="h4-mono" x="72" y="256" font-size="11">大对象空间</text>
+  <text class="h4-small" x="72" y="278" font-size="9.5">超过约 500KB 直入，绕过分代</text>
+
+  <rect class="h4-cell" x="262" y="232" width="186" height="68" rx="2"/>
+  <text class="h4-mono" x="276" y="256" font-size="11">代码 / Map / 只读</text>
+  <text class="h4-small" x="276" y="278" font-size="9.5">JIT 机器码 · 隐藏类</text>
+
+  <line x1="486" y1="48" x2="486" y2="320" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+  <rect class="h4-out" x="500" y="60" width="220" height="76" rx="2"/>
+  <text class="h4-mono" x="516" y="86" font-size="11.5">栈</text>
+  <text class="h4-small" x="516" y="108" font-size="9.5">调用帧 + 局部原始值</text>
+  <text class="h4-small" x="516" y="126" font-size="9.5">随调用结束自动弹出</text>
+
+  <rect class="h4-out" x="500" y="148" width="220" height="76" rx="2"/>
+  <text class="h4-mono" x="516" y="174" font-size="11.5">External</text>
+  <text class="h4-small" x="516" y="196" font-size="9.5">ArrayBuffer 的数据块（C++ 分配）</text>
+  <text class="h4-small" x="516" y="214" font-size="9.5">memoryUsage().external</text>
+
+  <rect class="h4-out" x="500" y="236" width="220" height="68" rx="2"/>
+  <text class="h4-mono" x="516" y="262" font-size="11.5">磁盘代码缓存</text>
+  <text class="h4-small" x="516" y="284" font-size="9.5">二次访问同站点的编译提速</text>
+
+  <text class="h4-small" x="40" y="348" font-size="10.5">Heap Snapshot 只有 80MB、进程却占 800MB：先查 external —— 大 buffer、canvas 位图、wasm 内存都不在堆里。</text>
+
+</svg>

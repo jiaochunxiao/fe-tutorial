@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 208" width="100%" role="img" aria-labelledby="r4rt r4rd">
+  <title id="r4rt">三轮渲染里 Hook 与链表节点的对应关系</title>
+  <desc id="r4rd">第一次渲染依次调用 A、B、C，沿链新建一号二号三号节点。第二次渲染还是调用 A、B、C，工作指针按顺序取回一二三号位，状态正确接续。但如果第二次因为 if 少调了 B，调用顺序变成 A、C，那么 C 就对到了二号位，也就是 B 的节点，状态张冠李戴。节点没有名字也没有 key，只能靠顺序定位，所以 Hook 必须无条件按同一顺序调用，这不是风格洁癖，而是链表寻址的物理约束。</desc>
+
+  <style>
+    .r4r-b{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .r4r-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r4r-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .r4r-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="r4r-t" x="40" y="24" font-size="8.5">节点没有名字也没有 key —— 唯一能定位它的是「第几个被调用」</text>
+
+  <text class="r4r-s" x="40" y="48" font-size="7.5">渲染</text>
+  <text class="r4r-s" x="210" y="48" font-size="7.5">调用顺序</text>
+  <text class="r4r-s" x="370" y="48" font-size="7.5">对到的节点</text>
+  <text class="r4r-s" x="570" y="48" font-size="7.5">结果</text>
+
+  <rect class="r4r-b" x="40" y="58" width="660" height="36" rx="1"/>
+  <text class="r4r-t" x="52" y="80" font-size="8">第 1 次</text>
+  <text class="r4r-mono" x="210" y="80" font-size="8">A · B · C</text>
+  <text class="r4r-s" x="370" y="80" font-size="8">新建 1 · 2 · 3</text>
+  <text class="r4r-s" x="570" y="80" font-size="8">建链</text>
+
+  <rect class="r4r-b" x="40" y="98" width="660" height="36" rx="1"/>
+  <text class="r4r-t" x="52" y="120" font-size="8">第 2 次</text>
+  <text class="r4r-mono" x="210" y="120" font-size="8">A · B · C</text>
+  <text class="r4r-s" x="370" y="120" font-size="8">1 · 2 · 3</text>
+  <text class="r4r-t" x="570" y="120" font-size="8">✓ 正确接续</text>
+
+  <rect class="r4r-b" x="40" y="138" width="660" height="36" rx="1" style="stroke:#B03A2E"/>
+  <text class="r4r-t" x="52" y="160" font-size="8" style="fill:#B03A2E">第 2 次（if 少调 B）</text>
+  <text class="r4r-mono" x="210" y="160" font-size="8" style="fill:#B03A2E">A · C</text>
+  <text class="r4r-s" x="370" y="160" font-size="8" style="fill:#B03A2E">1 · 2 ← C 撞上 B 的节点</text>
+  <text class="r4r-t" x="570" y="160" font-size="8" style="fill:#B03A2E">✕ 张冠李戴</text>
+
+  <text class="r4r-t" x="40" y="196" font-size="8.5" style="fill:#B03A2E">所以「必须无条件、按同一顺序调用」不是风格洁癖，是链表寻址的物理约束。</text>
+</svg>

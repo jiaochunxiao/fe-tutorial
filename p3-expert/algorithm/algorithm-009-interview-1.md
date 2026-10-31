@@ -90,6 +90,10 @@ async function loadAll(urls, limit = 6) {
 
 **答题骨架（先讲分层再写码）**：
 
+![左边是「一万行只留二十个 DOM」的空间账，右边是五步做法与两个边界](../../assets/svg/algorithm-009-vlist.svg)
+
+*图 · 左边是「一万行只留二十个 DOM」的空间账，右边是五步做法与两个边界*
+
 ```
 ① 只渲染可视区（数学换算：start = floor(scrollTop/rowH)，DOM 恒定 ~30 个）
 ② 撑高容器（总高 = n × rowH，滚动条真实）
@@ -160,6 +164,10 @@ function useSearch(fetcher, delay = 300) {
 ```
 
 ## 图解总结
+
+![五型是题库，三段式是答法](../../assets/svg/algorithm-009-interview.svg)
+
+*图 · 五型是题库，三段式是答法*
 
 ```
 真题五型: 输出串烧(事件循环+this) │ 调度器(并发+顺序+容错) │

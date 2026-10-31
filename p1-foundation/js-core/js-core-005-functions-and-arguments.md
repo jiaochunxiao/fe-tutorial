@@ -177,6 +177,10 @@ function validate(value, rules) {
 
 ## 图解总结
 
+![两个世界平时同步，一旦断链就再也对不上](../../assets/svg/js-core-005-arguments.svg)
+
+*图 · 两个世界平时同步，一旦断链就再也对不上*
+
 ```
 调用 f(a, b) ──实参们──▶ [ arguments（类数组镜像世界） ]
                         │  length = 实参个数

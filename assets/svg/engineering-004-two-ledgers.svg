@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 48 740 268" width="100%" role="img" aria-labelledby="wp4t wp4d">
+  <title id="wp4t">Webpack 优化的两本账：构建速度与产物体积</title>
+  <desc id="wp4d">构建速度账记的是少做重复工作：filesystem 缓存、include 与 exclude 收窄、alias 与 extensions 减少解析、thread-loader 与 terser 并行、用 esbuild 或 swc 换引擎。产物体积账记的是只发此刻需要的：路由 import 懒加载与 splitChunks、ESM 加 sideEffects 摇树、terser 与 gzip 压缩、组件库按需引入、小图内联与字体子集。两本账都先用 speed-measure 和 bundle-analyzer 测量，再用 size-limit 在 CI 守门。</desc>
+
+  <style>
+    .wp4-panel{fill:none;stroke:#CDC4AF;stroke-width:1.2}
+    .wp4-tag{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1}
+    .wp4-strip{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .wp4-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .wp4-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .wp4-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <rect class="wp4-panel" x="36" y="64" width="320" height="192" rx="3"/>
+  <text class="wp4-t" x="48" y="86" font-size="10.5">构建速度账</text>
+  <text class="wp4-s" x="140" y="86" font-size="9">本质是少做重复工作</text>
+  <line x1="48" y1="96" x2="344" y2="96" stroke="#CDC4AF" stroke-width="1"/>
+
+  <rect class="wp4-tag" x="48" y="108" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="72" y="126" font-size="8.5" text-anchor="middle">缓存</text>
+  <text class="wp4-mono" x="108" y="122" font-size="9">filesystem</text>
+  <text class="wp4-s" x="302" y="122" font-size="8.5" style="fill:#B03A2E">优先</text>
+
+  <rect class="wp4-tag" x="48" y="138" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="72" y="156" font-size="8.5" text-anchor="middle">收窄</text>
+  <text class="wp4-mono" x="108" y="152" font-size="9">include / exclude</text>
+
+  <rect class="wp4-tag" x="48" y="168" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="72" y="186" font-size="8.5" text-anchor="middle">定位</text>
+  <text class="wp4-mono" x="108" y="182" font-size="9">alias · extensions</text>
+
+  <rect class="wp4-tag" x="48" y="198" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="72" y="216" font-size="8.5" text-anchor="middle">并行</text>
+  <text class="wp4-mono" x="108" y="212" font-size="9">thread-loader · terser parallel</text>
+
+  <rect class="wp4-tag" x="48" y="228" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="72" y="246" font-size="8.5" text-anchor="middle">换引擎</text>
+  <text class="wp4-mono" x="108" y="242" font-size="9">esbuild / swc</text>
+
+  <rect class="wp4-panel" x="384" y="64" width="320" height="192" rx="3"/>
+  <text class="wp4-t" x="396" y="86" font-size="10.5">产物体积账</text>
+  <text class="wp4-s" x="488" y="86" font-size="9">只发用户此刻需要的</text>
+  <line x1="396" y1="96" x2="692" y2="96" stroke="#CDC4AF" stroke-width="1"/>
+
+  <rect class="wp4-tag" x="396" y="108" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="420" y="126" font-size="8.5" text-anchor="middle">分割</text>
+  <text class="wp4-mono" x="456" y="122" font-size="9">import() · splitChunks</text>
+  <text class="wp4-s" x="650" y="122" font-size="8.5" style="fill:#B03A2E">优先</text>
+
+  <rect class="wp4-tag" x="396" y="138" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="420" y="156" font-size="8.5" text-anchor="middle">摇树</text>
+  <text class="wp4-mono" x="456" y="152" font-size="9">ESM + sideEffects</text>
+
+  <rect class="wp4-tag" x="396" y="168" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="420" y="186" font-size="8.5" text-anchor="middle">压缩</text>
+  <text class="wp4-mono" x="456" y="182" font-size="9">terser · cssnano · gzip</text>
+
+  <rect class="wp4-tag" x="396" y="198" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="420" y="216" font-size="8.5" text-anchor="middle">按需</text>
+  <text class="wp4-mono" x="456" y="212" font-size="9">babel-plugin-import</text>
+
+  <rect class="wp4-tag" x="396" y="228" width="48" height="20" rx="2"/>
+  <text class="wp4-t" x="420" y="246" font-size="8.5" text-anchor="middle">资源</text>
+  <text class="wp4-mono" x="456" y="242" font-size="9">小图内联 · 字体子集</text>
+
+  <rect class="wp4-strip" x="36" y="268" width="668" height="32" rx="3"/>
+  <text class="wp4-s" x="370" y="289" font-size="9.5" text-anchor="middle">先测量再动手：speed-measure 看耗时 · bundle-analyzer 看体积 · size-limit 进 CI 守门</text>
+</svg>

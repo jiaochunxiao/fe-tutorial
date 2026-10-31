@@ -101,6 +101,10 @@ const routes = [
 
 路由切换的完整流水线（`router.beforeEach` 们的用武之地）：
 
+![九步里有六步能改道，另外三步只是通知](../../assets/svg/vue-006-guards.svg)
+
+*图 · 九步里有六步能改道，另外三步只是通知*
+
 ```
 导航触发
  → beforeRouteLeave（组件内，离开守卫）
@@ -141,6 +145,10 @@ Router 内部维护 `currentRoute` 的 **ref**——地址变化 → 更新 curr
 **3. 选型建议一句话**：能配服务器就用 history（URL 干净、SEO 友好）；静态托管改不了配置（如某些 OSS 场景）就 hash。
 
 ## 图解总结
+
+![hash 与 history 两种路由](../../assets/svg/vue-006-router.svg)
+
+*图 · 两种模式的分水岭只有一个：会不会让浏览器真的发请求*
 
 ```
 hash:     改 location.hash ──▶ hashchange ──▶ render（#后不出网→刷新安全）

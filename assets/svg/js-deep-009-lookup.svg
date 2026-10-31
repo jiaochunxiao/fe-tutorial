@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 500" width="100%" role="img" aria-labelledby="t2t t2d">
+  <title id="t2t">属性查找沿原型链向上</title>
+  <desc id="t2d">访问 p.sayHi 在 Person.prototype 命中，访问 p.toString 在 Object.prototype 命中，访问 p.xyz 一路走到 null 仍没有，返回 undefined。</desc>
+  <defs>
+    <marker id="t2-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="t2-cin" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <style>
+    .t2-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.6}
+    .t2-null{fill:#FBF7EE;stroke:#6E675A;stroke-width:1.4;stroke-dasharray:6 4}
+    .t2-chip{fill:#EFE8D8;stroke:#CDC4AF;stroke-width:1.2}
+    .t2-chip-miss{fill:none;stroke:#B03A2E;stroke-width:1.2;stroke-dasharray:5 4}
+    .t2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .t2-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <!-- ① p -->
+  <rect class="t2-box" x="48" y="44" width="336" height="56" rx="4"/>
+  <text class="t2-mono" x="66" y="68" font-size="13.5">p</text>
+  <text class="t2-mono" x="66" y="88" font-size="11" style="fill:#6E675A">{ name: '小明' }</text>
+  <text class="t2-small" x="366" y="88" font-size="10.5" text-anchor="end">自身属性</text>
+
+  <!-- ① → ② -->
+  <line x1="216" y1="102" x2="216" y2="158" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t2-ink)"/>
+  <text class="t2-mono" x="232" y="134" font-size="11" style="fill:#6E675A">✗ 没有 sayHi</text>
+
+  <!-- ② Person.prototype -->
+  <rect class="t2-box" x="48" y="164" width="336" height="56" rx="4"/>
+  <text class="t2-mono" x="66" y="188" font-size="13.5">Person.prototype</text>
+  <text class="t2-mono" x="66" y="208" font-size="11" style="fill:#6E675A">{ sayHi, constructor }</text>
+
+  <!-- ② → ③ -->
+  <line x1="216" y1="222" x2="216" y2="278" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t2-ink)"/>
+  <text class="t2-mono" x="232" y="254" font-size="11" style="fill:#6E675A">✗ 没有 toString</text>
+
+  <!-- ③ Object.prototype -->
+  <rect class="t2-box" x="48" y="284" width="336" height="56" rx="4"/>
+  <text class="t2-mono" x="66" y="308" font-size="13.5">Object.prototype</text>
+  <text class="t2-mono" x="66" y="328" font-size="11" style="fill:#6E675A">{ toString, valueOf, hasOwnProperty, … }</text>
+
+  <!-- ③ → null -->
+  <line x1="216" y1="342" x2="216" y2="398" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t2-ink)"/>
+  <text class="t2-mono" x="232" y="374" font-size="11" style="fill:#6E675A">✗ 还是没有</text>
+
+  <!-- ④ null -->
+  <rect class="t2-null" x="48" y="404" width="336" height="56" rx="4"/>
+  <text class="t2-mono" x="66" y="428" font-size="13.5" style="fill:#6E675A">null</text>
+  <text class="t2-small" x="66" y="448" font-size="11">链的尽头 —— Object.prototype.[[Prototype]] === null</text>
+
+  <!-- 右侧查询结果 -->
+  <line x1="386" y1="72" x2="432" y2="190" stroke="#BCB098" stroke-width="1.3" stroke-dasharray="4 4"/>
+  <rect class="t2-chip" x="438" y="174" width="278" height="36" rx="4"/>
+  <text class="t2-mono" x="452" y="197" font-size="11.5">p.sayHi</text>
+  <text class="t2-mono" x="702" y="197" font-size="11" text-anchor="end" font-weight="700" style="fill:#B03A2E">命中 · 第 2 层</text>
+
+  <line x1="386" y1="192" x2="432" y2="310" stroke="#BCB098" stroke-width="1.3" stroke-dasharray="4 4"/>
+  <rect class="t2-chip" x="438" y="294" width="278" height="36" rx="4"/>
+  <text class="t2-mono" x="452" y="317" font-size="11.5">p.toString</text>
+  <text class="t2-mono" x="702" y="317" font-size="11" text-anchor="end" font-weight="700" style="fill:#B03A2E">命中 · 第 3 层</text>
+
+  <line x1="386" y1="312" x2="432" y2="430" stroke="#BCB098" stroke-width="1.3" stroke-dasharray="4 4"/>
+  <rect class="t2-chip-miss" x="438" y="414" width="278" height="36" rx="4"/>
+  <text class="t2-mono" x="452" y="437" font-size="11.5">p.xyz</text>
+  <text class="t2-mono" x="702" y="437" font-size="11" text-anchor="end" font-weight="700" style="fill:#B03A2E">undefined</text>
+
+  <!-- 读取 vs 赋值 -->
+  <text class="t2-small" x="48" y="484" font-size="11">读取不到返回 undefined；赋值 p.xyz = 1 则直接在 p 自身创建属性，链上不动</text>
+</svg>

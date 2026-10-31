@@ -182,6 +182,10 @@ while (key in ctx) key = '_' + key;
 
 ## 图解总结
 
+![左边是 call 的骨架，右边是 bind 在骨架上加的三个赠品](../../assets/svg/handwritten-001-two.svg)
+
+*图 · 左边是 call 的骨架，右边是 bind 在骨架上加的三个赠品*
+
 ```
 myCall(ctx, ...args)              myBind(ctx, ...preset)
   ctx 包装(null→globalThis)          返回 bound 函数

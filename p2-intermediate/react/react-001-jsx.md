@@ -128,6 +128,10 @@ const el = <User name="x" />;
 
 精确的概念链（面试的高段位区分）：
 
+![从 JSX 到真实 DOM 的五步概念链](../../assets/svg/react-001-jsx-chain.svg)
+
+*图 · 从 JSX 到真实 DOM 的五步概念链*
+
 ```
 JSX（语法）──编译──▶ createElement 调用（代码）
     ──执行──▶ React 元素（普通对象 / vnode）
@@ -149,6 +153,10 @@ HTML 注释报错的答案：JSX 是 `createElement(参数1, 参数2, ...参数N
 **3. 一个快手题**：`<User />` 与 `<user />` 的区别？——前者是组件调用，后者渲染出一个未知的 `<user>` DOM 标签（浏览器忽略或告警）。
 
 ## 图解总结
+
+![JSX 编译成函数调用，运行时拿到一个普通对象](../../assets/svg/react-001-summary.svg)
+
+*图 · JSX 编译成函数调用，运行时拿到一个普通对象*
 
 ```
 JSX 书写               编译产物                 运行时对象

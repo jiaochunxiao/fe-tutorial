@@ -149,6 +149,10 @@ class NonEmptyString {
 
 ## 镜像对照：建立与查询
 
+![手写 new 与手写 instanceof：建立链与查询链](../../assets/svg/handwritten-002-new-vs-instanceof.svg)
+
+*图 · 一条从上往下造，一条从下往上找，最后撞在同一个对象上*
+
 ```
 objectFactory（建立链）                myInstanceof（查询链）
  ┌─────────────────────────┐          ┌─────────────────────────┐
@@ -180,6 +184,10 @@ myInstanceof(fn, Function); // 函数也是 Function 的实例（函数也是对
 ```
 
 ## 图解总结
+
+![把链真的走一遍，就知道「祖先也算」是什么意思](../../assets/svg/handwritten-002-chain-walk.svg)
+
+*图 · 把链真的走一遍，就知道「祖先也算」是什么意思*
 
 ```
 new Foo(args)                     x instanceof Foo

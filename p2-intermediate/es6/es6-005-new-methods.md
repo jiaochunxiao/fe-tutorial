@@ -44,6 +44,10 @@ arr.sort();              // 改原数组！（返回引用）
 
 **会改原数组的方法（9 个）**：
 
+![看返回值就能判断它动不动原数组](../../assets/svg/es6-005-array-mutators.svg)
+
+*图 · 看返回值就能判断它动不动原数组*
+
 ```
 push / pop / shift / unshift   ─ 增删首尾
 splice                         ─ 万能增删改
@@ -178,6 +182,10 @@ const uniqBy = (arr, key) => [...new Map(arr.map((x) => [x[key], x])).values()];
 **2. 「数组方法手写」是手写题富矿**：map/reduce/filter 的实现见《handwritten-006 发布订阅》同系列风格题，核心是「回调 + thisArg + 空位跳过」三个细节。
 
 ## 图解总结
+
+![对象的函数式处理闭环：entries 拆开，数组操作，装回去](../../assets/svg/es6-005-object-pipeline.svg)
+
+*图 · 对象没有 map，所以先拆成数组，处理完再装回去*
 
 ```
                   ┌── 改原数组（9个）──▶ push pop shift unshift splice sort reverse fill copyWithin

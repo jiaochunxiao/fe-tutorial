@@ -44,6 +44,10 @@ JavaScript 没有手动释放内存的语句（`delete` 只是删属性，不是
 
 「根」包括：全局对象、当前调用栈上的局部变量、正在执行的函数及其闭包链等。这个算法叫**可达性分析（reachability analysis）**，也叫标记-清除中的「标记」阶段的理论基础。
 
+![可达性分析：从根走得到的才活着](../../assets/svg/v8-005-reachability.svg)
+
+*图 · 上排每个对象都能从根沿着引用走到，所以都活着；下排两个对象互相指着，但从根没有任何一条路通到这里——整片都是垃圾*
+
 ```
    根（全局/栈/闭包）
     │        └──────────┐
@@ -66,6 +70,10 @@ JavaScript 没有手动释放内存的语句（`delete` 只是删属性，不是
 
 于是堆被分成两代：
 
+![V8 的堆分区](../../assets/svg/v8-005-heap-layout.svg)
+
+*图 · 两代的分工：新生代小而快、老生代大而慢；熬过两轮新生代回收的对象晋升上去，超过 500KB 的直接进大对象空间*
+
 ```
 V8 堆
 ├── 新生代（Young Generation）
@@ -81,50 +89,17 @@ V8 堆
 - **老生代**：容量大，存放熬过多次回收的对象，回收频率低、单次成本高；
 - 对象的「晋升（promotion）」路径：新生代 → 老生代。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="V8 分代堆：新生代 Scavenger 复制与晋升老生代">
-  <defs>
-    <marker id="g5-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="g5-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <text x="150" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">新生代（小而快 · 半空间复制）</text>
-  <text x="540" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">老生代（大而稳 · 标记清除/整理）</text>
-  <rect x="60" y="48" width="180" height="60" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="150" y="72" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">From（分配中）</text>
-  <text x="150" y="94" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">活 a · 活 b · 死 · 死</text>
-  <rect x="60" y="116" width="180" height="60" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="150" y="140" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">To（复制目标）</text>
-  <text x="150" y="162" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">a · b（复制过来的活对象）</text>
-  <rect x="430" y="48" width="220" height="188" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="540" y="76" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">熬过两轮的「老居民」</text>
-  <rect x="450" y="90" width="80" height="26" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.2"/>
-  <text x="490" y="108" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6E675A">a'（晋升）</text>
-  <rect x="540" y="90" width="80" height="26" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.2"/>
-  <text x="580" y="108" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6E675A">b'（晋升）</text>
-  <rect x="450" y="126" width="170" height="26" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.2"/>
-  <text x="535" y="144" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6E675A">全局 · 缓存 · 长命闭包…</text>
-  <path id="g5-promo" d="M 240 130 C 300 96 360 92 424 100" fill="none" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#g5-red)"/>
-  <text x="332" y="76" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">熬过两轮 → 晋升</text>
-  <circle r="5" fill="#B03A2E">
-    <animateMotion dur="2.6s" repeatCount="indefinite">
-      <mpath href="#g5-promo"/>
-    </animateMotion>
-  </circle>
-  <text x="150" y="212" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">死对象不需要逐个处理，</text>
-  <text x="150" y="232" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">To 装满活对象后整块作废 From</text>
-  <text x="540" y="212" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">Mark-Sweep + Mark-Compact，</text>
-  <text x="540" y="232" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">增量/并发把停顿压到毫秒级</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 分代堆——新对象住新生代（红点演示晋升），熬过两轮回收就搬进老生代安家</figcaption>
-</figure>
+![V8 分代堆：新生代 Scavenger 复制与晋升老生代](../../assets/svg/v8-005-memory-and-gc.svg)
+
+*图 · 分代堆——新对象住新生代（红点演示晋升），熬过两轮回收就搬进老生代安家*
 
 ## 第三层：新生代回收——Scavenger 半空间复制算法
 
 新生代使用 **Cheney 半空间复制算法**，V8 称为 **Scavenger（清道夫）**。一轮回收的流程：
+
+![Scavenger 半空间复制的三个阶段](../../assets/svg/v8-005-scavenger.svg)
+
+*图 · 只搬活对象、死对象整块作废、From 与 To 交换角色——所以它必须一直占着两个半空间*
 
 ```
  回收前：                          回收中（遍历复制）：

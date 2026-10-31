@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="a10t a10d">
+  <title id="a10t">建模五式与元能力四把刀</title>
+  <desc id="a10d">五道建模真题各占一行，左边是题型，右边是解法关键。楼中楼的关键是写模型与读模型分离，用 Map 平铺支持常数时间的新增与标记删除，渲染时才建树。实时 TopK 分计数层与选择层，先用哈希计数，再按更新与查询的频率选择小顶堆维护或按次数分桶。大文件分片上传是四件套的组合：分治切片、整体指纹实现秒传、调度器限并发、状态机管生命周期。区间问题先用排序创造可扫描性，合并用尾部吞并，并发峰值用起点加一终点减一的事件点扫描。深比较靠 Object.is 天然纳住 NaN，递归比较键集，并用 WeakMap 记录配对解开循环引用。底部点出真正的交付物是四种元能力：结构选型、异步编排、边界取舍、分层陈述。最后一行说明这个系列想给的不是多刷十道题，而是任何新题都能拆回这四把刀。</desc>
+
+  <style>
+    .a10-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a10-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a10-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a10-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a10-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="a10-t" x="30" y="24" font-size="8.5">第一波考组合，第二波考建模 —— 五道题，五个翻译套路</text>
+
+  <rect class="a10-b" x="30" y="38" width="680" height="34" rx="2"/>
+  <text class="a10-t" x="44" y="59" font-size="8.5">楼中楼</text>
+  <text class="a10-s" x="170" y="59" font-size="7.5">写模型与读模型分离：Map 平铺支持 O(1) 新增与标记删除，渲染时才建树</text>
+  <text class="a10-s" x="698" y="59" font-size="7" text-anchor="end" style="fill:#B03A2E">分离</text>
+
+  <rect class="a10-b" x="30" y="78" width="680" height="34" rx="2"/>
+  <text class="a10-t" x="44" y="99" font-size="8.5">实时 TopK</text>
+  <text class="a10-s" x="170" y="99" font-size="7.5">哈希计数 + 小顶堆或分桶 —— 按更新与查询的频率选型，还要管无限增长</text>
+  <text class="a10-s" x="698" y="99" font-size="7" text-anchor="end" style="fill:#B03A2E">选型</text>
+
+  <rect class="a10-b" x="30" y="118" width="680" height="34" rx="2"/>
+  <text class="a10-t" x="44" y="139" font-size="8.5">分片上传</text>
+  <text class="a10-s" x="170" y="139" font-size="7.5">分治切片 + 整体指纹秒传 + 并发调度 + 状态机 —— 四件套的标准组合</text>
+  <text class="a10-s" x="698" y="139" font-size="7" text-anchor="end" style="fill:#B03A2E">组合</text>
+
+  <rect class="a10-b" x="30" y="158" width="680" height="34" rx="2"/>
+  <text class="a10-t" x="44" y="179" font-size="8.5">区间问题</text>
+  <text class="a10-s" x="170" y="179" font-size="7.5">排序创造可扫描性：合并用尾部吞并，峰值用起点 +1、终点 -1 的事件点法</text>
+  <text class="a10-s" x="698" y="179" font-size="7" text-anchor="end" style="fill:#B03A2E">扫描</text>
+
+  <rect class="a10-b" x="30" y="198" width="680" height="34" rx="2"/>
+  <text class="a10-t" x="44" y="219" font-size="8.5">深比较</text>
+  <text class="a10-s" x="170" y="219" font-size="7.5">Object.is 天然纳住 NaN + 递归比键集 + WeakMap 记录配对，解开循环引用</text>
+  <text class="a10-s" x="698" y="219" font-size="7" text-anchor="end" style="fill:#B03A2E">边界</text>
+
+  <rect class="a10-c" x="30" y="244" width="680" height="26" rx="2"/>
+  <text class="a10-t" x="44" y="261" font-size="8">元能力四把刀</text>
+  <text class="a10-s" x="150" y="261" font-size="7.5">结构选型 │ 异步编排 │ 边界取舍 │ 分层陈述</text>
+
+  <text class="a10-s" x="30" y="290" font-size="7.5">系列最后想给的：不是「多刷十道题」，而是「任何新题都能拆回这四把刀」</text>
+</svg>

@@ -78,6 +78,10 @@ JavaScript 诞生时的使命是操作 DOM、响应用户交互。如果它是�
 
 ### 三个基础角色
 
+![调用栈、任务队列与 Web API 的三方循环](../../assets/svg/js-async-005-three-roles.svg)
+
+*图 · 队列里的回调没有优先级，只有先来后到*
+
 ```
    ┌────────────┐        ┌─────────────────┐
    │  调用栈      │◀──取──│  任务队列（队列） │◀──放入── Web API / 底层
@@ -141,41 +145,9 @@ JavaScript 诞生时的使命是操作 DOM、响应用户交互。如果它是�
 
 一句话：**微任务是「当前任务的后置步骤」，宏任务是「下一轮循环的主菜」。**
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 330" width="100%" role="img" aria-label="事件循环：宏任务 → 微任务清空 → 渲染">
-  <defs>
-    <marker id="el-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="el-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="60" y="60" width="180" height="70" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="150" y="90" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">取一个宏任务</text>
-  <text x="150" y="112" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">setTimeout / I/O / 事件</text>
-  <rect x="296" y="60" width="150" height="70" rx="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="371" y="90" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">执行</text>
-  <text x="371" y="112" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">同步代码跑完</text>
-  <rect x="516" y="60" width="150" height="70" rx="10" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2"/>
-  <text x="591" y="90" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#B03A2E">清空微任务</text>
-  <text x="591" y="112" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">then / await 后续</text>
-  <rect x="296" y="200" width="150" height="70" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="371" y="228" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">渲染（视时机）</text>
-  <text x="371" y="250" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">rAF → Style → Paint</text>
-  <path d="M 240 95 H 290" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#el-ink)"/>
-  <path d="M 446 95 H 510" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#el-ink)"/>
-  <path d="M 591 130 C 591 200 520 235 452 235" fill="none" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#el-ink)"/>
-  <text x="620" y="185" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">没到渲染时机，</text>
-  <text x="620" y="207" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">就继续下一轮</text>
-  <path id="el-loop" d="M 371 130 C 371 172 371 164 371 200" fill="none" stroke="none"/>
-  <circle r="5.5" fill="#B03A2E">
-    <animateMotion dur="2.2s" repeatCount="indefinite" path="M 591 130 C 591 200 520 235 452 235 C 420 235 400 233 371 233 C 330 233 150 233 150 165 C 150 120 220 96 294 96"/>
-  </circle>
-  <text x="560" y="205" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">红点 = 一轮循环的脚步</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 红点走完一圈 = 一轮事件循环：宏任务 → 微任务清空 →（可能）渲染 → 回到队列</figcaption>
-</figure>
+![事件循环：宏任务 → 微任务清空 → 渲染](../../assets/svg/js-async-005-event-loop.svg)
+
+*图 · 红点走完一圈 = 一轮事件循环：宏任务 → 微任务清空 →（可能）渲染 → 回到队列*
 
 ## 第三层：逐题精讲
 
@@ -263,6 +235,10 @@ setTimeout
 
 Node.js 的事件循环由 **libuv** 实现，与浏览器模型同源但更复杂：它把宏任务拆成了**六个阶段（phase）**，每轮循环依次经过：
 
+![Node.js 事件循环的六个阶段](../../assets/svg/js-async-005-node-phases.svg)
+
+*图 · 六段固定顺序转圈，不是「谁先准备好谁先跑」*
+
 ```
    ┌───────────────────────────┐
    │    timers 阶段             │ ← setTimeout / setInterval 回调
@@ -291,6 +267,10 @@ process.nextTick(() => console.log('nextTick'));
 `setTimeout(fn, 0)` 与 `setImmediate` 的顺序问题：进入 timers 阶段的时机受 1ms 门槛影响，两者都可能先执行，属于「实现细节不确定」，面试答出「不确定，取决于进程启动时机」反而是加分项。
 
 ## 图解总结
+
+![一轮循环的三个步骤](../../assets/svg/js-async-005-round.svg)
+
+*图 · 一轮只取一个宏任务，但微任务要清到队列空为止——包括执行中新产生的那个（虚线 m3）*
 
 ```
                          ┌──────────────┐

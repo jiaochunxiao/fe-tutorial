@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 336" width="100%" role="img" aria-labelledby="dp2t dp2d">
+  <title id="dp2t">display 的两根轴：对外怎么排队，对内怎么管孩子</title>
+  <desc id="dp2d">display 其实是两根独立的轴。左轴是对外，决定这个盒子在父级里怎么排队：block 独占一行、inline 跟文字流动、inline-block 是两者混合。右轴是对内，决定它的孩子怎么排：flow 是默认文档流、flex 弹性、grid 网格、table 表格、flow-root 建一个全新 BFC。两根轴可以自由组合，display 冒号后面写两个词，第一个是外的轴、第二个是内的轴，传统的 flex 就是 block flex，inline-flex 就是 inline flex。</desc>
+
+  <style>
+    .dp2-pill{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .dp2-hi{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .dp2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .dp2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .dp2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="dp2-t" x="40" y="64" font-size="9">对外 · 在父级里怎么排队</text>
+  <text class="dp2-t" x="380" y="64" font-size="9">对内 · 孩子怎么排</text>
+
+  <rect class="dp2-pill" x="40" y="76" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="54" y="96" font-size="9">block</text>
+  <text class="dp2-s" x="222" y="96" font-size="8.5">块级上下文，独占一行</text>
+
+  <rect class="dp2-pill" x="40" y="116" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="54" y="136" font-size="9">inline</text>
+  <text class="dp2-s" x="222" y="136" font-size="8.5">行内上下文，跟着文字流</text>
+
+  <rect class="dp2-pill" x="40" y="156" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="54" y="176" font-size="9">inline-block</text>
+  <text class="dp2-s" x="222" y="176" font-size="8.5">对外像文字，对内像块</text>
+
+  <rect class="dp2-pill" x="40" y="196" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="54" y="216" font-size="9">contents</text>
+  <text class="dp2-s" x="222" y="216" font-size="8.5">自己不生成盒子，孩子直接上位</text>
+
+  <rect class="dp2-pill" x="380" y="76" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="394" y="96" font-size="9">flow</text>
+  <text class="dp2-s" x="562" y="96" font-size="8.5">默认文档流</text>
+
+  <rect class="dp2-pill" x="380" y="116" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="394" y="136" font-size="9">flex</text>
+  <text class="dp2-s" x="562" y="136" font-size="8.5">弹性布局</text>
+
+  <rect class="dp2-pill" x="380" y="156" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="394" y="176" font-size="9">grid</text>
+  <text class="dp2-s" x="562" y="176" font-size="8.5">网格布局</text>
+
+  <rect class="dp2-pill" x="380" y="196" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="394" y="216" font-size="9">table*</text>
+  <text class="dp2-s" x="562" y="216" font-size="8.5">表格布局</text>
+
+  <rect class="dp2-hi" x="380" y="236" width="170" height="30" rx="3"/>
+  <text class="dp2-mono" x="394" y="256" font-size="9">flow-root</text>
+  <text class="dp2-t" x="562" y="256" font-size="8.5">建一个全新 BFC</text>
+
+  <line x1="40" y1="288" x2="40" y2="326" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="dp2-t" x="54" y="300" font-size="9">两根轴可以自由组合，冒号后面写两个词：第一个是外的轴，第二个是内的轴</text>
+  <text class="dp2-mono" x="54" y="318" font-size="8.5">display: block flex</text>
+  <text class="dp2-s" x="180" y="318" font-size="8.5">= 传统的 flex</text>
+  <text class="dp2-mono" x="330" y="318" font-size="8.5">display: inline flex</text>
+  <text class="dp2-s" x="470" y="318" font-size="8.5">= 传统的 inline-flex</text>
+</svg>

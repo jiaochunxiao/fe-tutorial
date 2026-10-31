@@ -42,6 +42,10 @@ JavaScript 是弱类型语言：运算符对操作数类型有预期，不匹配
 
 对象参与 `+ - == <` 等运算时，先转原始值：
 
+![ToPrimitive 的三次尝试](../../assets/svg/js-core-004-toprimitive.svg)
+
+*图 · 三个出口都是「拿到原始值就走」——自定义 valueOf 就够了，不用碰 toString*
+
 ```
 ① 对象是否有 Symbol.toPrimitive 方法？ ──有──▶ 调用它（最高优先级）
 ② 没有 ──▶ 调用 valueOf()：返回原始值？ ──是──▶ 用它

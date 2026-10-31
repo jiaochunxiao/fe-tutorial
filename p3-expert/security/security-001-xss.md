@@ -133,44 +133,9 @@ Set-Cookie: sid=xxx; HttpOnly; Secure; SameSite=Lax
 □ 第三方脚本的 SRI（integrity 哈希——security-005 的伏笔）
 ```
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 320" width="100%" role="img" aria-label="XSS 纵深防御：攻击通道上的三道墙">
-  <defs>
-    <marker id="x1-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-  </defs>
-  <rect x="30" y="40" width="150" height="70" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="105" y="68" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">不可信数据</text>
-  <text x="105" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">评论 / URL / 接口</text>
-  <path d="M 180 75 H 234" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#x1-ink)"/>
-  <line x1="240" y1="20" x2="240" y2="290" stroke="#B03A2E" stroke-width="3"/>
-  <text x="240" y="12" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">墙 ①</text>
-  <text x="310" y="46" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">编码转义</text>
-  <text x="310" y="66" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">框架默认插值</text>
-  <text x="310" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">富文本 → DOMPurify</text>
-  <path d="M 380 75 H 434" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#x1-ink)"/>
-  <line x1="440" y1="20" x2="440" y2="290" stroke="#B03A2E" stroke-width="3"/>
-  <text x="440" y="12" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">墙 ②</text>
-  <text x="510" y="46" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">CSP</text>
-  <text x="510" y="66" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">script-src + nonce</text>
-  <text x="510" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">内联脚本全灭</text>
-  <path d="M 580 75 H 634" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#x1-ink)"/>
-  <line x1="640" y1="20" x2="640" y2="290" stroke="#B03A2E" stroke-width="3"/>
-  <text x="640" y="12" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">墙 ③</text>
-  <rect x="30" y="120" width="180" height="60" rx="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="120" y="146" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">注入点（sink）</text>
-  <text x="120" y="166" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6E675A">innerHTML / eval / href</text>
-  <rect x="30" y="210" width="180" height="60" rx="10" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.5"/>
-  <text x="120" y="236" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">攻击者的目标资产</text>
-  <text x="120" y="256" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#6E675A">Cookie / DOM / 接口凭证</text>
-  <path d="M 240 60 C 200 120 160 160 120 208" fill="none" stroke="#6E675A" stroke-width="1.2" stroke-dasharray="4 4"/>
-  <path d="M 640 120 C 560 140 480 160 220 225" fill="none" stroke="#6E675A" stroke-width="1.2" stroke-dasharray="4 4"/>
-  <text x="240" y="312" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">三道墙纵向贯穿整个数据通道——</text>
-  <text x="470" y="312" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">全破才失守，破一道还有下一道</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · XSS 纵深防御地图——不可信数据流经的通道上，编码、CSP、HttpOnly 三道墙层层设卡</figcaption>
-</figure>
+![XSS 纵深防御：攻击通道上的三道墙](../../assets/svg/security-001-xss.svg)
+
+*图 · XSS 纵深防御地图——不可信数据流经的通道上，编码、CSP、HttpOnly 三道墙层层设卡*
 
 ## 回看开篇
 

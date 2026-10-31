@@ -153,6 +153,10 @@ function deepEqual(a, b, seen = new Map()) {
 
 ## 图解总结
 
+![五道建模题的翻译套路，与最后沉淀下来的四把刀](../../assets/svg/algorithm-010-modeling.svg)
+
+*图 · 五道建模题的翻译套路，与最后沉淀下来的四把刀*
+
 ```
 建模五式:
  楼中楼  → 写模型(Map平铺) + 读模型(树视图) 分离 ⭐

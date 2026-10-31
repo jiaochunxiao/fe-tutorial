@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 298" width="100%" role="img" aria-labelledby="jc8t jc8d">
+  <title id="jc8t">带 g 的正则为什么会时真时假：lastIndex 的两次调用</title>
+  <desc id="jc8d">顶部一行提示切片三兄弟：slice 支持负索引，substring 会自动换序并把负数归零，substr 按长度取、已是遗留方法。中间两张卡演示同一个带 g 的正则连续调两次 test 会发生什么：第一次 lastIndex 是 0，从 0 开始找命中，返回 true，lastIndex 推进到 1；第二次从 1 开始找，字符串已经到末尾所以越界，返回 false，lastIndex 归零；于是第三次又变回 true，这就是时真时假。下面是三个 API 的差别：test 返回布尔但会推进 lastIndex，是带副作用的；match 无 g 返回首个匹配加分组，有 g 返回全部匹配却丢掉分组；exec 配 g 可以循环推进，也能手动喂 lastIndex 分批取。底部给出规避方式：复用前把 lastIndex 置零，或者干脆每次新建正则。</desc>
+
+  <style>
+    .jc8-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .jc8-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .jc8-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .jc8-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .jc8-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="jc8-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="jc8-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect x="30" y="30" width="680" height="22" fill="#E7DEC8" opacity="0.55"/>
+  <text class="jc8-s" x="42" y="45" font-size="7.5">切片三兄弟：slice 支持负索引 │ substring 会自动换序并把负数归 0 │ substr 按长度取，已是遗留方法</text>
+
+  <text class="jc8-t" x="30" y="72" font-size="8.5">同一个 /a/g 连续调两次 test，中间隔着一个 lastIndex</text>
+
+  <rect class="jc8-b" x="30" y="80" width="330" height="110" rx="2"/>
+  <text class="jc8-mono" x="44" y="100" font-size="8.5">第一次 t.test('a')</text>
+  <text class="jc8-mono" x="44" y="122" font-size="7.5" style="fill:#6E675A">lastIndex = 0</text>
+  <text class="jc8-s" x="44" y="138" font-size="7.5">从 0 开始找 'a' → 命中</text>
+  <text class="jc8-s" x="44" y="154" font-size="7.5">返回 true，lastIndex 推进到 1</text>
+  <text class="jc8-s" x="44" y="172" font-size="7.5" style="fill:#B03A2E">雷就埋在这一步：它偷偷改了状态</text>
+
+  <rect class="jc8-b" x="380" y="80" width="330" height="110" rx="2"/>
+  <text class="jc8-mono" x="394" y="100" font-size="8.5">第二次 t.test('a')</text>
+  <text class="jc8-mono" x="394" y="122" font-size="7.5" style="fill:#6E675A">lastIndex = 1（上次留下的）</text>
+  <text class="jc8-s" x="394" y="138" font-size="7.5">从 1 开始找 → 已经到末尾，越界</text>
+  <text class="jc8-s" x="394" y="154" font-size="7.5">返回 false，lastIndex 归 0</text>
+  <text class="jc8-s" x="394" y="172" font-size="7.5" style="fill:#B03A2E">于是第三次又 true —— 时真时假</text>
+
+  <text class="jc8-t" x="30" y="212" font-size="8.5">三个 API 的差别，全在 lastIndex 上</text>
+
+  <rect class="jc8-b" x="30" y="220" width="216" height="44" rx="2"/>
+  <text class="jc8-mono" x="42" y="238" font-size="8">test</text>
+  <text class="jc8-s" x="42" y="253" font-size="7">返回布尔，但会推进 lastIndex</text>
+
+  <rect class="jc8-b" x="262" y="220" width="216" height="44" rx="2"/>
+  <text class="jc8-mono" x="274" y="238" font-size="8">match</text>
+  <text class="jc8-s" x="274" y="253" font-size="7">无 g：首个 + 分组 │ 有 g：全部但丢分组</text>
+
+  <rect class="jc8-b" x="494" y="220" width="216" height="44" rx="2"/>
+  <text class="jc8-mono" x="506" y="238" font-size="8">exec</text>
+  <text class="jc8-s" x="506" y="253" font-size="7">带 g 循环推进，可手动喂 lastIndex</text>
+
+  <text class="jc8-s" x="30" y="282" font-size="7.5" style="fill:#B03A2E">规避：复用前 t.lastIndex = 0；或者干脆每次新建 —— 正则字面量写在循环体内是安全的</text>
+</svg>

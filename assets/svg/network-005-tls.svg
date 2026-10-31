@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="n5tt n5td">
+  <title id="n5tt">TLS 握手：一次往返谈出同一把会话密钥</title>
+  <desc id="n5td">先由 TCP 三次握手建立连接，然后进入 TLS 握手。客户端发 ClientHello，带上随机数、支持的加密套件和自己的临时公钥；服务端回 ServerHello，带上自己的随机数、选定的套件、证书、临时公钥和签名。双方各自用「我的私钥」和「对方的公钥」做一次 ECDHE，再加上两个随机数，算出来的结果完全相同，这就是会话密钥。私钥从头到尾没有上过网，所以即使有人把整段流量存下来，日后拿到服务器私钥也解不开——这就是前向保密。之后的应用数据全部用对称加密加完整性标签。</desc>
+
+  <style>
+    .n5t-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.3}
+    .n5t-key{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.3}
+    .n5t-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .n5t-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .n5t-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="n5t-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="n5t-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="n5t-box" x="40" y="16" width="280" height="34" rx="3"/>
+  <text class="n5t-t" x="54" y="37" font-size="8.5">TCP 三次握手</text>
+  <text class="n5t-s" x="180" y="37" font-size="7.5">《network-001》</text>
+  <line x1="180" y1="50" x2="180" y2="68" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n5t-ink)"/>
+
+  <rect class="n5t-box" x="40" y="72" width="660" height="150" rx="3"/>
+  <text class="n5t-s" x="54" y="90" font-size="8">TLS 握手 · 1-RTT</text>
+
+  <line x1="140" y1="112" x2="600" y2="112" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#n5t-ink)"/>
+  <text class="n5t-mono" x="150" y="106" font-size="8">ClientHello</text>
+  <text class="n5t-s" x="240" y="106" font-size="7.5">随机数 Rc + 套件列表 + 临时公钥</text>
+
+  <line x1="600" y1="146" x2="146" y2="146" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#n5t-ink)"/>
+  <text class="n5t-mono" x="150" y="140" font-size="8">ServerHello</text>
+  <text class="n5t-s" x="240" y="140" font-size="7.5">随机数 Rs + 选定套件 + 证书 + 临时公钥 + 签名</text>
+
+  <path d="M140 160 V186 H336" fill="none" stroke="#B03A2E" stroke-width="1.5" marker-end="url(#n5t-red)"/>
+  <path d="M600 160 V164" fill="none" stroke="#B03A2E" stroke-width="1.5" marker-end="url(#n5t-red)"/>
+
+  <rect class="n5t-key" x="340" y="166" width="350" height="46" rx="3"/>
+  <text class="n5t-t" x="354" y="184" font-size="8" style="fill:#B03A2E">双方各自 ECDHE(我的私钥, 对方公钥) + Rc + Rs</text>
+  <text class="n5t-t" x="354" y="202" font-size="8.5">两边算出来完全相同 → 这就是会话密钥</text>
+
+  <line x1="180" y1="222" x2="180" y2="240" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n5t-ink)"/>
+
+  <rect class="n5t-box" x="40" y="244" width="460" height="34" rx="3"/>
+  <text class="n5t-t" x="54" y="265" font-size="8.5">应用数据：HTTP 报文 + AES-GCM + 完整性标签</text>
+
+  <text class="n5t-t" x="520" y="252" font-size="8.5" style="fill:#B03A2E">前向保密</text>
+  <text class="n5t-s" x="520" y="268" font-size="7.5">私钥从不传输，算不出密钥</text>
+
+  <text class="n5t-s" x="40" y="294" font-size="8">非对称只用来「谈钥匙」，谈完就退场；真正跑数据的是对称加密 —— 因为对称快几个数量级。</text>
+</svg>

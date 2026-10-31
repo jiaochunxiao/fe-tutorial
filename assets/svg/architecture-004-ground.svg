@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 285" width="100%" role="img" aria-labelledby="ar4gt ar4gd">
+  <title id="ar4gt">Monorepo 的三道地基：本地直链、任务缓存、版本联动</title>
+  <desc id="ar4gd">三层工具链自上而下支撑 Monorepo。pnpm workspace 用 workspace 协议把包间引用直链到本地源码，联调零成本，发版时自动换成真实版本号，严格拓扑让幽灵依赖无处藏身。Turborepo 用 dependsOn 的 ^build 声明任务拓扑，先建依赖再建自身，并按内容哈希缓存任务产物，二次构建从分钟级降到四十秒。Changesets 管版本联动与变更日志，内部包用 locked、开源包用 independent。底部是分包纪律：按变化原因切而不是按技术类型切，问谁用、变化跟谁、有没有外部使用者，三处重复再抽象。它和微前端正交，一个管仓库策略，一个管运行时架构。</desc>
+
+  <style>
+    .a4g-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a4g-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a4g-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a4g-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="a4g-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="a4g-t" x="40" y="26" font-size="8.5">三道地基：本地直链、任务缓存、版本联动</text>
+
+  <rect class="a4g-q" x="40" y="44" width="200" height="90" rx="2"/>
+  <text class="a4g-t" x="56" y="64" font-size="8.5">pnpm workspace</text>
+  <text class="a4g-s" x="56" y="84" font-size="7">workspace:* 直链本地源码</text>
+  <text class="a4g-s" x="56" y="100" font-size="7">发版自动换成真实版本号</text>
+  <text class="a4g-s" x="56" y="116" font-size="7">严格拓扑，幽灵依赖无处藏</text>
+
+  <line x1="242" y1="89" x2="266" y2="89" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a4g-ink)"/>
+
+  <rect class="a4g-q" x="270" y="44" width="200" height="90" rx="2"/>
+  <text class="a4g-t" x="286" y="64" font-size="8.5">Turborepo</text>
+  <text class="a4g-s" x="286" y="84" font-size="7">dependsOn: ["^build"] 拓扑执行</text>
+  <text class="a4g-s" x="286" y="100" font-size="7">按内容哈希缓存产物</text>
+  <text class="a4g-s" x="286" y="116" font-size="7">二次构建从分钟级到 40 秒</text>
+
+  <line x1="472" y1="89" x2="496" y2="89" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a4g-ink)"/>
+
+  <rect class="a4g-q" x="500" y="44" width="200" height="90" rx="2"/>
+  <text class="a4g-t" x="516" y="64" font-size="8.5">Changesets</text>
+  <text class="a4g-s" x="516" y="84" font-size="7">版本联动 + 自动 CHANGELOG</text>
+  <text class="a4g-s" x="516" y="100" font-size="7">内部包 locked，开源包 independent</text>
+  <text class="a4g-s" x="516" y="116" font-size="7">改哪个包就只发哪个包</text>
+
+  <rect class="a4g-b" x="40" y="150" width="660" height="86" rx="2"/>
+  <text class="a4g-t" x="56" y="170" font-size="8.5">分包：按「变化原因」切，不按「技术类型」切</text>
+
+  <rect class="a4g-b" x="56" y="180" width="106" height="26" rx="2"/>
+  <text class="a4g-t" x="109" y="197" font-size="7.5" text-anchor="middle">谁在用？</text>
+  <rect class="a4g-b" x="172" y="180" width="116" height="26" rx="2"/>
+  <text class="a4g-t" x="230" y="197" font-size="7.5" text-anchor="middle">变化跟谁走？</text>
+  <rect class="a4g-b" x="298" y="180" width="136" height="26" rx="2"/>
+  <text class="a4g-t" x="366" y="197" font-size="7.5" text-anchor="middle">有没有外部使用者？</text>
+  <text class="a4g-s" x="452" y="197" font-size="7.5">三处重复再抽象 —— 包级纪律</text>
+
+  <text class="a4g-s" x="56" y="224" font-size="7.5">apps = 部署单元｜packages = ui / config / api-client（各按一类变化聚拢）</text>
+
+  <text class="a4g-t" x="40" y="264" font-size="8.5" style="fill:#B03A2E">和微前端正交：一个管仓库策略，一个管运行时架构 —— 可以同时用，也可以只用一个。</text>
+</svg>

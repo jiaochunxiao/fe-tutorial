@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="pr5ht pr5hd">
+  <title id="pr5ht">读写分组与读写交错，布局次数的差别</title>
+  <desc id="pr5hd">上面一条是正确的写法：连续写三次样式，只把布局标脏，等到这一批写完之后统一算一次布局。下面一条是读写交错：每写完一次就去读一次几何信息，而读必须立刻知道答案，于是每次读都逼出一次全量布局，三次读写就是三次全量布局，这就是布局抖动。修复有三招：把读集中到写之前，用 requestAnimationFrame 把读和写分到两帧，或者干脆改用 transform 让元素不进布局。</desc>
+
+  <style>
+    .pr5h-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .pr5h-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .pr5h-r{fill:#FBF7EE;stroke:#B03A2E;stroke-width:1.1}
+    .pr5h-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .pr5h-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .pr5h-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="pr5h-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="pr5h-t" x="40" y="26" font-size="8.5">同样改三个元素，布局算几次？</text>
+
+  <!-- 正确：读写分组 -->
+  <text class="pr5h-t" x="40" y="63" font-size="8.5">读写分组</text>
+  <rect class="pr5h-band" x="110" y="48" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="132" y="63" font-size="8.5" text-anchor="middle">写</text>
+  <rect class="pr5h-band" x="160" y="48" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="182" y="63" font-size="8.5" text-anchor="middle">写</text>
+  <rect class="pr5h-band" x="210" y="48" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="232" y="63" font-size="8.5" text-anchor="middle">写</text>
+  <line x1="258" y1="60" x2="276" y2="60" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#pr5h-ink)"/>
+  <rect class="pr5h-b" x="280" y="48" width="104" height="24" rx="2"/>
+  <text class="pr5h-mono" x="332" y="63" font-size="8.5" text-anchor="middle">Layout</text>
+  <text class="pr5h-s" x="394" y="63" font-size="8">只算 1 次 —— 写只是标脏，下一帧统一算</text>
+
+  <!-- 错误：读写交错 -->
+  <text class="pr5h-t" x="40" y="135" font-size="8.5" style="fill:#B03A2E">读写交错</text>
+  <rect class="pr5h-band" x="110" y="120" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="132" y="135" font-size="8.5" text-anchor="middle">写</text>
+  <rect class="pr5h-r" x="160" y="120" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="182" y="135" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">读</text>
+  <rect class="pr5h-band" x="210" y="120" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="232" y="135" font-size="8.5" text-anchor="middle">写</text>
+  <rect class="pr5h-r" x="260" y="120" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="282" y="135" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">读</text>
+  <rect class="pr5h-band" x="310" y="120" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="332" y="135" font-size="8.5" text-anchor="middle">写</text>
+  <rect class="pr5h-r" x="360" y="120" width="44" height="24" rx="2"/>
+  <text class="pr5h-mono" x="382" y="135" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">读</text>
+
+  <line x1="182" y1="144" x2="182" y2="152" stroke="#B03A2E" stroke-width="1"/>
+  <line x1="282" y1="144" x2="282" y2="152" stroke="#B03A2E" stroke-width="1"/>
+  <line x1="382" y1="144" x2="382" y2="152" stroke="#B03A2E" stroke-width="1"/>
+  <rect class="pr5h-r" x="160" y="152" width="44" height="16" rx="1"/>
+  <text class="pr5h-mono" x="182" y="163" font-size="6.5" text-anchor="middle" style="fill:#B03A2E">Layout</text>
+  <rect class="pr5h-r" x="260" y="152" width="44" height="16" rx="1"/>
+  <text class="pr5h-mono" x="282" y="163" font-size="6.5" text-anchor="middle" style="fill:#B03A2E">Layout</text>
+  <rect class="pr5h-r" x="360" y="152" width="44" height="16" rx="1"/>
+  <text class="pr5h-mono" x="382" y="163" font-size="6.5" text-anchor="middle" style="fill:#B03A2E">Layout</text>
+  <text class="pr5h-s" x="416" y="135" font-size="8" style="fill:#B03A2E">算 3 次全量布局 —— 每次读都逼它立刻算</text>
+
+  <line x1="40" y1="190" x2="700" y2="190" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="pr5h-t" x="40" y="212" font-size="8.5">三连修复：从「少算几次」到「根本不用算」</text>
+
+  <rect class="pr5h-b" x="40" y="224" width="200" height="40" rx="2"/>
+  <text class="pr5h-t" x="140" y="240" font-size="8.5" text-anchor="middle">① 读写分组</text>
+  <text class="pr5h-s" x="140" y="255" font-size="7.5" text-anchor="middle">读全部读完，写再统一做</text>
+
+  <rect class="pr5h-b" x="256" y="224" width="180" height="40" rx="2"/>
+  <text class="pr5h-t" x="346" y="240" font-size="8.5" text-anchor="middle">② rAF 分帧</text>
+  <text class="pr5h-s" x="346" y="255" font-size="7.5" text-anchor="middle">本帧只读，下帧再写</text>
+
+  <rect class="pr5h-b" x="452" y="224" width="200" height="40" rx="2"/>
+  <text class="pr5h-t" x="552" y="240" font-size="8.5" text-anchor="middle">③ transform 直通</text>
+  <text class="pr5h-s" x="552" y="255" font-size="7.5" text-anchor="middle">不进 Layout，问题不存在</text>
+
+  <text class="pr5h-t" x="40" y="294" font-size="8.5" style="fill:#B03A2E">前两招让布局少算几次，第三招让它根本不用算 —— 所以动画永远优先 transform / opacity。</text>
+</svg>

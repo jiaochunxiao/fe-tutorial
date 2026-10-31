@@ -33,6 +33,10 @@ function App({ isVip }) {
 
 答案（react-003 的伏笔）：**状态不在函数里，在函数对应的 Fiber 节点上**——`fiber.memoizedState` 指向一条 **Hooks 链表**。
 
+![useState 的状态挂在 Fiber 的 Hooks 链表上](../../assets/svg/react-004-hooks-list.svg)
+
+*图 · useState 的状态挂在 Fiber 的 Hooks 链表上*
+
 ```
 Fiber.memoizedState ──▶ [useState 节点] ──▶ [useEffect 节点] ──▶ [useState 节点] ──▶ null
                           state: 0           effect: […]          state: {…}
@@ -146,6 +150,10 @@ function App() {
 ```
 
 ## 图解总结
+
+![三轮渲染里 Hook 与链表节点的对应关系](../../assets/svg/react-004-reuse.svg)
+
+*图 · 三轮渲染里 Hook 与链表节点的对应关系*
 
 ```
 fiber.memoizedState ──▶ ● ──▶ ● ──▶ ● ──▶ null      （Hooks 链表）

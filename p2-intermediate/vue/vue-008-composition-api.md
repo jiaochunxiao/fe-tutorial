@@ -51,6 +51,10 @@ function useMouse() {
 
 两种 API 的本质差异是**代码的组织维度**：
 
+![同一个功能，一种写法把它切成三截，另一种把它收成一摞](../../assets/svg/vue-008-grouping.svg)
+
+*图 · 同一个功能，一种写法把它切成三截，另一种把它收成一摞*
+
 ```
 Options API：按【选项类型】分组        Composition API：按【功能】分组
 ┌─────────────────┐                 ┌─────────────────┐
@@ -150,6 +154,10 @@ function useX() { return { data, loading }; }     // data/loading 是 ref
 **2. 一个规范实战题**：把「防抖搜索 + 竞态取消」写成 useSearch composable——输入 ref/debounce（handwritten-005）+ AbortController（js-async-008）+ 返回 { results, loading }，就是三篇知识的组装。
 
 ## 图解总结
+
+![Composition API 的四处转变](../../assets/svg/vue-008-composition.svg)
+
+*图 · 前三行是转变，第四行是分野 —— 别混为一谈*
 
 ```
 组织维度转变：  按选项类型(data/methods/钩子) ──▶ 按功能(state+effect+清理 同处)

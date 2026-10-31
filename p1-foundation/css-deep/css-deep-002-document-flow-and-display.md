@@ -70,6 +70,10 @@ div   { display: inline; } /* 也不占一行了 —— display 改的是"排版
 
 ### 二、display 的完整谱系 ⭐
 
+![display 的两根轴：对外怎么排队，对内怎么管孩子](../../assets/svg/css-deep-002-display-axes.svg)
+
+*图 · display 不是一个属性，是两根独立的轴*
+
 ```
 对外如何排队 ──┬── block        块级上下文
               ├── inline       行内上下文
@@ -142,6 +146,10 @@ div 独占一行、span 水平排列：它们的**默认 display**（div→block
 **2. 面试答题骨架**：「文档流是元素默认排布规则——块级从上到下堆叠、行内在行内盒中水平流动；display 决定盒子对外如何排队（block/inline/inline-block）与对内如何布局（flow/flex/grid），两轴正交可组合；float 与 absolute 都脱离文档流，但 float 仍影响行内内容（环绕），absolute 完全不再影响布局；块级垂直 margin 在文档流中折叠取大者，BFC、flex 容器、border/padding 隔断可以阻止折叠。」
 
 ## 图解总结
+
+![文档流的两条车道，以及三条离队通道](../../assets/svg/css-deep-002-flow.svg)
+
+*图 · 只有两条车道，所有布局都是在这上面做加减*
 
 ```
 文档流（默认排布系统）

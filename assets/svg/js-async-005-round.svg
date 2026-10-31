@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 200" width="100%" role="img" aria-labelledby="l1t l1d">
+  <title id="l1t">浏览器事件循环的一轮：宏任务、清空微任务、渲染</title>
+  <desc id="l1d">宏任务队列里排着 script、setTimeout、click 等任务，每轮只取最老的一个执行。执行完毕后清空微任务队列，连执行中新产生的微任务也一起清掉，图上第三个微任务用虚线表示它是新产生的。到渲染时机才执行 requestAnimationFrame、样式、布局、绘制，然后回到起点取下一个宏任务。</desc>
+
+  <style>
+    .l1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .l1-sans{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .l1-task{fill:#EFE8D8;stroke:#1C1A17;stroke-width:1.2}
+    .l1-micro{fill:#DDB9B1;stroke:#B03A2E;stroke-width:1.2}
+  </style>
+
+  <defs>
+    <marker id="l1-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <!-- 宏任务队列 -->
+  <text class="l1-sans" x="20" y="22" font-size="10">宏任务队列</text>
+  <rect class="l1-task" x="92" y="8" width="68" height="22" rx="2"/>
+  <text class="l1-mono" x="126" y="23" font-size="9.5" text-anchor="middle">script</text>
+  <rect class="l1-task" x="166" y="8" width="80" height="22" rx="2"/>
+  <text class="l1-mono" x="206" y="23" font-size="9.5" text-anchor="middle">setTimeout</text>
+
+  <!-- 微任务队列 -->
+  <text class="l1-sans" x="270" y="22" font-size="10">微任务队列</text>
+  <rect class="l1-micro" x="350" y="8" width="52" height="22" rx="2"/>
+  <text class="l1-mono" x="376" y="23" font-size="9.5" text-anchor="middle">then</text>
+  <rect class="l1-micro" x="408" y="8" width="92" height="22" rx="2"/>
+  <text class="l1-mono" x="454" y="23" font-size="9.5" text-anchor="middle">queueMicrotask</text>
+
+  <!-- 入队方向 -->
+  <line x1="126" y1="30" x2="126" y2="92" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#l1-ink)"/>
+  <line x1="425" y1="30" x2="425" y2="92" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#l1-ink)"/>
+
+  <!-- ① 执行一个宏任务 -->
+  <rect class="l1-task" x="20" y="96" width="190" height="70" rx="2"/>
+  <text class="l1-mono" x="34" y="120" font-size="11">① 执行一个宏任务</text>
+  <text class="l1-sans" x="34" y="142" font-size="10">script 首轮就是第一个任务</text>
+
+  <!-- ② 清空微任务 -->
+  <rect x="214" y="96" width="256" height="70" rx="2" fill="#FBF7EE" stroke="#1C1A17" stroke-width="1.2"/>
+  <text class="l1-mono" x="228" y="120" font-size="11">② 清空微任务（到底）</text>
+  <rect class="l1-micro" x="222" y="130" width="74" height="26" rx="2"/>
+  <text class="l1-mono" x="259" y="147" font-size="9.5" text-anchor="middle">m1</text>
+  <rect class="l1-micro" x="302" y="130" width="74" height="26" rx="2"/>
+  <text class="l1-mono" x="339" y="147" font-size="9.5" text-anchor="middle">m2</text>
+  <rect x="382" y="130" width="74" height="26" rx="2" fill="#DDB9B1" stroke="#B03A2E" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text class="l1-mono" x="419" y="147" font-size="9.5" text-anchor="middle">m3</text>
+
+  <!-- ③ 渲染 -->
+  <rect x="474" y="96" width="246" height="70" rx="2" fill="none" stroke="#6E675A" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text class="l1-mono" x="488" y="120" font-size="11" style="fill:#6E675A">③ 到点才渲染</text>
+  <text class="l1-sans" x="488" y="142" font-size="10">rAF → 样式 → 布局 → 绘制</text>
+
+  <!-- 回到下一轮 -->
+  <path d="M700 166 V188 H126 V168" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#l1-ink)"/>
+  <text class="l1-sans" x="413" y="182" font-size="10" text-anchor="middle">下一轮：再取一个宏任务</text>
+</svg>

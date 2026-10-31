@@ -166,6 +166,10 @@ console.log(JSON.stringify(o)); // '{"a":2}'（value 型默认可枚举？不—
 
 ## 图解总结
 
+![defineProperty 没传的旋钮默认全 false](../../assets/svg/js-core-007-descriptor.svg)
+
+*图 · 你只写了一个 value，另外三个开关被自动拧到关*
+
 ```
 属性描述符（每属性四个旋钮）
   value/writable │ get/set │ enumerable │ configurable

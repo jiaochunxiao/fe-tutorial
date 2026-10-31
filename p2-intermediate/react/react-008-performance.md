@@ -161,6 +161,10 @@ const fullName = firstName + ' ' + lastName;              // ✅ 渲染期直接
 
 ## 图解总结
 
+![重渲染的成本构成与 memo 的剪枝条件](../../assets/svg/react-008-memo.svg)
+
+*图 · 重渲染的成本构成与 memo 的剪枝条件*
+
 ```
 重渲染成本 = ①组件函数执行（必付） + ②DOM 更新（Diff 无差异则免）
 

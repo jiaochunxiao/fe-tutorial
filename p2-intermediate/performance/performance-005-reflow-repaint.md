@@ -31,6 +31,10 @@ elements.forEach((el) => {
 
 回顾渲染管线（一个改动从 JS 到像素的代价阶梯）：
 
+![越靠左入场，要跑的段数越多，代价越大](../../assets/svg/performance-005-pipeline-cost.svg)
+
+*图 · 越靠左入场，要跑的段数越多，代价越大*
+
 ```
 JS 改了 DOM/样式
    ▼
@@ -109,6 +113,10 @@ list.appendChild(frag);   // 一次上树
 
 ### 四、一次诊断流程（Performance 面板实战）⭐⭐
 
+![Performance 面板的四条线索与对应结论](../../assets/svg/performance-005-diagnose.svg)
+
+*图 · Performance 面板的四条线索与对应结论*
+
 ```
 录制动画 → 看 Main 轨：
   紫色 Layout 块又高又密 ──▶ 重排驱动（检查：是否在读几何/动几何属性）
@@ -128,6 +136,10 @@ Layout Thrashing 的完整因果：写使布局失效 → 下一次读被迫同�
 **2. 一个快手判断题**：改 `color` 触发什么？（重绘）改 `transform`？（仅合成）读 `offsetHeight`？（可能强制重排）`display:none→block`？（重排）批量改 20 条 style 属性 vs 加一个 class？（后者一次失效）。
 
 ## 图解总结
+
+![读写分组与读写交错，布局次数的差别](../../assets/svg/performance-005-thrashing.svg)
+
+*图 · 读写分组与读写交错，布局次数的差别*
 
 ```
 管线阶梯与代价：

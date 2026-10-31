@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 220" width="100%" role="img" aria-labelledby="r1st r1sd">
+  <title id="r1st">JSX 编译成函数调用，运行时拿到一个普通对象</title>
+  <desc id="r1sd">左边是你写的 JSX，中间是编译产物，一个带 type、props、children 的函数调用；右边是运行时拿到的对象，有 $$typeof 的 Symbol 标记、type、props、key 与 ref。所有规则差异都源于「参数是 JS 值」：class 要写成 className、事件要传函数对象、style 要传对象、标签必须闭合。type 是字符串就直接建 DOM 元素，是函数就调用它并递归下去。$$typeof 用 Symbol 是为了防住从 JSON 伪造一个元素注入。</desc>
+
+  <style>
+    .r1s-p{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .r1s-c{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1}
+    .r1s-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r1s-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .r1s-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .r1s-mono-s{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="r1s-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="r1s-t" x="40" y="24" font-size="8.5">你写的 → 编译成 → 运行时拿到的，三栏一眼看完</text>
+
+  <rect class="r1s-p" x="40" y="40" width="200" height="76" rx="2"/>
+  <text class="r1s-s" x="52" y="58" font-size="7.5">JSX 书写</text>
+  <text class="r1s-mono" x="52" y="76" font-size="7.5">&lt;h1 className="t"&gt;</text>
+  <text class="r1s-mono" x="52" y="90" font-size="7.5">　Hello {name}</text>
+  <text class="r1s-mono" x="52" y="104" font-size="7.5">&lt;/h1&gt;</text>
+
+  <line x1="240" y1="78" x2="266" y2="78" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r1s-ink)"/>
+
+  <rect class="r1s-p" x="270" y="40" width="190" height="76" rx="2"/>
+  <text class="r1s-s" x="282" y="58" font-size="7.5">编译产物</text>
+  <text class="r1s-mono" x="282" y="76" font-size="7.5">_jsx('h1', {</text>
+  <text class="r1s-mono" x="282" y="90" font-size="7.5">　className: 't',</text>
+  <text class="r1s-mono" x="282" y="104" font-size="7.5">　children: ['Hello', name] })</text>
+
+  <line x1="460" y1="78" x2="486" y2="78" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r1s-ink)"/>
+
+  <rect class="r1s-p" x="490" y="40" width="210" height="76" rx="2"/>
+  <text class="r1s-s" x="502" y="58" font-size="7.5">运行时对象</text>
+  <text class="r1s-mono" x="502" y="76" font-size="7.5">{ $$typeof: Symbol,</text>
+  <text class="r1s-mono" x="502" y="90" font-size="7.5">　type: 'h1' | User,</text>
+  <text class="r1s-mono" x="502" y="104" font-size="7.5">　props, key, ref }</text>
+
+  <text class="r1s-s" x="40" y="136" font-size="7.5">规则差异全部源于「参数是 JS 值」：</text>
+
+  <rect class="r1s-c" x="40" y="144" width="160" height="26" rx="2"/>
+  <text class="r1s-mono" x="120" y="161" font-size="7.5" text-anchor="middle">className</text>
+  <rect class="r1s-c" x="213" y="144" width="160" height="26" rx="2"/>
+  <text class="r1s-t" x="293" y="161" font-size="7.5" text-anchor="middle">事件 = 函数对象</text>
+  <rect class="r1s-c" x="386" y="144" width="160" height="26" rx="2"/>
+  <text class="r1s-t" x="466" y="161" font-size="7.5" text-anchor="middle">style = 对象</text>
+  <rect class="r1s-c" x="559" y="144" width="141" height="26" rx="2"/>
+  <text class="r1s-t" x="629" y="161" font-size="7.5" text-anchor="middle">标签必须闭合</text>
+
+  <text class="r1s-t" x="40" y="192" font-size="8">type 是字符串 → 直接建 DOM；是函数 → 调用它，递归到 DOM 为止</text>
+  <text class="r1s-t" x="40" y="210" font-size="8" style="fill:#B03A2E">$$typeof 用 Symbol 标记 —— 防住从 JSON 伪造一个「元素」注入</text>
+</svg>

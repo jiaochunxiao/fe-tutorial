@@ -48,6 +48,10 @@ input.addEventListener('input', (e) => onSearch(e.target.value));
 
 执行轨迹（wait=300，连续输入）：
 
+![三次输入各自预约了一次，只有第三次活到了执行](../../assets/svg/handwritten-005-debounce-timeline.svg)
+
+*图 · 三次输入各自预约了一次，只有第三次活到了执行*
+
 ```
 t=0    触发 ── 预约 A(t=300)
 t=100  触发 ── 作废 A，预约 B(t=400)
@@ -143,6 +147,10 @@ function throttleTimer(fn, interval) {
 
 ### 四、防抖 vs 节流终极对照 ⭐
 
+![同一根时间轴上，一个结算成 1 次，一个结算成 4 次](../../assets/svg/handwritten-005-compare.svg)
+
+*图 · 同一根时间轴上，一个结算成 1 次，一个结算成 4 次*
+
 ```
 连续触发 1 秒（间隔 100ms，共 10 次），wait/interval = 300ms：
 
@@ -170,6 +178,10 @@ function throttleTimer(fn, interval) {
 搜索框 = 防抖（等用户打完）；滚动上报 = 节流（固定频率）。两个场景都不该把每次原生事件全量处理——**防抖节流的共同本质：用闭包跨调用持有状态（timer/lastTime），把高频触发压缩成低频执行**。
 
 ## 图解总结
+
+![分岔点只有一个：作废旧预约，还是进入冷却](../../assets/svg/handwritten-005-variants.svg)
+
+*图 · 分岔点只有一个：作废旧预约，还是进入冷却*
 
 ```
 debounce（最后一次）：                throttle（固定频率）：

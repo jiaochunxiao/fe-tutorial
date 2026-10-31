@@ -148,6 +148,10 @@ import { FixedSizeList } from 'react-window';
 
 ## 图解总结
 
+![虚拟滚动：撑高容器 + 渲染切片 + translateY 平移](../../assets/svg/performance-006-virtual-scroll.svg)
+
+*图 · 九千多行只存在于算式里，DOM 里永远只有这一屏*
+
 ```
 viewport(overflow:auto) ────────────────────────
 │ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │

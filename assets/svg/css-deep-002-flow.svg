@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="df2t df2d">
+  <title id="df2t">文档流的两条车道，以及三条离队通道</title>
+  <desc id="df2d">文档流只有两条车道。块级盒独占一行、纵向堆叠、盒模型完整、垂直方向的 margin 会折叠；行内盒水平流动、宽高设置无效、垂直 padding 会溢出但不占位、对源码里的空白敏感。display 换挡就是在这两条车道之间切换。想彻底离开文档流有三条通道：float 让后面的文字仍会环绕、absolute 和 fixed 对兄弟零影响、display none 直接消失不占位。再往上是 flex 和 grid，在容器内部重写排版规则。</desc>
+
+  <style>
+    .df2-lane{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .df2-tag{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .df2-out{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .df2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .df2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="df2-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <rect class="df2-lane" x="40" y="56" width="660" height="52" rx="3"/>
+  <rect class="df2-tag" x="40" y="56" width="92" height="52" rx="3"/>
+  <text class="df2-t" x="86" y="87" font-size="9" text-anchor="middle">块级盒</text>
+  <text class="df2-t" x="148" y="78" font-size="8.5">独占一行 · 纵向堆叠 · 完整盒模型</text>
+  <text class="df2-s" x="148" y="96" font-size="8.5">垂直方向的 margin 会和邻居折叠，取大的那个</text>
+
+  <rect class="df2-lane" x="40" y="116" width="660" height="52" rx="3"/>
+  <rect class="df2-tag" x="40" y="116" width="92" height="52" rx="3"/>
+  <text class="df2-t" x="86" y="147" font-size="9" text-anchor="middle">行内盒</text>
+  <text class="df2-t" x="148" y="138" font-size="8.5">水平流动 · 宽高无效 · 对空白敏感</text>
+  <text class="df2-s" x="148" y="156" font-size="8.5">垂直 padding 会溢出但不占位，压到上一行也不推它</text>
+
+  <line x1="370" y1="168" x2="370" y2="194" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#df2-ink)"/>
+  <text class="df2-s" x="382" y="186" font-size="8.5">display 换挡，只在这两条车道之间切</text>
+
+  <rect class="df2-out" x="40" y="202" width="200" height="56" rx="3"/>
+  <text class="df2-t" x="54" y="222" font-size="9">float</text>
+  <text class="df2-s" x="54" y="240" font-size="8.5">半离队：后面的文字仍会环绕</text>
+
+  <rect class="df2-out" x="258" y="202" width="200" height="56" rx="3"/>
+  <text class="df2-t" x="272" y="222" font-size="9">absolute / fixed</text>
+  <text class="df2-s" x="272" y="240" font-size="8.5">全离队：对兄弟零影响</text>
+
+  <rect class="df2-out" x="476" y="202" width="224" height="56" rx="3"/>
+  <text class="df2-t" x="490" y="222" font-size="9">display: none</text>
+  <text class="df2-s" x="490" y="240" font-size="8.5">直接消失：既不占位也不渲染</text>
+
+  <text class="df2-s" x="40" y="284" font-size="8.5">再往上是组织升级：flex / grid —— 不进离队通道，而是在容器内部重写孩子的排版规则</text>
+</svg>

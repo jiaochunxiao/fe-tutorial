@@ -90,6 +90,10 @@ cubic-bezier(x1, y1, x2, y2)  自定义（y>1 可做过冲弹性）
 
 回顾渲染管线（详见《rendering-001》《performance-005》）：
 
+![三类属性各自从管线哪一段开始跑](../../assets/svg/css-deep-010-animation-tiers.svg)
+
+*图 · 三类属性各自从管线哪一段开始跑*
+
 ```
 Layout（重排） ──▶ Paint（重绘） ──▶ Composite（GPU 合成）
   贵               中                便宜 ✅
@@ -142,6 +146,10 @@ left 动画卡、transform 顺滑的原因：left 改变几何 → 触发重排 
 **2. 快手辨析**：`transition: all` 的两宗罪——性能（无关属性变化也开过渡）与失控（新属性意外被动画）——显式列举属性。
 
 ## 图解总结
+
+![transition 与 animation 的区别，以及动画属性的三级代价](../../assets/svg/css-deep-010-animation.svg)
+
+*图 · 三行里唯一在缩短的是虚线框，省下的就是时间*
 
 ```
 transition: 变化的缓冲（两态被动）  animation: 剧本（多帧主动可循环）

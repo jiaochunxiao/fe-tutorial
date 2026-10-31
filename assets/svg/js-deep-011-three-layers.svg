@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 30 740 342" width="100%" role="img" aria-labelledby="jd11t jd11d">
+  <title id="jd11t">执行机制的三层：调用栈、环境链、函数对象</title>
+  <desc id="jd11d">第一层是调用栈，管谁在执行：全局上下文常驻栈底，调用压栈、结束出栈。第二层是环境与链，管看得到什么：每个上下文持有一个词法环境，由环境记录和外层引用组成，查找由内到外、命中即止、终点是 null。第三层是函数对象，管连到哪里：[[Environment]] 指向出生地环境也就是闭包，[[Prototype]] 指向原型链，this 在调用时才决定。</desc>
+
+  <style>
+    .jd11-band{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .jd11-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .jd11-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .jd11-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <rect class="jd11-band" x="56" y="40" width="628" height="80" rx="3"/>
+  <text class="jd11-t" x="74" y="66" font-size="12">第一层 · 调用栈<tspan font-size="9.5" fill="#6E675A">　第 1 篇</tspan></text>
+  <text class="jd11-s" x="666" y="66" font-size="9" text-anchor="end">管：谁在执行</text>
+  <text class="jd11-s" x="74" y="90" font-size="10.5">全局上下文常驻栈底，调用时压栈、结束出栈</text>
+  <text class="jd11-s" x="74" y="108" font-size="10.5">出栈的上下文没了，它引用的环境却未必</text>
+
+  <rect class="jd11-band" x="56" y="136" width="628" height="104" rx="3"/>
+  <text class="jd11-t" x="74" y="162" font-size="12">第二层 · 环境与链<tspan font-size="9.5" fill="#6E675A">　第 2~4 篇</tspan></text>
+  <text class="jd11-s" x="666" y="162" font-size="9" text-anchor="end">管：看得到什么</text>
+  <text class="jd11-s" x="74" y="186" font-size="10.5">一个上下文持有一个词法环境 = 环境记录 + 外层引用</text>
+  <text class="jd11-s" x="74" y="206" font-size="10.5">创建阶段把形参、函数声明、var / let / const 登记进去</text>
+  <text class="jd11-s" x="74" y="226" font-size="10.5" style="fill:#B03A2E">查找由内到外，命中即止，终点是 null</text>
+
+  <rect class="jd11-band" x="56" y="256" width="628" height="104" rx="3"/>
+  <text class="jd11-t" x="74" y="282" font-size="12">第三层 · 函数对象<tspan font-size="9.5" fill="#6E675A">　第 5 篇起</tspan></text>
+  <text class="jd11-s" x="666" y="282" font-size="9" text-anchor="end">管：连到哪里</text>
+  <text class="jd11-mono" x="74" y="306" font-size="10">[[Environment]]</text>
+  <text class="jd11-s" x="190" y="306" font-size="10.5">→ 出生地的环境，闭包从这里来</text>
+  <text class="jd11-mono" x="74" y="326" font-size="10">[[Prototype]]</text>
+  <text class="jd11-s" x="190" y="326" font-size="10.5">→ 原型链，继承从这里来</text>
+  <text class="jd11-s" x="74" y="346" font-size="10.5">this 不在函数对象里，它在调用那一刻才被塞进来</text>
+
+</svg>

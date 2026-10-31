@@ -42,6 +42,10 @@ list.appendChild(frag);        // 一次性上树 ✅
 
 **DOM（Document Object Model）**：浏览器把 HTML 解析成一棵**对象树**，JS 通过操作这棵树来改变页面。
 
+![childNodes 与 children 的差别](../../assets/svg/dom-events-001-childnodes.svg)
+
+*图 · 你在源码里敲的换行，在 DOM 里是一个真节点*
+
 ```
 document
  └── html (Element)
@@ -166,6 +170,10 @@ items.forEach((x) => {
 **2. 快手题**：`el.children.length` 与 `el.childNodes.length` 什么时候相等？（只有元素节点、无文本注释时——标签连写不换行）。
 
 ## 图解总结
+
+![DOM API 地图：查询、关系、操作、属性四类](../../assets/svg/dom-events-001-api-map.svg)
+
+*图 · 四类 API 各自解决一个问题，混着背必然乱*
 
 ```
 document（树根）

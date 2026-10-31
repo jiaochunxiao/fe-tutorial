@@ -30,6 +30,10 @@ app.a3f8c2.js   vendors.7b2d1e.js   runtime.d91f0a.js   index.html
 
 Webpack 的工作一句话：**从入口出发，把一切资源当模块，构建依赖图，组装成浏览器可运行的产物**。
 
+![Loader 管单个文件，Plugin 管整条流水线](../../assets/svg/engineering-002-webpack-flow.svg)
+
+*图 · Loader 管单个文件，Plugin 管整条流水线*
+
 ```
 entry（入口）
   │ ① 递归解析依赖（一切皆模块：js/css/png/vue…）
@@ -137,6 +141,10 @@ HMR 一句话原理：WebSocket 通知「模块 X 变了」→ 浏览器拉新�
 **2. 三种 hash 的判定题**：改一行业务代码——hash/chunkhash/contenthash 各变哪些文件？（hash：全部；chunkhash：app 变 vendors 不变；contenthash：只有 app 变 ✅ 生产首选）
 
 ## 图解总结
+
+![开篇三个疑问与它们的答案](../../assets/svg/engineering-002-three-questions.svg)
+
+*图 · 开篇的三个疑问，其实是同一件事的三面*
 
 ```
 entry ──make──▶ [Loader链转译] ──AST解析依赖──▶ 递归 ──▶ 依赖图(Modules)

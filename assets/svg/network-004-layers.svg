@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 308" width="100%" role="img" aria-labelledby="q1t q1d">
+  <title id="q1t">HTTP/3 的分层结构</title>
+  <desc id="q1d">最上层是 HTTP/3 语义层，与 h2 相同，用 QPACK 做头压缩；中间是跑在用户态的 QUIC 传输层，每条流有独立偏移量所以丢包只堵自己，CRYPTO 帧内置 TLS 1.3 握手，Connection ID 与 IP 解耦；最下面是 UDP，内核只负责送包。</desc>
+
+  <style>
+    .q1-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.6}
+    .q1-quic{fill:#FBF7EE;stroke:#B03A2E;stroke-width:1.6}
+    .q1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .q1-serif{font-family:'Noto Serif SC','Songti SC','SimSun',serif;fill:#1C1A17}
+    .q1-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <!-- 左侧层次标注 -->
+  <text class="q1-small" x="76" y="88" font-size="10.5" text-anchor="end">应用层</text>
+  <text class="q1-small" x="76" y="190" font-size="10.5" text-anchor="end">传输层</text>
+  <text class="q1-small" x="76" y="280" font-size="10.5" text-anchor="end">内核</text>
+
+  <!-- 语义层 -->
+  <rect class="q1-box" x="90" y="50" width="590" height="68" rx="3"/>
+  <text class="q1-serif" x="106" y="74" font-size="12.5" font-weight="700">HTTP/3 语义层（与 h2 相同）</text>
+  <text class="q1-small" x="106" y="96" font-size="10.5">QPACK 头压缩 —— HPACK 的 QUIC 版</text>
+
+  <!-- QUIC 传输层 -->
+  <rect class="q1-quic" x="90" y="118" width="590" height="136" rx="3"/>
+  <text class="q1-serif" x="106" y="142" font-size="12.5" font-weight="700" style="fill:#B03A2E">QUIC 传输层（跑在用户态）</text>
+  <text class="q1-mono" x="106" y="166" font-size="10.5">流 A ── 独立偏移量 ──▶ 丢包只堵 A</text>
+  <text class="q1-mono" x="106" y="186" font-size="10.5">流 B ── 独立偏移量 ──▶ 不受影响 ✓</text>
+  <text class="q1-mono" x="106" y="206" font-size="10.5">CRYPTO 帧 = TLS 1.3 握手（1-RTT / 0-RTT）</text>
+  <text class="q1-mono" x="106" y="226" font-size="10.5">Connection ID ≠ IP（换网不断连）</text>
+
+  <!-- UDP -->
+  <rect class="q1-box" x="90" y="254" width="590" height="44" rx="3"/>
+  <text class="q1-small" x="106" y="280" font-size="10.5">UDP —— 内核只负责把包送到，可靠、有序、拥塞控制全归 QUIC 自己管</text>
+
+</svg>

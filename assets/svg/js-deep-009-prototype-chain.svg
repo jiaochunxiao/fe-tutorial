@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320" role="img" aria-label="prototype、__proto__ 与 constructor 的三角关系图">
+  <defs>
+    <marker id="p9-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
+    </marker>
+    <marker id="p9-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+  <text x="95" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">实例（对象）</text>
+  <text x="330" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">构造函数</text>
+  <text x="590" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">原型对象</text>
+  <ellipse cx="95" cy="185" rx="58" ry="36" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
+  <text x="95" y="181" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="14" font-weight="700" fill="#1C1A17">实例 f</text>
+  <text x="95" y="201" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">new Foo()</text>
+  <rect x="246" y="152" width="168" height="66" rx="6" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
+  <text x="330" y="181" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="14" font-weight="700" fill="#1C1A17">function Foo()</text>
+  <text x="330" y="203" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">构造函数本体</text>
+  <rect x="506" y="140" width="168" height="96" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
+  <text x="590" y="167" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="14" font-weight="700" fill="#1C1A17">Foo.prototype</text>
+  <text x="590" y="192" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">say: ƒ （共享方法）</text>
+  <text x="590" y="214" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#B03A2E">constructor → Foo</text>
+  <path d="M 414 172 H 500" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#p9-ink)"/>
+  <text x="457" y="161" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">prototype</text>
+  <path d="M 506 220 C 466 256 420 250 372 228" fill="none" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#p9-red)"/>
+  <text x="455" y="256" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">constructor（回指）</text>
+  <path id="p9-lookup" d="M 122 150 C 210 84 420 78 504 138" fill="none" stroke="#B03A2E" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#p9-red)"/>
+  <text x="312" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">__proto__（[[Prototype]]）</text>
+  <circle r="5" fill="#B03A2E">
+    <animateMotion dur="2.8s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#p9-lookup"/>
+    </animateMotion>
+  </circle>
+  <text x="95" y="262" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">访问 f.say 时</text>
+  <text x="95" y="282" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">沿红点路线向上找</text>
+  <text x="590" y="270" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">所有实例共享</text>
+  <text x="590" y="290" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">同一个 prototype</text>
+</svg>

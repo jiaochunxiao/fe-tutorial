@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="s4bt s4bd">
+  <title id="s4bt">前端的诚实边界，与 Token 存放的三条路线</title>
+  <desc id="s4bd">前端藏不住数据：对用户，DevTools 里能看到一切；对 XSS，同源脚本能读走一切。所以前端的职责不是隐藏，而是不放大伤害。Token 存放有三条路线：HttpOnly Cookie 防 XSS 但不防 CSRF；localStorage 反过来，防 CSRF 但挡不住 XSS；双 token 分置是平衡点，access 放内存短期、refresh 放 HttpOnly Cookie。数据泄露有四个面：URL 参数、console 日志、第三方埋点、截图，前三个靠纪律，最后一个靠水印溯源。</desc>
+
+  <style>
+    .s4b-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .s4b-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .s4b-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .s4b-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="s4b-t" x="40" y="26" font-size="8.5">前端藏不住东西 —— 所以职责不是隐藏，是不放大伤害</text>
+
+  <rect class="s4b-b" x="40" y="42" width="660" height="56" rx="2"/>
+  <text class="s4b-t" x="56" y="62" font-size="8">诚实边界</text>
+  <text class="s4b-s" x="56" y="80" font-size="7.5">对用户：DevTools 里能看到接口、字段、逻辑 —— 任何「前端加密/混淆」都挡不住本机的人</text>
+  <text class="s4b-s" x="56" y="94" font-size="7.5">对 XSS：同源脚本能读走内存里的一切 —— 只要脚本能跑，Token 放在哪都只是提高门槛</text>
+
+  <text class="s4b-t" x="40" y="124" font-size="8">Token 存哪：三条路线，没有全胜</text>
+
+  <rect class="s4b-b" x="40" y="132" width="200" height="70" rx="2"/>
+  <text class="s4b-t" x="56" y="150" font-size="7.5">HttpOnly Cookie</text>
+  <text class="s4b-s" x="56" y="166" font-size="7">防 XSS：脚本读不到 ✓</text>
+  <text class="s4b-s" x="56" y="180" font-size="7">防 CSRF：要靠 SameSite ✕</text>
+
+  <rect class="s4b-b" x="250" y="132" width="200" height="70" rx="2"/>
+  <text class="s4b-t" x="266" y="150" font-size="7.5">localStorage</text>
+  <text class="s4b-s" x="266" y="166" font-size="7">防 CSRF：不自动发送 ✓</text>
+  <text class="s4b-s" x="266" y="180" font-size="7">防 XSS：脚本随手可取 ✕</text>
+
+  <rect class="s4b-q" x="460" y="132" width="240" height="70" rx="2"/>
+  <text class="s4b-t" x="476" y="150" font-size="7.5">双 token 分置 · 平衡点</text>
+  <text class="s4b-s" x="476" y="166" font-size="7">access：内存 + 短期，泄露窗口小</text>
+  <text class="s4b-s" x="476" y="180" font-size="7">refresh：HttpOnly Cookie，只用来换新</text>
+
+  <text class="s4b-t" x="40" y="224" font-size="8">四个泄露面（前端的「日常失手」）</text>
+
+  <rect class="s4b-b" x="40" y="232" width="155" height="30" rx="2"/>
+  <text class="s4b-t" x="117" y="251" font-size="7.5" text-anchor="middle">URL 参数</text>
+  <rect class="s4b-b" x="205" y="232" width="155" height="30" rx="2"/>
+  <text class="s4b-t" x="282" y="251" font-size="7.5" text-anchor="middle">console 日志</text>
+  <rect class="s4b-b" x="370" y="232" width="155" height="30" rx="2"/>
+  <text class="s4b-t" x="447" y="251" font-size="7.5" text-anchor="middle">第三方埋点</text>
+  <rect class="s4b-b" x="535" y="232" width="165" height="30" rx="2"/>
+  <text class="s4b-t" x="617" y="251" font-size="7.5" text-anchor="middle">截图（靠水印溯源）</text>
+
+  <text class="s4b-t" x="40" y="288" font-size="8.5" style="fill:#B03A2E">性价比最高的两招不在密码学里：字段最小化 + 默认脱敏，查看原文再走一次二次鉴权。</text>
+</svg>

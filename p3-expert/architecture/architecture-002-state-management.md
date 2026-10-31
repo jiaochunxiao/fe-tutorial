@@ -122,6 +122,10 @@ const visible = useMemo(() => list.filter(f), [list, f]);
 
 ## 图解总结
 
+![五类状态各有各的家，反模式也都写在同一行](../../assets/svg/architecture-002-triage.svg)
+
+*图 · 五类状态各有各的家，反模式也都写在同一行*
+
 ```
 状态分诊（先分类再选型）:
  服务端状态 ──▶ 缓存层(React Query/SWR)   反模式: Redux手写缓存

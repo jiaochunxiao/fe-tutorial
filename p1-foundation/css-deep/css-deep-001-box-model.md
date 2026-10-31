@@ -35,6 +35,10 @@ createdAt: 2026-10-26
 
 浏览器把每个元素渲染成一个**矩形盒子**，从内到外四层：
 
+![盒模型的四层结构](../../assets/svg/css-deep-001-box-model.svg)
+
+*图 · 四层从里到外：只有 margin 在盒外且不画背景，border 与 padding 都算进占位*
+
 ```
 ┌───────────── margin（外边距：盒子之间的距离）─────────────┐
 │ ┌────────── border（边框）──────────────┐                │
@@ -65,6 +69,10 @@ createdAt: 2026-10-26
 .box2 { box-sizing: border-box; }
 /* 总宽 = 300，content = 300 - 40 - 2 = 258px */
 ```
+
+![content-box 与 border-box 的对照](../../assets/svg/css-deep-001-sizing.svg)
+
+*图 · 同一句 width: 200px（padding 20、border 2）：content-box 量内容区，实际占位 244px；border-box 量到边框外沿，内容被挤成 156px*
 
 ```
 content-box:  ◀─ width ─▶

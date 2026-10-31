@@ -114,6 +114,10 @@ main(); // 全局代码里调用 main
 
 压栈阶段（函数逐层调用，栈越来越深）：
 
+![调用栈的四个时刻](../../assets/svg/js-deep-001-callstack.svg)
+
+*图 · 四个连续时刻：每调一层压一层，朱砂描边的永远是正在执行的那一层（栈顶）*
+
 ```
 步骤① 程序启动，全局上下文入栈（此后一直垫底）
 
@@ -182,40 +186,9 @@ main(); // 全局代码里调用 main
 - **全局上下文常驻栈底**：浏览器里，只要页面还在，全局上下文就一直在栈底。脚本全部执行完、再无函数上下文压在上面时，调用栈就处于「空闲」状态，事件循环才能安排下一件事（异步调度的细节在 P2 阶段的事件循环篇展开）；
 - **栈深 = 同一时刻挂起的调用数**：上面的例子栈深不过 4；而 `sumTo(100000)` 需要 100000 个尚未返回的调用同时挂在栈上——难怪要爆。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 340" width="100%" role="img" aria-label="执行上下文栈的压栈与出栈">
-  <defs>
-    <marker id="ec-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-  </defs>
-  <text x="150" y="30" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">执行上下文栈 ECStack</text>
-  <text x="520" y="30" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">代码执行流</text>
-  <rect x="60" y="210" width="200" height="50" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="160" y="241" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">全局上下文（常驻栈底）</text>
-  <rect x="60" y="158" width="200" height="50" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="160" y="189" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">second 的上下文</text>
-  <rect x="60" y="106" width="200" height="50" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2"/>
-  <text x="160" y="131" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#B03A2E">first 的上下文（执行中）</text>
-  <g opacity="0">
-    <rect x="60" y="54" width="200" height="50" fill="#FBF8F1" stroke="#6E675A" stroke-width="1.4" stroke-dasharray="5 4"/>
-    <text x="160" y="85" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#6E675A">下一个上下文…</text>
-    <animateTransform attributeName="transform" type="translate" values="0,-46; 0,0; 0,0; 0,-46" keyTimes="0;0.35;0.75;1" dur="3.6s" repeatCount="indefinite"/>
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.35;0.75;1" dur="3.6s" repeatCount="indefinite"/>
-  </g>
-  <path d="M 292 205 V 130" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#ec-ink)"/>
-  <text x="312" y="172" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">入栈 push</text>
-  <path d="M 34 205 V 130" stroke="#6E675A" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ec-ink)"/>
-  <text x="18" y="120" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">出栈 pop</text>
-  <text x="520" y="80" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">second() 内部调用了 first()</text>
-  <text x="520" y="106" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">→ first 压栈，成为执行中的上下文</text>
-  <text x="520" y="140" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">first 执行完 → 出栈</text>
-  <text x="520" y="166" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">控制权交回 second 继续执行</text>
-  <text x="520" y="200" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">栈底永远是全局上下文，</text>
-  <text x="520" y="226" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">页面关闭时才出栈</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 一段嵌套调用的完整压栈过程——栈顶（红框）永远是「正在执行」的上下文</figcaption>
-</figure>
+![执行上下文栈的压栈与出栈](../../assets/svg/js-deep-001-execution-context-stack.svg)
+
+*图 · 一段嵌套调用的完整压栈过程——栈顶（红框）永远是「正在执行」的上下文*
 
 ### 四、栈溢出与递归：Maximum call stack size exceeded ⭐
 

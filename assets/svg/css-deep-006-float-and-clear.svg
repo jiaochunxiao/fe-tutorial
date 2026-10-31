@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 36 740 210" width="100%" role="img" aria-labelledby="fl6t fl6d">
+  <title id="fl6t">float 的高度塌陷与三种清除方式</title>
+  <desc id="fl6d">浮动元素脱离文档流，父级计算高度时不算它，所以 parent 的边框停在原地、高度为零，而浮动盒和后面的文字都溢出到下面。清除有三种写法：给父级 display: flow-root 建立 BFC 让它包含浮动，这是首选；用 clearfix 伪元素加 clear: both 撑高，是存量代码里的主流；或者 overflow: hidden 借 BFC，代价是会裁剪溢出内容。</desc>
+
+  <style>
+    .fl6-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .fl6-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .fl6-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .fl6-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .fl6-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .fl6-line{stroke:#CDC4AF;stroke-width:1.2}
+  </style>
+
+  <text class="fl6-s" x="40" y="50" font-size="9">父级的高度为什么不包含浮动</text>
+
+  <rect class="fl6-band" x="40" y="60" width="350" height="24" rx="2"/>
+  <text class="fl6-mono" x="52" y="76" font-size="9.5">parent</text>
+  <text class="fl6-mono" x="378" y="76" font-size="9.5" text-anchor="end">height = 0</text>
+
+  <line x1="40" y1="84" x2="40" y2="196" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="390" y1="84" x2="390" y2="196" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+  <rect class="fl6-box" x="52" y="92" width="96" height="70" rx="2"/>
+  <text class="fl6-mono" x="100" y="124" font-size="9.5" text-anchor="middle">float</text>
+  <text class="fl6-s" x="100" y="142" font-size="9" text-anchor="middle">脱流</text>
+
+  <line class="fl6-line" x1="160" y1="104" x2="378" y2="104"/>
+  <line class="fl6-line" x1="160" y1="118" x2="378" y2="118"/>
+  <line class="fl6-line" x1="160" y1="132" x2="378" y2="132"/>
+  <line class="fl6-line" x1="160" y1="146" x2="378" y2="146"/>
+  <line class="fl6-line" x1="52" y1="176" x2="378" y2="176"/>
+  <line class="fl6-line" x1="52" y1="190" x2="378" y2="190"/>
+
+  <text class="fl6-s" x="40" y="212" font-size="9">父级的底边停在这条线上，下面的内容它一概不认</text>
+
+  <text class="fl6-s" x="430" y="50" font-size="9">清除三式</text>
+
+  <text class="fl6-mono" x="430" y="74" font-size="9.5">display: flow-root</text>
+  <text class="fl6-s" x="430" y="90" font-size="9">建 BFC，父级把浮动算进高度</text>
+  <text class="fl6-s" x="612" y="90" font-size="9" style="fill:#B03A2E">首选</text>
+  <line x1="430" y1="102" x2="700" y2="102" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="fl6-mono" x="430" y="122" font-size="9.5">.clearfix::after</text>
+  <text class="fl6-s" x="430" y="138" font-size="9">空盒 clear: both，把父级撑高</text>
+  <text class="fl6-s" x="612" y="138" font-size="9">存量主流</text>
+  <line x1="430" y1="150" x2="700" y2="150" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="fl6-mono" x="430" y="170" font-size="9.5">overflow: hidden</text>
+  <text class="fl6-s" x="430" y="186" font-size="9">借 BFC，代价是裁剪溢出内容</text>
+  <text class="fl6-s" x="612" y="186" font-size="9">有副作用</text>
+
+  <text class="fl6-s" x="40" y="234" font-size="9.5">布局交给 flex / grid　｜　float 回归图文环绕，配 shape-outside 还能按不规则形状排</text>
+</svg>

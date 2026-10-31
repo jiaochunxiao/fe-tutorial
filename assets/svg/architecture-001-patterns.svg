@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 285" width="100%" role="img" aria-labelledby="ar1pt ar1pd">
+  <title id="ar1pt">组件设计的四种模式，加上一条通信的距离原则</title>
+  <desc id="ar1pd">五行对照。容器与展示：分野是逻辑和视图，做法是逻辑归自定义 Hook、视图只做纯渲染，分离不变、形态在进化。受控与非受控：分野是状态在父还是在组件自持，主流程表单用受控、瞬态 UI 用非受控，组件库要提供 defaultValue 与 value 双轨。组合优于配置：结构上的差异开插槽，行为差异才用 props，二十个 prop 就是重构信号。无头组件：行为与状态给你、样式全开放，是设计系统的发动机。通信：按距离选道，props 优先，Context 只放低频值，兄弟状态上提到最近公共父，全局才进 store。</desc>
+
+  <style>
+    .a1p-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a1p-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a1p-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a1p-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="a1p-t" x="40" y="26" font-size="8.5">四种模式 + 一条通信原则 —— 每一行都回答「分野在哪」</text>
+
+  <text class="a1p-s" x="44" y="48" font-size="7">模式</text>
+  <text class="a1p-s" x="196" y="48" font-size="7">分野</text>
+  <text class="a1p-s" x="382" y="48" font-size="7">判断与做法</text>
+
+  <rect class="a1p-b" x="40" y="58" width="660" height="32" rx="1"/>
+  <text class="a1p-t" x="52" y="78" font-size="8">容器 / 展示</text>
+  <text class="a1p-s" x="196" y="78" font-size="7.5">逻辑 vs 视图</text>
+  <text class="a1p-s" x="382" y="78" font-size="7.5">逻辑归 Hook，视图只做纯渲染 —— 分离不变，形态进化</text>
+
+  <rect class="a1p-b" x="40" y="96" width="660" height="32" rx="1"/>
+  <text class="a1p-t" x="52" y="116" font-size="8">受控 / 非受控</text>
+  <text class="a1p-s" x="196" y="116" font-size="7.5">状态在父 vs 自持</text>
+  <text class="a1p-s" x="382" y="116" font-size="7.5">主流程表单受控、瞬态 UI 非受控；组件库要 defaultValue 双轨</text>
+
+  <rect class="a1p-b" x="40" y="134" width="660" height="32" rx="1"/>
+  <text class="a1p-t" x="52" y="154" font-size="8">组合 &gt; 配置</text>
+  <text class="a1p-s" x="196" y="154" font-size="7.5">结构差异 vs 行为差异</text>
+  <text class="a1p-s" x="382" y="154" font-size="7.5">结构开插槽，行为才用 props —— 20 个 prop 就是重构信号</text>
+
+  <rect class="a1p-b" x="40" y="172" width="660" height="32" rx="1"/>
+  <text class="a1p-t" x="52" y="192" font-size="8">无头组件</text>
+  <text class="a1p-s" x="196" y="192" font-size="7.5">行为+状态 vs 样式</text>
+  <text class="a1p-s" x="382" y="192" font-size="7.5">内核给你、样式全开放（Radix 模式）—— 设计系统的发动机</text>
+
+  <rect class="a1p-q" x="40" y="210" width="660" height="32" rx="1"/>
+  <text class="a1p-t" x="52" y="230" font-size="8">通信</text>
+  <text class="a1p-s" x="196" y="230" font-size="7.5">两个组件的距离</text>
+  <text class="a1p-s" x="382" y="230" font-size="7.5">props &gt; Context（只放低频）&gt; 上提到公共父 &gt; 全局 store</text>
+
+  <text class="a1p-t" x="40" y="266" font-size="8.5" style="fill:#B03A2E">前四行都在同一件事上做选择：把什么留在组件里，把什么推出去。</text>
+</svg>

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 308" width="100%" role="img" aria-labelledby="r6t r6d">
+  <title id="r6t">三个病例共用的诊断流水线与四素处方</title>
+  <desc id="r6d">上半是五段诊断流水线：先复现并录制，稳定场景录三次取典型；再读三条轨，Frames 看有没有掉帧、Main 看谁最长、任务的色彩构成看是 JS 黄还是布局紫还是绘制绿；然后归因到渲染管线的具体段位，对照五站分科；接着开处方，只有四种动作；最后重录对比并用 RUM 曲线验证闭环。中间把四素处方展开：少做是算法优化与范围收窄，晚做是 debounce 与空闲执行和分优先级，挪走是把计算交给 Worker、把动画交给合成层，拆碎是用 yield、分帧与虚拟化。底部三个病例速记：滚动掉帧是布局抖动加全量重排，处方是 rAF 合帧加读写分离；先卡后动是长任务加首渲染，处方是预构建加合成层动画；打字延迟是每键长任务，处方是 debounce 加增量渲染加 yield 让主线程及时归还。</desc>
+
+  <style>
+    .r6-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r6-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .r6-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r6-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .r6-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="r6-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="r6-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="r6-t" x="30" y="22" font-size="8.5">诊断流水线：所有渲染问题都走这五步</text>
+
+  <rect class="r6-b" x="30" y="34" width="124" height="48" rx="2"/>
+  <text class="r6-mono" x="42" y="52" font-size="8" style="fill:#B03A2E">①</text>
+  <text class="r6-t" x="58" y="52" font-size="8">复现 + 录制</text>
+  <text class="r6-s" x="42" y="70" font-size="6.5">稳定场景录 3 次取典型</text>
+
+  <line x1="154" y1="58" x2="165" y2="58" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r6-ink)"/>
+
+  <rect class="r6-b" x="169" y="34" width="124" height="48" rx="2"/>
+  <text class="r6-mono" x="181" y="52" font-size="8" style="fill:#B03A2E">②</text>
+  <text class="r6-t" x="197" y="52" font-size="8">读三轨</text>
+  <text class="r6-s" x="181" y="70" font-size="6.5">Frames → Main → 色彩</text>
+
+  <line x1="293" y1="58" x2="304" y2="58" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r6-ink)"/>
+
+  <rect class="r6-b" x="308" y="34" width="124" height="48" rx="2"/>
+  <text class="r6-mono" x="320" y="52" font-size="8" style="fill:#B03A2E">③</text>
+  <text class="r6-t" x="336" y="52" font-size="8">归因段位</text>
+  <text class="r6-s" x="320" y="70" font-size="6.5">对应管线五站分科</text>
+
+  <line x1="432" y1="58" x2="443" y2="58" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r6-ink)"/>
+
+  <rect class="r6-b" x="447" y="34" width="124" height="48" rx="2"/>
+  <text class="r6-mono" x="459" y="52" font-size="8" style="fill:#B03A2E">④</text>
+  <text class="r6-t" x="475" y="52" font-size="8">四素处方</text>
+  <text class="r6-s" x="459" y="70" font-size="6.5">少做 · 晚做 · 挪走 · 拆碎</text>
+
+  <line x1="571" y1="58" x2="582" y2="58" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r6-ink)"/>
+
+  <rect class="r6-b" x="586" y="34" width="124" height="48" rx="2"/>
+  <text class="r6-mono" x="598" y="52" font-size="8" style="fill:#B03A2E">⑤</text>
+  <text class="r6-t" x="614" y="52" font-size="8">重录验证</text>
+  <text class="r6-s" x="598" y="70" font-size="6.5">对比 + RUM 曲线闭环</text>
+
+  <text class="r6-t" x="30" y="106" font-size="8.5">四素处方：万金油，所有优化都是这四个动作的组合</text>
+
+  <rect class="r6-b" x="30" y="114" width="160" height="90" rx="2"/>
+  <text class="r6-mono" x="42" y="136" font-size="10" style="fill:#B03A2E">少做</text>
+  <text class="r6-s" x="42" y="156" font-size="7">算法优化</text>
+  <text class="r6-s" x="42" y="172" font-size="7">范围收窄</text>
+  <text class="r6-s" x="42" y="188" font-size="7">contain / IO 观察者</text>
+
+  <rect class="r6-b" x="202" y="114" width="160" height="90" rx="2"/>
+  <text class="r6-mono" x="214" y="136" font-size="10" style="fill:#B03A2E">晚做</text>
+  <text class="r6-s" x="214" y="156" font-size="7">debounce</text>
+  <text class="r6-s" x="214" y="172" font-size="7">requestIdleCallback</text>
+  <text class="r6-s" x="214" y="188" font-size="7">分优先级</text>
+
+  <rect class="r6-b" x="374" y="114" width="160" height="90" rx="2"/>
+  <text class="r6-mono" x="386" y="136" font-size="10" style="fill:#B03A2E">挪走</text>
+  <text class="r6-s" x="386" y="156" font-size="7">计算 → Worker</text>
+  <text class="r6-s" x="386" y="172" font-size="7">动画 → 合成层</text>
+  <text class="r6-s" x="386" y="188" font-size="7">都不占主线程</text>
+
+  <rect class="r6-c" x="546" y="114" width="164" height="90" rx="2"/>
+  <text class="r6-mono" x="558" y="136" font-size="10" style="fill:#B03A2E">拆碎</text>
+  <text class="r6-s" x="558" y="156" font-size="7">scheduler.yield</text>
+  <text class="r6-s" x="558" y="172" font-size="7">分帧</text>
+  <text class="r6-s" x="558" y="188" font-size="7">虚拟化</text>
+
+  <text class="r6-t" x="30" y="226" font-size="8.5">三个病例的速记</text>
+
+  <rect class="r6-b" x="30" y="234" width="216" height="50" rx="2"/>
+  <text class="r6-t" x="42" y="250" font-size="8">A 滚动掉帧</text>
+  <text class="r6-s" x="42" y="264" font-size="6.5">读写交替 thrashing + 全量重排</text>
+  <text class="r6-s" x="42" y="275" font-size="6.5" style="fill:#B03A2E">→ rAF 合帧 + 读写分离</text>
+
+  <rect class="r6-b" x="262" y="234" width="216" height="50" rx="2"/>
+  <text class="r6-t" x="274" y="250" font-size="8">B 先卡后动</text>
+  <text class="r6-s" x="274" y="264" font-size="6.5">长任务 + 首渲染一次性铺开</text>
+  <text class="r6-s" x="274" y="275" font-size="6.5" style="fill:#B03A2E">→ 预构建 + Fragment + 合成层</text>
+
+  <rect class="r6-b" x="494" y="234" width="216" height="50" rx="2"/>
+  <text class="r6-t" x="506" y="250" font-size="8">C 打字延迟</text>
+  <text class="r6-s" x="506" y="264" font-size="6.5">每键一个长任务，上屏被挤后面</text>
+  <text class="r6-s" x="506" y="275" font-size="6.5" style="fill:#B03A2E">→ debounce + 增量 + yield</text>
+
+  <text class="r6-s" x="30" y="300" font-size="7.5">原理不是背的 —— 每个原理都应该能在火焰图上指认出来</text>
+</svg>

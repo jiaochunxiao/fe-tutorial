@@ -163,6 +163,10 @@ loggable/defaults/validatable 三层包装，就是三个 Proxy 叠加——每�
 
 ## 图解总结
 
+![Proxy 的拦截层：外界操作先进 handler，再落到 target](../../assets/svg/es6-008-proxy.svg)
+
+*图 · 所有操作都得先过 handler 这道门，没有绕过去的路*
+
 ```
         外界代码
            │ p.x / p.x=v / in / new p()

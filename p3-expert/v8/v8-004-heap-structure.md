@@ -115,6 +115,10 @@ Performance Monitor 的 JS Heap 只是总量 —— 分区要靠 snapshot 细看
 
 ## 图解总结
 
+![堆内分区与堆外的三块内存](../../assets/svg/v8-004-heap-map.svg)
+
+*图 · 左边一个框、右边三块散件：进程内存不等于堆内存，差额大多在 External 里*
+
 ```
 V8 堆                                  堆外
 ├ 新生代(MB级): From|To ──Scavenger──  ├ 栈: 调用帧/局部原始值(不归GC)

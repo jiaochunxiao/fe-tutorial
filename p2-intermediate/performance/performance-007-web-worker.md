@@ -128,6 +128,10 @@ Excel 冻结的病理与治疗：**纯计算霸占主线程 → 渲染与交互�
 
 ## 图解总结
 
+![主线程与 Worker 的双向通道](../../assets/svg/performance-007-worker.svg)
+
+*图 · 搬过去的是数据副本，不是对象本身*
+
 ```
 主线程 ──postMessage(克隆)──▶ Worker 线程
    ▲                            │ 独立事件循环/全局对象

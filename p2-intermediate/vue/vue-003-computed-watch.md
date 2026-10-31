@@ -77,6 +77,10 @@ function computed(getter) {
 
 **三段逻辑闭环**：
 
+![computed 的 dirty 状态机](../../assets/svg/vue-003-computed.svg)
+
+*图 · 依赖变化只是把开关拨到「脏」，重算要等有人来取*
+
 ```
 取值: dirty? ──是──▶ 执行 getter 存缓存，dirty=false ──▶ 返回缓存
                     └─否──▶ 直接返回缓存（零计算）✅
@@ -146,6 +150,10 @@ watchEffect(async (onCleanup) => {
 **3. 一个高频实战题**：搜索框防抖——`watch(kw, () => {...debounce...})` vs `watchEffect`+AbortController：后者天然每次重跑清理上次请求，竞态更稳（《js-async-008》）。
 
 ## 图解总结
+
+![三类 effect 共用一套账本，差异在调度策略](../../assets/svg/vue-003-effects.svg)
+
+*图 · 三类 effect 共用一套账本，差异在调度策略*
 
 ```
             track/trigger（vue-001 账本）

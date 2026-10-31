@@ -59,6 +59,10 @@ Fiber 链表（React 16+）：每个 Fiber 携带三个指针 ⭐
       Header ─sibling─ List  …
 ```
 
+![递归栈与 Fiber 三指针的差别](../../assets/svg/react-003-fiber-list.svg)
+
+*图 · 递归栈与 Fiber 三指针的差别*
+
 有了这三个指针，**遍历整棵树不需要递归**——用一个 while 循环按「深度优先」走：进 child、无 child 走 sibling、无 sibling 回 return——**每一步的「下一站」都写在节点上**，循环里随时可以 break（记住当前节点，下次从它继续）。
 
 ```
@@ -84,44 +88,15 @@ commit 阶段：完成 → workInProgress 整体"上台"成为新 current（指�
 
 **双缓冲的价值**：render 可中断重试期间，屏幕上的 current 纹丝不动；只有 commit 一次切换——「计算阶段随便折腾，呈现阶段原子替换」。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 280" width="100%" role="img" aria-label="Fiber 双缓冲：current 树与 workInProgress 树在 commit 时切换">
-  <defs>
-    <marker id="f3-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-  </defs>
-  <text x="200" y="34" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">current 树（屏幕上的）</text>
-  <text x="520" y="34" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">workInProgress 树（计算中的）</text>
-  <rect x="120" y="56" width="160" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="200" y="84" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">App（current）</text>
-  <rect x="120" y="122" width="160" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="200" y="150" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">Page（current）</text>
-  <g>
-    <rect x="440" y="56" width="160" height="46" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8" stroke-dasharray="7 4"/>
-    <text x="520" y="84" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#B03A2E">App（WIP · 改造中）</text>
-    <animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/>
-  </g>
-  <g>
-    <rect x="440" y="122" width="160" height="46" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8" stroke-dasharray="7 4"/>
-    <text x="520" y="150" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#B03A2E">Page（WIP · 可中断）</text>
-    <animate attributeName="opacity" values="0.4;1;0.4" dur="2.6s" repeatCount="indefinite"/>
-  </g>
-  <path d="M 280 79 H 434" stroke="#1C1A17" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#f3-ink)"/>
-  <text x="357" y="70" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6E675A">复用节点（alternate 互指）</text>
-  <path d="M 520 168 V 196 H 280" fill="none" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#f3-ink)">
-    <animate attributeName="stroke-opacity" values="1;0.35;1" dur="2.6s" repeatCount="indefinite"/>
-  </path>
-  <text x="400" y="188" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">commit 完成 → WIP 整体上台成为新 current</text>
-  <rect x="100" y="216" width="200" height="44" rx="8" fill="none" stroke="#1C1A17" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <text x="200" y="243" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">render 阶段可中断——屏幕纹丝不动</text>
-  <rect x="420" y="216" width="200" height="44" rx="8" fill="none" stroke="#B03A2E" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <text x="520" y="243" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">commit 同步不可中断——原子替换</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 双缓冲——render 在影子树里随便折腾，commit 时整体切换上台，用户永远看到完整的帧</figcaption>
-</figure>
+![Fiber 双缓冲：current 树与 workInProgress 树在 commit 时切换](../../assets/svg/react-003-fiber.svg)
+
+*图 · 双缓冲——render 在影子树里随便折腾，commit 时整体切换上台，用户永远看到完整的帧*
 
 ### 三、调度与优先级：让路给更要紧的事 ⭐⭐
+
+![时间片让路与优先级的闭环](../../assets/svg/react-003-schedule.svg)
+
+*图 · 时间片让路与优先级的闭环*
 
 ```
 shouldYield() 的判定（Scheduler 调度器）：
@@ -157,6 +132,10 @@ render 阶段 Diff 时，有变更的 Fiber 把自己挂进 **Effect List（单�
 **3. 一个认知纠偏**：Fiber 不是「虚拟 DOM 的替代」——React 元素（描述）→ Fiber（工作单元）→ DOM（呈现），三者是流水线上的三站。
 
 ## 图解总结
+
+![Fiber 的 child / sibling / return 三指针](../../assets/svg/react-003-fiber-pointers.svg)
+
+*图 · 三个指针就是一次「深度优先遍历」的全部状态：child 往下、sibling 往右、return 回父——遍历进度因此存在节点上，而不在调用栈里*
 
 ```
 链表三指针:  App ──┐ child

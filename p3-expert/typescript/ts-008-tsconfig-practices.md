@@ -128,6 +128,10 @@ createdAt: 2026-10-26
 
 ## 图解总结
 
+![从 JS 到 strict 的五级台阶](../../assets/svg/ts-008-tsconfig.svg)
+
+*图 · 台阶的高度是覆盖率，不是「完成度」*
+
 ```
 strict = 九道闸(NullChecks⭐/ImplicitAny/FunctionTypes/…)
 双目标: target=语法降级 │ lib=类型可用面 │ 现代分工: tsc检查 + bundler编译

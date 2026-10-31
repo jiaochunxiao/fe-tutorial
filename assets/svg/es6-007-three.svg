@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 288" width="100%" role="img" aria-labelledby="e7t e7d">
+  <title id="e7t">Set、Map、WeakMap 三兄弟的分工</title>
+  <desc id="e7d">三列并排对照。Set 是值到值的集合，键就是值本身，用 SameValueZero 判等，保持插入序且可迭代，对象按引用判等所以两个内容相同的对象字面量不算重复，用途是去重、并交差集与成员判断，has 与 add 都是 O(1)。Map 是任意键到值，键可以是任意类型包括对象，保持插入序、可迭代、有 size，且没有原型链污染，是字典语义的首选，get 与 set 都是 O(1)。WeakMap 的键只能是对象且是弱引用，因此没有 size 也不能遍历，键被回收时条目自动蒸发，用于 DOM 元数据、私有数据与框架的依赖收集。底部三个选型分支：字典语义选 Map，记录加 JSON 序列化选 Object，生命周期要跟随对象就选 WeakMap。最后一行点明弱引用结构没有 size、不可遍历的原因：谁还活着只有 GC 知道。</desc>
+
+  <style>
+    .e7-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .e7-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .e7-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e7-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e7-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="e7-t" x="40" y="26" font-size="8.5">三兄弟：键不同、序不同、生死规则不同</text>
+
+  <rect class="e7-b" x="40" y="44" width="216" height="136" rx="2"/>
+  <text class="e7-mono" x="52" y="66" font-size="10">Set</text>
+  <text class="e7-mono" x="52" y="84" font-size="7.5" style="fill:#6E675A">{ 值 → 值 }</text>
+  <text class="e7-s" x="52" y="104" font-size="7.5">键：值本身，SameValueZero</text>
+  <text class="e7-s" x="52" y="120" font-size="7.5">序：插入序，可迭代</text>
+  <text class="e7-s" x="52" y="136" font-size="7.5">坑：{a:1} !== {a:1}</text>
+  <text class="e7-s" x="52" y="152" font-size="7.5">用途：去重 / 并交差 / 判存</text>
+  <text class="e7-s" x="52" y="168" font-size="7.5" style="fill:#B03A2E">has / add 都是 O(1)</text>
+
+  <rect class="e7-b" x="262" y="44" width="216" height="136" rx="2"/>
+  <text class="e7-mono" x="274" y="66" font-size="10">Map</text>
+  <text class="e7-mono" x="274" y="84" font-size="7.5" style="fill:#6E675A">{ 任意键 → 值 }</text>
+  <text class="e7-s" x="274" y="104" font-size="7.5">键：任意类型，对象也行</text>
+  <text class="e7-s" x="274" y="120" font-size="7.5">序：插入序 · 可迭代 · 有 size</text>
+  <text class="e7-s" x="274" y="136" font-size="7.5">优势：无原型链污染</text>
+  <text class="e7-s" x="274" y="152" font-size="7.5">用途：字典 / 缓存 / LRU</text>
+  <text class="e7-s" x="274" y="168" font-size="7.5" style="fill:#B03A2E">get / set 都是 O(1)</text>
+
+  <rect class="e7-c" x="484" y="44" width="216" height="136" rx="2"/>
+  <text class="e7-mono" x="496" y="66" font-size="10">WeakMap</text>
+  <text class="e7-mono" x="496" y="84" font-size="7.5" style="fill:#6E675A">{ 对象键 → 值 }</text>
+  <text class="e7-s" x="496" y="104" font-size="7.5">键：只能是对象，弱引用</text>
+  <text class="e7-s" x="496" y="120" font-size="7.5">限：无 size、不可遍历</text>
+  <text class="e7-s" x="496" y="136" font-size="7.5">语义：键死 → 条目自动蒸发</text>
+  <text class="e7-s" x="496" y="152" font-size="7.5">用途：DOM 元数据 / 私有数据</text>
+  <text class="e7-s" x="496" y="168" font-size="7.5" style="fill:#B03A2E">Vue3 依赖收集的 targetMap</text>
+
+  <text class="e7-t" x="40" y="206" font-size="8.5">选型：一句话分流</text>
+
+  <rect class="e7-b" x="40" y="216" width="216" height="40" rx="2"/>
+  <text class="e7-t" x="52" y="232" font-size="8.5">字典语义 → Map</text>
+  <text class="e7-s" x="52" y="247" font-size="7.5">键任意、要顺序、要 size</text>
+
+  <rect class="e7-b" x="262" y="216" width="216" height="40" rx="2"/>
+  <text class="e7-t" x="274" y="232" font-size="8.5">记录 + JSON → Object</text>
+  <text class="e7-s" x="274" y="247" font-size="7.5">要序列化、要解构、字面量直观</text>
+
+  <rect class="e7-b" x="484" y="216" width="216" height="40" rx="2"/>
+  <text class="e7-t" x="496" y="232" font-size="8.5">生命周期跟随对象 → WeakMap</text>
+  <text class="e7-s" x="496" y="247" font-size="7.5">键死即清，不用手动 delete</text>
+
+  <text class="e7-s" x="40" y="278" font-size="7.5" style="fill:#B03A2E">弱引用结构没有 size、不能遍历 —— 「谁还活着」只有 GC 知道，所以它不提供任何让你数一数的接口</text>
+</svg>

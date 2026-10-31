@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320" role="img" aria-label="LRU：哈希定位与双向链表序联动">
+  <defs>
+    <marker id="lru-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
+    </marker>
+    <marker id="lru-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
+    </marker>
+    <path id="lru-fly" d="M 150 108 H 340 C 380 108 370 92 330 92 L 316 92" fill="none"/>
+  </defs>
+  <text x="140" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">Map：key → Node（哈希定位）</text>
+  <text x="470" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">双向链表：head ⇄ 最新 ⇄ … ⇄ 最旧 ⇄ tail</text>
+  <rect x="40" y="44" width="200" height="190" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
+  <line x1="40" y1="86" x2="240" y2="86" stroke="#1C1A17" stroke-width="1"/>
+  <line x1="40" y1="130" x2="240" y2="130" stroke="#1C1A17" stroke-width="1"/>
+  <line x1="40" y1="174" x2="240" y2="174" stroke="#1C1A17" stroke-width="1"/>
+  <text x="70" y="72" font-family="JetBrains Mono,monospace" font-size="12" fill="#B03A2E">'a' →</text>
+  <text x="70" y="116" font-family="JetBrains Mono,monospace" font-size="12" fill="#1C1A17">'b' →</text>
+  <text x="70" y="160" font-family="JetBrains Mono,monospace" font-size="12" fill="#1C1A17">'c' →</text>
+  <circle cx="196" cy="68" r="5" fill="#B03A2E"/>
+  <circle cx="196" cy="112" r="5" fill="#1C1A17"/>
+  <circle cx="196" cy="156" r="5" fill="#1C1A17"/>
+  <rect x="264" y="76" width="60" height="40" rx="6" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
+  <text x="294" y="101" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#1C1A17">head</text>
+  <rect x="352" y="76" width="86" height="40" rx="6" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2"/>
+  <text x="395" y="95" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#1C1A17">a（最新）</text>
+  <text x="395" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#6E675A">value: v1</text>
+  <rect x="462" y="76" width="86" height="40" rx="6" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
+  <text x="505" y="95" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">b</text>
+  <text x="505" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#6E675A">value: v2</text>
+  <rect x="572" y="76" width="86" height="40" rx="6" fill="#EFE8D8" stroke="#6E675A" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="615" y="95" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">c（最旧）</text>
+  <rect x="676" y="76" width="40" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
+  <text x="696" y="101" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">tail</text>
+  <path d="M 340 96 H 352" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#lru-ink)"/>
+  <path d="M 438 96 H 462" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#lru-ink)"/>
+  <path d="M 548 96 H 572" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#lru-ink)"/>
+  <path d="M 658 96 H 676" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#lru-ink)"/>
+  <circle r="5.5" fill="#B03A2E">
+    <animateMotion dur="3s" repeatCount="indefinite" path="M 150 108 H 340 C 380 108 372 96 395 96"/>
+  </circle>
+  <text x="196" y="286" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">① 哈希定位（O(1)）</text>
+  <text x="470" y="286" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">② 摘除 → 头插刷新「最近」</text>
+  <text x="640" y="148" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#B03A2E">③ 容量满 →</text>
+  <text x="640" y="168" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#B03A2E">淘汰 tail.prev 并反向删表项</text>
+</svg>

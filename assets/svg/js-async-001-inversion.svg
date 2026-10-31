@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 296" width="100%" role="img" aria-labelledby="a1it a1id">
+  <title id="a1it">控制反转：同步调用与回调调用的控制权归属</title>
+  <desc id="a1id">上面一行是同步调用：调用方发起 compute，compute 执行完把结果返回，控制权全程在调用方手里，返回就是交接完毕。下面一行是回调调用：调用方把 callback 交给异步方之后就交出了控制权，什么时候调、调几次、怎么传错，全由异步方决定——这就是控制反转，它本质是一个信任问题。修复路线是一代代把控制权拿回来：error-first 约定、Promise、async/await。</desc>
+
+  <style>
+    .a1i-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.3}
+    .a1i-alt{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.3}
+    .a1i-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a1i-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a1i-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="a1i-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="a1i-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="a1i-s" x="40" y="44" font-size="9">同步</text>
+  <rect class="a1i-box" x="90" y="22" width="150" height="48" rx="3"/>
+  <text class="a1i-t" x="165" y="51" font-size="9" text-anchor="middle">调用方</text>
+  <rect class="a1i-box" x="400" y="22" width="150" height="48" rx="3"/>
+  <text class="a1i-mono" x="475" y="51" font-size="9" text-anchor="middle">compute</text>
+  <line x1="240" y1="38" x2="396" y2="38" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#a1i-ink)"/>
+  <text class="a1i-s" x="318" y="32" font-size="7.5" text-anchor="middle">调用</text>
+  <line x1="400" y1="58" x2="244" y2="58" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#a1i-ink)"/>
+  <text class="a1i-s" x="318" y="72" font-size="7.5" text-anchor="middle">返回</text>
+  <text class="a1i-t" x="580" y="38" font-size="8.5" style="fill:#B03A2E">控制权始终在调用方</text>
+  <text class="a1i-s" x="580" y="54" font-size="8">函数一返回，交接就结束了</text>
+
+  <line x1="40" y1="96" x2="700" y2="96" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="a1i-s" x="40" y="124" font-size="9">回调</text>
+  <rect class="a1i-box" x="90" y="104" width="150" height="48" rx="3"/>
+  <text class="a1i-t" x="165" y="133" font-size="9" text-anchor="middle">调用方</text>
+  <rect class="a1i-box" x="400" y="104" width="150" height="48" rx="3"/>
+  <text class="a1i-t" x="475" y="133" font-size="9" text-anchor="middle">异步方</text>
+  <line x1="240" y1="120" x2="396" y2="120" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#a1i-ink)"/>
+  <text class="a1i-s" x="318" y="114" font-size="7.5" text-anchor="middle">交出 callback</text>
+
+  <text class="a1i-s" x="580" y="112" font-size="8">何时调？</text>
+  <text class="a1i-s" x="580" y="130" font-size="8">调几次？</text>
+  <text class="a1i-s" x="580" y="148" font-size="8">怎么传错？</text>
+
+  <path d="M400 152 V176 H240 V192" fill="none" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#a1i-red)"/>
+  <text class="a1i-t" x="300" y="170" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">控制反转 = 信任问题</text>
+
+  <rect class="a1i-alt" x="90" y="196" width="150" height="44" rx="3"/>
+  <text class="a1i-mono" x="165" y="222" font-size="9" text-anchor="middle">你的 callback</text>
+  <text class="a1i-s" x="256" y="222" font-size="8">它调不调、什么时候调，你说了不算</text>
+
+  <line x1="40" y1="262" x2="40" y2="280" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="a1i-s" x="54" y="272" font-size="8.5">修复路线：error-first 约定 → Promise → async/await —— 每一代都在把「控制权」往回拿一点</text>
+</svg>

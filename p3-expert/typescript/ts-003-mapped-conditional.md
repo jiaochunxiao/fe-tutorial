@@ -141,6 +141,10 @@ Partial 一行源码的组成：`[K in keyof T]`（映射遍历）+ `?`（修饰
 
 ## 图解总结
 
+![一个遍历键，一个做判断，工具类型全是它俩拼的](../../assets/svg/ts-003-mapped.svg)
+
+*图 · 一个遍历键，一个做判断，工具类型全是它俩拼的*
+
 ```
 映射类型（类型的 map）:  { [K in keyof T]: T[K] }
   修饰符: ±readonly ±?  │ 键重映射: as `get${Capitalize<K>}` │ as never=删键

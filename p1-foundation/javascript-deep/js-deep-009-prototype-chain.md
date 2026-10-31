@@ -49,6 +49,10 @@ console.log(p.constructor === Person);                   // true —— p 自己
 
 理解原型必须先分清三个角色：
 
+![原型三角关系](../../assets/svg/js-deep-009-triangle.svg)
+
+*图 · 三条边：prototype 只有函数有，[[Prototype]]（__proto__）所有对象都有，constructor 只是原型上的普通属性*
+
 ```
    Person（构造函数）                  p（实例）
         │                               │
@@ -71,51 +75,17 @@ console.log(p.constructor === Person);                   // true —— p 自己
 - **`prototype` 是函数才有的属性**（箭头函数、class 内部方法没有）；
 - **`[[Prototype]]` / `__proto__` 是所有对象都有的内部槽**——函数也是对象，所以 `Person.__proto__` 也存在（指向 `Function.prototype`）。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 320" width="100%" role="img" aria-label="prototype、__proto__ 与 constructor 的三角关系图">
-  <defs>
-    <marker id="p9-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="p9-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <text x="95" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">实例（对象）</text>
-  <text x="330" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">构造函数</text>
-  <text x="590" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">原型对象</text>
-  <ellipse cx="95" cy="185" rx="58" ry="36" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="95" y="181" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="14" font-weight="700" fill="#1C1A17">实例 f</text>
-  <text x="95" y="201" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">new Foo()</text>
-  <rect x="246" y="152" width="168" height="66" rx="6" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="330" y="181" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="14" font-weight="700" fill="#1C1A17">function Foo()</text>
-  <text x="330" y="203" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">构造函数本体</text>
-  <rect x="506" y="140" width="168" height="96" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="590" y="167" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="14" font-weight="700" fill="#1C1A17">Foo.prototype</text>
-  <text x="590" y="192" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">say: ƒ （共享方法）</text>
-  <text x="590" y="214" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#B03A2E">constructor → Foo</text>
-  <path d="M 414 172 H 500" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#p9-ink)"/>
-  <text x="457" y="161" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">prototype</text>
-  <path d="M 506 220 C 466 256 420 250 372 228" fill="none" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#p9-red)"/>
-  <text x="455" y="256" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">constructor（回指）</text>
-  <path id="p9-lookup" d="M 122 150 C 210 84 420 78 504 138" fill="none" stroke="#B03A2E" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#p9-red)"/>
-  <text x="312" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">__proto__（[[Prototype]]）</text>
-  <circle r="5" fill="#B03A2E">
-    <animateMotion dur="2.8s" repeatCount="indefinite" rotate="auto">
-      <mpath href="#p9-lookup"/>
-    </animateMotion>
-  </circle>
-  <text x="95" y="262" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">访问 f.say 时</text>
-  <text x="95" y="282" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">沿红点路线向上找</text>
-  <text x="590" y="270" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">所有实例共享</text>
-  <text x="590" y="290" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">同一个 prototype</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · prototype / __proto__ / constructor 的三角关系——红点是属性查找的行进路线</figcaption>
-</figure>
+![prototype、__proto__ 与 constructor 的三角关系图](../../assets/svg/js-deep-009-prototype-chain.svg)
+
+*图 · prototype / __proto__ / constructor 的三角关系——红点是属性查找的行进路线*
 
 ### 二、属性查找：沿原型链向上
 
 访问 `p.sayHi` 的完整过程：
+
+![属性查找沿链向上](../../assets/svg/js-deep-009-lookup.svg)
+
+*图 · 三次查询叠在同一条链上：sayHi 停在第 2 层，toString 停在第 3 层，xyz 一路走到 null 仍没有*
 
 ```
 p 自身属性 { name: '小明' }
@@ -195,6 +165,10 @@ console.log(myInstanceof([], Object)); // true
 这也解释了跨 iframe 失效的原因：两个 iframe 各有一套 `Array`，`iframeA 的数组 instanceof iframeB 的 Array` 沿链找不到**那个特定的** `Array.prototype`，返回 false（类型判断详见《js-core-002》）。
 
 ### 五、完整链路图：把终点画出来
+
+![完整原型链路图](../../assets/svg/js-deep-009-graph.svg)
+
+*图 · 把终点画出来：实例链、函数层、以及 Function 自指的那个环，三色边分别是 prototype / constructor / __proto__*
 
 ```
 实例 p ──▶ Person.prototype ──▶ Object.prototype ──▶ null

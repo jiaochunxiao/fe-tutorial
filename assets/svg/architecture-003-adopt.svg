@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 285" width="100%" role="img" aria-labelledby="ar3at ar3ad">
+  <title id="ar3at">微前端解决的是组织问题，不是技术问题</title>
+  <desc id="ar3ad">左边是该拆的三个信号：三个以上团队并行、巨石应用发版互相拖累、技术栈需要渐进替换。右边是不该拆的三种情况：团队小于二十人、项目早期、单一技术栈的新项目。底部列出五笔代价：构建部署复杂度、沙箱的边界坑、体验一致性、公共依赖协商、调试成本。判断的实质是用运行时复杂度换组织效率，值不值取决于团队规模，以及拆分边界是否天然落在业务域上。</desc>
+
+  <style>
+    .a3a-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a3a-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a3a-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a3a-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="a3a-t" x="40" y="26" font-size="8.5">微前端解决的是组织问题，不是技术问题</text>
+
+  <rect class="a3a-b" x="40" y="44" width="320" height="120" rx="2"/>
+  <text class="a3a-t" x="56" y="64" font-size="8.5" style="fill:#B03A2E">该拆的三个信号</text>
+  <text class="a3a-s" x="56" y="86" font-size="7.5">① 多团队并行（≥ 3 个团队，各有各的排期）</text>
+  <text class="a3a-s" x="56" y="108" font-size="7.5">② 巨石应用发版互相拖累，一次上线要全体等待</text>
+  <text class="a3a-s" x="56" y="130" font-size="7.5">③ 技术栈需要渐进替换（老 jQuery → Vue 慢慢迁）</text>
+  <text class="a3a-s" x="56" y="152" font-size="7">三条里中不了两条，就别拆</text>
+
+  <rect class="a3a-b" x="380" y="44" width="320" height="120" rx="2"/>
+  <text class="a3a-t" x="396" y="64" font-size="8.5">不该拆的三种情况</text>
+  <text class="a3a-s" x="396" y="86" font-size="7.5">① 团队小（&lt; 20 人，一个人管好几个模块）</text>
+  <text class="a3a-s" x="396" y="108" font-size="7.5">② 项目早期，业务边界还在天天变</text>
+  <text class="a3a-s" x="396" y="130" font-size="7.5">③ 单一技术栈的新项目，本来就没有历史包袱</text>
+  <text class="a3a-s" x="396" y="152" font-size="7">拆了只会凭空多出一层运维</text>
+
+  <text class="a3a-s" x="40" y="190" font-size="7.5">代价清单 —— 拆之前先把这五笔账算清</text>
+
+  <rect class="a3a-q" x="40" y="200" width="126" height="30" rx="2"/>
+  <text class="a3a-t" x="103" y="219" font-size="7.5" text-anchor="middle">构建部署复杂度</text>
+  <rect class="a3a-q" x="176" y="200" width="126" height="30" rx="2"/>
+  <text class="a3a-t" x="239" y="219" font-size="7.5" text-anchor="middle">沙箱的边界坑</text>
+  <rect class="a3a-q" x="312" y="200" width="126" height="30" rx="2"/>
+  <text class="a3a-t" x="375" y="219" font-size="7.5" text-anchor="middle">体验一致性</text>
+  <rect class="a3a-q" x="448" y="200" width="126" height="30" rx="2"/>
+  <text class="a3a-t" x="511" y="219" font-size="7.5" text-anchor="middle">公共依赖协商</text>
+  <rect class="a3a-q" x="584" y="200" width="126" height="30" rx="2"/>
+  <text class="a3a-t" x="647" y="219" font-size="7.5" text-anchor="middle">调试成本</text>
+
+  <text class="a3a-t" x="40" y="266" font-size="8.5" style="fill:#B03A2E">本质是用运行时复杂度换组织效率 —— 值不值，看团队规模，也看拆分边界是不是天然的业务域。</text>
+</svg>

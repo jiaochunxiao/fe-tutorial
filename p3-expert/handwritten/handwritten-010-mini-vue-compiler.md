@@ -24,6 +24,10 @@ createdAt: 2026-10-26
 
 上一章的 mini-Vue 只认 **render 函数**（手写 h(...)）——但 Vue 用户写的是**模板**。中间必须有一台翻译机：
 
+![编译的终点正好是响应式的起点，两篇在这里对接](../../assets/svg/handwritten-010-bridge.svg)
+
+*图 · 编译的终点正好是响应式的起点，两篇在这里对接*
+
 ```
 模板字符串 ──parse──▶ AST ──transform──▶ 优化后的 AST ──generate──▶ render 函数代码字符串
 ```
@@ -190,6 +194,10 @@ function mount(selector) {
 
 ### 五：完整流水线一图流 ⭐
 
+![每一步的输入输出都摆出来，三段论就不再是名词](../../assets/svg/handwritten-010-flow.svg)
+
+*图 · 每一步的输入输出都摆出来，三段论就不再是名词*
+
 ```
 "<div class=box @click=onTap><p>{{message}}</p></div>"
    │ parse（状态机：标签/插值/文本三分支 + 栈建树）
@@ -217,6 +225,10 @@ render(h, ctx) ──▶ vnode ──▶ 上一章的响应式渲染引擎 ═�
 **2. 动手建议**：把本篇与《handwritten-009》的代码合并成 `mini-vue.js`（约 250 行），你就拥有了一个「模板 + 响应式 + diff」全通的自制框架——面试时说「我写过一个 250 行的 Vue」的分量，远超背十遍原理。
 
 ## 图解总结
+
+![编译一次，运行一万次 —— 这条分界线决定了体积与性能](../../assets/svg/handwritten-010-two-phase.svg)
+
+*图 · 编译一次，运行一万次 —— 这条分界线决定了体积与性能*
 
 ```
      编译时（一次性）                     运行时（每次更新）

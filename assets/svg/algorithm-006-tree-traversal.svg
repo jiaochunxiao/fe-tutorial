@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 320" width="100%" role="img" aria-labelledby="a6tt a6td">
+  <title id="a6tt">树题只有两问：子问题怎么拆，答案在哪收集</title>
+  <desc id="a6td">左边一棵五节点的树，右边列出三种遍历的访问序列：前序是根最先，适合自顶向下把参数沿路带下去；中序在二叉搜索树上就是升序；后序是根最后，适合自底向上把子树答案往上汇。递归三步曲是终止条件、假设子问题已解、用小结果组装。BFS 用队列加每层长度快照得到层序，王牌是无权图最短路。这些遍历在前端就是 DOM 遍历、Fiber、AST 与递归组件。</desc>
+
+  <style>
+    .a6t-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a6t-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a6t-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a6t-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a6t-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="a6t-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="a6t-t" x="40" y="26" font-size="8.5">同一棵树，三种遍历只差「根什么时候被访问」</text>
+
+  <line x1="140" y1="78" x2="98" y2="98" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="140" y1="78" x2="182" y2="98" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="95" y1="124" x2="72" y2="144" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="95" y1="124" x2="118" y2="144" stroke="#1C1A17" stroke-width="1.1"/>
+
+  <rect class="a6t-q" x="124" y="54" width="32" height="24" rx="1"/>
+  <text class="a6t-m" x="140" y="70" font-size="8" text-anchor="middle">A</text>
+  <rect class="a6t-b" x="79" y="100" width="32" height="24" rx="1"/>
+  <text class="a6t-m" x="95" y="116" font-size="8" text-anchor="middle">B</text>
+  <rect class="a6t-b" x="169" y="100" width="32" height="24" rx="1"/>
+  <text class="a6t-m" x="185" y="116" font-size="8" text-anchor="middle">C</text>
+  <rect class="a6t-b" x="52" y="146" width="32" height="24" rx="1"/>
+  <text class="a6t-m" x="68" y="162" font-size="8" text-anchor="middle">D</text>
+  <rect class="a6t-b" x="106" y="146" width="32" height="24" rx="1"/>
+  <text class="a6t-m" x="122" y="162" font-size="8" text-anchor="middle">E</text>
+
+  <text class="a6t-t" x="240" y="64" font-size="8">前序</text>
+  <text class="a6t-m" x="290" y="64" font-size="8" style="fill:#B03A2E">A B D E C</text>
+  <text class="a6t-s" x="410" y="64" font-size="7.5">根最先 → 自顶向下，参数沿路带下去</text>
+
+  <text class="a6t-t" x="240" y="92" font-size="8">中序</text>
+  <text class="a6t-m" x="290" y="92" font-size="8">D B E A C</text>
+  <text class="a6t-s" x="410" y="92" font-size="7.5">BST 上的中序就是升序</text>
+
+  <text class="a6t-t" x="240" y="120" font-size="8">后序</text>
+  <text class="a6t-m" x="290" y="120" font-size="8" style="fill:#B03A2E">D E B C A</text>
+  <text class="a6t-s" x="410" y="120" font-size="7.5">根最后 → 自底向上，子树答案往上汇</text>
+
+  <text class="a6t-s" x="240" y="150" font-size="7.5">递归三步曲：① 终止条件 ② 假设子问题已解 ③ 用小结果组装</text>
+
+  <rect class="a6t-b" x="40" y="182" width="330" height="56" rx="2"/>
+  <text class="a6t-t" x="58" y="202" font-size="8.5">自顶向下 · 前序 + 参数</text>
+  <text class="a6t-s" x="58" y="218" font-size="7.5">路径和、判定 —— 沿途信息往下带</text>
+  <text class="a6t-s" x="58" y="232" font-size="7.5">先决定根，再进子树</text>
+
+  <rect class="a6t-b" x="390" y="182" width="330" height="56" rx="2"/>
+  <text class="a6t-t" x="408" y="202" font-size="8.5">自底向上 · 后序 + 返回值</text>
+  <text class="a6t-s" x="408" y="218" font-size="7.5">深度、直径、LCA —— 子树答案往上汇</text>
+  <text class="a6t-s" x="408" y="232" font-size="7.5">先要子树的答案，再算自己</text>
+
+  <rect class="a6t-q" x="40" y="252" width="680" height="34" rx="2"/>
+  <text class="a6t-t" x="58" y="273" font-size="8">BFS：队列 + 每层长度快照 → 层序、无权图最短路</text>
+  <text class="a6t-s" x="430" y="273" font-size="7.5">DFS 是一条路到黑，BFS 是一圈一圈往外</text>
+
+  <text class="a6t-t" x="40" y="306" font-size="8.5" style="fill:#B03A2E">前端战场：DOM 遍历、Fiber、AST、递归组件 —— 业务即算法。</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 500" width="100%" role="img" aria-labelledby="t6t t6d">
+  <title id="t6t">CORS 预检请求的两次往返</title>
+  <desc id="t6d">浏览器先发一次 OPTIONS 预检，带上 Origin、Access-Control-Request-Method 与 Request-Headers；服务器回 200 与放行清单，含 Allow-Origin、Allow-Methods、Allow-Headers、Max-Age；预检通过后才发真实请求，再校验响应头。简单请求跳过预检，直接进入真实请求。</desc>
+  <defs>
+    <marker id="t6-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="t6-cin" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+    <marker id="t6-mut" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#6E675A"/>
+    </marker>
+  </defs>
+
+  <style>
+    .t6-life{stroke:#CDC4AF;stroke-width:1.4;stroke-dasharray:3 5}
+    .t6-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .t6-serif{font-family:'Noto Serif SC','Songti SC','SimSun',serif;fill:#1C1A17}
+    .t6-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <!-- 端点 -->
+  <text class="t6-serif" x="200" y="38" font-size="14" text-anchor="middle">浏览器</text>
+  <text class="t6-serif" x="590" y="38" font-size="14" text-anchor="middle">服务器</text>
+  <line x1="160" y1="50" x2="240" y2="50" stroke="#1C1A17" stroke-width="1.4"/>
+  <line x1="550" y1="50" x2="630" y2="50" stroke="#1C1A17" stroke-width="1.4"/>
+
+  <!-- 生命线 -->
+  <line class="t6-life" x1="200" y1="54" x2="200" y2="470"/>
+  <line class="t6-life" x1="590" y1="54" x2="590" y2="470"/>
+
+  <!-- 简单请求的捷径（虚线，绕开 ①②） -->
+  <path d="M110 72 V372 H202" fill="none" stroke="#6E675A" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#t6-mut)"/>
+  <text class="t6-small" x="100" y="196" font-size="10" text-anchor="end" style="fill:#6E675A">简单请求</text>
+  <text class="t6-small" x="100" y="210" font-size="10" text-anchor="end" style="fill:#6E675A">跳过 ①②</text>
+
+  <!-- ① 预检 -->
+  <text class="t6-mono" x="396" y="110" font-size="12.5" text-anchor="middle" font-weight="700">① OPTIONS /api/user（预检，先探路）</text>
+  <text class="t6-mono" x="396" y="128" font-size="10.5" text-anchor="middle" style="fill:#6E675A">Origin: https://www.test.com</text>
+  <text class="t6-mono" x="396" y="144" font-size="10.5" text-anchor="middle" style="fill:#6E675A">Access-Control-Request-Method: PUT</text>
+  <text class="t6-mono" x="396" y="160" font-size="10.5" text-anchor="middle" style="fill:#6E675A">Access-Control-Request-Headers: authorization</text>
+  <line x1="206" y1="180" x2="582" y2="180" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#t6-ink)"/>
+
+  <!-- ② 放行清单 -->
+  <text class="t6-mono" x="396" y="216" font-size="12.5" text-anchor="middle" font-weight="700">② 200 + 放行清单</text>
+  <text class="t6-mono" x="396" y="234" font-size="10.5" text-anchor="middle" style="fill:#6E675A">Access-Control-Allow-Origin: https://www.test.com</text>
+  <text class="t6-mono" x="396" y="250" font-size="10.5" text-anchor="middle" style="fill:#6E675A">Access-Control-Allow-Methods: PUT</text>
+  <text class="t6-mono" x="396" y="266" font-size="10.5" text-anchor="middle" style="fill:#6E675A">Access-Control-Allow-Headers: authorization</text>
+  <text class="t6-mono" x="396" y="282" font-size="10.5" text-anchor="middle" style="fill:#B03A2E">Access-Control-Max-Age: 600（预检结论缓存 10 分钟）</text>
+  <line x1="584" y1="302" x2="208" y2="302" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#t6-ink)"/>
+
+  <!-- 预检结论 -->
+  <text class="t6-small" x="396" y="326" font-size="10.5" text-anchor="middle" style="fill:#6E675A">浏览器核对清单 → 通过，才允许发真实请求</text>
+
+  <!-- ③ 真实请求 -->
+  <text class="t6-mono" x="396" y="356" font-size="12.5" text-anchor="middle" font-weight="700" style="fill:#B03A2E">③ PUT /api/user（真实请求，带 Origin）</text>
+  <line x1="206" y1="372" x2="582" y2="372" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#t6-cin)"/>
+
+  <!-- ④ 真实响应 -->
+  <text class="t6-mono" x="396" y="408" font-size="12" text-anchor="middle">④ 200 + Access-Control-Allow-Origin</text>
+  <line x1="584" y1="424" x2="208" y2="424" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#t6-ink)"/>
+  <text class="t6-small" x="396" y="446" font-size="10.5" text-anchor="middle">校验通过才交给页面；缺头或缺值 → 响应被拦在 JS 之外</text>
+
+  <!-- 代价说明 -->
+  <line x1="110" y1="462" x2="630" y2="462" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="t6-small" x="200" y="480" font-size="10.5">代价：一次跨域写请求要 2 个 RTT——Max-Age 让重复请求省掉预检</text>
+
+</svg>

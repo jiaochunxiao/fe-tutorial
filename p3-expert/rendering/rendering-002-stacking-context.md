@@ -81,6 +81,10 @@ CSS3 类: opacity < 1 ⭐ / transform ≠ none ⭐ / filter / mix-blend-mode /
 
 把《rendering-001》的 Paint 站展开：
 
+![先切组再排序，所以 z-index 出了组就不算数](../../assets/svg/rendering-002-context-tree.svg)
+
+*图 · 先切组再排序，所以 z-index 出了组就不算数*
+
 ```
 Paint 阶段做两件事：
 A. 分组：按层叠上下文把渲染树切组（上下文树 stacking context tree）
@@ -115,6 +119,10 @@ Paint 的「顺序」= 层叠上下文树的自上而下遍历 + 每个上下文
 **2. DevTools 观察**：Layers 面板（三维展开图层树）+ Elements 面板选中元素的 Layer 信息——把抽象的「上下文/层」变成可视卡片。
 
 ## 图解总结
+
+![层叠上下文的七层绘制顺序，以及信封效应](../../assets/svg/rendering-002-stacking.svg)
+
+*图 · 左边是「层内怎么排」，右边是「层间怎么比」*
 
 ```
 上下文内七层（底→顶）:

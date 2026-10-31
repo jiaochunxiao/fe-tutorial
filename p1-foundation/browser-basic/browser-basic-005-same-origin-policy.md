@@ -108,6 +108,10 @@ window.addEventListener('message', (e) => {
 
 ## 图解总结
 
+![同源策略：拦「读」不拦「发」](../../assets/svg/browser-basic-005-sop.svg)
+
+*图 · 请求一路绿灯，卡住的是回来的那一段*
+
 ```
 源 = 协议 + 域名 + 端口（全同才同源）
 

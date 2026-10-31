@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 290" width="100%" role="img" aria-labelledby="ar1at ar1ad">
+  <title id="ar1at">800 行组件的问题不是写得差，是所有职责挤在一层</title>
+  <desc id="ar1ad">左边是一个 800 行、23 个 props、8 个 emit 的 SearchPanel，里面同时塞着五件事：数据获取、状态管理（本地加全局加 URL）、UI 结构、副作用、通信。它们缠在一个文件里，谁都不敢动。右边是按职责切开之后的三层：容器层由自定义 Hook 承接取数、loading、错误与缓存；状态层让 URL 放 query、全局进 store、瞬态留本地；视图层只接收数据、只做纯渲染。四种设计模式不是为了好看，是为了让这五件事各有各的家。</desc>
+
+  <style>
+    .a1a-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a1a-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a1a-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a1a-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="a1a-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="a1a-t" x="40" y="26" font-size="8.5">问题不是写得差，是所有职责挤在一层</text>
+
+  <rect class="a1a-b" x="40" y="44" width="300" height="200" rx="2"/>
+  <text class="a1a-t" x="58" y="68" font-size="9.5">SearchPanel</text>
+  <text class="a1a-s" x="58" y="84" font-size="7">800 行 · 23 个 props · 8 个 emit</text>
+
+  <rect class="a1a-q" x="58" y="96" width="264" height="22" rx="1"/>
+  <text class="a1a-t" x="68" y="111" font-size="7">数据获取：fetch 拼接 · loading · 错误处理</text>
+  <rect class="a1a-q" x="58" y="124" width="264" height="22" rx="1"/>
+  <text class="a1a-t" x="68" y="139" font-size="7">状态管理：本地 + 全局 + URL，交织</text>
+  <rect class="a1a-q" x="58" y="152" width="264" height="22" rx="1"/>
+  <text class="a1a-t" x="68" y="167" font-size="7">UI 结构：输入 · 列表 · 分页 · 弹窗</text>
+  <rect class="a1a-q" x="58" y="180" width="264" height="22" rx="1"/>
+  <text class="a1a-t" x="68" y="195" font-size="7">副作用：埋点 · 防抖 · 缓存</text>
+  <rect class="a1a-q" x="58" y="208" width="264" height="22" rx="1"/>
+  <text class="a1a-t" x="68" y="223" font-size="7">通信：23 props · 8 emit —— 谁都不敢动</text>
+
+  <path d="M340 144 H362 V79 H386" fill="none" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a1a-ink)"/>
+  <line x1="340" y1="144" x2="386" y2="144" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a1a-ink)"/>
+  <path d="M340 144 H362 V211 H386" fill="none" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a1a-ink)"/>
+
+  <rect class="a1a-b" x="390" y="52" width="310" height="54" rx="2"/>
+  <text class="a1a-t" x="406" y="70" font-size="8.5">容器层 · useSearch()</text>
+  <text class="a1a-s" x="406" y="86" font-size="7">取数、loading、错误、缓存都收在这里</text>
+  <text class="a1a-s" x="406" y="99" font-size="7">视图不再关心数据从哪来</text>
+
+  <rect class="a1a-b" x="390" y="118" width="310" height="54" rx="2"/>
+  <text class="a1a-t" x="406" y="136" font-size="8.5">状态层 · 各回各家</text>
+  <text class="a1a-s" x="406" y="152" font-size="7">URL 放 route.query，全局进 store</text>
+  <text class="a1a-s" x="406" y="165" font-size="7">瞬态留在组件自己身上</text>
+
+  <rect class="a1a-b" x="390" y="184" width="310" height="54" rx="2"/>
+  <text class="a1a-t" x="406" y="202" font-size="8.5">视图层 · 纯渲染</text>
+  <text class="a1a-s" x="406" y="218" font-size="7">只接数据、只吐事件，不碰副作用</text>
+  <text class="a1a-s" x="406" y="231" font-size="7">于是能单独测试、能换肤</text>
+
+  <text class="a1a-t" x="40" y="272" font-size="8.5" style="fill:#B03A2E">四种设计模式不是为了好看，是为了让这五件事各有各的家。</text>
+</svg>

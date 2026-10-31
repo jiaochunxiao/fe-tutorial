@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 56 740 306" width="100%" role="img" aria-labelledby="so5t so5d">
+  <title id="so5t">同源策略：拦「读」不拦「发」</title>
+  <desc id="so5d">evil.com 的页面发起 fetch 到 bank.com，请求正常发出，Cookie 也照常携带。响应回来时经过浏览器的同源检查：响应里带 Access-Control-Allow-Origin 才放行给 JS 读取，没有就扣下响应，脚本只拿到一个 CORS 错误。跨源 DOM 与 iframe 文档读不到，存储按源隔离，而 script、img、link 可以加载但脚本读不到内容。</desc>
+
+  <style>
+    .so5-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .so5-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .so5-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .so5-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="so5-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="so5-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="so5-s" x="370" y="80" font-size="9.5" text-anchor="middle">① 请求照发，Cookie 照带</text>
+  <line x1="224" y1="90" x2="514" y2="90" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#so5-ink)"/>
+
+  <rect class="so5-box" x="40" y="72" width="180" height="60" rx="3"/>
+  <text class="so5-mono" x="54" y="98" font-size="10.5">evil.com</text>
+  <text class="so5-s" x="54" y="116" font-size="9">别人的页面</text>
+
+  <rect class="so5-box" x="520" y="72" width="180" height="60" rx="3"/>
+  <text class="so5-mono" x="534" y="98" font-size="10.5">bank.com</text>
+  <text class="so5-s" x="534" y="116" font-size="9">你的登录态在这儿</text>
+
+  <line x1="610" y1="132" x2="610" y2="170" stroke="#1C1A17" stroke-width="1.6"/>
+  <line x1="610" y1="170" x2="544" y2="170" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#so5-ink)"/>
+  <text class="so5-s" x="622" y="150" font-size="9">② 200 带着数据回来</text>
+
+  <rect class="so5-box" x="300" y="138" width="240" height="64" rx="3"/>
+  <text class="so5-t" x="420" y="162" font-size="10.5" text-anchor="middle">SOP 检查</text>
+  <text class="so5-mono" x="420" y="180" font-size="9" text-anchor="middle">Access-Control-Allow-Origin</text>
+  <text class="so5-s" x="420" y="196" font-size="8.5" text-anchor="middle">有就放行，没有就扣下</text>
+
+  <line x1="300" y1="170" x2="150" y2="170" stroke="#1C1A17" stroke-width="1.6"/>
+  <line x1="150" y1="170" x2="150" y2="136" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#so5-ink)"/>
+  <text class="so5-s" x="232" y="161" font-size="9">✓ 放行</text>
+
+  <line x1="420" y1="202" x2="420" y2="224" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#so5-red)"/>
+  <text class="so5-s" x="420" y="242" font-size="9.5" text-anchor="middle" style="fill:#B03A2E">✘ 抛 CORS 错，JS 读不到数据</text>
+
+  <text class="so5-t" x="40" y="272" font-size="9.5">拦「读」不拦「发」</text>
+
+  <rect class="so5-box" x="40" y="282" width="220" height="50" rx="3"/>
+  <text class="so5-t" x="54" y="302" font-size="9.5">跨源 DOM / iframe</text>
+  <text class="so5-s" x="54" y="320" font-size="9">✘ 读不到对方的文档</text>
+
+  <rect class="so5-box" x="260" y="282" width="220" height="50" rx="3"/>
+  <text class="so5-t" x="274" y="302" font-size="9.5">localStorage / Cookie</text>
+  <text class="so5-s" x="274" y="320" font-size="9">✘ 按源隔离</text>
+
+  <rect class="so5-box" x="480" y="282" width="220" height="50" rx="3"/>
+  <text class="so5-t" x="494" y="302" font-size="9.5">script / img / link</text>
+  <text class="so5-s" x="494" y="320" font-size="9">✓ 能加载，但读不到内容</text>
+
+  <text class="so5-s" x="40" y="350" font-size="9">三层防线：进程隔离 ─ 沙箱 ─ 同源策略　｜　合法通道：CORS · postMessage · WebSocket</text>
+</svg>

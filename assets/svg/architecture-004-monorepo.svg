@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 436" width="100%" role="img" aria-labelledby="mr4t mr4d">
+  <title id="mr4t">monorepo 的分包结构：apps 是部署单元，packages 按变化原因切</title>
+  <desc id="mr4d">左边是仓库根，向右分出两个分支。apps 下面是 web、admin、docs 三个会真正上线的部署单元。packages 下面是 ui、hooks、utils、api-client、config、icons 六个包，每一个的切分依据不是「它是什么」，而是「它跟谁一起变」——ui 跟设计规范走，api-client 跟后端契约走，icons 由脚本生成。底部是判断新代码放哪里的三个问题。</desc>
+
+  <style>
+    .mr4-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .mr4-leaf{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .mr4-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .mr4-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .mr4-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <rect class="mr4-box" x="40" y="140" width="110" height="44" rx="3"/>
+  <text class="mr4-mono" x="95" y="167" font-size="10" text-anchor="middle">monorepo/</text>
+
+  <path d="M150 162 H170" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M170 78 V246" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M170 78 H190" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M170 246 H190" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+
+  <rect class="mr4-box" x="190" y="56" width="100" height="44" rx="3"/>
+  <text class="mr4-mono" x="240" y="76" font-size="10" text-anchor="middle">apps/</text>
+  <text class="mr4-s" x="240" y="91" font-size="8" text-anchor="middle">部署单元</text>
+
+  <rect class="mr4-box" x="190" y="224" width="100" height="44" rx="3"/>
+  <text class="mr4-mono" x="240" y="244" font-size="10" text-anchor="middle">packages/</text>
+  <text class="mr4-s" x="240" y="259" font-size="8" text-anchor="middle">复用单元</text>
+
+  <path d="M290 78 H300" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 43 V111" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 43 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 77 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 111 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+
+  <rect class="mr4-leaf" x="310" y="30" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="47" font-size="9">web</text>
+  <rect class="mr4-leaf" x="310" y="64" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="81" font-size="9">admin</text>
+  <rect class="mr4-leaf" x="310" y="98" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="115" font-size="9">docs</text>
+  <text class="mr4-s" x="452" y="81" font-size="8.5">这三个才是要发上线的</text>
+
+  <path d="M290 246 H300" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 161 V331" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 161 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 195 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 229 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 263 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 297 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+  <path d="M300 331 H310" fill="none" stroke="#CDC4AF" stroke-width="1.2"/>
+
+  <rect class="mr4-leaf" x="310" y="148" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="165" font-size="9">ui</text>
+  <text class="mr4-s" x="452" y="165" font-size="8.5">跟设计规范走</text>
+
+  <rect class="mr4-leaf" x="310" y="182" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="199" font-size="9">hooks</text>
+  <text class="mr4-s" x="452" y="199" font-size="8.5">跟组件逻辑走</text>
+
+  <rect class="mr4-leaf" x="310" y="216" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="233" font-size="9">utils</text>
+  <text class="mr4-s" x="452" y="233" font-size="8.5">纯函数，几乎不变</text>
+
+  <rect class="mr4-leaf" x="310" y="250" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="267" font-size="9">api-client</text>
+  <text class="mr4-s" x="452" y="267" font-size="8.5">跟后端契约一起变</text>
+
+  <rect class="mr4-leaf" x="310" y="284" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="301" font-size="9">config</text>
+  <text class="mr4-s" x="452" y="301" font-size="8.5">eslint / tsconfig 预设</text>
+
+  <rect class="mr4-leaf" x="310" y="318" width="130" height="26" rx="2"/>
+  <text class="mr4-mono" x="322" y="335" font-size="9">icons</text>
+  <text class="mr4-s" x="452" y="335" font-size="8.5">脚本自动生成，不要手改</text>
+
+  <line x1="40" y1="370" x2="40" y2="424" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="mr4-t" x="54" y="382" font-size="9">① 谁会用它？　只有 web 用 → 放 app 内部；两个以上应用用 → 才进 packages</text>
+  <text class="mr4-t" x="54" y="398" font-size="9">② 它跟谁一起变？　跟设计走 → ui；跟接口契约走 → api-client</text>
+  <text class="mr4-t" x="54" y="414" font-size="9">③ 有外部使用者吗？　要发 npm → 独立包 + 严格 API；纯内部 → 宽松</text>
+  <text class="mr4-s" x="54" y="430" font-size="8.5">三处重复再抽象 —— 这条在包层面同样成立，别为复用一个函数建十个包</text>
+</svg>

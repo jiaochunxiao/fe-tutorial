@@ -173,6 +173,10 @@ getType(1); getType(null); getType([]); getType(()=>{});  // 'number' 'null' 'ar
 
 ## 图解总结
 
+![类型判断的选择树：判断目标决定用哪种手段](../../assets/svg/js-core-002-type-check.svg)
+
+*图 · 五种手段各有各的盲区，按目标挑而不是按习惯挑*
+
 ```
               要判断什么？
    ├─ 原始类型 ──────▶ typeof（null 例外：=== null）

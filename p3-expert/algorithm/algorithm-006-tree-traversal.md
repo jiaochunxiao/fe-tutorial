@@ -147,6 +147,10 @@ function walkDom(root, fn) {
 
 ## 图解总结
 
+![三种遍历的差别只有一句：根排在第几个](../../assets/svg/algorithm-006-tree-traversal.svg)
+
+*图 · 三种遍历的差别只有一句：根排在第几个*
+
 ```
 递归三步曲: ①终止 ②假设子问题已解 ③组装 ⭐
 DFS(递归/栈): 一条路到黑

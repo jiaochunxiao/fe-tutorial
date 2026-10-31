@@ -155,6 +155,10 @@ console.log(w.get(key), w.size); // 'v' undefined —— WeakMap 没有 size
 
 ## 图解总结
 
+![三列对照：Set 管唯一、Map 管映射、WeakMap 管「生死跟随」](../../assets/svg/es6-007-three.svg)
+
+*图 · 三列对照：Set 管唯一、Map 管映射、WeakMap 管「生死跟随」*
+
 ```
 Set      { 值 → 值 }        唯一性（SameValueZero）/ 去重 / 集合运算
 Map      { 任意键 → 值 }    插入序 / 可迭代 / 无原型链

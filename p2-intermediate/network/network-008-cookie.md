@@ -106,6 +106,10 @@ Set-Cookie: sid=abc123; HttpOnly; Secure; SameSite=Lax
 
 ## 图解总结
 
+![Cookie 随请求自动携带前的三道匹配](../../assets/svg/network-008-cookie.svg)
+
+*图 · 三道关是串联的，任何一道不过，Cookie 就不在这趟车上*
+
 ```
 Set-Cookie 的六道边界
 ┌─────────────────────────────────────────────┐

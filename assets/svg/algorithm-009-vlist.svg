@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="a9t a9d">
+  <title id="a9t">虚拟列表：只渲染视口里那几十行</title>
+  <desc id="a9d">左边是一万行的长列表：整条容器的高度等于行数乘以行高，所以滚动条是真实的；中间高亮的一段是视口，八百像素高、按四十像素行高算大约能看到二十行；视口上方与下方都留出空白占位，让内容位置对得上。右边是五步做法：第一步数学换算，起始下标等于滚动距离除以行高取整，结束下标再加视口高度除以行高；第二步用总高把容器撑起来，滚动条才有真实比例；第三步用 transform 把渲染窗口平移到正确位置，它不触发重排；第四步递进优化，先用 rAF 合帧节流，再加 overscan 缓冲，最后从定高升级到变高，靠前缀和加二分查找；第五步是两个边界：快速滚动会白屏要靠缓冲，动态内容高度要靠测量缓存。</desc>
+
+  <style>
+    .a9-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a9-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a9-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a9-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a9-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="a9-t" x="30" y="24" font-size="8.5">一万行，只留二十个 DOM</text>
+
+  <!-- 长列表 -->
+  <rect x="90" y="40" width="130" height="230" fill="#FBF7EE" stroke="#1C1A17" stroke-width="1.1" stroke-dasharray="4 3"/>
+  <g stroke="#CDC4AF" stroke-width="0.8">
+    <line x1="96" y1="62" x2="214" y2="62"/><line x1="96" y1="78" x2="214" y2="78"/>
+    <line x1="96" y1="94" x2="214" y2="94"/>
+    <line x1="96" y1="172" x2="214" y2="172"/><line x1="96" y1="188" x2="214" y2="188"/>
+    <line x1="96" y1="204" x2="214" y2="204"/><line x1="96" y1="220" x2="214" y2="220"/>
+    <line x1="96" y1="236" x2="214" y2="236"/><line x1="96" y1="252" x2="214" y2="252"/>
+  </g>
+  <rect x="90" y="112" width="130" height="52" fill="#E7DEC8" opacity="0.85" stroke="#B03A2E" stroke-width="1.2"/>
+  <text class="a9-s" x="155" y="134" font-size="7" text-anchor="middle" style="fill:#B03A2E">视口 800px</text>
+  <text class="a9-s" x="155" y="148" font-size="7" text-anchor="middle" style="fill:#B03A2E">可见 ~20 行</text>
+
+  <text class="a9-s" x="234" y="60" font-size="7">总高 = n × rowH（滚动条才真实）</text>
+  <text class="a9-s" x="234" y="120" font-size="7" style="fill:#B03A2E">只渲染 start..end 这几十个</text>
+  <text class="a9-s" x="234" y="136" font-size="7">其余用上下 spacer 占位</text>
+  <text class="a9-s" x="234" y="238" font-size="7">paddingBottom =（n − end）× rowH</text>
+
+  <!-- 五步 -->
+  <text class="a9-t" x="380" y="32" font-size="8.5">五步做法</text>
+
+  <rect class="a9-b" x="380" y="40" width="330" height="42" rx="2"/>
+  <text class="a9-mono" x="392" y="56" font-size="7.5" style="fill:#B03A2E">①</text>
+  <text class="a9-t" x="408" y="56" font-size="8">数学换算</text>
+  <text class="a9-mono" x="392" y="72" font-size="7">start = floor(scrollTop / rowH)</text>
+
+  <rect class="a9-b" x="380" y="88" width="330" height="42" rx="2"/>
+  <text class="a9-mono" x="392" y="104" font-size="7.5" style="fill:#B03A2E">②</text>
+  <text class="a9-t" x="408" y="104" font-size="8">撑高容器</text>
+  <text class="a9-s" x="392" y="120" font-size="7">总高 = n × rowH，滚动条比例才对得上</text>
+
+  <rect class="a9-b" x="380" y="136" width="330" height="42" rx="2"/>
+  <text class="a9-mono" x="392" y="152" font-size="7.5" style="fill:#B03A2E">③</text>
+  <text class="a9-t" x="408" y="152" font-size="8">translateY 平移窗口</text>
+  <text class="a9-s" x="392" y="168" font-size="7" style="fill:#B03A2E">transform 不触发重排</text>
+
+  <rect class="a9-b" x="380" y="184" width="330" height="42" rx="2"/>
+  <text class="a9-mono" x="392" y="200" font-size="7.5" style="fill:#B03A2E">④</text>
+  <text class="a9-t" x="408" y="200" font-size="8">递进优化</text>
+  <text class="a9-s" x="392" y="216" font-size="7">rAF 合帧 → overscan 缓冲 → 变高（前缀和 + 二分）</text>
+
+  <rect class="a9-c" x="380" y="232" width="330" height="42" rx="2"/>
+  <text class="a9-mono" x="392" y="248" font-size="7.5" style="fill:#B03A2E">⑤</text>
+  <text class="a9-t" x="408" y="248" font-size="8">两个边界</text>
+  <text class="a9-s" x="392" y="264" font-size="7">快滚白屏（缓冲）│ 动态高度（测量缓存）</text>
+
+  <text class="a9-s" x="90" y="292" font-size="7.5" style="fill:#B03A2E">本质：DOM 数量恒定，滚动只改「窗口开在哪」</text>
+</svg>

@@ -26,6 +26,10 @@ createdAt: 2026-10-26
 
 ## 现象与直觉解释
 
+![三个文件两条 import，就是构建期要爬的那张图](../../assets/svg/handwritten-011-graph.svg)
+
+*图 · 三个文件两条 import，就是构建期要爬的那张图*
+
 ```
 src/
 ├── index.js      import { add } from './utils.js'
@@ -34,6 +38,10 @@ src/
 ```
 
 打包器的工作：
+
+![打包器的构建期与运行期](../../assets/svg/handwritten-011-pipeline.svg)
+
+*图 · 一条分界线把打包器切成两半：左边在 Node 里跑、产出字符串；右边在浏览器里跑、消费这张模块表*
 
 ```
 index.js ──发现依赖──▶ utils.js ──发现依赖──▶ constant.js

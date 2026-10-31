@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 158" width="100%" role="img" aria-labelledby="r1ct r1cd">
+  <title id="r1ct">JSX 到真实 DOM 的五步概念链</title>
+  <desc id="r1cd">JSX 是书写形态，编译后变成 createElement 或 jsx 的函数调用，执行这个调用得到 React 元素，它只是一个带 $$typeof 标记的普通对象；再经过渲染流程变成 Fiber 节点，Fiber 是工作单元形态；最后提交到真实 DOM。三者层层递进：JSX 是描述怎么写，虚拟 DOM 是描述的数据形态，Fiber 是描述的工作形态，不能混为一谈。</desc>
+
+  <style>
+    .r1c-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r1c-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .r1c-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r1c-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .r1c-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="r1c-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="r1c-t" x="40" y="26" font-size="8.5">五步概念链 —— 说「JSX 就是虚拟 DOM」的人，漏掉了中间两层</text>
+
+  <rect class="r1c-b" x="40" y="50" width="116" height="44" rx="2"/>
+  <text class="r1c-mono" x="98" y="70" font-size="9" text-anchor="middle">JSX</text>
+  <text class="r1c-s" x="98" y="84" font-size="7.5" text-anchor="middle">书写形态</text>
+
+  <text class="r1c-s" x="167" y="44" font-size="7" text-anchor="middle">编译</text>
+  <line x1="156" y1="72" x2="178" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r1c-ink)"/>
+
+  <rect class="r1c-b" x="182" y="50" width="116" height="44" rx="2"/>
+  <text class="r1c-mono" x="240" y="70" font-size="8" text-anchor="middle">createElement</text>
+  <text class="r1c-s" x="240" y="84" font-size="7.5" text-anchor="middle">函数调用</text>
+
+  <text class="r1c-s" x="309" y="44" font-size="7" text-anchor="middle">执行</text>
+  <line x1="298" y1="72" x2="320" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r1c-ink)"/>
+
+  <rect class="r1c-band" x="324" y="50" width="116" height="44" rx="2"/>
+  <text class="r1c-t" x="382" y="70" font-size="8.5" text-anchor="middle">React 元素</text>
+  <text class="r1c-s" x="382" y="84" font-size="7.5" text-anchor="middle">数据形态</text>
+
+  <text class="r1c-s" x="451" y="44" font-size="7" text-anchor="middle">渲染流程</text>
+  <line x1="440" y1="72" x2="462" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r1c-ink)"/>
+
+  <rect class="r1c-b" x="466" y="50" width="116" height="44" rx="2"/>
+  <text class="r1c-t" x="524" y="70" font-size="8.5" text-anchor="middle">Fiber 节点</text>
+  <text class="r1c-s" x="524" y="84" font-size="7.5" text-anchor="middle">工作形态</text>
+
+  <text class="r1c-s" x="593" y="44" font-size="7" text-anchor="middle">提交</text>
+  <line x1="582" y1="72" x2="604" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r1c-ink)"/>
+
+  <rect class="r1c-b" x="608" y="50" width="116" height="44" rx="2"/>
+  <text class="r1c-t" x="666" y="70" font-size="8.5" text-anchor="middle">真实 DOM</text>
+  <text class="r1c-s" x="666" y="84" font-size="7.5" text-anchor="middle">宿主形态</text>
+
+  <text class="r1c-t" x="40" y="124" font-size="8.5">JSX 是「怎么写」，虚拟 DOM 是「什么数据」，Fiber 是「怎么干」——</text>
+  <text class="r1c-t" x="40" y="146" font-size="8.5" style="fill:#B03A2E">三者层层递进，面试混用一次就露怯。</text>
+</svg>

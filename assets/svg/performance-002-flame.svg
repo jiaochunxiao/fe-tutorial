@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="p2t p2d">
+  <title id="p2t">Performance 面板的四条轨，以及 Main 轨怎么读</title>
+  <desc id="p2d">四条轨自上而下排开。Network 轨是请求瀑布，能看到排队、TTFB 与下载三段。Main 轨是主线程火焰图，是性能分析的主战场：横条越宽占用的时间越长，黄色是 JS 计算、紫色是样式计算与布局、绿色是绘制，顶部出现红三角说明这是一个超过 50 毫秒的长任务，通常就是 INP 的元凶。GPU 轨与 Frames 轨看帧率，绿条代表稳、红条代表掉帧。右侧一列是每轨的读法提示：先看 Frames 有没有掉帧，再回 Main 找谁最长，点进去看 Call Tree 与 Bottom-Up 按自身耗时排序，直接定位到函数名。</desc>
+
+  <style>
+    .p2-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .p2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .p2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="p2-t" x="30" y="24" font-size="8.5">四条轨：先看 Frames 有没有掉帧，再回 Main 找谁最长</text>
+
+  <!-- Network -->
+  <text class="p2-t" x="30" y="58" font-size="8.5">Network</text>
+  <rect x="150" y="46" width="90" height="14" fill="#E7DEC8" stroke="#CDC4AF" stroke-width="0.8"/>
+  <rect x="250" y="46" width="140" height="14" fill="#FBF7EE" stroke="#1C1A17" stroke-width="0.9"/>
+  <rect x="400" y="46" width="60" height="14" fill="#E7DEC8" stroke="#CDC4AF" stroke-width="0.8"/>
+  <text class="p2-s" x="620" y="57" font-size="7">排队 → TTFB → 下载</text>
+
+  <!-- Main -->
+  <text class="p2-t" x="30" y="110" font-size="8.5">Main</text>
+  <rect x="150" y="98" width="180" height="20" fill="#E7DEC8" stroke="#1C1A17" stroke-width="0.9"/>
+  <text class="p2-mono" x="240" y="112" font-size="7" text-anchor="middle">JS</text>
+  <rect x="150" y="120" width="110" height="14" fill="#FBF7EE" stroke="#CDC4AF" stroke-width="0.8"/>
+  <rect x="262" y="120" width="68" height="14" fill="#FBF7EE" stroke="#CDC4AF" stroke-width="0.8"/>
+  <rect x="330" y="98" width="110" height="20" fill="#FBF7EE" stroke="#1C1A17" stroke-width="0.9"/>
+  <text class="p2-s" x="385" y="112" font-size="7" text-anchor="middle">Layout</text>
+  <rect x="440" y="98" width="60" height="20" fill="#FBF7EE" stroke="#1C1A17" stroke-width="0.9"/>
+  <text class="p2-s" x="470" y="112" font-size="7" text-anchor="middle">Paint</text>
+  <path d="M332 96 L337 89 L342 96 Z" fill="#B03A2E"/>
+  <text class="p2-s" x="350" y="90" font-size="7" style="fill:#B03A2E">红三角 = 长任务 &gt; 50ms → INP 元凶</text>
+  <text class="p2-s" x="620" y="105" font-size="7">主战场：谁最宽</text>
+  <text class="p2-s" x="620" y="119" font-size="7">点进去看 Call Tree</text>
+
+  <!-- GPU -->
+  <text class="p2-t" x="30" y="162" font-size="8.5">GPU</text>
+  <g stroke="#1C1A17" stroke-width="1">
+    <line x1="150" y1="150" x2="150" y2="162"/><line x1="190" y1="150" x2="190" y2="162"/>
+    <line x1="230" y1="150" x2="230" y2="162"/><line x1="270" y1="150" x2="270" y2="162"/>
+    <line x1="310" y1="150" x2="310" y2="162"/><line x1="350" y1="150" x2="350" y2="162"/>
+  </g>
+  <text class="p2-s" x="620" y="160" font-size="7">合成：transform / opacity</text>
+
+  <!-- Frames -->
+  <text class="p2-t" x="30" y="214" font-size="8.5">Frames</text>
+  <g stroke="#1C1A17" stroke-width="2">
+    <line x1="150" y1="202" x2="186" y2="202"/><line x1="192" y1="202" x2="228" y2="202"/>
+    <line x1="234" y1="202" x2="270" y2="202"/>
+  </g>
+  <line x1="276" y1="202" x2="312" y2="202" stroke="#B03A2E" stroke-width="2"/>
+  <g stroke="#1C1A17" stroke-width="2">
+    <line x1="318" y1="202" x2="354" y2="202"/><line x1="360" y1="202" x2="396" y2="202"/>
+  </g>
+  <text class="p2-s" x="620" y="212" font-size="7">绿稳 · 红掉帧</text>
+
+  <rect x="30" y="236" width="680" height="24" fill="#E7DEC8" opacity="0.55"/>
+  <text class="p2-s" x="42" y="252" font-size="7.5">读法三步：① 找宽块（谁占时间）→ ② 看颜色（黄 JS · 紫 Layout · 绿 Paint）→ ③ 往下钻（Bottom-Up 按自身耗时排序）</text>
+
+  <text class="p2-s" x="30" y="282" font-size="7.5">单次跑动有抖动 —— 同一页面录三次取中位数，别拿一次的结果当结论</text>
+</svg>

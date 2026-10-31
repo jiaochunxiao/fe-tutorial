@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="260" viewBox="0 0 720 260" role="img" aria-label="爬楼梯 DP 表逐格填充">
+  <defs>
+    <marker id="dp7-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+  <text x="30" y="34" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">dp[i] = dp[i-1] + dp[i-2]，初始 dp[0] = dp[1] = 1 —— 表格从左到右逐格点亮：</text>
+  <g>
+    <rect x="40" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="72" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">1<animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.35s" fill="freeze"/></text>
+    <rect x="112" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="0.6s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="144" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">1<animate attributeName="opacity" from="0" to="1" begin="0.6s" dur="0.35s" fill="freeze"/></text>
+    <rect x="184" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="216" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">2<animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.35s" fill="freeze"/></text>
+    <rect x="256" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="288" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">3<animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.35s" fill="freeze"/></text>
+    <rect x="328" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="360" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">5<animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.35s" fill="freeze"/></text>
+    <rect x="400" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="432" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">8<animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.35s" fill="freeze"/></text>
+    <rect x="472" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="504" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">13<animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.35s" fill="freeze"/></text>
+    <rect x="544" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="576" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">21<animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.35s" fill="freeze"/></text>
+    <rect x="616" y="60" width="64" height="56" rx="6" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.35s" fill="freeze"/>
+    </rect>
+    <text x="648" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="700" fill="#B03A2E" opacity="0">34<animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.35s" fill="freeze"/></text>
+  </g>
+  <g font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">
+    <text x="72" y="140" text-anchor="middle">dp[0]</text>
+    <text x="144" y="140" text-anchor="middle">dp[1]</text>
+    <text x="216" y="140" text-anchor="middle">dp[2]</text>
+    <text x="288" y="140" text-anchor="middle">dp[3]</text>
+    <text x="360" y="140" text-anchor="middle">dp[4]</text>
+    <text x="432" y="140" text-anchor="middle">dp[5]</text>
+    <text x="504" y="140" text-anchor="middle">dp[6]</text>
+    <text x="576" y="140" text-anchor="middle">dp[7]</text>
+    <text x="648" y="140" text-anchor="middle">dp[8]</text>
+  </g>
+  <path d="M 504 56 C 540 20 600 20 640 52" fill="none" stroke="#B03A2E" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dp7-red)"/>
+  <path d="M 576 56 C 596 32 620 28 646 50" fill="none" stroke="#6E675A" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#dp7-red)"/>
+  <text x="648" y="184" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">dp[8] = dp[7] + dp[6] = 34</text>
+  <text x="30" y="184" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">初始两格直接点亮；</text>
+  <text x="30" y="206" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">之后每格 = 前两格之和</text>
+</svg>

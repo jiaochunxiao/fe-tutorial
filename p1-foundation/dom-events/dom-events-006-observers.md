@@ -159,6 +159,10 @@ ro.observe(container);      // 元素自身尺寸变化（window.resize 只管�
 
 ## 图解总结
 
+![三个观察者各盯一件事，共同点是把「问」换成了「等通知」](../../assets/svg/dom-events-006-observers.svg)
+
+*图 · 三个观察者各盯一件事，共同点是把「问」换成了「等通知」*
+
 ```
             观察者模型：把「问询」变「订阅」
  MutationObserver ──盯──▶ DOM 树变化（微任务批量回调）

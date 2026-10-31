@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 320" width="100%" role="img" aria-labelledby="a7t a7d">
+  <title id="a7t">动态规划的五步法与三类范式</title>
+  <desc id="a7d">上半是五步法流水线：第一步定义状态，也就是 dp 数组每一位到底是什么含义，这一步最难也最值钱；第二步写转移方程，用最后一步分析法枚举到达当前状态的所有来源；第三步初始化边界；第四步确定遍历顺序，保证依赖先算；第五步明确答案位置。下半是三类范式：线性型如爬楼梯等于斐波那契，转移是 dp i 等于 dp i 减一加 dp i 减二；选择型如零钱兑换与背包，转移是枚举最后一步选了谁再取最小或最大；双动线型如最长上升子序列、最长公共子序列与编辑距离，是二维表、两序列对照。底部两条提醒：以 i 结尾定义的题答案在 max(dp) 而不在 dp[n]；完全背包的内外层循环顺序决定算的是组合还是排列。最后一行是实现路线：先写记忆化搜索保证正确，再转递推消除递归栈，最后用滚动数组压空间。</desc>
+
+  <style>
+    .a7-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a7-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a7-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a7-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a7-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="a7-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="a7-t" x="30" y="24" font-size="8.5">五步法：把「灵光一现」变成填表流程</text>
+
+  <rect class="a7-b" x="30" y="38" width="124" height="52" rx="2"/>
+  <text class="a7-mono" x="42" y="56" font-size="8" style="fill:#B03A2E">①</text>
+  <text class="a7-t" x="58" y="56" font-size="8.5">状态定义</text>
+  <text class="a7-s" x="42" y="76" font-size="7" style="fill:#B03A2E">dp[i] 到底是什么</text>
+
+  <line x1="154" y1="64" x2="165" y2="64" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a7-ink)"/>
+
+  <rect class="a7-b" x="169" y="38" width="124" height="52" rx="2"/>
+  <text class="a7-mono" x="181" y="56" font-size="8" style="fill:#B03A2E">②</text>
+  <text class="a7-t" x="197" y="56" font-size="8.5">转移方程</text>
+  <text class="a7-s" x="181" y="76" font-size="7">最后一步从哪来</text>
+
+  <line x1="293" y1="64" x2="304" y2="64" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a7-ink)"/>
+
+  <rect class="a7-b" x="308" y="38" width="124" height="52" rx="2"/>
+  <text class="a7-mono" x="320" y="56" font-size="8" style="fill:#B03A2E">③</text>
+  <text class="a7-t" x="336" y="56" font-size="8.5">初始化</text>
+  <text class="a7-s" x="320" y="76" font-size="7">边界与非法状态</text>
+
+  <line x1="432" y1="64" x2="443" y2="64" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a7-ink)"/>
+
+  <rect class="a7-b" x="447" y="38" width="124" height="52" rx="2"/>
+  <text class="a7-mono" x="459" y="56" font-size="8" style="fill:#B03A2E">④</text>
+  <text class="a7-t" x="475" y="56" font-size="8.5">遍历顺序</text>
+  <text class="a7-s" x="459" y="76" font-size="7">依赖必须先算出来</text>
+
+  <line x1="571" y1="64" x2="582" y2="64" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#a7-ink)"/>
+
+  <rect class="a7-b" x="586" y="38" width="124" height="52" rx="2"/>
+  <text class="a7-mono" x="598" y="56" font-size="8" style="fill:#B03A2E">⑤</text>
+  <text class="a7-t" x="614" y="56" font-size="8.5">答案位置</text>
+  <text class="a7-s" x="598" y="76" font-size="7">dp[n] 还是 max(dp)</text>
+
+  <text class="a7-t" x="30" y="112" font-size="8.5">三范式：先认出是哪一类，再套模板</text>
+
+  <rect class="a7-b" x="30" y="120" width="680" height="40" rx="2"/>
+  <text class="a7-t" x="44" y="136" font-size="8.5">线性：爬楼 = 斐波那契</text>
+  <text class="a7-mono" x="196" y="136" font-size="8">dp[i] = dp[i-1] + dp[i-2]</text>
+  <text class="a7-s" x="196" y="151" font-size="7">「最后一步从哪来」—— 打家劫舍、单词拆分同型</text>
+
+  <rect class="a7-b" x="30" y="166" width="680" height="40" rx="2"/>
+  <text class="a7-t" x="44" y="182" font-size="8.5">选择型：零钱 / 背包</text>
+  <text class="a7-mono" x="196" y="182" font-size="8">dp[i] = min/max( dp[i-c] + cost )</text>
+  <text class="a7-s" x="196" y="197" font-size="7">枚举「最后一步选了谁」，选不选、选几个</text>
+
+  <rect class="a7-c" x="30" y="212" width="680" height="40" rx="2"/>
+  <text class="a7-t" x="44" y="228" font-size="8.5">双动线：LIS / LCS / 编辑距离</text>
+  <text class="a7-mono" x="196" y="228" font-size="8">dp[i][j] —— 二维表，两序列对照</text>
+  <text class="a7-s" x="196" y="243" font-size="7">双指针 i、j 在表上走，最难也最常考</text>
+
+  <rect x="30" y="262" width="680" height="22" fill="#E7DEC8" opacity="0.55"/>
+  <text class="a7-s" x="42" y="277" font-size="7.5">坑位：「以 i 结尾」的答案在 max(dp) 不在 dp[n]；完全背包的内外层顺序决定算组合还是排列</text>
+
+  <text class="a7-s" x="30" y="302" font-size="7.5">实现路线：记忆化搜索（先写 · 稳）→ 递推（再优 · 省栈）→ 滚动数组（压空间）</text>
+</svg>

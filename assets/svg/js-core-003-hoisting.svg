@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 740 250" width="100%" role="img" aria-labelledby="hl3t hl3d">
+  <title id="hl3t">提升的三种登记方式，与声明之前的三种结果</title>
+  <desc id="hl3d">创建阶段：函数声明把名字和函数体一起登记，var 只登记名字并把值初始化为 undefined，let 与 const 登记名字但不初始化。所以在声明语句之前，函数声明可以直接调用，var 读到 undefined，let 与 const 落在暂时性死区里访问就抛 ReferenceError。声明语句之后三者都能拿到值。</desc>
+
+  <style>
+    .hl3-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .hl3-tdz{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .hl3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .hl3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .hl3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="hl3-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="hl3-s" x="148" y="54" font-size="9">创建阶段登记什么</text>
+  <text class="hl3-s" x="435" y="54" font-size="9" text-anchor="middle">声明之前访问</text>
+  <text class="hl3-s" x="630" y="54" font-size="9" text-anchor="middle">声明之后</text>
+
+  <line x1="530" y1="62" x2="530" y2="216" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+  <rect class="hl3-box" x="36" y="84" width="98" height="24" rx="3"/>
+  <text class="hl3-mono" x="85" y="100" font-size="9.5" text-anchor="middle">function</text>
+  <text class="hl3-s" x="148" y="99" font-size="9">名字 + 函数体，整体登记</text>
+  <line x1="334" y1="96" x2="364" y2="96" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#hl3-ink)"/>
+  <rect class="hl3-box" x="370" y="82" width="130" height="28" rx="3"/>
+  <text class="hl3-t" x="435" y="100" font-size="9.5" text-anchor="middle">能调用</text>
+  <rect class="hl3-box" x="560" y="82" width="140" height="28" rx="3"/>
+  <text class="hl3-t" x="630" y="100" font-size="9.5" text-anchor="middle">能调用</text>
+
+  <rect class="hl3-box" x="36" y="134" width="98" height="24" rx="3"/>
+  <text class="hl3-mono" x="85" y="150" font-size="9.5" text-anchor="middle">var</text>
+  <text class="hl3-s" x="148" y="149" font-size="9">只登记名字，值先给 undefined</text>
+  <line x1="334" y1="146" x2="364" y2="146" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#hl3-ink)"/>
+  <rect class="hl3-box" x="370" y="132" width="130" height="28" rx="3"/>
+  <text class="hl3-mono" x="435" y="150" font-size="9.5" text-anchor="middle">undefined</text>
+  <rect class="hl3-box" x="560" y="132" width="140" height="28" rx="3"/>
+  <text class="hl3-t" x="630" y="150" font-size="9.5" text-anchor="middle">拿到赋的值</text>
+
+  <rect class="hl3-box" x="36" y="184" width="98" height="24" rx="3"/>
+  <text class="hl3-mono" x="85" y="200" font-size="9.5" text-anchor="middle">let / const</text>
+  <text class="hl3-s" x="148" y="199" font-size="9">登记名字，但不初始化</text>
+  <line x1="334" y1="196" x2="364" y2="196" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#hl3-ink)"/>
+  <rect class="hl3-tdz" x="370" y="182" width="130" height="28" rx="3"/>
+  <text class="hl3-s" x="435" y="200" font-size="9.5" text-anchor="middle" style="fill:#B03A2E">TDZ · 直接报错</text>
+  <rect class="hl3-box" x="560" y="182" width="140" height="28" rx="3"/>
+  <text class="hl3-t" x="630" y="200" font-size="9.5" text-anchor="middle">拿到值</text>
+
+  <text class="hl3-s" x="36" y="248" font-size="9.5">var 四坑：函数级作用域 · 允许重复声明 · 裸赋值泄漏全局 · 循环变量共享</text>
+  <text class="hl3-s" x="36" y="268" font-size="9.5">解药：let / const · 严格模式 ·（历史）IIFE</text>
+</svg>

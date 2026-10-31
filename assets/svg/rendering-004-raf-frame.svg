@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 250" width="100%" role="img" aria-labelledby="r4ft r4fd">
+  <title id="r4ft">rAF 排在一帧的最前端：任务之后、渲染管线之前</title>
+  <desc id="r4fd">一帧的顺序是任务与微任务、rAF 回调、样式计算、布局、绘制、合成，最后是空闲。rAF 排在渲染管线之前，所以回调里改的样式会在同一帧内生效，不会跨帧闪烁。它的五个优势是帧对齐、随刷新率、后台暂停、管线前执行、天然节流。动画要按回调参数与上一帧的时间差推进，这样掉帧时慢放不错位、高刷屏也不加速；再配合本帧读几何、下帧写样式的模式，可以根治布局抖动。</desc>
+
+  <style>
+    .r4f-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r4f-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .r4f-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r4f-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="r4f-t" x="40" y="26" font-size="8.5">一帧的顺序：rAF 站在渲染管线的大门口</text>
+
+  <rect class="r4f-b" x="40" y="44" width="110" height="34" rx="1"/>
+  <text class="r4f-t" x="95" y="65" font-size="7" text-anchor="middle">任务 + 微任务</text>
+  <rect class="r4f-q" x="154" y="44" width="90" height="34" rx="1"/>
+  <text class="r4f-t" x="199" y="65" font-size="7.5" text-anchor="middle">rAF 回调</text>
+  <rect class="r4f-b" x="248" y="44" width="80" height="34" rx="1"/>
+  <text class="r4f-t" x="288" y="65" font-size="7" text-anchor="middle">Style</text>
+  <rect class="r4f-b" x="332" y="44" width="80" height="34" rx="1"/>
+  <text class="r4f-t" x="372" y="65" font-size="7" text-anchor="middle">Layout</text>
+  <rect class="r4f-b" x="416" y="44" width="80" height="34" rx="1"/>
+  <text class="r4f-t" x="456" y="65" font-size="7" text-anchor="middle">Paint</text>
+  <rect class="r4f-b" x="500" y="44" width="80" height="34" rx="1"/>
+  <text class="r4f-t" x="540" y="65" font-size="7" text-anchor="middle">合成</text>
+  <rect class="r4f-b" x="584" y="44" width="110" height="34" rx="1"/>
+  <text class="r4f-s" x="639" y="65" font-size="7" text-anchor="middle">空闲</text>
+
+  <text class="r4f-s" x="199" y="92" font-size="6.5" text-anchor="middle" style="fill:#B03A2E">在这里改样式</text>
+  <path d="M199 92 V100 H456 V90" fill="none" stroke="#B03A2E" stroke-width="1" stroke-dasharray="3 3"/>
+  <text class="r4f-s" x="330" y="112" font-size="6.5" text-anchor="middle" style="fill:#B03A2E">同一帧内生效，不跨帧闪烁</text>
+
+  <text class="r4f-t" x="40" y="140" font-size="8">五个维度上的优势</text>
+
+  <rect class="r4f-b" x="40" y="150" width="126" height="40" rx="2"/>
+  <text class="r4f-t" x="103" y="166" font-size="7" text-anchor="middle">帧对齐</text>
+  <text class="r4f-s" x="103" y="179" font-size="6.5" text-anchor="middle">不会与帧周期错拍</text>
+
+  <rect class="r4f-b" x="176" y="150" width="126" height="40" rx="2"/>
+  <text class="r4f-t" x="239" y="166" font-size="7" text-anchor="middle">随刷新率</text>
+  <text class="r4f-s" x="239" y="179" font-size="6.5" text-anchor="middle">60 / 120Hz 自适应</text>
+
+  <rect class="r4f-b" x="312" y="150" width="126" height="40" rx="2"/>
+  <text class="r4f-t" x="375" y="166" font-size="7" text-anchor="middle">后台暂停</text>
+  <text class="r4f-s" x="375" y="179" font-size="6.5" text-anchor="middle">切走就不跑，省电</text>
+
+  <rect class="r4f-b" x="448" y="150" width="126" height="40" rx="2"/>
+  <text class="r4f-t" x="511" y="166" font-size="7" text-anchor="middle">管线前执行</text>
+  <text class="r4f-s" x="511" y="179" font-size="6.5" text-anchor="middle">改动同帧生效</text>
+
+  <rect class="r4f-b" x="584" y="150" width="110" height="40" rx="2"/>
+  <text class="r4f-t" x="639" y="166" font-size="7" text-anchor="middle">天然节流</text>
+  <text class="r4f-s" x="639" y="179" font-size="6.5" text-anchor="middle">一帧只跑一次</text>
+
+  <text class="r4f-s" x="40" y="212" font-size="7.5">标准姿势：用回调参数 now 算与上一帧的差值再推进 —— 掉帧时慢放不错位，高刷屏也不会加速。</text>
+  <text class="r4f-s" x="40" y="228" font-size="7.5">配合「本帧读几何、下帧写样式」，两帧分开写读，布局抖动就没有了。</text>
+
+  <text class="r4f-t" x="40" y="246" font-size="8.5" style="fill:#B03A2E">边界：纯 CSS 动画交给合成器；非视觉的定时不用 rAF；空闲活交给 idle / scheduler.yield。</text>
+</svg>

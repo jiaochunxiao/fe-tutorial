@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 260" width="100%" role="img" aria-labelledby="h5at h5ad">
+  <title id="h5at">防抖的执行轨迹：每次触发都作废上一次的预约</title>
+  <desc id="h5ad">时间轴上连续三次输入，分别在 0、100、250 毫秒。第一次触发预约了一次 300 毫秒后的执行；100 毫秒时第二次触发，把 A 作废、改约 B 到 400；250 毫秒时第三次触发，把 B 作废、改约 C 到 550。只有 C 活到了静默满 300 毫秒，所以在 550 毫秒执行了一次。三次输入只换来一次执行，靠的是闭包里那个被反复覆盖的 timer。</desc>
+
+  <style>
+    .h5a-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .h5a-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .h5a-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .h5a-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <text class="h5a-t" x="40" y="26" font-size="8.5">连续输入三次，只换来一次执行 —— wait = 300ms</text>
+
+  <line x1="60" y1="206" x2="694" y2="206" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="60" y1="200" x2="60" y2="212" stroke="#1C1A17" stroke-width="1.1"/>
+  <text class="h5a-m" x="60" y="226" font-size="7" text-anchor="middle">0</text>
+  <line x1="165" y1="200" x2="165" y2="212" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="h5a-m" x="165" y="226" font-size="7" text-anchor="middle">100</text>
+  <line x1="322" y1="200" x2="322" y2="212" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="h5a-m" x="322" y="226" font-size="7" text-anchor="middle">250</text>
+  <line x1="375" y1="200" x2="375" y2="212" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="h5a-m" x="375" y="226" font-size="7" text-anchor="middle">300</text>
+  <line x1="480" y1="200" x2="480" y2="212" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="h5a-m" x="480" y="226" font-size="7" text-anchor="middle">400</text>
+  <line x1="637" y1="200" x2="637" y2="212" stroke="#B03A2E" stroke-width="1.1"/>
+  <text class="h5a-m" x="637" y="226" font-size="7" text-anchor="middle" style="fill:#B03A2E">550</text>
+
+  <line x1="60" y1="44" x2="60" y2="60" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="165" y1="44" x2="165" y2="60" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="322" y1="44" x2="322" y2="60" stroke="#1C1A17" stroke-width="1.1"/>
+  <text class="h5a-s" x="60" y="38" font-size="7" text-anchor="middle">输入 1</text>
+  <text class="h5a-s" x="165" y="38" font-size="7" text-anchor="middle">输入 2</text>
+  <text class="h5a-s" x="322" y="38" font-size="7" text-anchor="middle">输入 3</text>
+
+  <rect class="h5a-b" x="60" y="70" width="315" height="16" rx="1" stroke-dasharray="4 3" style="fill:#FBF7EE;stroke:#CDC4AF"/>
+  <text class="h5a-s" x="70" y="81" font-size="6.5">A 预约到 300</text>
+  <line x1="161" y1="74" x2="169" y2="82" stroke="#6E675A" stroke-width="1.1"/>
+  <line x1="161" y1="82" x2="169" y2="74" stroke="#6E675A" stroke-width="1.1"/>
+  <text class="h5a-s" x="176" y="81" font-size="6.5" style="fill:#B03A2E">作废</text>
+
+  <rect class="h5a-b" x="165" y="100" width="315" height="16" rx="1" stroke-dasharray="4 3" style="fill:#FBF7EE;stroke:#CDC4AF"/>
+  <text class="h5a-s" x="175" y="111" font-size="6.5">B 预约到 400</text>
+  <line x1="318" y1="104" x2="326" y2="112" stroke="#6E675A" stroke-width="1.1"/>
+  <line x1="318" y1="112" x2="326" y2="104" stroke="#6E675A" stroke-width="1.1"/>
+  <text class="h5a-s" x="333" y="111" font-size="6.5" style="fill:#B03A2E">作废</text>
+
+  <rect x="322" y="130" width="315" height="16" rx="1" fill="#E7DEC8" stroke="#B03A2E" stroke-width="1.1"/>
+  <text class="h5a-t" x="332" y="141" font-size="6.5">C 预约到 550 —— 它活到了最后</text>
+
+  <line x1="637" y1="146" x2="637" y2="188" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="3 3"/>
+  <circle cx="637" cy="192" r="5" fill="#B03A2E"/>
+  <text class="h5a-t" x="648" y="168" font-size="7.5" style="fill:#B03A2E">执行</text>
+  <text class="h5a-s" x="648" y="180" font-size="7">静默满 300ms</text>
+
+  <text class="h5a-t" x="40" y="248" font-size="8.5" style="fill:#B03A2E">能作废上一次，是因为 timer 被闭包持有 —— 三次调用共享同一个变量。</text>
+</svg>

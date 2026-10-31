@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 256" width="100%" role="img" aria-labelledby="m1t m1d">
+  <title id="m1t">TCP 四元组与 QUIC 连接迁移</title>
+  <desc id="m1d">TCP 连接由源 IP、源端口、目标 IP、目标端口四元组标识，从 WiFi 切到 4G 后 IP 与端口都变了，旧连接作废、一切重来；QUIC 用与 IP 解耦的 Connection ID 标识连接，同样切换网络后服务器仍认作同一个连接，下载不重头。</desc>
+  <defs>
+    <marker id="m1-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <style>
+    .m1-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .m1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .m1-serif{font-family:'Noto Serif SC','Songti SC','SimSun',serif;fill:#1C1A17}
+    .m1-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <!-- 分栏线 -->
+  <line x1="380" y1="36" x2="380" y2="240" stroke="#CDC4AF" stroke-width="1"/>
+
+  <!-- 左：TCP -->
+  <text class="m1-serif" x="40" y="36" font-size="12.5" font-weight="700">TCP：连接身份 = 四元组</text>
+
+  <rect class="m1-box" x="40" y="56" width="330" height="40" rx="3"/>
+  <text class="m1-mono" x="205" y="81" font-size="10" text-anchor="middle">WiFi · 192.168.1.5 : 53211</text>
+
+  <line x1="205" y1="96" x2="205" y2="116" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#m1-ink)"/>
+  <text class="m1-small" x="216" y="111" font-size="9.5">切到 4G</text>
+
+  <rect class="m1-box" x="40" y="120" width="330" height="40" rx="3"/>
+  <text class="m1-mono" x="205" y="145" font-size="10" text-anchor="middle">4G · 10.32.7.77 : 41088</text>
+
+  <rect x="40" y="180" width="330" height="52" rx="3" fill="none" stroke="#B03A2E" stroke-width="1.4"/>
+  <text class="m1-serif" x="56" y="202" font-size="11.5" font-weight="700" style="fill:#B03A2E">源 IP 与源端口都变了</text>
+  <text class="m1-small" x="56" y="219" font-size="10.5">→ 旧连接作废：重握手、下载从头来</text>
+  <text class="m1-serif" x="352" y="208" font-size="15" text-anchor="end" style="fill:#B03A2E">✗</text>
+
+  <!-- 右：QUIC -->
+  <text class="m1-serif" x="390" y="36" font-size="12.5" font-weight="700">QUIC：连接身份 = Connection ID</text>
+
+  <rect class="m1-box" x="390" y="56" width="330" height="40" rx="3"/>
+  <text class="m1-mono" x="555" y="81" font-size="10" text-anchor="middle">WiFi · IP 192.168.1.5 · CID 0x83f2</text>
+
+  <line x1="555" y1="96" x2="555" y2="116" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#m1-ink)"/>
+  <text class="m1-small" x="566" y="111" font-size="9.5">切到 4G</text>
+
+  <rect class="m1-box" x="390" y="120" width="330" height="40" rx="3"/>
+  <text class="m1-mono" x="555" y="145" font-size="10" text-anchor="middle">4G · IP 10.32.7.77 · CID 0x83f2</text>
+
+  <rect x="390" y="180" width="330" height="52" rx="3" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <text class="m1-serif" x="406" y="202" font-size="11.5" font-weight="700">IP 变了，CID 没变</text>
+  <text class="m1-small" x="406" y="219" font-size="10.5">→ 服务器眼里仍是同一连接，不重头</text>
+  <text class="m1-serif" x="702" y="208" font-size="15" text-anchor="end">✓</text>
+
+</svg>

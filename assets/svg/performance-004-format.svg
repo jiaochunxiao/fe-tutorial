@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 352" width="100%" role="img" aria-labelledby="p4ft p4fd">
+  <title id="p4ft">按内容选格式，以及同一张照片的体积对比</title>
+  <desc id="p4fd">图标和 Logo 用 SVG，矢量无损缩放还能着色；照片用 AVIF 优先，WebP 与 JPEG 通过 picture 标签兜底降级；截图和 UI 线稿要 PNG 转 WebP 的无损压缩，保住锐利边缘；动图直接换成 mp4 或 webm，比 GIF 小八成以上。下半部分是同一张照片在质量视觉相近时的体积：以 JPEG 为基准一百，WebP 约六成五，AVIF 约一半。</desc>
+
+  <style>
+    .p4f-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .p4f-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .p4f-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p4f-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .p4f-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="p4f-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="p4f-t" x="40" y="26" font-size="8.5">先看是什么图，再决定压成什么格式</text>
+
+  <!-- 行 1：图标 -->
+  <text class="p4f-t" x="40" y="61" font-size="8.5">图标 / Logo</text>
+  <line x1="150" y1="58" x2="176" y2="58" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#p4f-ink)"/>
+  <rect class="p4f-b" x="182" y="45" width="180" height="26" rx="2"/>
+  <text class="p4f-mono" x="272" y="62" font-size="9" text-anchor="middle">SVG</text>
+  <text class="p4f-s" x="376" y="61" font-size="8">矢量无损缩放 · 可着色 · 可摇树</text>
+
+  <!-- 行 2：照片 -->
+  <text class="p4f-t" x="40" y="103" font-size="8.5">照片 / 大图</text>
+  <line x1="150" y1="100" x2="176" y2="100" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#p4f-ink)"/>
+  <rect class="p4f-band" x="182" y="87" width="180" height="26" rx="2"/>
+  <text class="p4f-mono" x="272" y="104" font-size="9" text-anchor="middle">AVIF ▸ WebP ▸ JPEG</text>
+  <text class="p4f-s" x="376" y="103" font-size="8">picture 兜底降级 · AVIF 再省 20%</text>
+
+  <!-- 行 3：截图 -->
+  <text class="p4f-t" x="40" y="145" font-size="8.5">截图 / UI 线稿</text>
+  <line x1="150" y1="142" x2="176" y2="142" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#p4f-ink)"/>
+  <rect class="p4f-b" x="182" y="129" width="180" height="26" rx="2"/>
+  <text class="p4f-mono" x="272" y="146" font-size="9" text-anchor="middle">PNG → WebP 无损</text>
+  <text class="p4f-s" x="376" y="145" font-size="8">边缘锐利，有损一压就糊</text>
+
+  <!-- 行 4：动图 -->
+  <text class="p4f-t" x="40" y="187" font-size="8.5">动图</text>
+  <line x1="150" y1="184" x2="176" y2="184" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#p4f-ink)"/>
+  <rect class="p4f-b" x="182" y="171" width="180" height="26" rx="2"/>
+  <text class="p4f-mono" x="272" y="188" font-size="9" text-anchor="middle">mp4 / webm</text>
+  <text class="p4f-s" x="376" y="187" font-size="8">比 GIF 小 80% 以上，冷知识但真香</text>
+
+  <line x1="40" y1="216" x2="700" y2="216" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="p4f-t" x="40" y="240" font-size="8.5">同一张照片，质量视觉相近时的体积</text>
+
+  <text class="p4f-s" x="40" y="266" font-size="8">JPEG</text>
+  <rect class="p4f-band" x="168" y="255" width="440" height="15" rx="1"/>
+  <text class="p4f-s" x="616" y="266" font-size="8">100%（基准）</text>
+
+  <text class="p4f-s" x="40" y="290" font-size="8">WebP</text>
+  <rect class="p4f-band" x="168" y="279" width="286" height="15" rx="1"/>
+  <text class="p4f-s" x="462" y="290" font-size="8">~65%</text>
+
+  <text class="p4f-s" x="40" y="314" font-size="8">AVIF</text>
+  <rect class="p4f-band" x="168" y="303" width="220" height="15" rx="1"/>
+  <text class="p4f-s" x="396" y="314" font-size="8">~50%</text>
+
+  <text class="p4f-t" x="40" y="344" font-size="8.5" style="fill:#B03A2E">格式只是第一层，但它往往一次就砍掉一半 —— 先换格式，再谈其他。</text>
+</svg>

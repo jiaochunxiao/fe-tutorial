@@ -18,6 +18,10 @@ createdAt: 2026-10-26
 
 对着一张瀑布图（DevTools Network）拆解一个典型慢首屏：
 
+![首屏 4 秒的六段耗时](../../assets/svg/performance-003-waterfall.svg)
+
+*图 · 首屏 4 秒的六段耗时*
+
 ```
 0.0s  请求 HTML ──▶ 0.8s 到达（TTFB 慢：无 CDN + 服务端渲染慢）
 0.8s  HTML 解析 ──▶ 发现 CSS（头部）/ 发现 bundle.js（头部同步）
@@ -119,6 +123,10 @@ CSR 的隐形浪费：JS 下载执行完才发首屏接口（上面时间线的 
 **1. 面试答题骨架**：「加载优化围绕关键渲染路径展开——TTFB 用 CDN 与 SSR/SSG 让首字节提前并让内容直出；用 preload 与 fetchpriority 提示关键资源提前下载、preconnect 暖三方连接；JS 用 defer/async 消除解析阻塞、非首屏 CSS 用 preload 换 rel 的方式异步化、关键 CSS 内联；代码分割按路由与重组件拆 chunk，首屏只带必需代码；数据层用预取与并行请求消除『等 JS 执行完才发请求』的串行段；LCP 主力通常是首图，配 preload 高优先级与现代格式。」
 
 ## 图解总结
+
+![六段瓶颈与六类武器的对位](../../assets/svg/performance-003-weapons.svg)
+
+*图 · 六段瓶颈，六类武器 —— 一一对位，别错配*
 
 ```
 首屏时间线的六段瓶颈 ──▶ 六类武器

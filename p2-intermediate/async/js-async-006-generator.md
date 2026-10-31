@@ -182,6 +182,10 @@ const first5 = naturals();
 
 ## 图解总结
 
+![生成器的一次 next 与暂停恢复](../../assets/svg/js-async-006-generator.svg)
+
+*图 · 一次 next 只跑到下一个 yield 就停：出去的是 value，进来的是下一次的参数*
+
 ```
 next(arg) ──arg 注入到当前暂停的 yield──▶ [恢复执行]
                                             │

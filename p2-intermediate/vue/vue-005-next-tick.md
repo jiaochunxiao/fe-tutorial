@@ -33,6 +33,10 @@ name.value = 'new';
 
 **数据变化 ≠ 立即渲染**。Vue 在两者之间放了一个调度器：
 
+![调度器把 N 次变更攒成一次渲染](../../assets/svg/vue-005-scheduler.svg)
+
+*图 · 调度器把 N 次变更攒成一次渲染*
+
 ```
 同步修改数据 ×N ──▶ trigger 逐个触发
                      │ 渲染 effect 不立即执行，而是入【队列】并去重
@@ -150,6 +154,10 @@ nextTick(() => console.log('C'));
 **3. 快手辨析**：`await nextTick()` 与 `setTimeout(0)` 都能「等等再执行」，差异在**等的位置**：前者是渲染前的微任务（不闪烁、不丢帧），后者是渲染后的宏任务（可能跨帧）。
 
 ## 图解总结
+
+![nextTick 在微任务里排在渲染之后](../../assets/svg/vue-005-nexttick.svg)
+
+*图 · 去重发生在排队那一层，不是改数据那一层*
 
 ```
 同步块: count=1 → count=2 → push → name='x'

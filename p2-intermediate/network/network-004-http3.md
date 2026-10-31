@@ -55,6 +55,10 @@ QUIC（流独立）：
 
 对比建立一条可用加密连接的成本：
 
+![建立加密连接的握手成本](../../assets/svg/network-004-rtt.svg)
+
+*图 · 同一件事——「多久能发出第一个请求」：TCP 叠 TLS 1.2 要 3 个 RTT，TLS 1.3 要 2 个，QUIC 把两层握手并成一步，会话恢复还能压到 0*
+
 ```
 HTTPS over TCP/1.1 或 2：
   TCP 握手: 1 RTT ┐
@@ -76,6 +80,10 @@ QUIC 帧结构里直接内置了 TLS 1.3 的握手消息（CRYPTO 帧）——**
 TCP 连接由「四元组」（源 IP、源端口、目标 IP、目标端口）标识——手机从 WiFi 切到 4G，IP 变了，TCP 连接作废，一切重来。
 
 QUIC 用 **Connection ID** 标识连接（与 IP 解耦）：
+
+![TCP 四元组与 QUIC 连接迁移](../../assets/svg/network-004-migration.svg)
+
+*图 · 身份挂在 IP 上，换网就得重来；身份挂在 CID 上，IP 怎么变都还是那条连接*
 
 ```
 WiFi 下: [CIP=192.168.1.5, CID=0x83f2…] ─┐
@@ -116,6 +124,10 @@ HTTP/3:    QUIC(UDP) · 流独立交付 · 0-RTT · CID ┘ 传输层重写
 ```
 
 ## 图解总结
+
+![HTTP/3 的分层结构](../../assets/svg/network-004-layers.svg)
+
+*图 · 换掉的只有中间那一层：语义层原样复用 h2，UDP 只是「道路」，可靠性、流、加密、迁移全被搬进了用户态的 QUIC*
 
 ```
               ┌────────── HTTP/3 语义层（同 h2）──────────┐

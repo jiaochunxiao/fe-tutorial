@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 28 740 300" width="100%" role="img" aria-labelledby="ni2t ni2d">
+  <title id="ni2t">手写 new 与手写 instanceof：建立链与查询链的镜像对照</title>
+  <desc id="ni2d">左边 objectFactory 建立链：先用 Object.create 造出 obj 并让它的原型指向 Ctor.prototype，再用 apply 在 obj 上跑构造函数体，最后判断返回值是不是对象。右边 myInstanceof 查询链：从 left 的原型出发，逐层上溯比对 Ctor.prototype，命中返回 true，爬到 null 返回 false。两条路径方向相反，但落在同一个 Ctor.prototype 对象上，所以能互相验证。</desc>
+
+  <style>
+    .ni2-panel{fill:none;stroke:#CDC4AF;stroke-width:1.2}
+    .ni2-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ni2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ni2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ni2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="ni2-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="ni2-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="ni2-panel" x="36" y="60" width="300" height="192" rx="3"/>
+  <text class="ni2-mono" x="52" y="82" font-size="10.5">objectFactory</text>
+  <text class="ni2-s" x="144" y="82" font-size="9">建立链 · 从上往下造</text>
+
+  <text class="ni2-mono" x="52" y="110" font-size="10">Object.create(Ctor.prototype)</text>
+  <text class="ni2-s" x="52" y="124" font-size="9">obj 的原型直接钉在 Ctor.prototype</text>
+  <line x1="60" y1="132" x2="60" y2="146" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#ni2-ink)"/>
+
+  <text class="ni2-mono" x="52" y="164" font-size="10">Ctor.apply(obj, args)</text>
+  <text class="ni2-s" x="52" y="178" font-size="9">在 obj 上跑一遍构造函数体</text>
+  <line x1="60" y1="186" x2="60" y2="200" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#ni2-ink)"/>
+
+  <text class="ni2-mono" x="52" y="218" font-size="10">typeof ret === 'object' ? ret : obj</text>
+  <text class="ni2-s" x="52" y="232" font-size="9">构造函数若返回对象，那个对象赢</text>
+
+  <rect class="ni2-panel" x="404" y="60" width="300" height="192" rx="3"/>
+  <text class="ni2-mono" x="420" y="82" font-size="10.5">myInstanceof</text>
+  <text class="ni2-s" x="506" y="82" font-size="9">查询链 · 从下往上找</text>
+
+  <text class="ni2-mono" x="420" y="110" font-size="10">getPrototypeOf(left)</text>
+  <text class="ni2-s" x="420" y="124" font-size="9">从链的起点出发，而不是从对象本身</text>
+  <line x1="428" y1="132" x2="428" y2="146" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#ni2-ink)"/>
+
+  <text class="ni2-mono" x="420" y="164" font-size="10">proto === Ctor.prototype</text>
+  <text class="ni2-s" x="420" y="178" font-size="9">命中就 true，一层都不用再爬</text>
+  <line x1="428" y1="186" x2="428" y2="200" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#ni2-ink)"/>
+
+  <text class="ni2-mono" x="420" y="218" font-size="10">proto = getPrototypeOf(proto)</text>
+  <text class="ni2-s" x="420" y="232" font-size="9">没命中就往上爬，爬到 null 返回 false</text>
+
+  <line x1="186" y1="252" x2="186" y2="285" stroke="#B03A2E" stroke-width="1.8"/>
+  <line x1="186" y1="285" x2="316" y2="285" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#ni2-red)"/>
+  <line x1="554" y1="252" x2="554" y2="285" stroke="#B03A2E" stroke-width="1.8"/>
+  <line x1="554" y1="285" x2="424" y2="285" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#ni2-red)"/>
+
+  <rect class="ni2-box" x="320" y="271" width="100" height="28" rx="3"/>
+  <text class="ni2-mono" x="370" y="289" font-size="9.5" text-anchor="middle">Ctor.prototype</text>
+
+  <text class="ni2-s" x="370" y="318" font-size="9.5" text-anchor="middle">两条方向相反的路径，落在同一个对象上</text>
+</svg>

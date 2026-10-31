@@ -51,6 +51,10 @@ const answer = 6 * 7;
 
 ### 一、Babel 三段式流水线 ⭐⭐⭐
 
+![三段是死的，插件全挂在中间那段上](../../assets/svg/engineering-006-pipeline.svg)
+
+*图 · 三段是死的，插件全挂在中间那段上*
+
 ```
 source（源码字符串）
    │ ① parse：@babel/parser 把源码 → AST
@@ -162,6 +166,10 @@ Babel（语法层）：箭头函数、可选链、class —— 编译期【转�
 **3. 一个快手题**：`2 ** 10`、`a?.b`、`f(...arr)` 各是什么节点类型？（BinaryExpression、ChainExpression/OptionalMemberExpression、CallExpression+SpreadElement）
 
 ## 图解总结
+
+![一条流水线，四个借用者 —— 差别只在访问者里写了什么](../../assets/svg/engineering-006-summary.svg)
+
+*图 · 一条流水线，四个借用者 —— 差别只在访问者里写了什么*
 
 ```
 source ──parse──▶ AST ──transform──▶ AST' ──generate──▶ output(+sourcemap)

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 272" width="100%" role="img" aria-labelledby="p3wt p3wd">
+  <title id="p3wt">六段瓶颈与六类武器的对位</title>
+  <desc id="p3wd">瀑布图上的六段各有名字，也各有一把武器。TTFB 慢用 CDN 分发、SSR 或 SSG 直出，加上强缓存让回头客零等待；资源发现晚用 preload 与 fetchpriority 提示，preconnect 预热三方连接；下载慢靠压缩、现代格式与就近分发；解析被阻塞就上 defer 与 async，关键 CSS 内联；代码量太大就按路由与重组件做代码分割，配 Tree Shaking；数据链路串行就预取并行、用 SWR 让二次进入秒开。六段里只有第四段真正花在主线程上，其余五段本质都是「等」。</desc>
+
+  <style>
+    .p3w-c{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .p3w-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p3w-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="p3w-t" x="40" y="26" font-size="8.5">六段瓶颈，六类武器 —— 一一对位，别错配</text>
+
+  <rect class="p3w-c" x="40" y="48" width="220" height="80" rx="2"/>
+  <text class="p3w-t" x="54" y="70" font-size="8.5">① TTFB</text>
+  <text class="p3w-s" x="54" y="88" font-size="7.5">CDN · SSR / SSG 直出</text>
+  <text class="p3w-s" x="54" y="102" font-size="7.5">强缓存让回头客零等待</text>
+
+  <rect class="p3w-c" x="280" y="48" width="220" height="80" rx="2"/>
+  <text class="p3w-t" x="294" y="70" font-size="8.5">② 资源发现</text>
+  <text class="p3w-s" x="294" y="88" font-size="7.5">preload · fetchpriority</text>
+  <text class="p3w-s" x="294" y="102" font-size="7.5">preconnect 预热三方连接</text>
+
+  <rect class="p3w-c" x="520" y="48" width="180" height="80" rx="2"/>
+  <text class="p3w-t" x="534" y="70" font-size="8.5">③ 下载耗时</text>
+  <text class="p3w-s" x="534" y="88" font-size="7.5">压缩 · 现代格式</text>
+  <text class="p3w-s" x="534" y="102" font-size="7.5">CDN 就近分发</text>
+
+  <rect class="p3w-c" x="40" y="140" width="220" height="80" rx="2"/>
+  <text class="p3w-t" x="54" y="162" font-size="8.5">④ 阻塞解析</text>
+  <text class="p3w-s" x="54" y="180" font-size="7.5">defer / async</text>
+  <text class="p3w-s" x="54" y="194" font-size="7.5">关键 CSS 内联进 HTML</text>
+
+  <rect class="p3w-c" x="280" y="140" width="220" height="80" rx="2"/>
+  <text class="p3w-t" x="294" y="162" font-size="8.5">⑤ 代码量</text>
+  <text class="p3w-s" x="294" y="180" font-size="7.5">按路由与重组件分割</text>
+  <text class="p3w-s" x="294" y="194" font-size="7.5">Tree Shaking</text>
+
+  <rect class="p3w-c" x="520" y="140" width="180" height="80" rx="2"/>
+  <text class="p3w-t" x="534" y="162" font-size="8.5">⑥ 数据链路</text>
+  <text class="p3w-s" x="534" y="180" font-size="7.5">预取 · 并行发起</text>
+  <text class="p3w-s" x="534" y="194" font-size="7.5">SWR 二次秒开</text>
+
+  <text class="p3w-t" x="40" y="248" font-size="8.5">六段里只有 ④ 真正花在主线程上，其余五段本质都是「等」。</text>
+  <text class="p3w-t" x="40" y="264" font-size="8.5" style="fill:#B03A2E">所以先修 ④（它不花钱），再修「等」的那五段。</text>
+</svg>

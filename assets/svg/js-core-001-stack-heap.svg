@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 30 740 250" width="100%" role="img" aria-labelledby="dt1t dt1d">
+  <title id="dt1t">栈与堆：原始值直接存，引用值只存地址</title>
+  <desc id="dt1d">栈上按变量名一格一格放值。原始值 a 和 s 的值直接写在格子里；对象 o 和数组 p 的格子里只有一串地址 #101 和 #102，真正的对象实体放在堆里，靠地址指过去。所以复制一个对象变量，复制走的是地址。</desc>
+
+  <style>
+    .dt1-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.6}
+    .dt1-row{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .dt1-heap{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .dt1-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .dt1-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .dt1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="dt1-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <rect class="dt1-box" x="56" y="52" width="210" height="200" rx="4"/>
+  <text class="dt1-t" x="72" y="76" font-size="11.5">栈 stack</text>
+  <text class="dt1-s" x="72" y="94" font-size="9">原始值直接放在这里</text>
+
+  <rect class="dt1-row" x="72" y="112" width="178" height="30" rx="2"/>
+  <text class="dt1-mono" x="86" y="132" font-size="10">a</text>
+  <text class="dt1-mono" x="132" y="132" font-size="10">1</text>
+
+  <rect class="dt1-row" x="72" y="146" width="178" height="30" rx="2"/>
+  <text class="dt1-mono" x="86" y="166" font-size="10">s</text>
+  <text class="dt1-mono" x="132" y="166" font-size="10">'hi'</text>
+
+  <rect class="dt1-row" x="72" y="180" width="178" height="30" rx="2"/>
+  <text class="dt1-mono" x="86" y="200" font-size="10">o</text>
+  <text class="dt1-mono" x="132" y="200" font-size="10">#101</text>
+
+  <rect class="dt1-row" x="72" y="214" width="178" height="30" rx="2"/>
+  <text class="dt1-mono" x="86" y="234" font-size="10">p</text>
+  <text class="dt1-mono" x="132" y="234" font-size="10">#102</text>
+
+  <rect class="dt1-box" x="430" y="52" width="254" height="200" rx="4"/>
+  <text class="dt1-t" x="446" y="76" font-size="11.5">堆 heap</text>
+  <text class="dt1-s" x="446" y="94" font-size="9">对象的实体都住在这儿</text>
+
+  <rect class="dt1-heap" x="446" y="112" width="222" height="32" rx="2"/>
+  <text class="dt1-mono" x="458" y="133" font-size="9.5">#101 · { name: 'x' }</text>
+
+  <rect class="dt1-heap" x="446" y="150" width="222" height="32" rx="2"/>
+  <text class="dt1-mono" x="458" y="171" font-size="9.5">#102 · [1, 2, 3]</text>
+
+  <rect class="dt1-heap" x="446" y="188" width="222" height="32" rx="2"/>
+  <text class="dt1-mono" x="458" y="209" font-size="9.5">#103 · { … }</text>
+
+  <path d="M250 195 H286 V128 H442" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#dt1-ink)"/>
+  <path d="M250 229 H320 V166 H442" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#dt1-ink)"/>
+
+</svg>

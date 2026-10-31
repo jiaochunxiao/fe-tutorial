@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 366" width="100%" role="img" aria-labelledby="b1t b1d">
+  <title id="b1t">盒模型的四层结构</title>
+  <desc id="b1d">从外到内依次是 margin、border、padding、content 四层。margin 在盒外，透明、可折叠、可为负；border 与 padding 算进占位；content 是真正装内容的区域，width 与 height 默认只作用于这一层。</desc>
+
+  <style>
+    .b1-margin{fill:none;stroke:#B03A2E;stroke-width:1.4;stroke-dasharray:6 4}
+    .b1-border{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .b1-padding{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .b1-content{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .b1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .b1-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <rect class="b1-margin" x="60" y="48" width="380" height="280" rx="2"/>
+  <text class="b1-mono" x="250" y="70" font-size="11" text-anchor="middle" style="fill:#B03A2E">margin</text>
+
+  <rect class="b1-border" x="96" y="84" width="308" height="208" rx="2"/>
+  <text class="b1-mono" x="250" y="106" font-size="11" text-anchor="middle">border</text>
+
+  <rect class="b1-padding" x="132" y="120" width="236" height="136" rx="2"/>
+  <text class="b1-mono" x="250" y="142" font-size="11" text-anchor="middle">padding</text>
+
+  <rect class="b1-content" x="168" y="156" width="164" height="64" rx="2"/>
+  <text class="b1-mono" x="250" y="184" font-size="11" text-anchor="middle">content</text>
+  <text class="b1-small" x="250" y="202" font-size="9.5" text-anchor="middle">width / height</text>
+
+  <text class="b1-mono" x="470" y="102" font-size="11" style="fill:#B03A2E">margin</text>
+  <text class="b1-small" x="470" y="120" font-size="9.5">在盒外：透明、可折叠、可为负</text>
+  <text class="b1-small" x="470" y="136" font-size="9.5">它只是「盒子之间的距离」，不画背景</text>
+
+  <text class="b1-mono" x="470" y="176" font-size="11">border / padding</text>
+  <text class="b1-small" x="470" y="194" font-size="9.5">算进占位：同样的 width，实际大小不同</text>
+
+  <text class="b1-mono" x="470" y="234" font-size="11">content</text>
+  <text class="b1-small" x="470" y="252" font-size="9.5">真正装内容的区域</text>
+  <text class="b1-small" x="470" y="268" font-size="9.5">width / height 默认只作用在这一层</text>
+
+  <text class="b1-small" x="40" y="352" font-size="10.5">四层里只有 margin 不画背景 —— 把背景色打在 padding 上，会一直铺到 border 内沿为止。</text>
+
+</svg>

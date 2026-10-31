@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 44 740 254" width="100%" role="img" aria-labelledby="vt5t vt5d">
+  <title id="vt5t">Vite 开发期的两条 import 走向：裸导入走预构建，相对路径走现场编译</title>
+  <desc id="vt5d">启动时只起开发服务器，不打一个包。浏览器加载入口模块后按 import 语句逐个请求：import 'vue' 这种裸导入被重写指向 .vite/deps 里预构建好的单文件，因为 CJS 包在原生 ESM 下不能直接用；import './App.vue' 这种相对路径由中间件现场编译那一个文件，这就是 No-Bundle。热更新只重编译改动的那个文件。生产构建仍然交给 Rollup 打包。</desc>
+
+  <style>
+    .vt5-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .vt5-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .vt5-pill{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .vt5-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .vt5-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .vt5-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="vt5-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <rect class="vt5-band" x="36" y="56" width="668" height="32" rx="3"/>
+  <text class="vt5-t" x="48" y="77" font-size="9.5">启动只起服务器，不打一个包 —— 冷启动时间与项目体积无关</text>
+
+  <rect class="vt5-box" x="36" y="110" width="164" height="80" rx="3"/>
+  <text class="vt5-s" x="48" y="130" font-size="9">浏览器</text>
+  <text class="vt5-mono" x="48" y="152" font-size="8.5">&lt;script type="module"&gt;</text>
+  <text class="vt5-mono" x="48" y="170" font-size="8.5">src="/src/main.js"</text>
+
+  <line x1="200" y1="122" x2="246" y2="122" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#vt5-ink)"/>
+  <line x1="200" y1="182" x2="246" y2="182" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#vt5-ink)"/>
+
+  <rect class="vt5-pill" x="250" y="106" width="170" height="32" rx="3"/>
+  <text class="vt5-mono" x="264" y="127" font-size="9.5">import 'vue'</text>
+
+  <rect class="vt5-pill" x="250" y="166" width="170" height="32" rx="3"/>
+  <text class="vt5-mono" x="264" y="187" font-size="9.5">import './App.vue'</text>
+
+  <line x1="424" y1="122" x2="506" y2="122" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#vt5-ink)"/>
+  <line x1="424" y1="182" x2="506" y2="182" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#vt5-ink)"/>
+
+  <rect class="vt5-box" x="510" y="92" width="194" height="60" rx="3"/>
+  <text class="vt5-t" x="522" y="112" font-size="9.5">预构建产物，命中缓存</text>
+  <text class="vt5-mono" x="522" y="130" font-size="8.5">/node_modules/.vite/deps/vue.js</text>
+  <text class="vt5-s" x="522" y="146" font-size="8.5">CJS→ESM，几百个请求合成一个</text>
+
+  <rect class="vt5-box" x="510" y="156" width="194" height="52" rx="3"/>
+  <text class="vt5-t" x="522" y="176" font-size="9.5">现场编译这一个文件</text>
+  <text class="vt5-s" x="522" y="194" font-size="8.5">.vue → JS，不碰别的模块</text>
+
+  <rect class="vt5-band" x="36" y="226" width="668" height="32" rx="3"/>
+  <text class="vt5-t" x="48" y="247" font-size="9">HMR：只重编译改的那一个文件 → WS 通知 → 动态 import（带时间戳）→ 在模块图里找边界替换</text>
+
+  <text class="vt5-s" x="36" y="282" font-size="9.5">生产仍走 Rollup —— 请求瀑布与体积优化让打包不可省，preview 用来验 dev 与 build 的差异</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 28 740 384" width="100%" role="img" aria-labelledby="ts8t ts8d">
+  <title id="ts8t">从 JS 到 strict 的五级台阶，以及三条纪律</title>
+  <desc id="ts8d">五级台阶从左到右逐级升高。第一级开 allowJs，让 JS 文件能进编译；第二级要求新文件一律写 TS；第三级给模块边界补类型；第四级按依赖图自底向上改造；第五级才全量打开 strict，并在 CI 设类型检查关卡。台阶的高度代表类型覆盖率。第五级上方标出 strict 是一行开关但展开是九道检查，其中 strictNullChecks 拦下的运行时错误最多。底部三条纪律：不大爆炸、跟修改热点、每阶段可发布。</desc>
+
+  <style>
+    .ts8-step{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ts8-last{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .ts8-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ts8-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="ts8-s" x="50" y="44" font-size="9">从 JS 到 strict：五步，每一步都能单独发布</text>
+  <text class="ts8-t" x="650" y="100" font-size="8.5" text-anchor="end" style="fill:#B03A2E">一行 strict 展开是九道闸，strictNullChecks 拦下的错最多</text>
+
+  <rect class="ts8-step" x="50" y="280" width="120" height="50" rx="2"/>
+  <text class="ts8-t" x="62" y="302" font-size="9">① allowJs</text>
+  <text class="ts8-s" x="62" y="318" font-size="8.5">先让 JS 进来</text>
+
+  <rect class="ts8-step" x="170" y="240" width="120" height="90" rx="2"/>
+  <text class="ts8-t" x="182" y="262" font-size="9">② 新文件 TS</text>
+  <text class="ts8-s" x="182" y="278" font-size="8.5">只对新代码提要求</text>
+
+  <rect class="ts8-step" x="290" y="200" width="120" height="130" rx="2"/>
+  <text class="ts8-t" x="302" y="222" font-size="9">③ 边界补类型</text>
+  <text class="ts8-s" x="302" y="238" font-size="8.5">模块出入口先标</text>
+
+  <rect class="ts8-step" x="410" y="160" width="120" height="170" rx="2"/>
+  <text class="ts8-t" x="422" y="182" font-size="9">④ 自底向上</text>
+  <text class="ts8-s" x="422" y="198" font-size="8.5">按依赖图逐层改</text>
+
+  <rect class="ts8-last" x="530" y="120" width="120" height="210" rx="2"/>
+  <text class="ts8-t" x="542" y="142" font-size="9">⑤ 全量 strict</text>
+  <text class="ts8-s" x="542" y="158" font-size="8.5">CI 加检查关卡</text>
+
+  <line x1="40" y1="330" x2="700" y2="330" stroke="#1C1A17" stroke-width="1.6"/>
+
+  <line x1="40" y1="352" x2="40" y2="392" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="ts8-t" x="54" y="364" font-size="9">不大爆炸 —— 一次只开一个目录，别一口气改全仓</text>
+  <text class="ts8-t" x="54" y="380" font-size="9">跟修改热点 —— 先改最常动的模块，收益最快显现</text>
+  <text class="ts8-t" x="54" y="396" font-size="9">每阶段可发布 —— 任何一步停下来，代码都还能上线</text>
+</svg>

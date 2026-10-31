@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 284" width="100%" role="img" aria-labelledby="p8tt p8td">
+  <title id="p8tt">内存泄漏的排查四步与五类惯犯</title>
+  <desc id="p8td">左边是排查四步：先用 Performance Monitor 确认，JS Heap 呈锯齿是健康，只涨不落的楼梯就是泄漏；再用堆快照对比定位，按增量排序找只增不减的对象，也能用 Allocation Timeline 的蓝色条看分配时机；然后顺着 Retainers 保留链追到源头，找到你写的第一个引用；最后重复操作若干次验证内存回落，不回落就是没修好。右边是五类惯犯与对应修复：意外全局变量用严格模式，定时器和监听没清就成对清理，游离 DOM 置空引用，闭包持有大对象就提前解构基本值，无上限缓存换 LRU 或 WeakMap。</desc>
+
+  <style>
+    .p8t-dot{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .p8t-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p8t-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .p8t-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="p8t-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#6E675A"/>
+    </marker>
+  </defs>
+
+  <text class="p8t-t" x="40" y="26" font-size="8.5">先证明它是泄漏，再去找是谁 —— 顺序反了会白干一整天</text>
+
+  <line x1="60" y1="62" x2="60" y2="232" stroke="#CDC4AF" stroke-width="1.2"/>
+
+  <circle class="p8t-dot" cx="60" cy="62" r="10"/>
+  <text class="p8t-t" x="60" y="65.5" font-size="8.5" text-anchor="middle">1</text>
+  <text class="p8t-t" x="82" y="60" font-size="8.5">确认</text>
+  <text class="p8t-s" x="82" y="74" font-size="7.5">Performance Monitor：锯齿 = 健康，楼梯 = 泄漏</text>
+
+  <circle class="p8t-dot" cx="60" cy="118" r="10"/>
+  <text class="p8t-t" x="60" y="121.5" font-size="8.5" text-anchor="middle">2</text>
+  <text class="p8t-t" x="82" y="116" font-size="8.5">定位</text>
+  <text class="p8t-s" x="82" y="130" font-size="7.5">快照对比：Delta 排序找只增不减，搜 Detached</text>
+  <text class="p8t-s" x="82" y="144" font-size="7.5">Allocation Timeline：蓝色条看分配时机</text>
+
+  <circle class="p8t-dot" cx="60" cy="180" r="10"/>
+  <text class="p8t-t" x="60" y="183.5" font-size="8.5" text-anchor="middle">3</text>
+  <text class="p8t-t" x="82" y="178" font-size="8.5">溯源</text>
+  <text class="p8t-s" x="82" y="192" font-size="7.5">Retainers 保留链，找到你写的第一个引用</text>
+
+  <circle class="p8t-dot" cx="60" cy="232" r="10"/>
+  <text class="p8t-t" x="60" y="235.5" font-size="8.5" text-anchor="middle">4</text>
+  <text class="p8t-t" x="82" y="230" font-size="8.5">验证</text>
+  <text class="p8t-s" x="82" y="244" font-size="7.5">重复操作 N 次，Heap 回落才算修好</text>
+
+  <line x1="384" y1="52" x2="384" y2="236" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="p8t-t" x="404" y="58" font-size="8.5">五类惯犯 → 对位修复</text>
+
+  <text class="p8t-s" x="404" y="84" font-size="7.5">意外全局变量</text>
+  <line x1="486" y1="81" x2="508" y2="81" stroke="#6E675A" stroke-width="1" marker-end="url(#p8t-ink)"/>
+  <text class="p8t-s" x="518" y="84" font-size="7.5">严格模式 + ESLint</text>
+
+  <text class="p8t-s" x="404" y="112" font-size="7.5">定时器 / 监听未清</text>
+  <line x1="486" y1="109" x2="508" y2="109" stroke="#6E675A" stroke-width="1" marker-end="url(#p8t-ink)"/>
+  <text class="p8t-s" x="518" y="112" font-size="7.5">卸载时成对清理</text>
+
+  <text class="p8t-s" x="404" y="140" font-size="7.5">游离 DOM</text>
+  <line x1="486" y1="137" x2="508" y2="137" stroke="#6E675A" stroke-width="1" marker-end="url(#p8t-ink)"/>
+  <text class="p8t-s" x="518" y="140" font-size="7.5">置空引用</text>
+
+  <text class="p8t-s" x="404" y="168" font-size="7.5">闭包持大对象</text>
+  <line x1="486" y1="165" x2="508" y2="165" stroke="#6E675A" stroke-width="1" marker-end="url(#p8t-ink)"/>
+  <text class="p8t-s" x="518" y="168" font-size="7.5">提前解构基本值</text>
+
+  <text class="p8t-s" x="404" y="196" font-size="7.5">无上限缓存</text>
+  <line x1="486" y1="193" x2="508" y2="193" stroke="#6E675A" stroke-width="1" marker-end="url(#p8t-ink)"/>
+  <text class="p8t-s" x="518" y="196" font-size="7.5">LRU / WeakMap</text>
+
+  <text class="p8t-t" x="40" y="272" font-size="8.5" style="fill:#B03A2E">判据不是「涨了」，而是「反复做同一件事之后不回落」—— 涨了可能只是膨胀。</text>
+</svg>

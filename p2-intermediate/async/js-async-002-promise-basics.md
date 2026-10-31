@@ -65,6 +65,10 @@ Promise 对上一篇回调节日的回应，一句话：
 
 ### 一、状态机：Promise 的第一条公理
 
+![Promise 的三个状态](../../assets/svg/js-async-002-promise.svg)
+
+*图 · 只有两条出路，而且都是单行道：一旦落定，再调 resolve / reject 都不会生效*
+
 ```
             resolve(value)
   pending ────────────────▶ fulfilled（落定值 value）

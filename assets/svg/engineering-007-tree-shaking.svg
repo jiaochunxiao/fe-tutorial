@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 56 740 334" width="100%" role="img" aria-labelledby="ts7t ts7d">
+  <title id="ts7t">Tree Shaking 的四步判定链，以及副作用检查的三个分支</title>
+  <desc id="ts7d">第一步从入口解析全部 import，第二步从入口出发把可达的 export 标记为已使用，第三步对没被使用的 export 做副作用检查：声明 sideEffects 为 false 的模块整体可删；没声明或只列了几个的，只有列出来的要保留；确实有副作用的模块，即使导出没人用也必须留着。最后一步由 Terser 在压缩期把无引用的变量和函数体物理删除。</desc>
+
+  <style>
+    .ts7-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ts7-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ts7-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ts7-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="ts7-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="ts7-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="ts7-box" x="40" y="64" width="170" height="40" rx="3"/>
+  <text class="ts7-t" x="54" y="84" font-size="9.5">① 从入口解析全部 import</text>
+  <text class="ts7-s" x="54" y="98" font-size="8.5">ESM 是静态的，才可能被分析</text>
+
+  <line x1="125" y1="104" x2="125" y2="128" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ts7-ink)"/>
+
+  <rect class="ts7-box" x="40" y="132" width="170" height="40" rx="3"/>
+  <text class="ts7-t" x="54" y="152" font-size="9.5">② 标记「可达」的 export</text>
+  <text class="ts7-s" x="54" y="166" font-size="8.5">没被标记的就是候选</text>
+
+  <line x1="125" y1="172" x2="125" y2="196" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ts7-ink)"/>
+
+  <rect class="ts7-box" x="40" y="200" width="170" height="40" rx="3"/>
+  <text class="ts7-t" x="54" y="220" font-size="9.5">③ 副作用检查</text>
+  <text class="ts7-s" x="54" y="234" font-size="8.5">删了会不会出事</text>
+
+  <line x1="210" y1="222" x2="234" y2="222" stroke="#1C1A17" stroke-width="1.4"/>
+  <line x1="234" y1="222" x2="234" y2="302" stroke="#1C1A17" stroke-width="1.4"/>
+  <line x1="234" y1="222" x2="262" y2="222" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ts7-ink)"/>
+  <line x1="234" y1="262" x2="262" y2="262" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ts7-ink)"/>
+  <line x1="234" y1="302" x2="262" y2="302" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ts7-ink)"/>
+
+  <text class="ts7-mono" x="270" y="226" font-size="9">sideEffects: false</text>
+  <line x1="400" y1="222" x2="422" y2="222" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#ts7-ink)"/>
+  <text class="ts7-s" x="430" y="226" font-size="9">模块整体无副作用，放心删</text>
+
+  <text class="ts7-s" x="270" y="266" font-size="9">未声明，或数组只列了几个</text>
+  <line x1="400" y1="262" x2="422" y2="262" stroke="#1C1A17" stroke-width="1.2" marker-end="url(#ts7-ink)"/>
+  <text class="ts7-s" x="430" y="266" font-size="9">只留声明里列出的，其余可删</text>
+
+  <text class="ts7-s" x="270" y="306" font-size="9">模块确实有副作用</text>
+  <line x1="400" y1="302" x2="422" y2="302" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#ts7-red)"/>
+  <text class="ts7-s" x="430" y="306" font-size="9" style="fill:#B03A2E">导出没人用也要留着</text>
+
+  <line x1="125" y1="240" x2="125" y2="312" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ts7-ink)"/>
+
+  <rect class="ts7-box" x="40" y="316" width="170" height="40" rx="3"/>
+  <text class="ts7-t" x="54" y="336" font-size="9.5">④ Terser 物理删除</text>
+  <text class="ts7-s" x="54" y="350" font-size="8.5">无引用的变量 / 函数体</text>
+
+  <text class="ts7-s" x="40" y="378" font-size="9.5">声明是承诺，不是检测 —— 漏报副作用就会丢样式、丢全局变量</text>
+</svg>

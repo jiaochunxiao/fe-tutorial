@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 280" width="100%" role="img" aria-labelledby="r2tt r2td">
+  <title id="r2tt">Paint 先分组再排序，z-index 只在同一个上下文里有效</title>
+  <desc id="r2td">Paint 阶段做两件事：先按层叠上下文把渲染树切成组，得到上下文树；再自上而下、组内按七层顺序排出绘制指令。例子是 body 根上下文下挂 header 和 main，header 自己是一个上下文，内部有背景、logo 和 z-index 99 的下拉。绘制序是根背景、main 的块级浮动行内、最后才是 header 整个上下文连同它的内部顺序。所以 header 里那个 z-index 99 的下拉，永远盖不过 header 之外 z-index 2 的弹窗，这就是信封效应。</desc>
+
+  <style>
+    .r2t-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r2t-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .r2t-r{fill:#E7DEC8;stroke:#B03A2E;stroke-width:1.1}
+    .r2t-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r2t-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="r2t-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="r2t-t" x="40" y="26" font-size="8.5">Paint 做两件事：先分组，再排序 —— z-index 只在组内比大小</text>
+
+  <text class="r2t-s" x="40" y="46" font-size="7">A 分组：按层叠上下文切组</text>
+
+  <rect class="r2t-b" x="40" y="54" width="120" height="28" rx="2"/>
+  <text class="r2t-t" x="100" y="73" font-size="7.5" text-anchor="middle">body 根上下文</text>
+
+  <path d="M100 82 V96 H100" fill="none" stroke="#1C1A17" stroke-width="1.1"/>
+  <path d="M100 82 V96 H70 V110" fill="none" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r2t-ink)"/>
+  <path d="M100 82 V96 H176 V110" fill="none" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r2t-ink)"/>
+
+  <rect class="r2t-q" x="40" y="114" width="60" height="30" rx="2"/>
+  <text class="r2t-t" x="70" y="128" font-size="7" text-anchor="middle">header</text>
+  <text class="r2t-s" x="70" y="139" font-size="6" text-anchor="middle">z:1 上下文</text>
+
+  <rect class="r2t-b" x="146" y="114" width="60" height="30" rx="2"/>
+  <text class="r2t-t" x="176" y="128" font-size="7" text-anchor="middle">main</text>
+  <text class="r2t-s" x="176" y="139" font-size="6" text-anchor="middle">常规流</text>
+
+  <line x1="70" y1="144" x2="70" y2="166" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="70" y1="166" x2="234" y2="166" stroke="#1C1A17" stroke-width="1.1"/>
+
+  <rect class="r2t-b" x="40" y="170" width="70" height="22" rx="1"/>
+  <text class="r2t-s" x="75" y="185" font-size="6.5" text-anchor="middle">H 背景</text>
+  <rect class="r2t-b" x="118" y="170" width="70" height="22" rx="1"/>
+  <text class="r2t-s" x="153" y="185" font-size="6.5" text-anchor="middle">logo 常规</text>
+  <rect class="r2t-r" x="196" y="170" width="76" height="22" rx="1"/>
+  <text class="r2t-t" x="234" y="185" font-size="6.5" text-anchor="middle">下拉 z:99</text>
+
+  <text class="r2t-s" x="216" y="122" font-size="6.5">main 内：</text>
+  <text class="r2t-s" x="216" y="134" font-size="6.5">块级 → 浮动 → 行内</text>
+
+  <text class="r2t-s" x="40" y="238" font-size="7">B 排序：上下文树自上而下，组内按七层</text>
+
+  <text class="r2t-t" x="380" y="52" font-size="7.5">绘制序（从底到顶）</text>
+  <rect class="r2t-b" x="380" y="60" width="320" height="26" rx="1"/>
+  <text class="r2t-s" x="392" y="77" font-size="7">① 根背景（body 底色）</text>
+  <rect class="r2t-b" x="380" y="90" width="320" height="26" rx="1"/>
+  <text class="r2t-s" x="392" y="107" font-size="7">② main 的块级 → 浮动 → 行内文字</text>
+  <rect class="r2t-q" x="380" y="120" width="320" height="26" rx="1"/>
+  <text class="r2t-t" x="392" y="137" font-size="7">③ header 整个上下文（作为一整块）</text>
+  <text class="r2t-s" x="400" y="158" font-size="6.5">其内部再按 背景 → logo → 下拉 排一遍</text>
+
+  <text class="r2t-t" x="380" y="188" font-size="8" style="fill:#B03A2E">信封效应</text>
+  <text class="r2t-s" x="380" y="204" font-size="7.5">header 里 z:99 的下拉，盖不过 header 之外 z:2 的弹窗 ——</text>
+  <text class="r2t-s" x="380" y="218" font-size="7.5">因为比较发生在「上下文这一层」，组内数字出了组就不算数。</text>
+  <text class="r2t-s" x="380" y="236" font-size="7.5">要让它盖住，得把下拉挂到更外层的上下文里（Portal / 挂 body）。</text>
+</svg>

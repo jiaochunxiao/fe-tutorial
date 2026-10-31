@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 268" width="100%" role="img" aria-labelledby="h5vt h5vd">
+  <title id="h5vt">防抖与节流的决策分岔，以及各自的变体清单</title>
+  <desc id="h5vd">左边是防抖：触发时先把上一次预约作废，再重新预约，静默满 wait 才执行，三个变体是延迟版、立即执行版和可取消版。右边是节流：触发时先看是否在冷却期，冷却中直接丢弃，否则执行并进入冷却，两个变体是时间戳版（首次立即执行、尾部丢弃）和定时器版（尾部补执行）。选型上，滚动上报用时间戳版因为数据不追尾，滚动到底加载用定时器版因为要保住最后一次。</desc>
+
+  <style>
+    .h5v-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .h5v-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .h5v-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .h5v-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="h5v-t" x="40" y="26" font-size="8.5">两套决策，四个变体 —— 记住分岔点就够了</text>
+
+  <rect class="h5v-b" x="40" y="44" width="320" height="140" rx="2"/>
+  <text class="h5v-t" x="56" y="64" font-size="9">debounce · 只认最后一次</text>
+  <text class="h5v-s" x="56" y="86" font-size="7.5">触发 → 作废上一次预约 → 重新预约</text>
+  <text class="h5v-s" x="56" y="102" font-size="7.5">→ 静默满 wait 才真正执行</text>
+
+  <rect class="h5v-q" x="56" y="116" width="86" height="24" rx="1"/>
+  <text class="h5v-t" x="99" y="132" font-size="7" text-anchor="middle">延迟版</text>
+  <rect class="h5v-q" x="150" y="116" width="94" height="24" rx="1"/>
+  <text class="h5v-t" x="197" y="132" font-size="7" text-anchor="middle">立即版 leading</text>
+  <rect class="h5v-q" x="252" y="116" width="92" height="24" rx="1"/>
+  <text class="h5v-t" x="298" y="132" font-size="7" text-anchor="middle">可取消 .cancel</text>
+  <text class="h5v-s" x="56" y="162" font-size="7">搜索、resize 结束、表单校验、保存草稿</text>
+
+  <rect class="h5v-b" x="380" y="44" width="320" height="140" rx="2"/>
+  <text class="h5v-t" x="396" y="64" font-size="9">throttle · 固定频率放行</text>
+  <text class="h5v-s" x="396" y="86" font-size="7.5">触发 → 冷却中？丢弃 : 执行并进入冷却</text>
+  <text class="h5v-s" x="396" y="102" font-size="7.5">→ 每满 interval 放行一次</text>
+
+  <rect class="h5v-q" x="396" y="116" width="136" height="24" rx="1"/>
+  <text class="h5v-t" x="464" y="132" font-size="7" text-anchor="middle">时间戳版（首即执行）</text>
+  <rect class="h5v-q" x="540" y="116" width="144" height="24" rx="1"/>
+  <text class="h5v-t" x="612" y="132" font-size="7" text-anchor="middle">定时器版（尾部补执行）</text>
+  <text class="h5v-s" x="396" y="162" font-size="7">滚动、拖拽、mousemove、射击按钮</text>
+
+  <text class="h5v-t" x="40" y="212" font-size="8.5">选型口诀</text>
+  <text class="h5v-s" x="40" y="230" font-size="7.5">数据不追尾（滚动上报）→ 时间戳版；必须保住最后一次（滚动到底加载）→ 定时器版。</text>
+
+  <text class="h5v-t" x="40" y="256" font-size="8.5" style="fill:#B03A2E">能对比、能选型，比默写某一种更得分 —— 面试问的是判断，不是记忆。</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 292" width="100%" role="img" aria-labelledby="v4lt v4ld">
+  <title id="v4lt">生命周期的四幕与各阶段能看到什么</title>
+  <desc id="v4ld">第一幕创建：setup 到 created，数据已就绪但还没有 DOM。第二幕挂载：beforeMount 之后执行 render 与 patch，DOM 诞生，子组件先挂载父组件后挂载，所以 mounted 里能拿到 DOM。第三幕更新：数据变化触发渲染 effect 入队，beforeUpdate 时数据已经是新的但 DOM 还是旧的，patch 之后 updated 里 DOM 才变新，想在 beforeUpdate 读新 DOM 要等 nextTick 或用 flush post。第四幕卸载：beforeUnmount 时实例仍然完整，适合解绑事件与清理定时器。keep-alive 包裹的组件不走卸载，而是在 deactivated 与 activated 之间来回。</desc>
+
+  <style>
+    .v4l-dot{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .v4l-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .v4l-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .v4l-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .v4l-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <text class="v4l-t" x="40" y="26" font-size="8.5">四幕：创建 → 挂载 → 更新 → 卸载，每一幕能碰到什么不一样</text>
+
+  <line x1="120" y1="58" x2="120" y2="240" stroke="#CDC4AF" stroke-width="1.2"/>
+
+  <circle class="v4l-dot" cx="120" cy="58" r="4.5"/>
+  <text class="v4l-s" x="40" y="62" font-size="7.5">创建</text>
+  <rect class="v4l-b" x="140" y="44" width="380" height="32" rx="2"/>
+  <text class="v4l-mono" x="152" y="64" font-size="7.5">setup → beforeCreate → created</text>
+  <text class="v4l-s" x="372" y="64" font-size="7">数据就绪，还没有 DOM</text>
+
+  <circle class="v4l-dot" cx="120" cy="118" r="4.5"/>
+  <text class="v4l-s" x="40" y="122" font-size="7.5">挂载</text>
+  <rect class="v4l-b" x="140" y="104" width="380" height="32" rx="2"/>
+  <text class="v4l-mono" x="152" y="124" font-size="7.5">beforeMount → render/patch → mounted</text>
+  <text class="v4l-s" x="372" y="124" font-size="7">子先父后</text>
+
+  <circle class="v4l-dot" cx="120" cy="178" r="4.5"/>
+  <text class="v4l-s" x="40" y="182" font-size="7.5">更新</text>
+  <rect class="v4l-b" x="140" y="160" width="380" height="48" rx="2"/>
+  <text class="v4l-mono" x="152" y="180" font-size="7.5">beforeUpdate → patch → updated</text>
+  <text class="v4l-s" x="152" y="196" font-size="7">beforeUpdate 时：数据已新，DOM 还旧</text>
+  <text class="v4l-s" x="470" y="196" font-size="7" text-anchor="end" style="fill:#B03A2E">↻ 可反复</text>
+
+  <circle class="v4l-dot" cx="120" cy="240" r="4.5"/>
+  <text class="v4l-s" x="40" y="244" font-size="7.5">卸载</text>
+  <rect class="v4l-b" x="140" y="226" width="380" height="32" rx="2"/>
+  <text class="v4l-mono" x="152" y="246" font-size="7.5">beforeUnmount → unmounted</text>
+  <text class="v4l-s" x="372" y="246" font-size="7">卸载前实例仍完整</text>
+
+  <rect class="v4l-b" x="548" y="160" width="152" height="48" rx="2" style="stroke:#B03A2E"/>
+  <text class="v4l-t" x="624" y="178" font-size="7.5" text-anchor="middle" style="fill:#B03A2E">keep-alive 支线</text>
+  <text class="v4l-s" x="624" y="194" font-size="7" text-anchor="middle">deactivated ⇄ activated</text>
+
+  <text class="v4l-t" x="40" y="278" font-size="8.5" style="fill:#B03A2E">beforeUpdate 里读 DOM 拿到的是旧值 —— 要读新的，用 nextTick 或 flush: 'post'。</text>
+</svg>

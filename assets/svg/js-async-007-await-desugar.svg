@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 232" width="100%" role="img" aria-labelledby="ja7t ja7d">
+  <title id="ja7t">await 把一个函数劈成同步段与微任务恢复段</title>
+  <desc id="ja7d">async 函数调用后会同步执行到第一个 await 处，然后暂停，立刻返回一个 pending 状态的 promise，调用栈空出来交给渲染和其他任务。await 右侧的值被 Promise.resolve 包一层并挂上 then，等它落定之后，后续代码作为微任务恢复执行。所以每个 await 都是一条分界线，把一个函数劈成若干段同步代码和若干段微任务恢复代码。</desc>
+
+  <style>
+    .ja7-seg{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .ja7-cut{fill:#FBF7EE;stroke:#B03A2E;stroke-width:1.2;stroke-dasharray:5 3.5}
+    .ja7-chip{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .ja7-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ja7-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ja7-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .ja7-mono-s{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="ja7-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="ja7-t" x="40" y="26" font-size="8.5">每个 await 都是一条分界线 —— 左边同步跑，右边靠微任务接回来</text>
+
+  <rect class="ja7-seg" x="60" y="52" width="185" height="40" rx="2"/>
+  <text class="ja7-mono" x="152" y="72" font-size="9" text-anchor="middle">A</text>
+  <text class="ja7-s" x="152" y="86" font-size="7.5" text-anchor="middle">同步执行</text>
+
+  <rect class="ja7-cut" x="245" y="52" width="185" height="40" rx="2"/>
+  <text class="ja7-mono" x="337" y="72" font-size="9" text-anchor="middle" style="fill:#B03A2E">await p</text>
+  <text class="ja7-s" x="337" y="86" font-size="7.5" text-anchor="middle" style="fill:#B03A2E">暂停 · 立刻返回</text>
+
+  <rect class="ja7-seg" x="430" y="52" width="185" height="40" rx="2"/>
+  <text class="ja7-mono" x="522" y="72" font-size="9" text-anchor="middle">B</text>
+  <text class="ja7-s" x="522" y="86" font-size="7.5" text-anchor="middle">微任务恢复</text>
+
+  <line x1="337" y1="92" x2="337" y2="116" stroke="#B03A2E" stroke-width="1.2" marker-end="url(#ja7-red)"/>
+
+  <rect class="ja7-chip" x="190" y="118" width="294" height="28" rx="2"/>
+  <text class="ja7-mono" x="337" y="136" font-size="7.5" text-anchor="middle">Promise.resolve(p).then(resume)</text>
+
+  <text class="ja7-t" x="60" y="170" font-size="8">main 在这一刻返回一个 pending 的 promise，调用栈空出来给渲染和其他任务</text>
+  <text class="ja7-t" x="60" y="188" font-size="8">p 落定后，B 不是同步续上，而是作为微任务排进队列 —— 至少让位一层</text>
+
+  <text class="ja7-t" x="40" y="220" font-size="8.5" style="fill:#B03A2E">所以一个函数被劈成 N 段同步 + N 段微任务；循环里 await 就是 N 次串行让位。</text>
+</svg>

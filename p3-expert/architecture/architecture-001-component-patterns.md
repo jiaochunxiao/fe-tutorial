@@ -16,6 +16,10 @@ createdAt: 2026-10-26
 
 ## 从「一个 800 行的 SearchPanel 组件」说起
 
+![五个职责缠在一个文件里，谁都不敢动](../../assets/svg/architecture-001-anatomy.svg)
+
+*图 · 五个职责缠在一个文件里，谁都不敢动*
+
 > **系列导读**：《前端架构系列》共 6 篇——组件设计、状态分层、微前端、Monorepo、监控体系与复杂页面权衡，从「写代码」上升到「做决策」。
 
 ```
@@ -140,6 +144,10 @@ const { isOpen, open, close, toggle, getTriggerProps, getMenuProps } = useDropdo
 **2. 一道设计题**：给「可编辑表格」设计组件 API——受控的 value/onChange（行数据）、组合型的列定义（Table.Column 的 children 或配置）、无头的核心逻辑（useEditableTable）——三个模式一题打尽。
 
 ## 图解总结
+
+![四种模式 + 一条通信原则，每一行都在回答「分野在哪」](../../assets/svg/architecture-001-patterns.svg)
+
+*图 · 四种模式 + 一条通信原则，每一行都在回答「分野在哪」*
 
 ```
 容器/展示: 逻辑(容器→Hook化) │ 视图(纯展示) —— 分离不变、形态进化

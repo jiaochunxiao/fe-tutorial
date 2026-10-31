@@ -179,55 +179,9 @@ obj.delayedBroken();  // 'window'
 
 工程建议：**回调里需要「外层的 this」用箭头函数；作为对象方法、需要动态 this 的别用箭头函数**（`obj = { getName: () => this.name }` 是经典错误——箭头函数拿到的是模块/全局的 this）。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 380" width="100%" role="img" aria-label="this 的四条绑定规则决策流程">
-  <defs>
-    <marker id="t6-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-  </defs>
-  <text x="120" y="26" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">从上往下问，命中即停</text>
-  <rect x="30" y="42" width="180" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="120" y="70" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">箭头函数？</text>
-  <path d="M 210 65 H 500" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="355" y="57" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">是</text>
-  <rect x="502" y="42" width="188" height="46" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="596" y="70" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">外层作用域的 this（改不动）</text>
-  <path d="M 120 88 V 108" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="134" y="102" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">否</text>
-  <rect x="30" y="110" width="180" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="120" y="138" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">new 调用？</text>
-  <path d="M 210 133 H 500" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="355" y="125" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">是</text>
-  <rect x="502" y="110" width="188" height="46" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="596" y="138" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">新创建的对象</text>
-  <path d="M 120 156 V 176" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="134" y="170" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">否</text>
-  <rect x="30" y="178" width="180" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="120" y="206" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">call/apply/bind？</text>
-  <path d="M 210 201 H 500" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="355" y="193" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">是</text>
-  <rect x="502" y="178" width="188" height="46" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="596" y="201" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">指定的对象（bind 永久）</text>
-  <path d="M 120 224 V 244" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="134" y="238" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">否</text>
-  <rect x="30" y="246" width="180" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="120" y="274" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">obj.fn()？</text>
-  <path d="M 210 269 H 500" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="355" y="261" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">是</text>
-  <rect x="502" y="246" width="188" height="46" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="596" y="269" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">点号前的对象</text>
-  <path d="M 120 292 V 312" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="134" y="306" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">否</text>
-  <rect x="30" y="314" width="180" height="46" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="120" y="342" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">默认绑定</text>
-  <path d="M 210 337 H 500" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t6-ink)"/>
-  <text x="355" y="329" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">裸调用</text>
-  <rect x="502" y="314" width="188" height="46" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="596" y="337" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">非严格: 全局 / 严格: undefined</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · this 的判定流程——四规则自上而下命中即停，箭头函数是规则外的「词法派」</figcaption>
-</figure>
+![this 的四条绑定规则决策流程](../../assets/svg/js-deep-006-this.svg)
+
+*图 · this 的判定流程——四规则自上而下命中即停，箭头函数是规则外的「词法派」*
 
 ### 一张决策流程图
 

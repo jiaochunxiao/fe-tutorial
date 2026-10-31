@@ -50,6 +50,10 @@ for (const x of myCustomThing) {}   // 你自己的结构也能进这个循环�
 
 **协议 2：迭代器（Iterator）**——带 `next()` 方法的对象，每次调用返回 `{ value, done }`。
 
+![一个负责「能被遍历」，一个负责「走到哪了」](../../assets/svg/es6-009-iterator.svg)
+
+*图 · 一个负责「能被遍历」，一个负责「走到哪了」*
+
 ```
 可迭代对象 ──[Symbol.iterator]()──▶ 迭代器 ──next()──▶ {value, done}
    (能被遍历的东西)                  (游标)           (一次吐一个)

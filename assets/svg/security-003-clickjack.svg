@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 268" width="100%" role="img" aria-labelledby="s3t s3d">
+  <title id="s3t">点击劫持：同一块像素上叠了两层页面</title>
+  <desc id="s3d">左边是攻击的成立方式。上层是你看到的攻击者诱饵页，写着领取奖品；下层是被透明 iframe 嵌进来的真页面，按钮位置上写着确认转账。两块像素完全重合，你以为点的是领奖，实际点的是转账，而请求带着你的 Cookie 从真站点发出，凭证齐全，服务端看不出任何异常。右边是三道防线：第一道也是最核心的一道，用 frame-ancestors self 或老牌的 X-Frame-Options 禁止被嵌套；第二道是敏感操作二次输入密码或验证码；第三道是必须嵌别人的页面时用 sandbox 收权。底部点明它和 CSRF 的区别：它不伪造请求，借的是你的真点击，所以 CSRF 的防御覆盖不到它。</desc>
+
+  <style>
+    .s3-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .s3-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .s3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .s3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .s3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="s3-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="s3-t" x="30" y="24" font-size="8.5">攻击：不伪造请求，借你的真手指</text>
+
+  <rect class="s3-b" x="50" y="40" width="250" height="62" rx="2"/>
+  <text class="s3-s" x="62" y="58" font-size="7.5">你看到的：攻击者页面（诱饵）</text>
+  <rect class="s3-c" x="130" y="66" width="90" height="26" rx="2"/>
+  <text class="s3-t" x="175" y="83" font-size="8" text-anchor="middle">领取奖品</text>
+
+  <line x1="175" y1="104" x2="175" y2="122" stroke="#B03A2E" stroke-width="1.2" stroke-dasharray="3 2" marker-end="url(#s3-red)"/>
+
+  <rect class="s3-b" x="50" y="126" width="250" height="62" rx="2"/>
+  <text class="s3-s" x="62" y="144" font-size="7.5">实际点到的：真页面（透明 iframe）</text>
+  <rect x="130" y="152" width="90" height="26" rx="2" fill="#FBF7EE" stroke="#B03A2E" stroke-width="1.3"/>
+  <text class="s3-t" x="175" y="169" font-size="8" text-anchor="middle" style="fill:#B03A2E">确认转账</text>
+
+  <text class="s3-s" x="50" y="208" font-size="7" style="fill:#B03A2E">两层像素完全重合 —— 点哪都是真按钮</text>
+  <text class="s3-s" x="50" y="222" font-size="7">请求带着你的 Cookie 从真站点发出，凭证齐全</text>
+
+  <text class="s3-t" x="360" y="44" font-size="8.5">三道防线</text>
+
+  <rect class="s3-b" x="360" y="54" width="350" height="40" rx="2"/>
+  <text class="s3-t" x="372" y="70" font-size="8">① 禁止被嵌套（核心，一行头就够）</text>
+  <text class="s3-mono" x="372" y="85" font-size="6.5" style="fill:#B03A2E">frame-ancestors 'self'　│　X-Frame-Options: DENY / SAMEORIGIN</text>
+
+  <rect class="s3-b" x="360" y="100" width="350" height="40" rx="2"/>
+  <text class="s3-t" x="372" y="116" font-size="8">② 敏感操作二次输入</text>
+  <text class="s3-s" x="372" y="131" font-size="7">密码 / 验证码 —— 让「一次点击」不够用</text>
+
+  <rect class="s3-b" x="360" y="146" width="350" height="40" rx="2"/>
+  <text class="s3-t" x="372" y="162" font-size="8">③ 必须嵌别人时，sandbox 收权</text>
+  <text class="s3-s" x="372" y="177" font-size="7">去掉 allow-top-navigation 等敏感能力</text>
+
+  <rect x="360" y="196" width="350" height="34" fill="#E7DEC8" opacity="0.55"/>
+  <text class="s3-s" x="372" y="211" font-size="7.5">与 CSRF 的区别：CSRF 伪造请求，点击劫持借真点击</text>
+  <text class="s3-s" x="372" y="224" font-size="7.5" style="fill:#B03A2E">→ CSRF 的 Token 防御覆盖不到它，必须单独配头</text>
+
+  <text class="s3-s" x="50" y="252" font-size="7.5">自查：curl -I 看响应头有没有 X-Frame-Options 或 CSP 的 frame-ancestors —— 十秒能查完全站</text>
+</svg>

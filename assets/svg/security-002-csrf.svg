@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 270" width="100%" role="img" aria-labelledby="s2ct s2cd">
+  <title id="s2ct">CSRF 是拿你的 Cookie 当通行证，四道关拦住它</title>
+  <desc id="s2cd">攻击成立要同时满足三个条件：浏览器跨站请求会自动带上 Cookie、表单这类简单请求不需要预检就能发出、服务端仅凭 Cookie 无法分辨请求来自谁。四道关依次是 SameSite=Lax 让跨站子请求不带 Cookie，CSRF Token 放一个攻击者读不到的随机值，双重 Cookie 把 Cookie 值再放进自定义头，以及架构约定让写接口必须是 JSON 加自定义头从而必过预检。此外 GET 不产生副作用、敏感操作二次验证，以及先修 XSS 再谈 CSRF 的次序问题。</desc>
+
+  <style>
+    .s2c-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .s2c-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .s2c-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .s2c-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="s2c-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="s2c-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="s2c-t" x="40" y="26" font-size="8.5">CSRF = 拿你的 Cookie 当通行证，替你去发请求</text>
+
+  <text class="s2c-s" x="40" y="50" font-size="7">成立条件（三条同时满足才打得成）</text>
+  <rect class="s2c-b" x="40" y="58" width="200" height="26" rx="1"/>
+  <text class="s2c-t" x="52" y="75" font-size="7">① Cookie 跨站自动带上</text>
+  <rect class="s2c-b" x="40" y="88" width="200" height="26" rx="1"/>
+  <text class="s2c-t" x="52" y="105" font-size="7">② 简单请求无需预检即可发出</text>
+  <rect class="s2c-b" x="40" y="118" width="200" height="26" rx="1"/>
+  <text class="s2c-t" x="52" y="135" font-size="7">③ 服务端只看 Cookie，辨不出真伪</text>
+
+  <text class="s2c-s" x="290" y="50" font-size="7">四道关（按现代优先级排）</text>
+
+  <rect class="s2c-q" x="290" y="58" width="410" height="30" rx="1"/>
+  <text class="s2c-t" x="302" y="71" font-size="7.5">① SameSite=Lax（默认值）</text>
+  <text class="s2c-s" x="302" y="83" font-size="6.5">跨站子请求不再带 Cookie —— 现代首选，已经消灭大半场景</text>
+
+  <rect class="s2c-b" x="290" y="94" width="410" height="30" rx="1"/>
+  <text class="s2c-t" x="302" y="107" font-size="7.5">② CSRF Token</text>
+  <text class="s2c-s" x="302" y="119" font-size="6.5">与会话绑定的随机值，攻击者读不到（同源策略挡住了读）</text>
+
+  <rect class="s2c-b" x="290" y="130" width="410" height="30" rx="1"/>
+  <text class="s2c-t" x="302" y="143" font-size="7.5">③ 双重 Cookie</text>
+  <text class="s2c-s" x="302" y="155" font-size="6.5">把 Cookie 的值再放进自定义头 —— 读不到就放不进头</text>
+
+  <rect class="s2c-b" x="290" y="166" width="410" height="30" rx="1"/>
+  <text class="s2c-t" x="302" y="179" font-size="7.5">④ 架构约定：写接口只收 JSON + 自定义头</text>
+  <text class="s2c-s" x="302" y="191" font-size="6.5">必然触发预检，没有 CORS 授权就直接失败</text>
+
+
+  <text class="s2c-s" x="40" y="216" font-size="7.5">纪律：GET 不产生副作用 ｜ 敏感操作二次验证（密码 / 验证码）｜ Strict 最严但会丢外链来的登录态，</text>
+  <text class="s2c-s" x="40" y="230" font-size="7.5">None 必须配 Secure 且只留给第三方回调。</text>
+
+  <text class="s2c-t" x="40" y="256" font-size="8.5" style="fill:#B03A2E">次序很重要：XSS 一旦得手，Token 和双重 Cookie 全都能被读走 —— 先修 XSS，再谈 CSRF。</text>
+</svg>

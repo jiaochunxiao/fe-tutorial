@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 250" width="100%" role="img" aria-labelledby="v8ot v8od">
+  <title id="v8ot">一个热函数的 JIT 三幕：升温、被投毒、保守重优化</title>
+  <desc id="v8od">第一幕热而稳：同一个构造函数调用上千次，对象形状一致，内联缓存收敛到单态，函数升温后被 TurboFan 编译，类型特化并内联，性能达到峰值。第二幕投毒：多传了一个字段让隐藏类变成 wrong map，或者 delete 一个属性，优化代码的前提失效，触发 deopt 回退到字节码，日志里能看到明确签名。第三幕：重新优化出来的是保守版本，不再做那么激进的假设，于是永久慢一档。三个开关 trace-opt、trace-deopt、trace-ic 把这一切变成可观察的证据。</desc>
+
+  <style>
+    .v8o-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .v8o-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .v8o-r{fill:#FBF7EE;stroke:#B03A2E;stroke-width:1.1}
+    .v8o-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .v8o-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="v8o-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="v8o-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="v8o-t" x="40" y="26" font-size="8.5">同一个函数的三幕：升温 → 被投毒 → 保守重优化</text>
+
+  <text class="v8o-s" x="40" y="50" font-size="7">第一幕 · 热而稳</text>
+  <rect class="v8o-b" x="40" y="58" width="110" height="28" rx="1"/>
+  <text class="v8o-s" x="95" y="76" font-size="6.5" text-anchor="middle">同构造 ×1000</text>
+  <line x1="152" y1="72" x2="164" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#v8o-ink)"/>
+  <rect class="v8o-b" x="168" y="58" width="100" height="28" rx="1"/>
+  <text class="v8o-s" x="218" y="76" font-size="6.5" text-anchor="middle">同形状</text>
+  <line x1="270" y1="72" x2="282" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#v8o-ink)"/>
+  <rect class="v8o-b" x="286" y="58" width="100" height="28" rx="1"/>
+  <text class="v8o-s" x="336" y="76" font-size="6.5" text-anchor="middle">IC 单态</text>
+  <line x1="388" y1="72" x2="400" y2="72" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#v8o-ink)"/>
+  <rect class="v8o-q" x="404" y="58" width="180" height="28" rx="1"/>
+  <text class="v8o-t" x="494" y="76" font-size="6.5" text-anchor="middle">TurboFan：类型特化 + 内联</text>
+  <text class="v8o-s" x="596" y="76" font-size="6.5">峰值</text>
+
+  <line x1="494" y1="86" x2="494" y2="106" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#v8o-red)"/>
+
+  <text class="v8o-s" x="40" y="126" font-size="7">第二幕 · 投毒</text>
+  <rect class="v8o-r" x="40" y="134" width="150" height="28" rx="1"/>
+  <text class="v8o-s" x="115" y="152" font-size="6.5" text-anchor="middle">{x:'a'} → wrong map</text>
+  <rect class="v8o-r" x="200" y="134" width="130" height="28" rx="1"/>
+  <text class="v8o-s" x="265" y="152" font-size="6.5" text-anchor="middle">delete weird.x</text>
+  <line x1="336" y1="148" x2="366" y2="148" stroke="#B03A2E" stroke-width="1.1" marker-end="url(#v8o-red)"/>
+  <rect class="v8o-q" x="370" y="134" width="214" height="28" rx="1"/>
+  <text class="v8o-t" x="477" y="152" font-size="6.5" text-anchor="middle" style="fill:#B03A2E">deopt（日志实锤）→ 回字节码</text>
+
+  <line x1="477" y1="162" x2="477" y2="182" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#v8o-red)"/>
+
+  <text class="v8o-s" x="40" y="200" font-size="7">第三幕 · 保守重优化</text>
+  <rect class="v8o-q" x="40" y="186" width="300" height="28" rx="1"/>
+  <text class="v8o-t" x="190" y="204" font-size="6.5" text-anchor="middle">再优化 = 保守版，永久慢一档</text>
+  <text class="v8o-s" x="356" y="204" font-size="6.5">deopt 不是「回退一次」，是把上限拉低了</text>
+
+  <text class="v8o-t" x="40" y="236" font-size="8.5" style="fill:#B03A2E">规范：一次声明全部字段 ｜ 类型从一而终 ｜ 不 delete ｜ 热函数不混传。</text>
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340" role="img" aria-label="执行上下文栈的压栈与出栈">
+  <defs>
+    <marker id="ec-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+  <text x="150" y="30" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">执行上下文栈 ECStack</text>
+  <text x="520" y="30" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">代码执行流</text>
+  <rect x="60" y="210" width="200" height="50" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
+  <text x="160" y="241" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">全局上下文（常驻栈底）</text>
+  <rect x="60" y="158" width="200" height="50" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
+  <text x="160" y="189" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">second 的上下文</text>
+  <rect x="60" y="106" width="200" height="50" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2"/>
+  <text x="160" y="131" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#B03A2E">first 的上下文（执行中）</text>
+  <g opacity="0">
+    <rect x="60" y="54" width="200" height="50" fill="#FBF8F1" stroke="#6E675A" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <text x="160" y="85" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#6E675A">下一个上下文…</text>
+    <animateTransform attributeName="transform" type="translate" values="0,-46; 0,0; 0,0; 0,-46" keyTimes="0;0.35;0.75;1" dur="3.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.35;0.75;1" dur="3.6s" repeatCount="indefinite"/>
+  </g>
+  <path d="M 292 205 V 130" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#ec-ink)"/>
+  <text x="312" y="172" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">入栈 push</text>
+  <path d="M 34 205 V 130" stroke="#6E675A" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ec-ink)"/>
+  <text x="18" y="120" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">出栈 pop</text>
+  <text x="520" y="80" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">second() 内部调用了 first()</text>
+  <text x="520" y="106" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#1C1A17">→ first 压栈，成为执行中的上下文</text>
+  <text x="520" y="140" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">first 执行完 → 出栈</text>
+  <text x="520" y="166" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">控制权交回 second 继续执行</text>
+  <text x="520" y="200" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">栈底永远是全局上下文，</text>
+  <text x="520" y="226" font-family="Noto Sans SC,sans-serif" font-size="13.5" fill="#6E675A">页面关闭时才出栈</text>
+</svg>

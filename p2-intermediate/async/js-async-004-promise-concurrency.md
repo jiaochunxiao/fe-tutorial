@@ -122,39 +122,9 @@ MyPromise.allSettled = function (promises) {
 
 **Promise.any**：与 all 的镜像——收集 rejection、等第一个成功；全部失败时 `reject(new AggregateError(errors))`。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="并发池：固定 worker 轮转认领任务">
-  <defs>
-    <marker id="cc-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-  </defs>
-  <text x="150" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">任务队列（100 个）</text>
-  <text x="540" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">3 个 worker（limit = 3）</text>
-  <rect x="40" y="46" width="220" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="150" y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">t1 · t2 · t3 · t4 · … · t100</text>
-  <rect x="40" y="94" width="220" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4" opacity="0.55"/>
-  <text x="150" y="119" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#6E675A">在途：t1 · t2 · t3</text>
-  <rect x="470" y="42" width="150" height="48" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
-  <text x="545" y="72" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">Worker 1 → t4</text>
-  <rect x="470" y="102" width="150" height="48" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
-  <text x="545" y="132" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">Worker 2 → t2</text>
-  <rect x="470" y="162" width="150" height="48" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
-  <text x="545" y="192" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">Worker 3 → t1</text>
-  <path d="M 262 66 C 320 56 380 56 464 64" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#cc-ink)"/>
-  <path d="M 262 66 C 330 96 380 114 464 124" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#cc-ink)"/>
-  <path d="M 262 66 C 330 140 380 174 464 186" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#cc-ink)"/>
-  <circle r="5" fill="#B03A2E">
-    <animateMotion dur="2.6s" repeatCount="indefinite" path="M 262 66 C 330 96 380 114 464 124"/>
-  </circle>
-  <text x="300" y="150" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">红点 = 一份任务被认领</text>
-  <rect x="40" y="210" width="580" height="44" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="330" y="238" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">results[i] —— 完成一个归还一个，位置跟着下标走（顺序稳定）</text>
-  <text x="676" y="120" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">完工的 worker</text>
-  <text x="676" y="140" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">立刻认领下一个 ⭐</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 并发池模型——工人数封顶了「同时在途」，队尾的完工者马上回头抢新任务</figcaption>
-</figure>
+![并发池：固定 worker 轮转认领任务](../../assets/svg/js-async-004-promise-concurrency.svg)
+
+*图 · 并发池模型——工人数封顶了「同时在途」，队尾的完工者马上回头抢新任务*
 
 ### 三、并发限制器：100 张图片、最多 6 个在途 ⭐⭐
 
@@ -227,6 +197,10 @@ const blobs = await limitConcurrency(tasks, 6); // 任意时刻最多 6 个在�
 **3. 面试快手题**：`Promise.all` 中一个失败后，其他请求会怎样？——**继续跑，只是结果被丢弃**；要「全部要结果」换 allSettled，要「真正取消」用 AbortController。
 
 ## 图解总结
+
+![一个队列 + 固定工人，靠共享游标认领，按下标归还](../../assets/svg/js-async-004-pool.svg)
+
+*图 · 一个队列 + 固定工人，靠共享游标认领，按下标归还*
 
 ```
 任务队列: [t1 t2 t3 t4 t5 t6 t7 t8 t9 …]   ← nextIndex 游标

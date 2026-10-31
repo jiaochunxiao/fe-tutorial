@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img" aria-label="并发池：固定 worker 轮转认领任务">
+  <defs>
+    <marker id="cc-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+  <text x="150" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">任务队列（100 个）</text>
+  <text x="540" y="28" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#6E675A">3 个 worker（limit = 3）</text>
+  <rect x="40" y="46" width="220" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
+  <text x="150" y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">t1 · t2 · t3 · t4 · … · t100</text>
+  <rect x="40" y="94" width="220" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4" opacity="0.55"/>
+  <text x="150" y="119" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#6E675A">在途：t1 · t2 · t3</text>
+  <rect x="470" y="42" width="150" height="48" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
+  <text x="545" y="72" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">Worker 1 → t4</text>
+  <rect x="470" y="102" width="150" height="48" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
+  <text x="545" y="132" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">Worker 2 → t2</text>
+  <rect x="470" y="162" width="150" height="48" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
+  <text x="545" y="192" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">Worker 3 → t1</text>
+  <path d="M 262 66 C 320 56 380 56 464 64" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#cc-ink)"/>
+  <path d="M 262 66 C 330 96 380 114 464 124" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#cc-ink)"/>
+  <path d="M 262 66 C 330 140 380 174 464 186" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#cc-ink)"/>
+  <circle r="5" fill="#B03A2E">
+    <animateMotion dur="2.6s" repeatCount="indefinite" path="M 262 66 C 330 96 380 114 464 124"/>
+  </circle>
+  <text x="300" y="150" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#B03A2E">红点 = 一份任务被认领</text>
+  <rect x="40" y="210" width="580" height="44" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
+  <text x="330" y="238" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">results[i] —— 完成一个归还一个，位置跟着下标走（顺序稳定）</text>
+  <text x="676" y="120" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">完工的 worker</text>
+  <text x="676" y="140" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">立刻认领下一个 ⭐</text>
+</svg>

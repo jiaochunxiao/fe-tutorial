@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 314" width="100%" role="img" aria-labelledby="jd2t jd2d">
+  <title id="jd2t">ES3 的变量对象与现行规范词法环境的对应关系</title>
+  <desc id="jd2d">两套术语说的是同一件事。变量对象对应环境记录；活动对象对应函数代码执行前的声明实例化，也就是登记形参、创建 arguments、实例化函数声明与 var 绑定；全局上下文的变量对象等于全局对象，对应全局环境记录，其中对象记录绑定 globalThis 收纳 var 与函数声明，声明式记录收纳 let、const 与 class；进入上下文时的声明实例化，对应各类代码执行前的声明实例化。对只用 var 和函数声明的传统代码，两套模型预测的行为完全一致。</desc>
+
+  <style>
+    .jd2-b{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .jd2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .jd2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .jd2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .jd2-mono-s{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="jd2-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#6E675A"/>
+    </marker>
+  </defs>
+
+  <text class="jd2-t" x="40" y="24" font-size="8.5">同一件事，两套术语 —— 左边是 1999 年的说法，右边才是规范原文</text>
+
+  <text class="jd2-s" x="40" y="46" font-size="7.5">ES3（1999）</text>
+  <text class="jd2-s" x="368" y="46" font-size="7.5">现行规范（ES2015+）</text>
+
+  <rect class="jd2-b" x="40" y="62" width="300" height="44" rx="2"/>
+  <text class="jd2-t" x="52" y="80" font-size="8.5">变量对象 VO</text>
+  <text class="jd2-s" x="52" y="94" font-size="7.5">登记名字的容器</text>
+  <line x1="348" y1="84" x2="362" y2="84" stroke="#6E675A" stroke-width="1" marker-end="url(#jd2-ink)"/>
+  <rect class="jd2-b" x="368" y="62" width="332" height="44" rx="2"/>
+  <text class="jd2-t" x="380" y="80" font-size="8.5">环境记录 Environment Record</text>
+  <text class="jd2-s" x="380" y="94" font-size="7.5">名字到值的映射</text>
+
+  <rect class="jd2-b" x="40" y="112" width="300" height="56" rx="2"/>
+  <text class="jd2-t" x="52" y="130" font-size="8.5">活动对象 AO</text>
+  <text class="jd2-s" x="52" y="144" font-size="7.5">函数上下文的 VO</text>
+  <text class="jd2-s" x="52" y="156" font-size="7.5">含形参与 arguments</text>
+  <line x1="348" y1="140" x2="362" y2="140" stroke="#6E675A" stroke-width="1" marker-end="url(#jd2-ink)"/>
+  <rect class="jd2-b" x="368" y="112" width="332" height="56" rx="2"/>
+  <text class="jd2-mono" x="380" y="130" font-size="7.5">FunctionDeclarationInstantiation</text>
+  <text class="jd2-s" x="380" y="144" font-size="7.5">执行前登记形参、创建 arguments</text>
+  <text class="jd2-s" x="380" y="156" font-size="7.5">并实例化函数声明与 var 绑定</text>
+
+  <rect class="jd2-b" x="40" y="174" width="300" height="66" rx="2"/>
+  <text class="jd2-t" x="52" y="192" font-size="8.5">全局上下文的 VO</text>
+  <text class="jd2-s" x="52" y="206" font-size="7.5">就是全局对象</text>
+  <text class="jd2-s" x="52" y="222" font-size="7.5">所以 var 会挂到 window 上</text>
+  <line x1="348" y1="207" x2="362" y2="207" stroke="#6E675A" stroke-width="1" marker-end="url(#jd2-ink)"/>
+  <rect class="jd2-b" x="368" y="174" width="332" height="66" rx="2"/>
+  <text class="jd2-t" x="380" y="192" font-size="8.5">全局环境记录 = 两种记录相加</text>
+  <text class="jd2-s" x="380" y="208" font-size="7.5">对象记录：绑定对象是 globalThis，收纳 var 与函数声明</text>
+  <text class="jd2-s" x="380" y="232" font-size="7.5">声明式记录：收纳 let / const / class</text>
+
+  <rect class="jd2-b" x="40" y="246" width="300" height="40" rx="2"/>
+  <text class="jd2-t" x="52" y="264" font-size="8.5">Variable Instantiation</text>
+  <text class="jd2-s" x="52" y="277" font-size="7.5">ES3 §10.1.3</text>
+  <line x1="348" y1="266" x2="362" y2="266" stroke="#6E675A" stroke-width="1" marker-end="url(#jd2-ink)"/>
+  <rect class="jd2-b" x="368" y="246" width="332" height="40" rx="2"/>
+  <text class="jd2-t" x="380" y="264" font-size="8.5">各类代码执行前的声明实例化</text>
+  <text class="jd2-s" x="380" y="277" font-size="7.5">GlobalDeclarationInstantiation 等一组抽象操作</text>
+
+  <text class="jd2-t" x="40" y="306" font-size="8.5" style="fill:#B03A2E">净效果一致 —— 旧术语是够用的心智模型，新术语才是规范原文。</text>
+</svg>

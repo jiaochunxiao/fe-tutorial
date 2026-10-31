@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 262" width="100%" role="img" aria-labelledby="t1st t1sd">
+  <title id="t1st">名义类型看名字，结构化类型看形状</title>
+  <desc id="t1sd">名义类型里名字就是身份，两个类即使字段一模一样也互不兼容；TypeScript 是结构化类型，形状即身份，只要源类型拥有目标类型要求的全部成员就能赋值，这叫静态鸭子类型。唯一的例外是字面量直接传参会触发多余属性检查，用来防拼写错误。推论是 interface 与 type 在形状上等价、断言等于关闭检查、字面量类型是最小形状。代价是同形异义的类型会互相串，要用品牌类型、unique symbol 或 private 成员把名义加回来。</desc>
+
+  <style>
+    .t1s-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .t1s-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .t1s-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .t1s-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .t1s-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="t1s-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="t1s-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="t1s-t" x="40" y="26" font-size="8.5">名义类型看名字，结构化类型看形状</text>
+
+  <text class="t1s-s" x="40" y="50" font-size="7">名义类型（Java / C#）</text>
+  <rect class="t1s-b" x="40" y="58" width="130" height="34" rx="2"/>
+  <text class="t1s-m" x="105" y="79" font-size="7" text-anchor="middle">class User</text>
+  <rect class="t1s-b" x="200" y="58" width="130" height="34" rx="2"/>
+  <text class="t1s-m" x="265" y="79" font-size="7" text-anchor="middle">class Account</text>
+  <line x1="172" y1="75" x2="196" y2="75" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="4 3"/>
+  <text class="t1s-s" x="184" y="70" font-size="10" text-anchor="middle" style="fill:#B03A2E">✕</text>
+  <text class="t1s-s" x="344" y="79" font-size="7">字段一模一样也不兼容 —— 名字不同就是两个类型</text>
+
+  <text class="t1s-s" x="40" y="118" font-size="7">结构化类型（TypeScript）</text>
+  <rect class="t1s-b" x="40" y="126" width="130" height="34" rx="2"/>
+  <text class="t1s-m" x="105" y="147" font-size="6.5" text-anchor="middle">{ name: string }</text>
+  <rect class="t1s-q" x="200" y="126" width="150" height="34" rx="2"/>
+  <text class="t1s-m" x="275" y="147" font-size="6.5" text-anchor="middle">{ name, age, id }</text>
+  <line x1="172" y1="143" x2="196" y2="143" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#t1s-ink)"/>
+  <text class="t1s-s" x="368" y="140" font-size="7">源 ≥ 目标就能赋值（多给的成员不算错）</text>
+  <text class="t1s-s" x="368" y="153" font-size="7">这就是「静态鸭子类型」：会叫会走就是鸭子</text>
+
+  <text class="t1s-t" x="40" y="190" font-size="8">三个推论与一个例外</text>
+  <rect class="t1s-b" x="40" y="198" width="200" height="26" rx="1"/>
+  <text class="t1s-s" x="52" y="215" font-size="6.5">interface ≡ type（形状本尊）</text>
+  <rect class="t1s-b" x="250" y="198" width="200" height="26" rx="1"/>
+  <text class="t1s-s" x="262" y="215" font-size="6.5">断言 = 关闭形状检查</text>
+  <rect class="t1s-q" x="460" y="198" width="240" height="26" rx="1"/>
+  <text class="t1s-s" x="472" y="215" font-size="6.5" style="fill:#B03A2E">例外：字面量直传 → 多余属性检查</text>
+
+  <text class="t1s-t" x="40" y="248" font-size="8.5" style="fill:#B03A2E">代价是同形异义会互串 —— 品牌类型 / unique symbol / private 成员，是把名义加回来的三把锁。</text>
+</svg>

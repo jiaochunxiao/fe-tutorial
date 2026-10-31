@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 330" width="100%" role="img" aria-labelledby="w1t w1d">
+  <title id="w1t">首屏 4 秒的六段耗时瀑布</title>
+  <desc id="w1d">一条 4 秒的首屏时间线被拆成六段：TTFB 900 毫秒，发现关键资源 200 毫秒，下载 JS 与 CSS 700 毫秒，解析与 JS 执行 1200 毫秒，首屏数据请求 600 毫秒，首图下载 400 毫秒。其中解析与 JS 执行是唯一占用主线程的一段，数据请求必须等它执行完才能发出，两段构成串行依赖。</desc>
+
+  <style>
+    .w1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .w1-sans{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .w1-net{fill:#EFE8D8;stroke:#1C1A17;stroke-width:1.2}
+    .w1-cpu{fill:#DDB9B1;stroke:#B03A2E;stroke-width:1.4}
+  </style>
+
+  <!-- 图例 -->
+  <rect class="w1-net" x="4" y="16" width="11" height="11"/>
+  <text class="w1-sans" x="20" y="26" font-size="9.5">网络等待</text>
+  <rect class="w1-cpu" x="82" y="16" width="11" height="11"/>
+  <text class="w1-sans" x="98" y="26" font-size="9.5">主线程</text>
+
+  <!-- 时间轴 -->
+  <line x1="186" y1="34" x2="717" y2="34" stroke="#6E675A" stroke-width="1.2"/>
+  <line x1="186" y1="34" x2="186" y2="39" stroke="#6E675A" stroke-width="1.2"/>
+  <line x1="318" y1="34" x2="318" y2="39" stroke="#6E675A" stroke-width="1.2"/>
+  <line x1="451" y1="34" x2="451" y2="39" stroke="#6E675A" stroke-width="1.2"/>
+  <line x1="584" y1="34" x2="584" y2="39" stroke="#6E675A" stroke-width="1.2"/>
+  <line x1="717" y1="34" x2="717" y2="39" stroke="#6E675A" stroke-width="1.2"/>
+  <text class="w1-sans" x="186" y="27" font-size="9.5" text-anchor="middle">0</text>
+  <text class="w1-sans" x="318" y="27" font-size="9.5" text-anchor="middle">1s</text>
+  <text class="w1-sans" x="451" y="27" font-size="9.5" text-anchor="middle">2s</text>
+  <text class="w1-sans" x="584" y="27" font-size="9.5" text-anchor="middle">3s</text>
+  <text class="w1-sans" x="717" y="27" font-size="9.5" text-anchor="end">4.0s</text>
+
+  <!-- ① TTFB -->
+  <text class="w1-mono" x="172" y="71" font-size="10.5" text-anchor="end">① TTFB 900ms</text>
+  <rect class="w1-net" x="186" y="54" width="119" height="26"/>
+
+  <!-- ② 发现关键资源 -->
+  <text class="w1-mono" x="172" y="113" font-size="10.5" text-anchor="end">② 发现关键资源 200ms</text>
+  <rect class="w1-net" x="305" y="96" width="27" height="26"/>
+
+  <!-- ③ 下载 -->
+  <text class="w1-mono" x="172" y="155" font-size="10.5" text-anchor="end">③ 下载 JS / CSS 700ms</text>
+  <rect class="w1-net" x="332" y="138" width="93" height="26"/>
+
+  <!-- ④ 解析与执行 -->
+  <text class="w1-mono" x="172" y="197" font-size="10.5" text-anchor="end">④ 解析 + JS 执行 1.2s</text>
+  <rect class="w1-cpu" x="425" y="180" width="159" height="26"/>
+
+  <!-- ⑤ 数据请求 -->
+  <text class="w1-mono" x="172" y="239" font-size="10.5" text-anchor="end">⑤ 首屏数据请求 600ms</text>
+  <rect class="w1-net" x="584" y="222" width="80" height="26"/>
+
+  <!-- ⑥ 首图 -->
+  <text class="w1-mono" x="172" y="281" font-size="10.5" text-anchor="end">⑥ 首图下载 400ms</text>
+  <rect class="w1-net" x="664" y="264" width="53" height="26"/>
+
+  <!-- ④⑤ 的串行依赖 -->
+  <path d="M425 296 V302 H664 V296" fill="none" stroke="#B03A2E" stroke-width="1.2"/>
+  <text class="w1-sans" x="544" y="320" font-size="10" text-anchor="middle" style="fill:#B03A2E">④⑤ 串行：JS 执行完才发首屏请求</text>
+</svg>

@@ -28,6 +28,10 @@ createdAt: 2026-10-26
 
 Flex 的核心心智模型：**两根轴 + 主尺寸弹性**。
 
+![Flex 容器的主轴与交叉轴](../../assets/svg/css-deep-007-flex-axes.svg)
+
+*图 · 两根轴永远垂直，改 flex-direction 等于把两根一起转*
+
 ```
 flex-direction: row 时：
 
@@ -46,33 +50,9 @@ flex-direction: row 时：
 
 ## 深入原理
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Flex 的主轴与交叉轴">
-  <defs>
-    <marker id="fx-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-  </defs>
-  <rect x="110" y="70" width="420" height="190" fill="#FBF8F1" stroke="#1C1A17" stroke-width="2"/>
-  <text x="320" y="58" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">display: flex 的容器</text>
-  <rect x="134" y="118" width="108" height="94" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="188" y="170" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">item 1</text>
-  <rect x="266" y="118" width="108" height="94" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="320" y="170" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">item 2</text>
-  <rect x="398" y="118" width="108" height="94" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4"/>
-  <text x="452" y="170" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">item 3</text>
-  <path d="M 124 100 H 516" stroke="#B03A2E" stroke-width="2" marker-end="url(#fx-ink)"/>
-  <text x="320" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">主轴 main axis —— justify-content 管它</text>
-  <path d="M 96 88 V 248" stroke="#1C1A17" stroke-width="1.8" marker-end="url(#fx-ink)"/>
-  <text x="80" y="60" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#1C1A17">交叉轴</text>
-  <text x="80" y="278" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">align-items 管它</text>
-  <text x="560" y="130" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">flex-direction 决定</text>
-  <text x="560" y="150" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">哪根是主轴——</text>
-  <text x="560" y="170" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">column 时两根轴</text>
-  <text x="560" y="190" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">职责互换</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · Flex 的两轴模型——主轴（红）与交叉轴（墨）各自有自己的属性族</figcaption>
-</figure>
+![Flex 的主轴与交叉轴](../../assets/svg/css-deep-007-flex-layout.svg)
+
+*图 · Flex 的两轴模型——主轴（红）与交叉轴（墨）各自有自己的属性族*
 
 ### 一、容器（父）六属性 ⭐⭐
 

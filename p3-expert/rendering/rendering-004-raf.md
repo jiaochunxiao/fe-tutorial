@@ -127,6 +127,10 @@ setInterval 做动画的三宗罪对位 rAF 的三恩赐：时机交给浏览器
 
 ## 图解总结
 
+![rAF 站在渲染管线的门口，改的东西同一帧就能上屏](../../assets/svg/rendering-004-raf-frame.svg)
+
+*图 · rAF 站在渲染管线的门口，改的东西同一帧就能上屏*
+
 ```
 一帧的结构:
  [任务→微任务] → [rAF回调 ⭐] → Style→Layout→Paint→Composite → [空闲(idle)]

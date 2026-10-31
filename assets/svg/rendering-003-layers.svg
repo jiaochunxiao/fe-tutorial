@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="cp3t cp3d">
+  <title id="cp3t">普通层与合成层的差别</title>
+  <desc id="cp3d">普通层里所有内容共用同一块纹理，任何一处改动都要把这块区域重新画一遍。合成层独占一块 GPU 纹理，改它只需要重新贴一次，甚至可以完全由合成线程完成，不惊动主线程。</desc>
+
+  <style>
+    .cp3-tex{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .cp3-key{fill:#E7DEC8;stroke:#B03A2E;stroke-width:1.8}
+    .cp3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .cp3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .cp3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <text class="cp3-t" x="40" y="42" font-size="11.5">普通层 · 共享一块纹理</text>
+  <rect class="cp3-tex" x="40" y="58" width="300" height="170" rx="3"/>
+  <rect class="cp3-key" x="110" y="110" width="90" height="66" rx="2"/>
+  <text class="cp3-s" x="155" y="148" font-size="9" text-anchor="middle" style="fill:#B03A2E">这里变了</text>
+  <text class="cp3-s" x="40" y="254" font-size="9.5">改动落在这块纹理上，就得把这块区域重新画一遍</text>
+
+  <text class="cp3-t" x="400" y="42" font-size="11.5">合成层 · 独占一块纹理</text>
+  <rect class="cp3-tex" x="400" y="58" width="140" height="170" rx="3"/>
+  <text class="cp3-s" x="470" y="148" font-size="9" text-anchor="middle">纹理 ①</text>
+  <rect class="cp3-key" x="556" y="58" width="144" height="170" rx="3"/>
+  <text class="cp3-s" x="628" y="148" font-size="9" text-anchor="middle" style="fill:#B03A2E">纹理 ②</text>
+  <text class="cp3-s" x="400" y="254" font-size="9.5">改的只是②，重贴一次就够，①②的位置还能各自挪</text>
+
+  <text class="cp3-s" x="40" y="284" font-size="9.5">合成层的 transform / opacity 动画，可以完全由合成线程接管，主线程忙也不掉帧</text>
+
+</svg>

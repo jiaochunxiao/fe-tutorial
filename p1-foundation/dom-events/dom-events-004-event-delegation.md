@@ -119,6 +119,10 @@ if (delBtn && list.contains(delBtn)) { ... }   // 防御：确认目标在容器
 
 ## 图解总结
 
+![事件委托：一个监听接住所有子元素的点击](../../assets/svg/dom-events-004-delegation.svg)
+
+*图 · 靠冒泡把事件送上来，再靠 closest 把来源认回去*
+
 ```
         ul ══ 唯一的 addEventListener('click') ══
          ▲ 冒泡                     │ 回调里：

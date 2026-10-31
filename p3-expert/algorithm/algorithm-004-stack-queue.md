@@ -28,6 +28,10 @@ createdAt: 2026-10-26
 
 ## 现象与直觉解释
 
+![栈的后进先出与队列的先进先出](../../assets/svg/algorithm-004-stack-vs-queue.svg)
+
+*图 · 差别只有一个：开口在一边还是两边*
+
 ```
 栈（LIFO 后进先出）: 只在一端进出 —— "撤销/嵌套/回溯"的世界
   push/pop/peek     O(1)

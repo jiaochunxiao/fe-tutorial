@@ -30,6 +30,10 @@ Redux 三原则（一切设计的出发点）：
 
 单向数据流的闭环：
 
+![Redux 的单向数据流闭环](../../assets/svg/react-007-flow.svg)
+
+*图 · 唯一往回走的是用户交互，数据本身从不掉头*
+
 ```
 视图 dispatch(action) ──▶ reducer 算新 state ──▶ store 通知订阅者 ──▶ 视图重渲染
         ▲                                                              │
@@ -162,6 +166,10 @@ Redux 的强项：中大型应用的**可预测性**（时间旅行、动作日�
 **2. 一道经典题**：手写 logger 中间件 + thunk 的装配调用链，画出 dispatch 一个函数型 action 的完整穿越路径。
 
 ## 图解总结
+
+![Redux 中间件的洋葱结构](../../assets/svg/react-007-middleware.svg)
+
+*图 · 每层都拦在同一个 dispatch 上，核心只有一句「改 state 再通知」*
 
 ```
 单向数据流: view ──dispatch(action)──▶ reducer(纯) ──▶ 新state ──▶ 通知 ──▶ view

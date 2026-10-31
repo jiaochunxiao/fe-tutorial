@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 740 278" width="100%" role="img" aria-labelledby="ce5t ce5d">
+  <title id="ce5t">自定义事件的三件套：收发器、消息、投递</title>
+  <desc id="ce5d">自定义事件由三样东西组成：EventTarget 是收发器，负责登记监听；Event 或 CustomEvent 是消息本体，detail 装载荷，bubbles 和 cancelable 决定它能不能冒泡、能不能被取消；dispatchEvent 是投递动作，而且它是同步的，派发时监听会当场执行完才返回。收发器有两种载体：DOM 元素自带 EventTarget，所以原生事件和自定义事件走同一条链；也可以 new 一个 EventTarget 当纯内存事件总线，不碰 DOM。</desc>
+
+  <style>
+    .ce5-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ce5-alt{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .ce5-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ce5-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ce5-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="ce5-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <rect class="ce5-box" x="40" y="52" width="200" height="60" rx="3"/>
+  <text class="ce5-mono" x="54" y="76" font-size="10">EventTarget</text>
+  <text class="ce5-s" x="54" y="96" font-size="8.5">收发器：登记监听、管监听</text>
+  <line x1="240" y1="82" x2="286" y2="82" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#ce5-ink)"/>
+
+  <rect class="ce5-box" x="290" y="52" width="200" height="60" rx="3"/>
+  <text class="ce5-mono" x="304" y="76" font-size="10">Event / CustomEvent</text>
+  <text class="ce5-s" x="304" y="96" font-size="8.5">消息：detail 载荷</text>
+  <line x1="490" y1="82" x2="536" y2="82" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#ce5-ink)"/>
+
+  <rect class="ce5-box" x="540" y="52" width="160" height="60" rx="3"/>
+  <text class="ce5-mono" x="554" y="76" font-size="10">dispatchEvent</text>
+  <text class="ce5-t" x="554" y="96" font-size="8.5" style="fill:#B03A2E">同步投递，当场跑完</text>
+
+  <path d="M140 112 V136 H60 V160" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M140 136 H390 V160" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+
+  <rect class="ce5-box" x="40" y="160" width="200" height="60" rx="3"/>
+  <text class="ce5-t" x="54" y="184" font-size="9">DOM 元素</text>
+  <text class="ce5-s" x="54" y="202" font-size="8.5">原生事件 + 自定义事件同链</text>
+
+  <rect class="ce5-alt" x="280" y="160" width="220" height="60" rx="3"/>
+  <text class="ce5-mono" x="294" y="184" font-size="9">new EventTarget()</text>
+  <text class="ce5-s" x="294" y="202" font-size="8.5">纯内存总线，完全不碰 DOM</text>
+
+  <line x1="40" y1="238" x2="700" y2="238" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="ce5-s" x="40" y="258" font-size="8.5">选型</text>
+  <text class="ce5-t" x="96" y="258" font-size="8.5">交互 → 原生事件</text>
+  <text class="ce5-t" x="240" y="258" font-size="8.5">组件语义 → 元素上派 CustomEvent</text>
+  <text class="ce5-t" x="96" y="280" font-size="8.5">跨组件 → EventTarget 总线</text>
+  <text class="ce5-t" x="240" y="280" font-size="8.5">全局状态 → 响应式状态管理（别拿事件当状态）</text>
+  <line x1="40" y1="298" x2="40" y2="314" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="ce5-s" x="54" y="308" font-size="8.5">dispatchEvent 是同步的：这一行执行完，所有监听都已经跑过了 —— 别在监听里假设「稍后才更新」</text>
+</svg>

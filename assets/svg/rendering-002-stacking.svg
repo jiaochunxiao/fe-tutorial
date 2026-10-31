@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="sc2t sc2d">
+  <title id="sc2t">层叠上下文的七层绘制顺序，以及信封效应</title>
+  <desc id="sc2d">左边是一个层叠上下文内部的七层绘制顺序，从下往上依次是：自身背景与边框、负 z-index 的子上下文、常规流块级盒、浮动盒、行内盒、z-index 为零或 auto 的定位元素、正 z-index 的子上下文。右边是信封效应：外层上下文 A 的 z 是 1，里面装着一个 z 为 99 的元素，旁边有个 z 为 2 的兄弟元素 B。B 的 2 大于 A 的 1，所以 B 盖住了整个 A，包括里面那个 99——比较发生在 A 和 B 之间，不是 99 和 2 之间。</desc>
+
+  <style>
+    .sc2-band{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .sc2-hi{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .sc2-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .sc2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .sc2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .sc2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="sc2-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+    <marker id="sc2-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <line x1="34" y1="250" x2="34" y2="62" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#sc2-red)"/>
+  <text class="sc2-s" x="34" y="54" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">顶</text>
+  <text class="sc2-s" x="34" y="266" font-size="8.5" text-anchor="middle">底</text>
+
+  <rect class="sc2-band" x="50" y="224" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="242" font-size="8.5">① 自身背景与边框</text>
+
+  <rect class="sc2-band" x="50" y="198" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="216" font-size="8.5">② 负 z-index 的子上下文</text>
+
+  <rect class="sc2-band" x="50" y="172" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="190" font-size="8.5">③ 常规流块级盒</text>
+
+  <rect class="sc2-band" x="50" y="146" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="164" font-size="8.5">④ 浮动盒</text>
+
+  <rect class="sc2-band" x="50" y="120" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="138" font-size="8.5">⑤ 行内盒</text>
+
+  <rect class="sc2-band" x="50" y="94" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="112" font-size="8.5">⑥ z-index: 0 / auto 的定位元素</text>
+
+  <rect class="sc2-hi" x="50" y="68" width="350" height="26"/>
+  <text class="sc2-t" x="62" y="86" font-size="8.5">⑦ 正 z-index 的子上下文</text>
+
+  <text class="sc2-s" x="460" y="54" font-size="8.5">信封嵌套</text>
+
+  <rect class="sc2-box" x="460" y="68" width="150" height="132" rx="3"/>
+  <text class="sc2-mono" x="472" y="86" font-size="8.5">A · z: 1</text>
+
+  <rect class="sc2-box" x="478" y="100" width="114" height="80" rx="2"/>
+  <text class="sc2-mono" x="490" y="118" font-size="8.5">z: 99</text>
+  <text class="sc2-s" x="490" y="142" font-size="8">再大的 z</text>
+  <text class="sc2-s" x="490" y="156" font-size="8">也只在 A 内部有效</text>
+
+  <rect class="sc2-box" x="644" y="104" width="66" height="60" rx="3"/>
+  <text class="sc2-mono" x="677" y="128" font-size="8.5" text-anchor="middle">B</text>
+  <text class="sc2-mono" x="677" y="146" font-size="8.5" text-anchor="middle">z: 2</text>
+
+  <line x1="644" y1="134" x2="616" y2="134" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#sc2-red)"/>
+  <text class="sc2-s" x="630" y="126" font-size="8" text-anchor="middle" style="fill:#B03A2E">盖住</text>
+  <text class="sc2-t" x="460" y="222" font-size="8.5" style="fill:#B03A2E">2 &gt; 1，所以 B 盖住整个 A —— 连同里面那个 99</text>
+  <text class="sc2-s" x="460" y="238" font-size="8.5">比的是 A 与 B，不是 99 与 2</text>
+
+  <line x1="40" y1="276" x2="40" y2="294" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="sc2-t" x="54" y="288" font-size="9">信封效应让 z-index 变成「树序」而不是「排行榜」—— 子元素再大也只在信封内部有效</text>
+</svg>

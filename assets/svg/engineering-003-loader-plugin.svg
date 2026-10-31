@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 306" width="100%" role="img" aria-labelledby="e3lt e3ld">
+  <title id="e3lt">Loader 与 Plugin 的分工：一个管文件，一个管流程</title>
+  <desc id="e3ld">左边是 Loader，它是机床：输入一段源码字符串，输出另一段字符串，每个文件跑一遍，多个 loader 串成链时从右往左执行，也就是后写的先跑。右边是 Plugin，它是调度员：一个带 apply(compiler) 的类，每次构建只挂一次，通过 Tapable 的钩子插到流程的各个阶段，还能直接改 compilation.assets。一句话：内容转换用 Loader，流程干预用 Plugin。</desc>
+
+  <style>
+    .e3l-panel{fill:none;stroke:#CDC4AF;stroke-width:1.1}
+    .e3l-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .e3l-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e3l-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e3l-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="e3l-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="e3l-band" x="40" y="28" width="320" height="28" rx="3"/>
+  <text class="e3l-t" x="54" y="47" font-size="9">Loader · 机床</text>
+  <text class="e3l-s" x="200" y="47" font-size="8">每个【文件】跑一遍</text>
+  <rect class="e3l-panel" x="40" y="56" width="320" height="196" rx="2"/>
+
+  <text class="e3l-mono" x="54" y="80" font-size="8.5">fn(source) → newSource</text>
+  <text class="e3l-s" x="54" y="100" font-size="8">输入字符串，输出字符串，别的一概不管</text>
+
+  <text class="e3l-s" x="54" y="126" font-size="8">多个 loader 串成链：</text>
+  <text class="e3l-mono" x="54" y="144" font-size="8.5">style( css( sass(src) ) )</text>
+  <line x1="196" y1="152" x2="60" y2="152" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#e3l-red)"/>
+  <text class="e3l-s" x="204" y="156" font-size="8" style="fill:#B03A2E">执行方向：从右往左，后写的先跑</text>
+
+  <text class="e3l-s" x="54" y="184" font-size="8">this 上有：</text>
+  <text class="e3l-mono" x="54" y="202" font-size="8">async / query / resourcePath / emitFile</text>
+  <text class="e3l-s" x="54" y="226" font-size="8">配置：module.rules 里 test 匹配，use 数组排链</text>
+
+  <rect class="e3l-band" x="400" y="28" width="300" height="28" rx="3"/>
+  <text class="e3l-t" x="414" y="47" font-size="9">Plugin · 调度员</text>
+  <text class="e3l-s" x="540" y="47" font-size="8">每次【构建】挂一次</text>
+  <rect class="e3l-panel" x="400" y="56" width="300" height="196" rx="2"/>
+
+  <text class="e3l-mono" x="414" y="80" font-size="8.5">class X { apply(compiler) }</text>
+  <text class="e3l-s" x="414" y="100" font-size="8">拿到的不是文件，是整个编译器</text>
+
+  <text class="e3l-s" x="414" y="126" font-size="8">compiler.hooks：</text>
+  <text class="e3l-mono" x="414" y="142" font-size="8">environment / compile / emit / done</text>
+  <text class="e3l-s" x="414" y="162" font-size="8">compilation.hooks：</text>
+  <text class="e3l-mono" x="414" y="178" font-size="8">buildModule / processAssets …</text>
+
+  <text class="e3l-s" x="414" y="202" font-size="8">Tapable 四型：</text>
+  <text class="e3l-mono" x="414" y="218" font-size="8">Sync │ AsyncParallel │ AsyncSeries │ Bail</text>
+  <text class="e3l-s" x="414" y="238" font-size="8">改产物：compilation.assets[name] = { … }</text>
+
+  <line x1="40" y1="268" x2="700" y2="268" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="e3l-t" x="40" y="288" font-size="8.5">分工：<tspan style="fill:#B03A2E">内容转换 → Loader</tspan>　｜　<tspan style="fill:#B03A2E">流程干预 → Plugin</tspan>　（抽 CSS、注 HTML、压缩、上报，全是后者）</text>
+</svg>

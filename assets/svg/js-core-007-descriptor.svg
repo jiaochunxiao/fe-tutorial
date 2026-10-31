@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 740 240" width="100%" role="img" aria-labelledby="ds7t ds7d">
+  <title id="ds7t">defineProperty 没传的旋钮默认全 false，以及由此改变的四个操作</title>
+  <desc id="ds7d">Object.defineProperty 只传了 value，于是 writable、enumerable、configurable 三个开关全部落到 false。后果是：读 o.x 仍然得到 1，但赋值静默失败、Object.keys 返回空数组、delete 返回 false 删不掉。另外对象的键遍历顺序是整数键按数值升序、字符串键按插入序，Symbol 键不参与。</desc>
+
+  <style>
+    .ds7-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ds7-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ds7-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ds7-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="ds7-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="ds7-mono" x="40" y="56" font-size="9.5">Object.defineProperty(o, 'x', { value: 1 })</text>
+  <text class="ds7-s" x="300" y="56" font-size="9">只传了 value，另外三个旋钮全部落到 false</text>
+  <line x1="162" y1="64" x2="162" y2="80" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ds7-ink)"/>
+
+  <rect class="ds7-box" x="40" y="84" width="290" height="120" rx="3"/>
+  <text class="ds7-t" x="54" y="106" font-size="10">o.x 的属性描述符</text>
+  <text class="ds7-mono" x="54" y="130" font-size="9.5">value</text>
+  <text class="ds7-mono" x="210" y="130" font-size="9.5">1</text>
+  <text class="ds7-mono" x="54" y="152" font-size="9.5">writable</text>
+  <text class="ds7-mono" x="210" y="152" font-size="9.5" style="fill:#B03A2E">false</text>
+  <text class="ds7-mono" x="54" y="174" font-size="9.5">enumerable</text>
+  <text class="ds7-mono" x="210" y="174" font-size="9.5" style="fill:#B03A2E">false</text>
+  <text class="ds7-mono" x="54" y="196" font-size="9.5">configurable</text>
+  <text class="ds7-mono" x="210" y="196" font-size="9.5" style="fill:#B03A2E">false</text>
+
+  <line x1="330" y1="144" x2="368" y2="144" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ds7-ink)"/>
+
+  <text class="ds7-t" x="376" y="106" font-size="10">于是这四个操作都变了</text>
+  <text class="ds7-mono" x="376" y="130" font-size="9.5">o.x</text>
+  <text class="ds7-s" x="484" y="130" font-size="9">→</text>
+  <text class="ds7-mono" x="504" y="130" font-size="9.5">1</text>
+  <text class="ds7-mono" x="376" y="152" font-size="9.5">o.x = 2</text>
+  <text class="ds7-s" x="484" y="152" font-size="9">→</text>
+  <text class="ds7-s" x="504" y="152" font-size="9">还是 1（静默失败）</text>
+  <text class="ds7-mono" x="376" y="174" font-size="9.5">Object.keys(o)</text>
+  <text class="ds7-s" x="484" y="174" font-size="9">→</text>
+  <text class="ds7-mono" x="504" y="174" font-size="9.5">[]</text>
+  <text class="ds7-mono" x="376" y="196" font-size="9.5">delete o.x</text>
+  <text class="ds7-s" x="484" y="196" font-size="9">→</text>
+  <text class="ds7-s" x="504" y="196" font-size="9" style="fill:#B03A2E">false（删不掉）</text>
+
+  <text class="ds7-s" x="40" y="226" font-size="9">键的遍历顺序</text>
+
+  <rect class="ds7-box" x="40" y="234" width="210" height="34" rx="3"/>
+  <text class="ds7-mono" x="54" y="255" font-size="9.5">0 · 1 · 2</text>
+  <text class="ds7-s" x="150" y="255" font-size="9">按数值升序</text>
+
+  <rect class="ds7-box" x="265" y="234" width="210" height="34" rx="3"/>
+  <text class="ds7-mono" x="279" y="255" font-size="9.5">'a' · 'b'</text>
+  <text class="ds7-s" x="375" y="255" font-size="9">按插入顺序</text>
+
+  <rect class="ds7-box" x="490" y="234" width="210" height="34" rx="3"/>
+  <text class="ds7-mono" x="504" y="255" font-size="9.5">Symbol()</text>
+  <text class="ds7-s" x="600" y="255" font-size="9">不参与</text>
+</svg>

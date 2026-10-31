@@ -199,6 +199,10 @@ Plugin 干活：MiniCssExtractPlugin 把 JS 里的样式抽成独立 .css 文件
 
 ## 图解总结
 
+![一个管「这个文件变成什么」，一个管「流程走到哪一步」](../../assets/svg/engineering-003-loader-plugin.svg)
+
+*图 · 一个管「这个文件变成什么」，一个管「流程走到哪一步」*
+
 ```
 Loader（机床）: fn(source) → newSource         每个【文件】跑一遍
   链: style( css( sass(src) ) )  ←右到左 compose

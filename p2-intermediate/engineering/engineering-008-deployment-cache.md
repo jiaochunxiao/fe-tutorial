@@ -59,6 +59,10 @@ location = /index.html {
 
 效果闭环（与 network-006 对齐）：
 
+![哈希变了 URL 就变了 —— 这是强缓存敢设一年的唯一理由](../../assets/svg/engineering-008-cache-loop.svg)
+
+*图 · 哈希变了 URL 就变了 —— 这是强缓存敢设一年的唯一理由*
+
 ```
 用户再次访问：
   HTML no-cache ──协商──▶ 新 HTML（引用 app.9f2c.js）
@@ -69,6 +73,10 @@ location = /index.html {
 ```
 
 ### 二、发布顺序：为什么「先资源后 HTML」⭐⭐⭐
+
+![顺序颠倒一次，就是一片白屏](../../assets/svg/engineering-008-release-order.svg)
+
+*图 · 顺序颠倒一次，就是一片白屏*
 
 ```
 错误顺序（先 HTML 后资源）：
@@ -105,6 +113,10 @@ router.onError((error) => {
 
 ### 四、灰度与回滚：上线的安全网 ⭐⭐
 
+![灰度是一级级放大，回滚是拨一下指针](../../assets/svg/engineering-008-rollout.svg)
+
+*图 · 灰度是一级级放大，回滚是拨一下指针*
+
 ```
 灰度发布（gradual rollout）：
   按流量比例（1% → 10% → 50% → 100%）或按用户分组（内部 → 白名单 → 全量）
@@ -140,6 +152,10 @@ router.onError((error) => {
 **2. 一道排障题**：「用户反馈点击某页面白屏，控制台 Failed to fetch dynamically imported module」——给出五步排查：确认报错 chunk 的哈希是否存在（CDN）→ 判断是否在途旧会话（版本上报比对）→ 触发兜底刷新逻辑是否生效 → 检查发布顺序是否漏传 → 复盘清理策略是否过早删旧产物。
 
 ## 图解总结
+
+![不可变资源 + 可变指针 —— 这套骨架到处都在用](../../assets/svg/engineering-008-summary.svg)
+
+*图 · 不可变资源 + 可变指针 —— 这套骨架到处都在用*
 
 ```
 资源: [name].[contenthash].js ──▶ Cache-Control: max-age=1y, immutable（永不过期的底气=永不覆盖）

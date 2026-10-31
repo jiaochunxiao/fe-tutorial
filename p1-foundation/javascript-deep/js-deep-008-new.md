@@ -165,6 +165,10 @@ function Person(name) {
 
 ## 图解总结
 
+![new 的四步：建对象、连原型、绑 this、判返回值](../../assets/svg/js-deep-008-new.svg)
+
+*图 · 前三步是固定的，只有第四步是岔路*
+
 ```
    new Foo(args)
         │

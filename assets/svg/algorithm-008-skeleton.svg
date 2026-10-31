@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 296" width="100%" role="img" aria-labelledby="a8t a8d">
+  <title id="a8t">四类手写题的算法骨架与三档评分</title>
+  <desc id="a8d">上半四张卡：深度拍平本质是 DFS，要能写递归版与显式栈两个版本，后者防万层嵌套爆栈；TTL 加 LRU 是在有序 Map 或哈希配双向链表之上叠加时间约束，过期用惰性检查并陈述与定时清扫的取舍；批量调度器的地基是固定 worker 配共享游标，升级方向是优先级堆、重试退避与取消信号；全排列是回溯的选择、递归、撤销三连，SKU 组合可以用 reduce 求笛卡尔积。下半是评分三档，条形长度递增：初级只要求功能正确和基础边界；中级要求说出数据结构选型与复杂度，以及能否替换优化；高级要求处理爆栈、竞态、过期、取消这类复合约束。底部一条点破隐藏维度：面试官真正在看你把题当 API 背写，还是在做结构设计。</desc>
+
+  <style>
+    .a8-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a8-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a8-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a8-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a8-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="a8-t" x="30" y="24" font-size="8.5">四类题的骨架：认出来，就有模板</text>
+
+  <rect class="a8-b" x="30" y="36" width="160" height="104" rx="2"/>
+  <text class="a8-mono" x="42" y="56" font-size="8.5">拍平</text>
+  <text class="a8-s" x="42" y="76" font-size="7">DFS 递归版</text>
+  <text class="a8-s" x="42" y="90" font-size="7">显式栈迭代版</text>
+  <text class="a8-s" x="42" y="110" font-size="7" style="fill:#B03A2E">深嵌套不爆栈</text>
+  <text class="a8-s" x="42" y="128" font-size="6.5">两种面孔，都要会</text>
+
+  <rect class="a8-b" x="202" y="36" width="160" height="104" rx="2"/>
+  <text class="a8-mono" x="214" y="56" font-size="8.5">TTL-LRU</text>
+  <text class="a8-s" x="214" y="76" font-size="7">有序 Map / 哈希+链表</text>
+  <text class="a8-s" x="214" y="90" font-size="7">叠加惰性过期</text>
+  <text class="a8-s" x="214" y="110" font-size="7" style="fill:#B03A2E">复合约束要陈述取舍</text>
+  <text class="a8-s" x="214" y="128" font-size="6.5">惰性 vs 定时清扫</text>
+
+  <rect class="a8-b" x="374" y="36" width="160" height="104" rx="2"/>
+  <text class="a8-mono" x="386" y="56" font-size="8.5">批量调度器</text>
+  <text class="a8-s" x="386" y="76" font-size="7">worker 池 × 共享游标</text>
+  <text class="a8-s" x="386" y="90" font-size="7">结果按下标归位</text>
+  <text class="a8-s" x="386" y="110" font-size="7" style="fill:#B03A2E">升级：堆 / 重试 / 取消</text>
+  <text class="a8-s" x="386" y="128" font-size="6.5">异步 × 数据结构</text>
+
+  <rect class="a8-b" x="546" y="36" width="164" height="104" rx="2"/>
+  <text class="a8-mono" x="558" y="56" font-size="8.5">全排列 / SKU</text>
+  <text class="a8-s" x="558" y="76" font-size="7">回溯：选 → 递 → 退</text>
+  <text class="a8-s" x="558" y="90" font-size="7">结果收集要副本</text>
+  <text class="a8-s" x="558" y="110" font-size="7" style="fill:#B03A2E">笛卡尔积用 reduce</text>
+  <text class="a8-s" x="558" y="128" font-size="6.5">空数组是必考边界</text>
+
+  <text class="a8-t" x="30" y="164" font-size="8.5">评分三档：条越长，说明你越往下想了一层</text>
+
+  <rect class="a8-b" x="30" y="174" width="240" height="26" rx="2"/>
+  <text class="a8-t" x="42" y="191" font-size="7.5">初级（能跑）</text>
+  <text class="a8-s" x="176" y="191" font-size="7">功能正确 · 基础边界</text>
+
+  <rect class="a8-b" x="30" y="206" width="460" height="26" rx="2"/>
+  <text class="a8-t" x="42" y="223" font-size="7.5">中级（结构意识）</text>
+  <text class="a8-s" x="176" y="223" font-size="7">说出选型与复杂度 · 能否替换优化</text>
+
+  <rect class="a8-c" x="30" y="238" width="680" height="26" rx="2"/>
+  <text class="a8-t" x="42" y="255" font-size="7.5">高级（组合边界）</text>
+  <text class="a8-s" x="176" y="255" font-size="7">爆栈 · 竞态 · 过期 · 取消等复合约束，以及惰性与批量的取舍</text>
+
+  <rect x="30" y="272" width="680" height="22" fill="#E7DEC8" opacity="0.55"/>
+  <text class="a8-s" x="42" y="287" font-size="7.5" style="fill:#B03A2E">隐藏维度：你把题当「API 背写」，还是在「做结构设计」</text>
+</svg>

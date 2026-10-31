@@ -37,6 +37,10 @@ Vue 3 里这些坑**全部消失**——直接赋值就好。差异的根源：*
 ③ 派发更新（写时）：通知所有记过名的人重跑/重渲染
 ```
 
+![读时记账、写时通知的响应式闭环](../../assets/svg/vue-001-track-trigger.svg)
+
+*图 · 读时记账，写时通知 —— 代理层只做两件事*
+
 ```
 渲染函数读 state.count ──读──▶ [代理层] 记账：count 的依赖 += 渲染函数
 state.count = 2 ────────写──▶ [代理层] 通知：把记过名的都重跑一遍 ✅
@@ -110,45 +114,17 @@ function reactive(target) {
 
 外加 Map/Set 支持、代理整个对象一层搞定（不必逐属性定义）。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Vue 响应式闭环：track 收集依赖，trigger 通知更新">
-  <defs>
-    <marker id="v1-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="v1-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="60" y="60" width="190" height="86" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="155" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">组件渲染函数</text>
-  <text x="155" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">读取 state.count</text>
-  <rect x="330" y="42" width="180" height="120" rx="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="420" y="70" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">依赖账本 targetMap</text>
-  <text x="420" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">state → Map{</text>
-  <text x="420" y="116" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">  count → Set[渲染effect]</text>
-  <text x="420" y="136" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">}</text>
-  <rect x="330" y="216" width="180" height="52" rx="10" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
-  <text x="420" y="238" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#B03A2E">state.count++</text>
-  <text x="420" y="258" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">Proxy set 拦截</text>
-  <rect x="80" y="216" width="170" height="52" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="165" y="238" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">重新渲染</text>
-  <text x="165" y="258" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">新 vnode → patch → DOM</text>
-  <path d="M 250 96 H 324" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#v1-ink)"/>
-  <text x="284" y="86" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#1C1A17">get → track</text>
-  <path d="M 420 162 V 210" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#v1-red)">
-    <animate attributeName="stroke-opacity" values="1;0.3;1" dur="2.2s" repeatCount="indefinite"/>
-  </path>
-  <text x="440" y="190" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#B03A2E">set → trigger</text>
-  <path d="M 330 250 C 260 262 200 274 168 272" fill="none" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#v1-ink)"/>
-  <text x="140" y="292" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">调度器微任务批量执行</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 响应式闭环——读属性记账（track），改属性放行（trigger），渲染 effect 在微任务里批量重跑</figcaption>
-</figure>
+![Vue 响应式闭环：track 收集依赖，trigger 通知更新](../../assets/svg/vue-001-reactivity.svg)
+
+*图 · 响应式闭环——读属性记账（track），改属性放行（trigger），渲染 effect 在微任务里批量重跑*
 
 ### 三、依赖收集的完整图景：effect 与调度 ⭐⭐
 
 组件渲染的本质是一个 **effect（副作用函数）**：
+
+![targetMap 的三层嵌套结构](../../assets/svg/vue-001-targetmap.svg)
+
+*图 · targetMap 的三层嵌套结构*
 
 ```
 组件渲染函数执行

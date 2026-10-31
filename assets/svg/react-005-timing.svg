@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 260" width="100%" role="img" aria-labelledby="r5tt r5td">
+  <title id="r5tt">useEffect 与 useLayoutEffect 只差在 paint 的前后</title>
+  <desc id="r5td">组件函数执行时，useEffect 只是把回调和依赖登记到 Fiber 的链表上，并不执行。到了 commit 阶段 DOM 已经更新，useLayoutEffect 在这里同步跑完，所以它适合量尺寸、防闪烁定位这类必须在新帧画出来前完成的 DOM 操作。等浏览器 paint 完、用户已经看到新帧，useEffect 才异步执行，适合请求、日志、订阅这些不该阻塞绘制的事。两个 Hook 的唯一本质差异就是 paint 前同步还是 paint 后异步。</desc>
+
+  <style>
+    .r5t-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r5t-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r5t-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="r5t-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="r5t-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="r5t-t" x="40" y="26" font-size="8.5">两个 Hook 只差一条线：paint</text>
+
+  <rect class="r5t-b" x="60" y="40" width="300" height="44" rx="2"/>
+  <text class="r5t-t" x="74" y="58" font-size="8.5">render 阶段 · 组件函数执行</text>
+  <text class="r5t-s" x="74" y="72" font-size="7.5">useEffect 在这里只是登记</text>
+  <text class="r5t-s" x="380" y="62" font-size="7.5">副作用不该阻塞绘制 —— 先让用户看到界面</text>
+
+  <line x1="210" y1="84" x2="210" y2="96" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r5t-ink)"/>
+
+  <rect class="r5t-b" x="60" y="100" width="300" height="44" rx="2"/>
+  <text class="r5t-t" x="74" y="118" font-size="8.5">commit 阶段 · DOM 已更新</text>
+  <text class="r5t-s" x="74" y="132" font-size="7.5">useLayoutEffect 在这里同步跑完</text>
+  <text class="r5t-s" x="380" y="122" font-size="7.5">必须在新帧前完成 —— 量尺寸、防闪烁定位</text>
+
+  <text class="r5t-s" x="60" y="158" font-size="7.5" style="fill:#B03A2E">浏览器 paint：新帧画出来，用户看到界面</text>
+  <line x1="60" y1="164" x2="700" y2="164" stroke="#B03A2E" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+  <line x1="210" y1="164" x2="210" y2="176" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#r5t-ink)"/>
+
+  <rect class="r5t-b" x="60" y="180" width="300" height="44" rx="2"/>
+  <text class="r5t-t" x="74" y="198" font-size="8.5">paint 之后</text>
+  <text class="r5t-s" x="74" y="212" font-size="7.5">useEffect 异步执行</text>
+  <text class="r5t-s" x="380" y="202" font-size="7.5">界面已可见，副作用稍后补齐</text>
+
+  <text class="r5t-t" x="40" y="248" font-size="8.5" style="fill:#B03A2E">这条虚线就是分水岭 —— 选哪个 Hook，等于选「在用户看到之前还是之后」。</text>
+</svg>

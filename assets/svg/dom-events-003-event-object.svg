@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 36 740 216" width="100%" role="img" aria-labelledby="eo3t eo3d">
+  <title id="eo3t">事件对象像一张快递单：身份、信息、干预、合成四栏</title>
+  <desc id="eo3d">事件对象可以按四栏读。身份栏里 target 是案发现场，从始至终不变；currentTarget 是当前这一层，随传播每换一层就变一次；this 跟的是 currentTarget。信息栏里 clientX 是相对视口、pageX 是相对页面，key 是新标准、keyCode 已废弃。干预栏里 preventDefault 禁掉默认行为但仍继续传播，stopPropagation 断掉传播但默认行为照做，stopImmediatePropagation 连本元素后续监听也断。合成栏里可以 new Event 加 dispatchEvent 手动触发，isTrusted 用来分辨真假。</desc>
+
+  <style>
+    .eo3-card{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .eo3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .eo3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .eo3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <rect class="eo3-card" x="40" y="56" width="660" height="148" rx="3"/>
+  <line x1="205" y1="56" x2="205" y2="204" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="370" y1="56" x2="370" y2="204" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="535" y1="56" x2="535" y2="204" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="40" y1="86" x2="700" y2="86" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="eo3-t" x="56" y="76" font-size="9">身份</text>
+  <text class="eo3-t" x="221" y="76" font-size="9">信息</text>
+  <text class="eo3-t" x="386" y="76" font-size="9">干预</text>
+  <text class="eo3-t" x="551" y="76" font-size="9">合成</text>
+
+  <text class="eo3-mono" x="56" y="106" font-size="8">target</text>
+  <text class="eo3-s" x="56" y="122" font-size="7.5">案发现场，始终不变</text>
+  <text class="eo3-mono" x="56" y="146" font-size="8">currentTarget</text>
+  <text class="eo3-s" x="56" y="162" font-size="7.5">当前这一层，每层都变</text>
+  <text class="eo3-s" x="56" y="186" font-size="7.5">this 跟的是 currentTarget</text>
+
+  <text class="eo3-mono" x="221" y="106" font-size="8">type / timeStamp</text>
+  <text class="eo3-s" x="221" y="122" font-size="7.5">事件名与发生时刻</text>
+  <text class="eo3-mono" x="221" y="146" font-size="8">clientX vs pageX</text>
+  <text class="eo3-s" x="221" y="162" font-size="7.5">相对视口 vs 相对页面</text>
+  <text class="eo3-s" x="221" y="186" font-size="7.5">key 是新标准，keyCode 已废</text>
+
+  <text class="eo3-mono" x="386" y="106" font-size="8">preventDefault</text>
+  <text class="eo3-s" x="386" y="122" font-size="7.5">禁默认，传播照旧</text>
+  <text class="eo3-mono" x="386" y="146" font-size="8">stopPropagation</text>
+  <text class="eo3-s" x="386" y="162" font-size="7.5">断传播，默认照旧</text>
+  <text class="eo3-s" x="386" y="186" font-size="7.5">stopImmediate 连后续也断</text>
+
+  <text class="eo3-mono" x="551" y="106" font-size="8">new Event</text>
+  <text class="eo3-s" x="551" y="122" font-size="7.5">配 dispatchEvent 手动派发</text>
+  <text class="eo3-mono" x="551" y="146" font-size="8">isTrusted</text>
+  <text class="eo3-s" x="551" y="162" font-size="7.5">分辨真人触发还是脚本触发</text>
+  <text class="eo3-s" x="551" y="186" font-size="7.5">合成事件走同一条传播链</text>
+
+  <line x1="40" y1="222" x2="40" y2="244" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="eo3-t" x="54" y="234" font-size="9">target 从始至终是同一个，currentTarget 每换一层就变一次 —— 这两个混用，委托就会写错</text>
+</svg>

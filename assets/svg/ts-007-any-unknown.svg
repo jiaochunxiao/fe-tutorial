@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 288" width="100%" role="img" aria-labelledby="t7at t7ad">
+  <title id="t7at">any 是双向全通的危险顶，unknown 是只进不出的安全顶</title>
+  <desc id="t7ad">any 站在类型系统的顶端但两头都通：任何值可以赋给它，它也可以赋给任何类型，代价是传染与静默，链式扩散、拼写不报、null 不查。unknown 也接受任何值，但只能进不能出，用之前必须收窄或断言。never 是底部的空集，用在穷尽检查与不可达分支上。纪律是边界用 unknown 加守卫、禁止用 any 表达不知道、断言最小化、泛型用约束、并用 ESLint 兜底。逃生舱按安全性分级：校验器最好，unknown 加收窄次之，然后是 as，最后才是 any。</desc>
+
+  <style>
+    .t7a-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .t7a-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .t7a-r{fill:#FBF7EE;stroke:#B03A2E;stroke-width:1.1}
+    .t7a-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .t7a-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="t7a-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="t7a-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="t7a-t" x="40" y="26" font-size="8.5">any 与 unknown 都接受任何值，区别在于「出得来吗」</text>
+
+  <rect class="t7a-r" x="40" y="42" width="320" height="56" rx="2"/>
+  <text class="t7a-t" x="56" y="62" font-size="8.5" style="fill:#B03A2E">any · 危险顶</text>
+  <text class="t7a-s" x="56" y="78" font-size="7">任何值 ⇄ any，双向全通</text>
+  <text class="t7a-s" x="56" y="92" font-size="7">代价：传染 + 静默 —— 一处声明，整链失明</text>
+
+  <rect class="t7a-b" x="380" y="42" width="320" height="56" rx="2"/>
+  <text class="t7a-t" x="396" y="62" font-size="8.5">unknown · 安全顶</text>
+  <text class="t7a-s" x="396" y="78" font-size="7">任何值 → unknown，只进不出</text>
+  <text class="t7a-s" x="396" y="92" font-size="7">用之前必须收窄或断言 —— 强制你证明</text>
+
+
+  <rect class="t7a-b" x="40" y="120" width="660" height="34" rx="2"/>
+  <text class="t7a-s" x="56" y="141" font-size="7">三个具体的罪：链式扩散（一处 any 让调用方全变 any）｜拼写不报（属性名写错也不提示）｜null 不查（空值直接崩）</text>
+
+  <rect class="t7a-q" x="220" y="168" width="300" height="34" rx="2"/>
+  <text class="t7a-t" x="370" y="189" font-size="8" text-anchor="middle">never · 底（空集）</text>
+  <text class="t7a-s" x="530" y="189" font-size="6.5">穷尽检查 / 不可达分支</text>
+
+  <text class="t7a-t" x="40" y="226" font-size="8">纪律五条</text>
+  <text class="t7a-s" x="40" y="242" font-size="7.5">① 边界一律 unknown + 守卫 ② 禁止用 any 表达「我不知道」 ③ 断言最小化、就地注释理由</text>
+  <text class="t7a-s" x="40" y="256" font-size="7.5">④ 泛型用约束代替 any ⑤ ESLint 兜底：no-explicit-any / no-unsafe-*</text>
+
+  <text class="t7a-t" x="40" y="280" font-size="8.5" style="fill:#B03A2E">逃生舱分级：校验器（zod）&lt; unknown + 收窄 &lt; as X &lt; any —— 越往右越省事，也越不安全。</text>
+</svg>

@@ -120,6 +120,10 @@ commitMutation 前：
 
 ## 图解总结
 
+![render 阶段与 commit 阶段](../../assets/svg/react-002-two-phases.svg)
+
+*图 · 左边只做计算，随时可被更高优先级的更新打断；右边碰真实 DOM，必须一口气做完*
+
 ```
 触发: setState ─────────────────────────────────────────┐
                                                         ▼

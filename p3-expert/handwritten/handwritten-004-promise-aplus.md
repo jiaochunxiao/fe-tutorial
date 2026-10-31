@@ -239,6 +239,10 @@ MyPromise.resolve(MyPromise.resolve(MyPromise.resolve(42)))
 
 ## 图解总结
 
+![then 的三段，与 resolvePromise 的三个分支](../../assets/svg/handwritten-004-promise-aplus.svg)
+
+*图 · 参数清洗看着像防御性代码，其实是「值穿透」唯一的落点*
+
 ```
 then(onFulfilled, onRejected)
   ├─ 2.2.1 参数清洗：非函数 → (v)=>v / (r)=>{throw r}   ← 值穿透的落点

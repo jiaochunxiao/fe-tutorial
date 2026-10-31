@@ -46,6 +46,10 @@ useEffect 的心智模型（来自官方的精准比喻）：
 
 ### 一、执行时机：异步、渲染后、批量 ⭐⭐
 
+![useEffect 与 useLayoutEffect 只差在 paint 的前后](../../assets/svg/react-005-timing.svg)
+
+*图 · useEffect 与 useLayoutEffect 只差在 paint 的前后*
+
 ```
 组件函数执行（render 阶段）
   └─ useEffect 被调用：只是【登记】（把 effect 回调 + 依赖挂到 Fiber 的链表）
@@ -137,6 +141,10 @@ setInterval(() => setCount(countRef.current + 1), 1000);  // 读 ref 取新值 �
 **2. 一道综合题**：搜索框 userId 变化请求用户——要求无竞态、卸载不 setState——把「ignore 守卫 + AbortController + 依赖 [userId]」组合写出，正是《js-async-008》在 React 里的标准落地。
 
 ## 图解总结
+
+![闭包陷阱：effect 是当次渲染快照的囚徒](../../assets/svg/react-005-closure.svg)
+
+*图 · 闭包陷阱：effect 是当次渲染快照的囚徒*
 
 ```
 渲染N: 函数执行 ──▶ useEffect登记(快照effectₙ + deps) ──▶ commit

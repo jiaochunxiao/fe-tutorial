@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 296" width="100%" role="img" aria-labelledby="v1t v1d">
+  <title id="v1t">一行代码怎么变成字节码：源码、Token、AST、字节码</title>
+  <desc id="v1d">四行演示 V8 的编译前半程，每行左边是阶段名，右边是这一步真实的数据形态。第一行是源码 const x 等于 1 加 2。第二行是词法分析，Lexer 把它切成 Token 流：const、x、等号、1、加号、2、分号。第三行是语法分析，Parser 按文法把这些 Token 组装成抽象语法树，根节点是变量声明，初始化部分是一个加法表达式，左右操作数是 1 和 2。第四行是 Ignition 解释器，把语法树翻译成引擎自定义的紧凑指令集，也就是字节码：加载参数一、加载参数二、相加、返回，然后逐条解释执行。底部解释为什么不直接生成机器码：字节码生成极快、体积小、还能逐条执行，对只跑一两次的冷代码性价比最高。</desc>
+
+  <style>
+    .v1-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .v1-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .v1-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .v1-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .v1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="v1-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="v1-t" x="30" y="24" font-size="8.5">编译前半程：文本 → Token → 树 → 指令</text>
+
+  <rect class="v1-b" x="30" y="44" width="110" height="44" rx="2"/>
+  <text class="v1-t" x="85" y="70" font-size="8" text-anchor="middle">源码</text>
+  <text class="v1-mono" x="156" y="70" font-size="8">const x = 1 + 2;</text>
+
+  <line x1="85" y1="88" x2="85" y2="98" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#v1-ink)"/>
+
+  <rect class="v1-b" x="30" y="100" width="110" height="44" rx="2"/>
+  <text class="v1-t" x="85" y="120" font-size="8" text-anchor="middle">词法分析</text>
+  <text class="v1-s" x="85" y="134" font-size="7" text-anchor="middle">Lexer</text>
+  <text class="v1-mono" x="156" y="120" font-size="7.5">[const] [x] [=] [1] [+] [2] [;]</text>
+  <text class="v1-s" x="156" y="136" font-size="7">按字符切成 Token 流 —— 此时还不懂语法</text>
+
+  <line x1="85" y1="144" x2="85" y2="154" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#v1-ink)"/>
+
+  <rect class="v1-b" x="30" y="156" width="110" height="44" rx="2"/>
+  <text class="v1-t" x="85" y="176" font-size="8" text-anchor="middle">语法分析</text>
+  <text class="v1-s" x="85" y="190" font-size="7" text-anchor="middle">Parser</text>
+  <text class="v1-mono" x="156" y="176" font-size="7">AST { type: 'VariableDeclaration', init: BinaryExpression(+, 1, 2) }</text>
+  <text class="v1-s" x="156" y="192" font-size="7">按文法组装成树 —— 结构出来了，语义还没落地</text>
+
+  <line x1="85" y1="200" x2="85" y2="210" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#v1-ink)"/>
+
+  <rect class="v1-c" x="30" y="212" width="110" height="44" rx="2"/>
+  <text class="v1-t" x="85" y="232" font-size="8" text-anchor="middle">字节码</text>
+  <text class="v1-s" x="85" y="246" font-size="7" text-anchor="middle">Ignition</text>
+
+  <rect class="v1-b" x="156" y="218" width="90" height="24" rx="2"/>
+  <text class="v1-mono" x="201" y="234" font-size="7" text-anchor="middle">Ldar a1</text>
+  <rect class="v1-b" x="256" y="218" width="90" height="24" rx="2"/>
+  <text class="v1-mono" x="301" y="234" font-size="7" text-anchor="middle">Ldar a2</text>
+  <rect class="v1-b" x="356" y="218" width="90" height="24" rx="2"/>
+  <text class="v1-mono" x="401" y="234" font-size="7" text-anchor="middle">Add</text>
+  <rect class="v1-b" x="456" y="218" width="90" height="24" rx="2"/>
+  <text class="v1-mono" x="501" y="234" font-size="7" text-anchor="middle">Return</text>
+  <text class="v1-s" x="560" y="234" font-size="7">逐条解释执行</text>
+
+  <rect x="30" y="268" width="680" height="22" fill="#E7DEC8" opacity="0.55"/>
+  <text class="v1-s" x="42" y="283" font-size="7.5">为什么不直接生成机器码：字节码生成极快、体积小、可逐条执行 —— 只跑一两次的冷代码用它性价比最高</text>
+</svg>

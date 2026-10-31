@@ -44,6 +44,10 @@ createdAt: 2026-10-26
 
 ### 数据结构：三层嵌套的「依赖账本」
 
+![三层嵌套放大了看，就是一个具体对象的两条依赖链](../../assets/svg/handwritten-009-targetmap.svg)
+
+*图 · 三层嵌套放大了看，就是一个具体对象的两条依赖链*
+
 ```
 targetMap: WeakMap ── target(原对象)
     └─ depsMap: Map ── key(属性)
@@ -219,6 +223,10 @@ render() 读 state.count ──track──▶ 账本登记「渲染 effect 依�
 | 与 ref 的关系？ | ref 是「包装原始值」的响应式（对象壳 + get/set 拦截 + .value 访问触发 track/trigger）——本篇聚焦 reactive，ref 是思考题 4 |
 
 ## 图解总结
+
+![响应式的双向账本：track 记账与 trigger 查账](../../assets/svg/handwritten-009-reactivity.svg)
+
+*图 · 读的时候把「谁在读」记下来，写的时候才知道该叫醒谁*
 
 ```
           ┌────────── 渲染 effect（render 的包装）──────────┐

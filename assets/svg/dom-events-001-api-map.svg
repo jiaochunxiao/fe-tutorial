@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 24 740 278" width="100%" role="img" aria-labelledby="dm1t dm1d">
+  <title id="dm1t">DOM API 地图：查询、关系、操作、属性四类</title>
+  <desc id="dm1d">中间的 element 节点向四个方向分出四类 API。查询类里 querySelector 返回静态集合、getElementsBy 返回动态集合，后者会随 DOM 变化；关系类里 children 和 nextElementSibling 跳过文本节点，childNodes 含空白文本；操作类用 append、insertBefore、remove、replaceChild，批量插入应走离线的 DocumentFragment；属性类里 attribute 是标签上的字符串，property 是对象上的活属性，value 与 checked 两者不同步，data-* 走 dataset 的驼峰通道。底部两条提醒：性能上不要循环 appendChild，安全上用户内容一律用 textContent。</desc>
+
+  <style>
+    .dm1-c{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .dm1-col{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .dm1-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .dm1-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .dm1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <rect class="dm1-c" x="320" y="36" width="100" height="36" rx="3"/>
+  <text class="dm1-mono" x="370" y="59" font-size="10" text-anchor="middle">element</text>
+
+  <path d="M370 72 V100 H116 V116" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M370 100 H284 V116" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M370 100 H452 V116" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M370 100 H620 V116" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+
+  <rect class="dm1-col" x="40" y="116" width="152" height="118" rx="3"/>
+  <text class="dm1-t" x="54" y="136" font-size="9">查询</text>
+  <text class="dm1-mono" x="54" y="158" font-size="8">querySelector —— 静态</text>
+  <text class="dm1-mono" x="54" y="176" font-size="8">getElementsBy —— 动态</text>
+  <text class="dm1-s" x="54" y="194" font-size="8">后者会随 DOM 变化</text>
+  <text class="dm1-s" x="54" y="212" font-size="8">存下来的 NodeList 会失效</text>
+
+  <rect class="dm1-col" x="208" y="116" width="152" height="118" rx="3"/>
+  <text class="dm1-t" x="222" y="136" font-size="9">关系</text>
+  <text class="dm1-mono" x="222" y="158" font-size="8">children —— 跳过文本</text>
+  <text class="dm1-mono" x="222" y="176" font-size="8">childNodes —— 含空白</text>
+  <text class="dm1-s" x="222" y="194" font-size="8">nextElementSibling 同理</text>
+  <text class="dm1-s" x="222" y="212" font-size="8">取元素别用 firstChild</text>
+
+  <rect class="dm1-col" x="376" y="116" width="152" height="118" rx="3"/>
+  <text class="dm1-t" x="390" y="136" font-size="9">操作</text>
+  <text class="dm1-mono" x="390" y="158" font-size="8">append / insertBefore</text>
+  <text class="dm1-mono" x="390" y="176" font-size="8">remove / replaceChild</text>
+  <text class="dm1-s" x="390" y="194" font-size="8">批量走 DocumentFragment</text>
+  <text class="dm1-s" x="390" y="212" font-size="8">离线拼好再插一次</text>
+
+  <rect class="dm1-col" x="544" y="116" width="152" height="118" rx="3"/>
+  <text class="dm1-t" x="558" y="136" font-size="9">属性</text>
+  <text class="dm1-mono" x="558" y="158" font-size="8">attribute ≠ property</text>
+  <text class="dm1-mono" x="558" y="176" font-size="8">dataset ← data-*</text>
+  <text class="dm1-s" x="558" y="194" font-size="8">value / checked 不同步</text>
+  <text class="dm1-s" x="558" y="212" font-size="8">标签字符串 vs 活对象</text>
+
+  <line x1="40" y1="256" x2="40" y2="300" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="dm1-t" x="54" y="268" font-size="8.5">性能：循环 appendChild 每次都触发重排 —— 离线拼接（DocumentFragment）或一次 innerHTML</text>
+  <text class="dm1-t" x="54" y="286" font-size="8.5">安全：用户内容一律走 textContent；非要用 innerHTML 就必须自己转义</text>
+</svg>

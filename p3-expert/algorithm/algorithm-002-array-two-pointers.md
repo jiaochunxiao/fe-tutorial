@@ -123,65 +123,9 @@ for (右指针扩张) {
 
 **适用信号**：**连续子串/子数组** + 「最长/最短/计数」。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="双指针三套路的指针运动：对撞、快慢、滑动窗口">
-  <defs>
-    <marker id="a2-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="a2-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <style>
-    .a2-l { animation: a2L 3s linear infinite; }
-    .a2-r { animation: a2R 3s linear infinite; }
-    .a2-w { animation: a2W 4s linear infinite; }
-    @keyframes a2L { 0%{transform:translateX(0)} 45%{transform:translateX(150px)} 100%{transform:translateX(150px)} }
-    @keyframes a2R { 0%{transform:translateX(0)} 45%{transform:translateX(-150px)} 100%{transform:translateX(-150px)} }
-    @keyframes a2W { 0%{transform:translateX(0)} 60%{transform:translateX(120px)} 100%{transform:translateX(120px)} }
-  </style>
-  <text x="24" y="46" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">① 对撞：移矮板，两端向中间收</text>
-  <rect x="24" y="58" width="290" height="34" rx="5" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.3"/>
-  <g>
-    <rect x="60" y="66" width="34" height="18" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="120" y="66" width="34" height="18" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="180" y="66" width="34" height="18" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="240" y="66" width="34" height="18" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-  </g>
-  <g>
-    <path class="a2-l" d="M 66 76 h 20 m -5 -5 l 5 5 l -5 5" stroke="#B03A2E" stroke-width="2" fill="none" marker-end="url(#a2-red)"/>
-    <path class="a2-r" d="M 288 76 h -20 m 5 -5 l -5 5 l 5 5" stroke="#1C1A17" stroke-width="2" fill="none" marker-end="url(#a2-ink)"/>
-  </g>
-  <text x="24" y="146" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">② 滑动窗口：右扩左缩，状态随身</text>
-  <rect x="24" y="158" width="290" height="34" rx="5" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.3"/>
-  <g>
-    <rect x="30" y="164" width="26" height="22" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="60" y="164" width="26" height="22" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="90" y="164" width="26" height="22" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="120" y="164" width="26" height="22" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-    <rect x="150" y="164" width="26" height="22" rx="3" fill="#FBF8F1" stroke="#1C1A17"/>
-  </g>
-  <g class="a2-w">
-    <rect x="42" y="160" width="122" height="30" rx="5" fill="none" stroke="#B03A2E" stroke-width="2"/>
-  </g>
-  <path d="M 46 202 h 100 m -5 -5 l 5 5 l -5 5" stroke="#B03A2E" stroke-width="1.6" fill="none" marker-end="url(#a2-red)"/>
-  <text x="160" y="206" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">窗口右扩（状态不合法时左缩）</text>
-  <text x="24" y="244" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">③ 快慢：速度差制造信息</text>
-  <rect x="24" y="256" width="290" height="34" rx="5" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.3"/>
-  <g>
-    <circle cx="60" cy="273" r="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-    <circle cx="120" cy="273" r="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-    <circle cx="180" cy="273" r="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.4"/>
-  </g>
-  <g>
-    <path class="a2-l" d="M 54 273 h 12" stroke="#B03A2E" stroke-width="2" fill="none"/>
-    <path class="a2-r" d="M 174 273 h -24" stroke="#1C1A17" stroke-width="2" fill="none"/>
-  </g>
-  <text x="60" y="300" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">slow 1 步 / fast 2 步——中点、倒数 k、判环全靠它</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 三套指针的移动方式——每一步移动都「安全地丢掉一批候选解」</figcaption>
-</figure>
+![双指针三套路的指针运动：对撞、快慢、滑动窗口](../../assets/svg/algorithm-002-array-two-pointers.svg)
+
+*图 · 三套指针的移动方式——每一步移动都「安全地丢掉一批候选解」*
 
 ### 前端场景对号入座 ⭐⭐
 
@@ -202,6 +146,10 @@ for (右指针扩张) {
 **2. 一道模板套用题**：长度最小的子数组（LC 209，≥target 的最短连续和）——滑窗模板直接落地（状态从 Set 换成 sum）。
 
 ## 图解总结
+
+![双指针的三个套路：对撞、快慢、滑窗](../../assets/svg/algorithm-002-two-pointers.svg)
+
+*图 · 同一排格子，指针站的位置不同，能省掉的东西也不同*
 
 ```
 双指针 = 用单调性让每步"安全丢一批解" (n² → n)

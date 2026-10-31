@@ -132,6 +132,10 @@ for (const w of words) s += w;   // 老引擎可能每次复制 → O(n²)；现
 
 ## 图解总结
 
+![五种常见复杂度的增长曲线](../../assets/svg/algorithm-001-complexity.svg)
+
+*图 · 曲线的弯法比阶数名字更值得记*
+
 ```
 量级阶梯: O(1) < O(logn) < O(n) < O(nlogn) < O(n²) < O(2ⁿ)
 标尺: 1秒≈1亿次 │ n=10⁶: 线性✅ 平方❌ │ 数据范围反推复杂度 ⭐

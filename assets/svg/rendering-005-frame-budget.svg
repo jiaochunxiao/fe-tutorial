@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 268" width="100%" role="img" aria-labelledby="r5bt r5bd">
+  <title id="r5bt">帧预算 16.7 毫秒，一个长任务就能吃掉两帧</title>
+  <desc id="r5bd">60Hz 下每帧预算 16.7 毫秒，任务、微任务、rAF、样式、布局、绘制、合成全部跑在同一个主线程上。正常帧里任务很短，剩下的时间留给渲染管线，画面按拍上屏。一旦某个任务占用 40 毫秒，本帧预算爆掉，浏览器干脆跳过这一拍，下一次渲染机会要等到下一个垂直同步，用户看到的就是动画跳变、点击回调排队，INP 与 LCP 一起变差。解法只有把长任务拆碎，每块之间主动让出主线程。</desc>
+
+  <style>
+    .r5b-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r5b-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .r5b-r{fill:#E7DEC8;stroke:#B03A2E;stroke-width:1.1}
+    .r5b-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r5b-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="r5b-t" x="40" y="26" font-size="8.5">帧预算 16.7ms，全部跑在同一个主线程上</text>
+
+  <text class="r5b-s" x="40" y="50" font-size="7">正常帧</text>
+  <rect class="r5b-b" x="40" y="58" width="110" height="30" rx="1"/>
+  <text class="r5b-t" x="95" y="77" font-size="6.5" text-anchor="middle">任务</text>
+  <rect class="r5b-q" x="154" y="58" width="60" height="30" rx="1"/>
+  <text class="r5b-t" x="184" y="77" font-size="6.5" text-anchor="middle">rAF</text>
+  <rect class="r5b-b" x="218" y="58" width="290" height="30" rx="1"/>
+  <text class="r5b-t" x="363" y="77" font-size="6.5" text-anchor="middle">Style → Layout → Paint → 合成</text>
+  <rect class="r5b-b" x="512" y="58" width="182" height="30" rx="1"/>
+  <text class="r5b-s" x="603" y="77" font-size="6.5" text-anchor="middle">空闲</text>
+  <text class="r5b-s" x="40" y="102" font-size="6.5">这一拍按时上屏</text>
+
+  <text class="r5b-s" x="40" y="130" font-size="7">长任务帧</text>
+  <rect class="r5b-r" x="40" y="138" width="290" height="30" rx="1"/>
+  <text class="r5b-t" x="185" y="157" font-size="6.5" text-anchor="middle">一个任务占住主线程 40ms</text>
+  <rect class="r5b-b" x="334" y="138" width="360" height="30" rx="1" stroke-dasharray="4 3"/>
+  <text class="r5b-s" x="514" y="157" font-size="6.5" text-anchor="middle">本帧渲染机会被跳过（画面停在上一拍）</text>
+
+  <line x1="330" y1="120" x2="330" y2="196" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="3 3"/>
+  <text class="r5b-s" x="336" y="196" font-size="6.5" style="fill:#B03A2E">vsync</text>
+  <line x1="694" y1="120" x2="694" y2="196" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="3 3"/>
+  <text class="r5b-s" x="688" y="196" font-size="6.5" text-anchor="end" style="fill:#B03A2E">下一个 vsync</text>
+
+  <text class="r5b-t" x="40" y="226" font-size="8">杀伤路径</text>
+  <text class="r5b-s" x="40" y="242" font-size="7.5">占住主线程 → 预算爆 → 跳拍 → 动画跳变、点击回调排队 → INP 与 LCP 一起变差</text>
+
+  <text class="r5b-t" x="40" y="262" font-size="8.5" style="fill:#B03A2E">解法只有一个方向：把长任务拆碎到 50ms 以下，每块之间把主线程还给渲染与交互。</text>
+</svg>

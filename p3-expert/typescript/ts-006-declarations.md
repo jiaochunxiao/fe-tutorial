@@ -137,6 +137,10 @@ declare const $: JQueryStatic;          // UMD 全局 + import 两用
 
 ## 图解总结
 
+![类型从哪来：三种形态，四步解析](../../assets/svg/ts-006-declarations.svg)
+
+*图 · 类型从哪来：三种形态，四步解析*
+
 ```
 类型供给三形态: ①包自带 types 字段 │ ②@types(DefinitelyTyped) │ ③裸包(any)
 解析顺序: package.json types → index.d.ts → @types/ 目录 → any

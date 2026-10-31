@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 22 740 254" width="100%" role="img" aria-labelledby="ob6t ob6d">
+  <title id="ob6t">三种观察者：把「问询」变成「订阅」</title>
+  <desc id="ob6d">三个观察者各盯一件事。MutationObserver 盯 DOM 树的变化，配置项是 childList、subtree、attributes、characterData，回调在微任务里批量送达。IntersectionObserver 盯元素与视口或容器的交叉，浏览器内部算好再告诉你，配置项是 rootMargin 提前量和 threshold 档位。ResizeObserver 盯元素自身的尺寸变化，这是 window.resize 做不到的——后者只告诉你窗口变了。底部三条纪律：记得 disconnect、回调里防止自触发循环、回调是异步的不要依赖同步状态。</desc>
+
+  <style>
+    .ob6-pill{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .ob6-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ob6-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ob6-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="ob6-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="ob6-t" x="40" y="40" font-size="9">观察者模型：把「问询」变成「订阅」—— 你不再轮询，浏览器内部发现变化后通知你</text>
+
+  <rect class="ob6-pill" x="40" y="56" width="176" height="44" rx="3"/>
+  <text class="ob6-mono" x="52" y="76" font-size="8.5">MutationObserver</text>
+  <text class="ob6-s" x="52" y="92" font-size="8">盯 DOM 树的变化</text>
+  <line x1="216" y1="78" x2="240" y2="78" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ob6-ink)"/>
+  <text class="ob6-t" x="252" y="76" font-size="8.5">childList / subtree</text>
+  <text class="ob6-s" x="252" y="92" font-size="8">attributes / characterData</text>
+  <text class="ob6-s" x="480" y="76" font-size="8">回调在微任务里批量送达</text>
+  <text class="ob6-s" x="480" y="92" font-size="8">一次改动多次？合并成一批</text>
+
+  <rect class="ob6-pill" x="40" y="112" width="176" height="44" rx="3"/>
+  <text class="ob6-mono" x="52" y="132" font-size="8.5">IntersectionObserver</text>
+  <text class="ob6-s" x="52" y="148" font-size="8">盯与视口 / 容器的交叉</text>
+  <line x1="216" y1="134" x2="240" y2="134" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ob6-ink)"/>
+  <text class="ob6-t" x="252" y="132" font-size="8.5">isIntersecting / ratio</text>
+  <text class="ob6-s" x="252" y="148" font-size="8">rootMargin 提前量 / threshold 档</text>
+  <text class="ob6-s" x="480" y="132" font-size="8">交叉比例由浏览器内部算</text>
+  <text class="ob6-s" x="480" y="148" font-size="8">不用自己监听 scroll</text>
+
+  <rect class="ob6-pill" x="40" y="168" width="176" height="44" rx="3"/>
+  <text class="ob6-mono" x="52" y="188" font-size="8.5">ResizeObserver</text>
+  <text class="ob6-s" x="52" y="204" font-size="8">盯元素自身尺寸</text>
+  <line x1="216" y1="190" x2="240" y2="190" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ob6-ink)"/>
+  <text class="ob6-t" x="252" y="188" font-size="8.5">contentRect</text>
+  <text class="ob6-s" x="252" y="204" font-size="8">border-box / content-box 可选</text>
+  <text class="ob6-t" x="480" y="188" font-size="8" style="fill:#B03A2E">window.resize 只管窗口</text>
+  <text class="ob6-s" x="480" y="204" font-size="8">父容器变了它收不到</text>
+
+  <line x1="40" y1="232" x2="40" y2="268" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="ob6-t" x="54" y="244" font-size="8.5">记得 disconnect —— 观察者持有回调，回调闭包持有 DOM，忘了断就是泄漏</text>
+  <text class="ob6-s" x="54" y="260" font-size="8.5">回调里改了被观察的东西会自触发循环；回调是异步的，别在里面读「同步那一刻」的状态</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 296" width="100%" role="img" aria-labelledby="h10ft h10fd">
+  <title id="h10ft">模板编译的完整流水线，每一步的输入输出长什么样</title>
+  <desc id="h10fd">一段带点击事件和插值的模板字符串，经 parse 的状态机切成 AST，标签栈建出树，插值和文本各走一支；transform 把 @click 改写成 onClick、把静态属性字面量化，得到 AST'；generate 递归拼出 h 调用的代码字符串；最后 new Function 把它变成 render 函数，交给响应式引擎执行出 vnode。</desc>
+
+  <style>
+    .h10f-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .h10f-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .h10f-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .h10f-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .h10f-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="h10f-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="h10f-t" x="40" y="26" font-size="8.5">三段论一图流 —— 每一格左边是阶段，右边是它手上真正拿着的东西</text>
+
+  <rect class="h10f-b" x="40" y="40" width="660" height="30" rx="2"/>
+  <text class="h10f-t" x="52" y="59" font-size="7.5">输入</text>
+  <text class="h10f-m" x="150" y="59" font-size="6.5">&lt;div class="box" @click="onTap"&gt;&lt;p&gt;{{ message }}&lt;/p&gt;&lt;/div&gt;</text>
+
+  <line x1="60" y1="70" x2="60" y2="78" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h10f-ink)"/>
+
+  <rect class="h10f-b" x="40" y="80" width="660" height="30" rx="2"/>
+  <text class="h10f-t" x="52" y="99" font-size="7.5">parse</text>
+  <text class="h10f-m" x="150" y="99" font-size="6.5">AST { div { attrs, children: [ p { children: [ interpolation ] } ] } }</text>
+  <text class="h10f-s" x="612" y="99" font-size="6.5">状态机 + 栈建树</text>
+
+  <line x1="60" y1="110" x2="60" y2="118" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h10f-ink)"/>
+
+  <rect class="h10f-b" x="40" y="120" width="660" height="30" rx="2"/>
+  <text class="h10f-t" x="52" y="139" font-size="7.5">transform</text>
+  <text class="h10f-m" x="150" y="139" font-size="6.5">AST' { props: { class: "box", onClick: _ctx.onTap } }</text>
+  <text class="h10f-s" x="536" y="139" font-size="6.5">@click → onClick，静态属性字面量化</text>
+
+  <line x1="60" y1="150" x2="60" y2="158" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h10f-ink)"/>
+
+  <rect class="h10f-b" x="40" y="160" width="660" height="30" rx="2"/>
+  <text class="h10f-t" x="52" y="179" font-size="7.5">generate</text>
+  <text class="h10f-m" x="150" y="179" font-size="6.5">'h("div", { class:"box", onClick:_ctx.onTap }, [ h("p", {}, [_ctx.message]) ])'</text>
+
+  <line x1="60" y1="190" x2="60" y2="198" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h10f-ink)"/>
+
+  <rect class="h10f-b" x="40" y="200" width="660" height="30" rx="2"/>
+  <text class="h10f-t" x="52" y="219" font-size="7.5">new Function</text>
+  <text class="h10f-m" x="150" y="219" font-size="6.5">new Function('h', '_ctx', 'with(_ctx){ return ... }')</text>
+  <text class="h10f-s" x="560" y="219" font-size="6.5">CSP 限制就卡在这一步</text>
+
+  <line x1="60" y1="230" x2="60" y2="238" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h10f-ink)"/>
+
+  <rect class="h10f-q" x="40" y="240" width="660" height="30" rx="2"/>
+  <text class="h10f-t" x="52" y="259" font-size="7.5">render</text>
+  <text class="h10f-m" x="150" y="259" font-size="6.5">render(h, ctx) → vnode → 响应式引擎 → DOM</text>
+  <text class="h10f-s" x="592" y="259" font-size="6.5">交给上一章</text>
+
+  <text class="h10f-t" x="40" y="288" font-size="8.5" style="fill:#B03A2E">编译器做的事只有一件：把「写给人看的」改写成「跑得动的」，中途不改语义。</text>
+</svg>

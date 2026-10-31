@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="e7mt e7md">
+  <title id="e7mt">摇不动的四类，与库作者能做的事</title>
+  <desc id="e7md">摇树有一个共同前提：模块结构必须静态可分析，也就是 ESM 的顶层 import 加字面量路径。在这个前提下仍然摇不动的有四类：CJS 的运行时 require、export default 导出一个大对象、import 星号之后动态访问成员、以及类成员。作为库作者，能主动配合的三件事是小模块、具名导出、以及在 package.json 里声明 sideEffects，lodash-es 就是范本。</desc>
+
+  <style>
+    .e7m-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.3}
+    .e7m-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .e7m-row{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1.1}
+    .e7m-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e7m-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e7m-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <rect class="e7m-band" x="40" y="16" width="660" height="30" rx="3"/>
+  <text class="e7m-t" x="54" y="35" font-size="8.5">共同前提：模块结构静态可分析 —— 顶层 import + 路径是字面量</text>
+  <text class="e7m-s" x="520" y="35" font-size="7.5">做不到这条，下面全都白搭</text>
+
+  <text class="e7m-t" x="40" y="74" font-size="9" style="fill:#B03A2E">摇不动的四类</text>
+  <rect class="e7m-row" x="40" y="86" width="330" height="34" rx="2"/>
+  <text class="e7m-mono" x="54" y="107" font-size="8">require('./' + name)</text>
+  <text class="e7m-s" x="210" y="107" font-size="7.5">运行时才知道加载了什么</text>
+
+  <rect class="e7m-row" x="40" y="126" width="330" height="34" rx="2"/>
+  <text class="e7m-mono" x="54" y="147" font-size="8">export default { a, b, c }</text>
+  <text class="e7m-s" x="210" y="147" font-size="7.5">拿不到具名，整块保留</text>
+
+  <rect class="e7m-row" x="40" y="166" width="330" height="34" rx="2"/>
+  <text class="e7m-mono" x="54" y="187" font-size="8">import * as ns</text>
+  <text class="e7m-s" x="210" y="187" font-size="7.5">成员是动态取的，不敢删</text>
+
+  <rect class="e7m-row" x="40" y="206" width="330" height="34" rx="2"/>
+  <text class="e7m-mono" x="54" y="227" font-size="8">class A { m() {…} }</text>
+  <text class="e7m-s" x="210" y="227" font-size="7.5">方法挂在原型上，删不干净</text>
+
+  <text class="e7m-t" x="410" y="74" font-size="9">库作者能配合的三件事</text>
+  <text class="e7m-t" x="410" y="102" font-size="8.5">① 拆小模块</text>
+  <text class="e7m-s" x="424" y="118" font-size="8">一个文件一个能力，别做「全家桶」</text>
+  <text class="e7m-t" x="410" y="142" font-size="8.5">② 只用具名导出</text>
+  <text class="e7m-s" x="424" y="158" font-size="8">export const fn = … ，别 default 一个对象</text>
+  <text class="e7m-t" x="410" y="182" font-size="8.5">③ 声明 sideEffects</text>
+  <text class="e7m-s" x="424" y="198" font-size="8">"sideEffects": false，只把 CSS 之类的列出来</text>
+  <text class="e7m-t" x="410" y="222" font-size="8.5">范本</text>
+  <text class="e7m-mono" x="424" y="238" font-size="8">lodash-es</text>
+  <text class="e7m-s" x="480" y="238" font-size="8">—— 同样的函数，换个导出方式就能摇</text>
+
+  <line x1="40" y1="258" x2="700" y2="258" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="e7m-s" x="40" y="278" font-size="8.5">所以「摇不掉」大多不是工具的问题：要么你的代码结构让它看不见，要么库没给你可以删的粒度。</text>
+  <text class="e7m-t" x="40" y="294" font-size="8.5" style="fill:#B03A2E">判定看的是「有没有引用边」，不是「有没有用」—— 这条线一划，四类全都解释得通。</text>
+</svg>

@@ -140,6 +140,10 @@ useEffect(() => {
 
 ## 图解总结
 
+![排查四步与五类惯犯的对位修复](../../assets/svg/performance-008-triage.svg)
+
+*图 · 排查四步与五类惯犯的对位修复*
+
 ```
 确认: Performance Monitor ── 锯齿=健康 │ 楼梯=泄漏
 定位: Snapshot对比(Delta排序) ──▶ Detached DOM / 闭包 / Object

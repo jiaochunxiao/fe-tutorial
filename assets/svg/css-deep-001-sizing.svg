@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 292" width="100%" role="img" aria-labelledby="z1t z1d">
+  <title id="z1t">content-box 与 border-box：同一个 width 量的是不同的东西</title>
+  <desc id="z1d">左右两个盒子都声明了 width 200px、padding 20px、border 2px。content-box 里这 200px 只量内容区，加上两侧内边距与边框后实际占位 244px。border-box 里 200px 一直量到边框外沿，内容区被挤成 156px，实际占位仍是 200px。</desc>
+
+  <style>
+    .z1-border{fill:#FBF7EE;stroke:#1C1A17;stroke-width:3}
+    .z1-padding{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .z1-content{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .z1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+    .z1-serif{font-family:'Noto Serif SC','Songti SC','SimSun',serif;fill:#1C1A17}
+    .z1-small{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="z1-l" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M10 0 L0 5 L10 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="z1-r" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="z1-ml" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M10 0 L0 5 L10 10 Z" fill="#6E675A"/>
+    </marker>
+    <marker id="z1-mr" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#6E675A"/>
+    </marker>
+  </defs>
+
+  <line x1="372" y1="18" x2="372" y2="286" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="4 4"/>
+
+  <text class="z1-serif" x="70" y="30" font-size="11.5" font-weight="700">content-box（默认）</text>
+  <text class="z1-serif" x="430" y="30" font-size="11.5" font-weight="700">border-box</text>
+
+  <line x1="92" y1="54" x2="292" y2="54" stroke="#1C1A17" stroke-width="1.2" marker-start="url(#z1-l)" marker-end="url(#z1-r)"/>
+  <text class="z1-mono" x="192" y="44" font-size="10" text-anchor="middle">width: 200px</text>
+
+  <rect class="z1-border" x="70" y="70" width="244" height="160" rx="2"/>
+  <rect class="z1-padding" x="72" y="72" width="240" height="156" rx="2"/>
+  <rect class="z1-content" x="92" y="92" width="200" height="116" rx="2"/>
+  <text class="z1-mono" x="192" y="146" font-size="10" text-anchor="middle">content</text>
+  <text class="z1-mono" x="192" y="164" font-size="10" text-anchor="middle" style="fill:#6E675A">200px</text>
+
+  <line x1="70" y1="254" x2="314" y2="254" stroke="#6E675A" stroke-width="1.2" marker-start="url(#z1-ml)" marker-end="url(#z1-mr)"/>
+  <text class="z1-small" x="192" y="274" font-size="10" text-anchor="middle">实际占位 244px</text>
+
+  <line x1="430" y1="54" x2="630" y2="54" stroke="#1C1A17" stroke-width="1.2" marker-start="url(#z1-l)" marker-end="url(#z1-r)"/>
+  <text class="z1-mono" x="530" y="44" font-size="10" text-anchor="middle">width: 200px</text>
+
+  <rect class="z1-border" x="430" y="70" width="200" height="160" rx="2"/>
+  <rect class="z1-padding" x="432" y="72" width="196" height="156" rx="2"/>
+  <rect class="z1-content" x="452" y="92" width="156" height="116" rx="2"/>
+  <text class="z1-mono" x="530" y="146" font-size="10" text-anchor="middle">content</text>
+  <text class="z1-mono" x="530" y="164" font-size="10" text-anchor="middle" style="fill:#6E675A">156px</text>
+
+  <line x1="430" y1="254" x2="630" y2="254" stroke="#6E675A" stroke-width="1.2" marker-start="url(#z1-ml)" marker-end="url(#z1-mr)"/>
+  <text class="z1-small" x="530" y="274" font-size="10" text-anchor="middle">实际占位 200px</text>
+
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 264" width="100%" role="img" aria-labelledby="a5t a5d">
+  <title id="a5t">埋点的三代演进与质量三原则</title>
+  <desc id="a5d">三张卡代表三代埋点。第一代是代码埋点，在业务代码里显式调用 track 并带上业务参数，精确、语义清晰，但侵入业务，漏埋了就永远没有。第二代是可视化或全埋点，用事件委托统一采集点击再靠 XPath 映射还原元素，覆盖全、不用改业务，代价是噪音大、语义要靠事后还原。第三代是会话回放，把 DOM 快照序列化记录下来，能像素级复现用户操作，配合错误栈就是完整现场，但体积大，隐私字段必须先打码。底部是质量三原则：事件命名要按 版本点页面点动作 的规范，公共属性要自动注入 uid、版本与渠道，上报失败要有兜底，用 sendBeacon 配本地队列重试。最后一行给选型建议：先用第一代的骨架保证核心路径，再用第二代兜住覆盖面，第三代只留给疑难 bug 复现。</desc>
+
+  <style>
+    .a5-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .a5-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .a5-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .a5-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .a5-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="a5-t" x="30" y="24" font-size="8.5">三代埋点：越往后覆盖越全，噪音与成本也越高</text>
+
+  <rect class="a5-b" x="30" y="38" width="216" height="112" rx="2"/>
+  <text class="a5-mono" x="42" y="58" font-size="8" style="fill:#B03A2E">① 代码埋点</text>
+  <text class="a5-mono" x="42" y="78" font-size="6.5">track('click_buy', { sku })</text>
+  <text class="a5-s" x="42" y="96" font-size="7">优点：精确、语义清晰</text>
+  <text class="a5-s" x="42" y="112" font-size="7">缺点：侵入业务，漏埋就没了</text>
+  <text class="a5-s" x="42" y="134" font-size="7" style="fill:#B03A2E">用在：核心转化路径</text>
+
+  <rect class="a5-b" x="262" y="38" width="216" height="112" rx="2"/>
+  <text class="a5-mono" x="274" y="58" font-size="8" style="fill:#B03A2E">② 可视化 / 全埋点</text>
+  <text class="a5-mono" x="274" y="78" font-size="6.5">事件委托采集 + XPath 映射</text>
+  <text class="a5-s" x="274" y="96" font-size="7">优点：覆盖全，不改业务</text>
+  <text class="a5-s" x="274" y="112" font-size="7">缺点：噪音大，语义靠事后还原</text>
+  <text class="a5-s" x="274" y="134" font-size="7" style="fill:#B03A2E">用在：全站行为兜底</text>
+
+  <rect class="a5-c" x="494" y="38" width="216" height="112" rx="2"/>
+  <text class="a5-mono" x="506" y="58" font-size="8" style="fill:#B03A2E">③ 会话回放</text>
+  <text class="a5-mono" x="506" y="78" font-size="6.5">DOM 快照序列（rrweb）</text>
+  <text class="a5-s" x="506" y="96" font-size="7">优点：像素级复现，配错误栈=现场</text>
+  <text class="a5-s" x="506" y="112" font-size="7">缺点：体积大，隐私字段要先打码</text>
+  <text class="a5-s" x="506" y="134" font-size="7" style="fill:#B03A2E">用在：疑难 bug 复现</text>
+
+  <rect x="30" y="164" width="680" height="24" fill="#E7DEC8" opacity="0.55"/>
+  <text class="a5-s" x="42" y="180" font-size="7.5">质量三原则：命名规范 version.view.action │ 公共属性自动注入（uid / 版本 / 渠道）│ 上报兜底（sendBeacon + 本地队列重试）</text>
+
+  <text class="a5-s" x="30" y="212" font-size="7.5">选型：① 保证核心路径的准确性，② 兜住覆盖面，③ 只留给疑难复现 —— 三代不是替代关系，是分工</text>
+  <text class="a5-s" x="30" y="236" font-size="7.5" style="fill:#B03A2E">最容易翻车的地方：只埋了点击没埋曝光，漏斗永远算不平</text>
+</svg>

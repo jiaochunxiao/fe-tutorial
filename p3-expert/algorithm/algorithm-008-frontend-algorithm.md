@@ -148,6 +148,10 @@ function permute(nums) {
 
 ## 图解总结
 
+![上：四类题的骨架与升级方向；下：三档评分的分水岭](../../assets/svg/algorithm-008-skeleton.svg)
+
+*图 · 上：四类题的骨架与升级方向；下：三档评分的分水岭*
+
 ```
 手写题的算法骨架:
  拍平 deepFlatten   = DFS（递归版 + 显式栈版防爆栈 ⭐）

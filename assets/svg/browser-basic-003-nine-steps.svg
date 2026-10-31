@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 216" width="100%" role="img" aria-labelledby="b3nt b3nd">
+  <title id="b3nt">从输入 URL 到首帧的九步，以及缓存命中抄的那条近路</title>
+  <desc id="b3nd">九步分三个阶段：找到它是 URL 解析和缓存闸门；拿到它是 DNS 解析、TCP 握手、TLS 协商、HTTP 请求；画出来是 HTML 构建 DOM、渲染树与布局绘制、GPU 合成出首帧。缓存闸门排在 DNS 之前，一旦命中，中间的 DNS、TCP、TLS、HTTP 四步整段跳过，直接进入第七步。</desc>
+
+  <style>
+    .b3n-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .b3n-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .b3n-dot{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .b3n-gate{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+  </style>
+
+  <defs>
+    <marker id="b3n-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="b3n-t" x="40" y="26" font-size="8.5">九步三阶段 —— 缓存命中能抄掉中间四步</text>
+
+  <path d="M155 99 Q342 34 530 99" fill="none" stroke="#B03A2E" stroke-width="1.3"
+        stroke-dasharray="5 4" marker-end="url(#b3n-red)"/>
+  <text class="b3n-s" x="342" y="46" font-size="7.5" text-anchor="middle" style="fill:#B03A2E">命中缓存 → 整段网络跳过，直接进 ⑦</text>
+
+  <line x1="68" y1="110" x2="692" y2="110" stroke="#1C1A17" stroke-width="1.2"/>
+
+  <circle class="b3n-dot" cx="80" cy="110" r="11"/>
+  <text class="b3n-t" x="80" y="113.5" font-size="9" text-anchor="middle">1</text>
+  <text class="b3n-t" x="80" y="140" font-size="8" text-anchor="middle">URL 解析</text>
+
+  <circle class="b3n-gate" cx="155" cy="110" r="11"/>
+  <text class="b3n-t" x="155" y="113.5" font-size="9" text-anchor="middle">2</text>
+  <text class="b3n-t" x="155" y="140" font-size="8" text-anchor="middle">缓存闸门</text>
+
+  <circle class="b3n-dot" cx="230" cy="110" r="11"/>
+  <text class="b3n-t" x="230" y="113.5" font-size="9" text-anchor="middle">3</text>
+  <text class="b3n-t" x="230" y="140" font-size="8" text-anchor="middle">DNS</text>
+
+  <circle class="b3n-dot" cx="305" cy="110" r="11"/>
+  <text class="b3n-t" x="305" y="113.5" font-size="9" text-anchor="middle">4</text>
+  <text class="b3n-t" x="305" y="140" font-size="8" text-anchor="middle">TCP 握手</text>
+
+  <circle class="b3n-dot" cx="380" cy="110" r="11"/>
+  <text class="b3n-t" x="380" y="113.5" font-size="9" text-anchor="middle">5</text>
+  <text class="b3n-t" x="380" y="140" font-size="8" text-anchor="middle">TLS</text>
+
+  <circle class="b3n-dot" cx="455" cy="110" r="11"/>
+  <text class="b3n-t" x="455" y="113.5" font-size="9" text-anchor="middle">6</text>
+  <text class="b3n-t" x="455" y="140" font-size="8" text-anchor="middle">HTTP</text>
+
+  <circle class="b3n-dot" cx="530" cy="110" r="11"/>
+  <text class="b3n-t" x="530" y="113.5" font-size="9" text-anchor="middle">7</text>
+  <text class="b3n-t" x="530" y="140" font-size="8" text-anchor="middle">DOM 构建</text>
+
+  <circle class="b3n-dot" cx="605" cy="110" r="11"/>
+  <text class="b3n-t" x="605" y="113.5" font-size="9" text-anchor="middle">8</text>
+  <text class="b3n-t" x="605" y="140" font-size="8" text-anchor="middle">布局绘制</text>
+
+  <circle class="b3n-dot" cx="680" cy="110" r="11"/>
+  <text class="b3n-t" x="680" y="113.5" font-size="9" text-anchor="middle">9</text>
+  <text class="b3n-t" x="680" y="140" font-size="8" text-anchor="middle">合成首帧</text>
+
+  <line x1="68" y1="160" x2="167" y2="160" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="68" y1="156" x2="68" y2="164" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="167" y1="156" x2="167" y2="164" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="b3n-s" x="117" y="176" font-size="7.5" text-anchor="middle">找到它</text>
+
+  <line x1="218" y1="160" x2="467" y2="160" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="218" y1="156" x2="218" y2="164" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="467" y1="156" x2="467" y2="164" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="b3n-s" x="342" y="176" font-size="7.5" text-anchor="middle">拿到它</text>
+
+  <line x1="518" y1="160" x2="692" y2="160" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="518" y1="156" x2="518" y2="164" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="692" y1="156" x2="692" y2="164" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="b3n-s" x="605" y="176" font-size="7.5" text-anchor="middle">画出来</text>
+
+  <text class="b3n-t" x="40" y="204" font-size="8.5">基础版答这三段就够；追问细节时，每一段都留了钩子往 network-010 走。</text>
+</svg>

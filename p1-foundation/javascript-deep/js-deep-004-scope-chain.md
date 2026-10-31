@@ -80,6 +80,10 @@ global                          ┐
 
 查找 `a` 时：inner（无）→ middle（无）→ outer（无）→ 全局（命中 `a = 1`）。
 
+![作用域链上的变量查找](../../assets/svg/js-deep-004-lookup.svg)
+
+*图 · 由内到外、命中即止：前三层各查一次都落空，第四层拿到 a 就停——后面的环境根本不会被访问*
+
 ```
 inner 环境 { d:4 }
    │ 沿 [[Environment]] 链向外

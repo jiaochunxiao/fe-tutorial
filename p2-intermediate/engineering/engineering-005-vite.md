@@ -123,6 +123,10 @@ Vite HMR：
 
 ## 图解总结
 
+![Vite 开发期的两条 import 走向](../../assets/svg/engineering-005-vite.svg)
+
+*图 · 裸导入走缓存，相对路径现场编译 —— No-Bundle 说的是后者*
+
 ```
 Vite dev 全景：
 

@@ -179,6 +179,10 @@ structuredClone(obj);            // ✅ 循环引用、Date、RegExp、Map、Set
 
 ## 图解总结
 
+![深拷贝的环：靠 WeakMap 登记处剪断自引用](../../assets/svg/handwritten-003-deep-clone.svg)
+
+*图 · 表里那一行不是缓存，是「这个对象已经在造了」的凭据*
+
 ```
 deepClone(target, map=WeakMap)
   ├─ 原始值/函数 ──────────▶ 直接返回（叶子）

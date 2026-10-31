@@ -83,47 +83,9 @@ el.addEventListener('click', handler, true);    // true：捕获阶段执行
 
 **两个易错点**：① 旅程是 window 起、window 终（document/html 只是中途站）；② 目标阶段不重排——按注册顺序执行（规范早期在目标阶段也分捕泡，现代统一为注册序）。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 340" width="100%" role="img" aria-label="事件流：捕获下潜、目标触发、冒泡上浮">
-  <defs>
-    <marker id="ef-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="ef-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="270" y="36" width="180" height="42" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="360" y="62" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">window</text>
-  <rect x="286" y="94" width="148" height="42" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="360" y="120" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">document</text>
-  <rect x="302" y="152" width="116" height="42" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="360" y="178" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">body</text>
-  <rect x="318" y="210" width="84" height="42" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="360" y="236" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">div</text>
-  <rect x="330" y="268" width="60" height="42" rx="6" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2"/>
-  <text x="360" y="294" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#B03A2E">button</text>
-  <path id="ef-cap" d="M 240 57 C 210 90 240 140 262 173 C 286 208 300 250 324 289" fill="none" stroke="#1C1A17" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ef-ink)"/>
-  <path id="ef-bub" d="M 396 289 C 430 250 462 200 496 150 C 520 116 512 80 452 57" fill="none" stroke="#B03A2E" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ef-red)"/>
-  <circle r="6" fill="#1C1A17">
-    <animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto">
-      <mpath href="#ef-cap"/>
-    </animateMotion>
-  </circle>
-  <circle r="6" fill="#B03A2E">
-    <animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" rotate="auto">
-      <mpath href="#ef-bub"/>
-    </animateMotion>
-  </circle>
-  <text x="150" y="90" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">① 捕获阶段</text>
-  <text x="150" y="112" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">从 window 一路下潜</text>
-  <text x="540" y="230" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#B03A2E">③ 冒泡阶段</text>
-  <text x="540" y="252" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">逐级上浮回 window</text>
-  <text x="150" y="300" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">第三方参 = true 时</text>
-  <text x="150" y="322" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">捕获段被叫醒</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 一次点击的完整旅行——黑点下潜（捕获），红点上浮（冒泡），button 是两者交汇的目标站</figcaption>
-</figure>
+![事件流：捕获下潜、目标触发、冒泡上浮](../../assets/svg/dom-events-002-event-flow.svg)
+
+*图 · 一次点击的完整旅行——黑点下潜（捕获），红点上浮（冒泡），button 是两者交汇的目标站*
 
 ### 二、哪些事件不冒泡 ⭐
 

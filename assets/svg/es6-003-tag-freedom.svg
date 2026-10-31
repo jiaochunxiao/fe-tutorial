@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 246" width="100%" role="img" aria-labelledby="e63ft e63fd">
+  <title id="e63ft">标签函数的三个自由度</title>
+  <desc id="e63fd">因为标签函数能分别拿到静态片段和动态值，它就多了三种用法。第一种只处理动态值，把变量转义后原样拼回去，safeHtml 就是这一类。第二种只处理静态片段，拿片段去查词表，变量原样插入，这是 i18n 的常见做法。第三种两者一起用，把整段模板编译成别的东西，styled-components 生成 CSS，lit-html 生成 DOM 指令。要注意标签模板本身不防注入，防护来自你在函数里做的转义。</desc>
+
+  <style>
+    .e63f-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.3}
+    .e63f-alt{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.3}
+    .e63f-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e63f-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e63f-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <rect class="e63f-box" x="40" y="24" width="200" height="34" rx="3"/>
+  <text class="e63f-t" x="54" y="45" font-size="9">① 只碰 values</text>
+  <text class="e63f-s" x="54" y="76" font-size="8">把变量转义，模板原样拼回去</text>
+  <text class="e63f-mono" x="54" y="98" font-size="8">safeHtml`&lt;b&gt;${name}&lt;/b&gt;`</text>
+  <text class="e63f-s" x="54" y="120" font-size="8">变量里的 &lt; 变成 &amp;lt;</text>
+  <text class="e63f-t" x="54" y="142" font-size="8" style="fill:#B03A2E">最常见的 XSS 防线</text>
+
+  <rect class="e63f-box" x="270" y="24" width="200" height="34" rx="3"/>
+  <text class="e63f-t" x="284" y="45" font-size="9">② 只碰 strings</text>
+  <text class="e63f-s" x="284" y="76" font-size="8">拿片段去查词表，变量原样插入</text>
+  <text class="e63f-mono" x="284" y="98" font-size="8">i18n`Hello ${name}`</text>
+  <text class="e63f-s" x="284" y="120" font-size="8">片段当 key，变量只填占位</text>
+  <text class="e63f-t" x="284" y="142" font-size="8" style="fill:#B03A2E">翻译不破坏变量</text>
+
+  <rect class="e63f-alt" x="500" y="24" width="200" height="34" rx="3"/>
+  <text class="e63f-t" x="514" y="45" font-size="9">③ 两者一起用</text>
+  <text class="e63f-s" x="514" y="76" font-size="8">把整段模板编译成别的东西</text>
+  <text class="e63f-mono" x="514" y="98" font-size="8">styled.div`color: ${c}`</text>
+  <text class="e63f-s" x="514" y="120" font-size="8">产出 CSS 类 / DOM 指令</text>
+  <text class="e63f-t" x="514" y="142" font-size="8" style="fill:#B03A2E">styled-components · lit-html</text>
+
+  <line x1="40" y1="166" x2="700" y2="166" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="e63f-s" x="40" y="188" font-size="8.5">三个自由度的共同前提是：静态片段和动态值在参数层面就是分开的，你才可能只碰其中一组。</text>
+  <text class="e63f-t" x="40" y="212" font-size="8.5" style="fill:#B03A2E">注意：标签模板本身不防注入 —— 防护来自你在函数里做的那次转义，不是来自语法。</text>
+  <text class="e63f-s" x="40" y="234" font-size="8.5">SQL 同理：该用参数化查询，别指望模板字符串帮你挡。</text>
+</svg>

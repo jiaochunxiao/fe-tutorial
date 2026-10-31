@@ -164,6 +164,10 @@ webpack-bundle-analyzer           # 可视化树状图：谁大、为什么大
 
 ## 图解总结
 
+![Webpack 优化的两本账：构建速度与产物体积](../../assets/svg/engineering-004-two-ledgers.svg)
+
+*图 · 两本账记的不是同一件事，别把它们混着背*
+
 ```
 构建速度账                     产物体积账
 ├ 缓存: filesystem ⭐         ├ 分割: 路由import()懒加载 ⭐

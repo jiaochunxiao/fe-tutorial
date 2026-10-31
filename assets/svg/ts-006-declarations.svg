@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 268" width="100%" role="img" aria-labelledby="t6dt t6dd">
+  <title id="t6dt">类型声明的三种供给形态，与四步解析顺序</title>
+  <desc id="t6dd">类型来源有三种：包自带 types 字段、社区通过 DefinitelyTyped 发布的 @types、以及什么都没带的裸包，后者会被推断成 any。TypeScript 解析时按顺序找：先看 package.json 的 types 字段，再看目录下的 index.d.ts，再找 @types 目录，最后落到 any。自己写声明有三档：declare module 'x' 是最快的 any 逃生，带具体描述的 declare module 最实用，完整声明可以回馈社区。全局扩展要配 export 才不污染，增强已有模块则用声明合并。</desc>
+
+  <style>
+    .t6d-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .t6d-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .t6d-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .t6d-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .t6d-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="t6d-t" x="40" y="26" font-size="8.5">.d.ts 是纯类型描述 —— 问题是它从哪儿来</text>
+
+  <text class="t6d-s" x="40" y="50" font-size="7">三种供给形态</text>
+  <rect class="t6d-b" x="40" y="58" width="200" height="34" rx="2"/>
+  <text class="t6d-t" x="54" y="74" font-size="7">① 包自带 types 字段</text>
+  <text class="t6d-s" x="54" y="86" font-size="6.5">最省心，版本天然对齐</text>
+  <rect class="t6d-b" x="250" y="58" width="200" height="34" rx="2"/>
+  <text class="t6d-t" x="264" y="74" font-size="7">② @types（DefinitelyTyped）</text>
+  <text class="t6d-s" x="264" y="86" font-size="6.5">社区声明，注意版本对齐</text>
+  <rect class="t6d-q" x="460" y="58" width="240" height="34" rx="2"/>
+  <text class="t6d-t" x="474" y="74" font-size="7" style="fill:#B03A2E">③ 裸包 → 静默 any</text>
+  <text class="t6d-s" x="474" y="86" font-size="6.5">没人报错，但类型保护全没了</text>
+
+  <text class="t6d-s" x="40" y="118" font-size="7">解析顺序（从上往下，先中先赢）</text>
+
+  <rect class="t6d-b" x="40" y="126" width="330" height="26" rx="1"/>
+  <text class="t6d-m" x="54" y="143" font-size="6.5">① package.json 的 types / typings 字段</text>
+  <rect class="t6d-b" x="40" y="156" width="330" height="26" rx="1"/>
+  <text class="t6d-m" x="54" y="173" font-size="6.5">② 目录下的 index.d.ts</text>
+  <rect class="t6d-b" x="40" y="186" width="330" height="26" rx="1"/>
+  <text class="t6d-m" x="54" y="203" font-size="6.5">③ node_modules/@types/ 目录</text>
+  <rect class="t6d-q" x="40" y="216" width="330" height="26" rx="1"/>
+  <text class="t6d-m" x="54" y="233" font-size="6.5" style="fill:#B03A2E">④ 都没有 → 退化成 any</text>
+
+  <text class="t6d-t" x="400" y="118" font-size="7.5">自己写的三档</text>
+  <rect class="t6d-b" x="400" y="126" width="300" height="26" rx="1"/>
+  <text class="t6d-s" x="412" y="143" font-size="6.5">declare module 'x' —— any 逃生舱</text>
+  <rect class="t6d-q" x="400" y="156" width="300" height="26" rx="1"/>
+  <text class="t6d-s" x="412" y="173" font-size="6.5">declare module 'x' { 具体描述 } —— 实用</text>
+  <rect class="t6d-b" x="400" y="186" width="300" height="26" rx="1"/>
+  <text class="t6d-s" x="412" y="203" font-size="6.5">完整声明 —— 可以回馈社区</text>
+  <text class="t6d-s" x="400" y="228" font-size="6.5">全局扩展：declare global + export {} —— 少了 export 就污染全局</text>
+  <text class="t6d-s" x="400" y="242" font-size="6.5">增强已有模块：declare module 'vue-router' 声明合并 RouteMeta</text>
+
+  <text class="t6d-t" x="40" y="262" font-size="8.5" style="fill:#B03A2E">渐进迁移的路径：allowJs + JSDoc 起步 → 新文件用 ts → 老文件补 .d.ts 形状。</text>
+</svg>

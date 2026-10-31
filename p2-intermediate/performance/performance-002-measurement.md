@@ -51,6 +51,10 @@ npx lighthouse https://app.com --preset=desktop   # CLI（可进 CI）
 
 录制一段交互/加载，时间轴四大轨（对应《browser-basic-002》的线程分工）：
 
+![四条轨各看一件事：Frames 判有没有掉帧，Main 找谁最长，颜色告诉你卡在哪一段](../../assets/svg/performance-002-flame.svg)
+
+*图 · 四条轨各看一件事：Frames 判有没有掉帧，Main 找谁最长，颜色告诉你卡在哪一段*
+
 ```
 Network 轨：请求瀑布（TTFB/下载/排队）
 Main 轨：主线程火焰图 —— 性能分析的主战场 ⭐
@@ -137,6 +141,10 @@ RUM 告警（P75 LCP 恶化 3.2s）
 **2. 一个快手实验**：打开任意网站 DevTools → Performance → Record 十秒滚动——找出最长任务的函数名（Bottom-Up 第一行），你已经完成了一次真实定位。
 
 ## 图解总结
+
+![实验室数据与真实用户数据的互补闭环](../../assets/svg/performance-002-lab-rum.svg)
+
+*图 · 实验室数据与真实用户数据的互补闭环*
 
 ```
 Lab(找原因)                        RUM(定真相)

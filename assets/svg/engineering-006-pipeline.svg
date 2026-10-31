@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="e6pt e6pd">
+  <title id="e6pt">Babel 的三段式流水线</title>
+  <desc id="e6pd">源码字符串先由 parser 变成 AST，再由 traverse 配合各插件的访问者修改节点，最后由 generator 把改好的树重新生成字符串并附带 source map。三段里只有中间那段是插件的地盘，而插件唯一的入口就是访问者——你没法在字符串上精确地「改一处」，但在树上可以。</desc>
+
+  <style>
+    .e6p-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .e6p-alt{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .e6p-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e6p-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e6p-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="e6p-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="e6p-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="e6p-box" x="60" y="16" width="190" height="36" rx="3"/>
+  <text class="e6p-mono" x="155" y="39" font-size="9.5" text-anchor="middle">source</text>
+  <line x1="155" y1="52" x2="155" y2="82" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#e6p-ink)"/>
+  <text class="e6p-t" x="170" y="62" font-size="8.5">① parse</text>
+  <text class="e6p-s" x="170" y="76" font-size="8">@babel/parser　字符串 → 树</text>
+
+  <rect class="e6p-box" x="60" y="86" width="190" height="36" rx="3"/>
+  <text class="e6p-mono" x="155" y="109" font-size="9.5" text-anchor="middle">AST</text>
+  <line x1="155" y1="122" x2="155" y2="152" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#e6p-red)"/>
+  <text class="e6p-t" x="170" y="132" font-size="8.5" style="fill:#B03A2E">② transform</text>
+  <text class="e6p-s" x="170" y="146" font-size="8" style="fill:#B03A2E">@babel/traverse　插件在这里改节点</text>
+
+  <rect class="e6p-alt" x="60" y="156" width="190" height="36" rx="3"/>
+  <text class="e6p-mono" x="155" y="179" font-size="9.5" text-anchor="middle">AST′</text>
+  <line x1="155" y1="192" x2="155" y2="222" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#e6p-ink)"/>
+  <text class="e6p-t" x="170" y="202" font-size="8.5">③ generate</text>
+  <text class="e6p-s" x="170" y="216" font-size="8">@babel/generator　树 → 字符串</text>
+
+  <rect class="e6p-box" x="60" y="226" width="190" height="36" rx="3"/>
+  <text class="e6p-mono" x="155" y="249" font-size="9.5" text-anchor="middle">output</text>
+  <text class="e6p-s" x="262" y="249" font-size="8">含 source map</text>
+
+  <line x1="440" y1="16" x2="440" y2="262" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="e6p-t" x="462" y="40" font-size="8.5" style="fill:#B03A2E">为什么非要绕这一圈？</text>
+  <text class="e6p-s" x="462" y="60" font-size="8">因为字符串上没法「精确地改一处」——</text>
+  <text class="e6p-s" x="462" y="76" font-size="8">正则替换一定会误伤长得像的地方。</text>
+
+  <text class="e6p-t" x="462" y="112" font-size="8.5">三段里只有 ② 是插件的地盘</text>
+  <text class="e6p-s" x="462" y="132" font-size="8">而 ② 的唯一入口就是访问者：</text>
+  <text class="e6p-mono" x="462" y="150" font-size="8">CallExpression(path) { … }</text>
+
+  <text class="e6p-t" x="462" y="186" font-size="8.5">①③ 是死的，② 是活的</text>
+  <text class="e6p-s" x="462" y="206" font-size="8">所以「Babel 插件」= 一个访问者对象，</text>
+  <text class="e6p-s" x="462" y="222" font-size="8">挂在 traverse 上，按节点类型被调用。</text>
+
+  <text class="e6p-s" x="40" y="286" font-size="8.5">一句话：parse 负责「能看懂」，transform 负责「能改」，generate 负责「能还原」—— 中间那段才是所有工具链的战场。</text>
+</svg>

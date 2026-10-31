@@ -241,6 +241,10 @@ console.log('end');
 
 ## 图解总结
 
+![手写 Promise 的三段结构：订阅、发布、采用](../../assets/svg/js-async-003-promise-graph.svg)
+
+*图 · then 只负责排队，resolve 才把闸门打开*
+
 ```
        ┌────────── MyPromise 实例 ──────────┐
        │ status / value / reason            │

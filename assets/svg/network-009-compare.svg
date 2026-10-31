@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="n9ct n9cd">
+  <title id="n9ct">五种实时方案的对话形态</title>
+  <desc id="n9cd">HTTP 永远是客户端先开口，服务器答完就结束。短轮询是每隔几秒问一次，大部分都是空手而归。长轮询问一次，服务器挂住不答，直到有数据才返回，延迟低但连接常驻。SSE 是客户端订阅一次，服务器持续往下推 data 帧，单向流，断了自己重连。WebSocket 先用 HTTP 升级到 101，之后就是一条双向的帧通道，靠 ping 和 pong 心跳维持。</desc>
+
+  <style>
+    .n9c-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .n9c-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .n9c-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+    .n9c-band{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+  </style>
+
+  <defs>
+    <marker id="n9c-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="n9c-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="n9c-mono" x="40" y="30" font-size="8.5">HTTP</text>
+  <line x1="140" y1="26" x2="266" y2="26" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n9c-ink)"/>
+  <text class="n9c-s" x="272" y="30" font-size="7">服务器</text>
+  <line x1="310" y1="26" x2="436" y2="26" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n9c-ink)"/>
+  <text class="n9c-s" x="446" y="30" font-size="7.5">永远客户端先开口，答完就结束</text>
+
+  <text class="n9c-mono" x="40" y="70" font-size="8.5">短轮询</text>
+  <line x1="140" y1="66" x2="180" y2="66" stroke="#CDC4AF" stroke-width="1.2" marker-end="url(#n9c-ink)"/>
+  <line x1="200" y1="66" x2="240" y2="66" stroke="#CDC4AF" stroke-width="1.2" marker-end="url(#n9c-ink)"/>
+  <line x1="260" y1="66" x2="300" y2="66" stroke="#CDC4AF" stroke-width="1.2" marker-end="url(#n9c-ink)"/>
+  <line x1="320" y1="66" x2="360" y2="66" stroke="#CDC4AF" stroke-width="1.2" marker-end="url(#n9c-ink)"/>
+  <text class="n9c-s" x="372" y="70" font-size="7.5">每 N 秒问一次，前 N-1 次空手而归</text>
+
+  <text class="n9c-mono" x="40" y="110" font-size="8.5">长轮询</text>
+  <line x1="140" y1="106" x2="420" y2="106" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n9c-ink)"/>
+  <text class="n9c-s" x="200" y="100" font-size="7">挂住不答</text>
+  <text class="n9c-s" x="430" y="110" font-size="7.5">有货才回，延迟低但连接常驻</text>
+
+  <text class="n9c-mono" x="40" y="150" font-size="8.5">SSE</text>
+  <line x1="140" y1="146" x2="200" y2="146" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n9c-ink)"/>
+  <text class="n9c-s" x="146" y="140" font-size="7">订阅</text>
+  <line x1="204" y1="146" x2="280" y2="146" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#n9c-red)"/>
+  <line x1="204" y1="160" x2="280" y2="160" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#n9c-red)"/>
+  <line x1="204" y1="174" x2="280" y2="174" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#n9c-red)"/>
+  <text class="n9c-s" x="290" y="154" font-size="7.5" style="fill:#B03A2E">data: 帧持续下推</text>
+  <text class="n9c-s" x="290" y="176" font-size="7.5">单向流，断了自己重连</text>
+
+  <text class="n9c-mono" x="40" y="216" font-size="8.5">WebSocket</text>
+  <line x1="140" y1="212" x2="200" y2="212" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#n9c-ink)"/>
+  <text class="n9c-s" x="146" y="206" font-size="7">Upgrade</text>
+  <rect class="n9c-band" x="204" y="198" width="330" height="28" rx="2"/>
+  <text class="n9c-t" x="369" y="216" font-size="8" text-anchor="middle">═══ 双向帧通道 ═══</text>
+  <line x1="544" y1="206" x2="600" y2="206" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#n9c-red)"/>
+  <line x1="600" y1="218" x2="544" y2="218" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#n9c-red)"/>
+  <text class="n9c-s" x="610" y="216" font-size="7.5">ping / pong 维活</text>
+
+  <line x1="40" y1="246" x2="700" y2="246" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="n9c-t" x="40" y="266" font-size="8.5" style="fill:#B03A2E">越往下，实时性越好，运维成本也越高 —— 选型选的是「够用」，不是「最强」。</text>
+  <text class="n9c-s" x="40" y="286" font-size="8">SSE 走普通 HTTP，天然过得了代理和网关；WebSocket 要单独配置升级与超时，这是它真正的成本所在。</text>
+</svg>

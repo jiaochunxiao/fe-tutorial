@@ -42,6 +42,10 @@ JPEG 100% ──▶ WebP ~60-70% ──▶ AVIF ~50%
 
 **按内容选格式的决策**：
 
+![按内容选格式，以及同一张照片的体积对比](../../assets/svg/performance-004-format.svg)
+
+*图 · 按内容选格式，以及同一张照片的体积对比*
+
 ```
 图标/Logo ──────────▶ SVG（矢量无损缩放 + 可着色 + 摇树按需）
 照片类 ─────────────▶ AVIF > WebP > JPEG（<picture> 兜底降级 ⭐）
@@ -129,6 +133,10 @@ JPEG 100% ──▶ WebP ~60-70% ──▶ AVIF ~50%
 **2. 一个快手判断**：`loading="lazy"` 写在首屏 banner 上——错（毁 LCP）；`<img>` 无 width/height——错（CLS）；给 50px 头像发 800px 图——错（DPR 浪费）。
 
 ## 图解总结
+
+![图片优化的四层与体积逐层下降的链条](../../assets/svg/performance-004-summary.svg)
+
+*图 · 图片优化的四层与体积逐层下降的链条*
 
 ```
 格式: SVG(图标) ▸ AVIF▸WebP▸JPEG(picture降级) ▸ 视频(替动图)

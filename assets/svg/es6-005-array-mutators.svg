@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 260" width="100%" role="img" aria-labelledby="e65t e65d">
+  <title id="e65t">数组方法的可变性地图：九个就地改，其余都返回新的</title>
+  <desc id="e65d">数组方法按「会不会动原数组」分成两类。就地改的有九个，按用途分四组：增删首尾的 push、pop、shift、unshift；万能的 splice；排序与倒置的 sort、reverse，这两个特别容易踩；填充与复制的 fill、copyWithin。其余大多数返回新数组，比如 map、filter、slice、concat。最典型的混淆是 slice 和 splice，前者切一段出来，后者切进去。</desc>
+
+  <style>
+    .e65-row{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1.1}
+    .e65-row2{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .e65-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e65-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e65-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="e65-t" x="40" y="30" font-size="9" style="fill:#B03A2E">会改原数组 · 9 个</text>
+
+  <rect class="e65-row" x="40" y="42" width="330" height="34" rx="2"/>
+  <text class="e65-mono" x="54" y="63" font-size="8">push / pop / shift / unshift</text>
+  <text class="e65-s" x="250" y="63" font-size="7.5">增删首尾</text>
+
+  <rect class="e65-row" x="40" y="82" width="330" height="34" rx="2"/>
+  <text class="e65-mono" x="54" y="103" font-size="8">splice(start, n, ...items)</text>
+  <text class="e65-s" x="250" y="103" font-size="7.5">万能增删改</text>
+
+  <rect class="e65-row" x="40" y="122" width="330" height="34" rx="2"/>
+  <text class="e65-mono" x="54" y="143" font-size="8">sort / reverse</text>
+  <text class="e65-s" x="250" y="143" font-size="7.5">排序与倒置（就地！）</text>
+
+  <rect class="e65-row" x="40" y="162" width="330" height="34" rx="2"/>
+  <text class="e65-mono" x="54" y="183" font-size="8">fill / copyWithin</text>
+  <text class="e65-s" x="250" y="183" font-size="7.5">填充与复制</text>
+
+  <text class="e65-t" x="410" y="30" font-size="9">返回新数组 · 原数组不动</text>
+  <rect class="e65-row2" x="410" y="42" width="290" height="34" rx="2"/>
+  <text class="e65-mono" x="424" y="63" font-size="8">map / filter / slice / concat</text>
+  <rect class="e65-row2" x="410" y="82" width="290" height="34" rx="2"/>
+  <text class="e65-mono" x="424" y="103" font-size="8">flat / flatMap / toSorted / toReversed</text>
+  <text class="e65-s" x="410" y="132" font-size="7.5">后两个是 ES2023 补的「不可变版」sort / reverse</text>
+  <text class="e65-s" x="410" y="150" font-size="7.5">老代码里 sort() 直接改原数组，是无数 bug 的来源</text>
+
+  <line x1="40" y1="212" x2="700" y2="212" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="e65-t" x="40" y="232" font-size="8.5" style="fill:#B03A2E">最经典的混淆：slice 是「切一段出来」，splice 是「切进去」—— 一个字母之差，一个不动一个动。</text>
+  <text class="e65-s" x="40" y="246" font-size="8">判断口诀：看返回值。返回长度或元素的是就地改，返回新数组的是没动原数组。</text>
+</svg>

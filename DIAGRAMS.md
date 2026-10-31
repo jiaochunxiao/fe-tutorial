@@ -2,7 +2,7 @@
 
 > 158 篇文章的 SVG 图解 inventory：已插入 **23 幅**（含 7 幅 SMIL/CSS 微动效）+ 后续候补清单。
 > 统一视觉语言：墨 #1C1A17 / 纸（继承页面底色）/ 朱砂 #B03A2E 一笔强调 / 发丝 #CDC4AF / 灰注 #6E675A；
-> 字体 Noto Sans SC + JetBrains Mono；动效只用 SMIL/CSS 且带图专属前缀（无全局样式泄漏）；全部内联在 md 中（Astro 原样渲染）。
+> 字体 Noto Sans SC + JetBrains Mono；动效只用 SMIL/CSS 且带图专属前缀（无全局样式泄漏）；SVG 文件集中存放于 [assets/svg](./assets/svg)，Markdown 通过相对路径引用。
 
 ## 已插入（23 幅）
 
@@ -45,8 +45,8 @@
 
 ## 制作规范（新增图解时遵守）
 
-1. 内联 `<figure><svg>…</svg><figcaption>图 · …</figcaption></figure>`，flush-left，前后空行
-2. viewBox 720×260~400，`width="100%"`；文字 ≥11.5px；配色走墨/朱砂/灰三色律
+1. SVG 独立存为 `assets/svg/<文章文件名>.svg`，带 `xmlns` 与显式宽高；Markdown 使用 `![语义描述](../../assets/svg/xxx.svg)` 引用，图注紧随其后
+2. viewBox 720×260~400，导出 SVG 时写显式 `width` / `height`；文字 ≥11.5px；配色走墨/朱砂/灰三色律
 3. 动效只用 SMIL（`animateMotion`/`animate`，`fill="freeze"` 做定格）或带专属前缀的 CSS keyframes，2.5~4s 循环，克制到「辅助理解」级别
 4. `<defs>` 里的 marker/id 全部带图专属前缀（如 `p9-ink`、`a2-red`），防多图同页 id 冲突
 5. 语义：`role="img"` + `aria-label`；figcaption 一句话讲图

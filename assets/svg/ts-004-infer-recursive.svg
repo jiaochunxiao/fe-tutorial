@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img" aria-label="infer：模式匹配中的类型捕获槽">
+  <defs>
+    <marker id="t4-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+  <text x="30" y="34" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#6E675A">① 从函数签名捕获返回值</text>
+  <rect x="30" y="48" width="150" height="60" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
+  <text x="105" y="73" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">type F =</text>
+  <text x="105" y="93" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">() =&gt; User</text>
+  <path d="M 184 78 H 234" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t4-ink)"/>
+  <rect x="240" y="44" width="250" height="68" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.5"/>
+  <text x="365" y="70" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">(...args:any[]) =&gt;</text>
+  <rect x="330" y="78" width="86" height="24" rx="5" fill="none" stroke="#B03A2E" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <text x="373" y="95" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">infer R</text>
+  <text x="452" y="95" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">← 挖坑待填</text>
+  <path d="M 490 78 H 540" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t4-ink)"/>
+  <rect x="546" y="52" width="140" height="52" rx="8" fill="#EFE8D8" stroke="#B03A2E" stroke-width="1.8"/>
+  <text x="616" y="76" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" font-weight="700" fill="#B03A2E">R = User</text>
+  <text x="616" y="94" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">捕获完成</text>
+  <text x="30" y="178" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#6E675A">② 从字符串字面量捕获两个片段</text>
+  <rect x="30" y="192" width="150" height="60" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
+  <text x="105" y="217" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">type S =</text>
+  <text x="105" y="237" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">'2026-10'</text>
+  <path d="M 184 222 H 234" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t4-ink)"/>
+  <rect x="240" y="188" width="250" height="68" rx="8" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.5"/>
+  <text x="365" y="214" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">`${infer Y}-</text>
+  <rect x="300" y="222" width="78" height="24" rx="5" fill="none" stroke="#B03A2E" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <rect x="382" y="222" width="86" height="24" rx="5" fill="none" stroke="#B03A2E" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <text x="414" y="239" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">infer M</text>
+  <path d="M 490 222 H 540" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t4-ink)"/>
+  <rect x="546" y="192" width="150" height="64" rx="8" fill="#EFE8D8" stroke="#B03A2E" stroke-width="1.8"/>
+  <text x="621" y="218" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" font-weight="700" fill="#B03A2E">Y = '2026'</text>
+  <text x="621" y="240" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" font-weight="700" fill="#B03A2E">M = '10'</text>
+  <text x="30" y="288" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">两行的共同点：模式里挖一个 infer 槽，让编译器把「匹配到的类型」填进来——和正则的捕获组是同一个思想。</text>
+</svg>

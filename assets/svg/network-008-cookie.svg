@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 52 740 190" width="100%" role="img" aria-labelledby="ck8t ck8d">
+  <title id="ck8t">Cookie 随请求自动携带前的三道匹配</title>
+  <desc id="ck8d">浏览器发出请求时，按顺序做三道匹配：先看 Domain 对不对得上，父域可以放宽逐级比对；再看 Path 是不是请求路径的前缀；最后看 SameSite 档位允不允许这次跨站携带。三关都过才会自动带上 Cookie，任何一关不过就不带。会话 Cookie 的起配线是 HttpOnly 加 Secure 加 SameSite=Lax。</desc>
+
+  <style>
+    .ck8-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ck8-out{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .ck8-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ck8-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ck8-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="ck8-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="ck8-mono" x="40" y="76" font-size="9">请求发往  https://api.a.com/admin/user</text>
+
+  <rect class="ck8-box" x="40" y="92" width="150" height="66" rx="3"/>
+  <text class="ck8-t" x="115" y="112" font-size="9.5" text-anchor="middle">① 域匹配</text>
+  <text class="ck8-mono" x="115" y="132" font-size="9" text-anchor="middle">Domain</text>
+  <text class="ck8-s" x="115" y="150" font-size="8.5" text-anchor="middle">父域放宽，逐级比对</text>
+
+  <line x1="194" y1="125" x2="214" y2="125" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ck8-ink)"/>
+
+  <rect class="ck8-box" x="218" y="92" width="150" height="66" rx="3"/>
+  <text class="ck8-t" x="293" y="112" font-size="9.5" text-anchor="middle">② 路径匹配</text>
+  <text class="ck8-mono" x="293" y="132" font-size="9" text-anchor="middle">Path</text>
+  <text class="ck8-s" x="293" y="150" font-size="8.5" text-anchor="middle">是不是前缀</text>
+
+  <line x1="372" y1="125" x2="392" y2="125" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ck8-ink)"/>
+
+  <rect class="ck8-box" x="396" y="92" width="150" height="66" rx="3"/>
+  <text class="ck8-t" x="471" y="112" font-size="9.5" text-anchor="middle">③ 跨站放行</text>
+  <text class="ck8-mono" x="471" y="132" font-size="9" text-anchor="middle">SameSite</text>
+  <text class="ck8-s" x="471" y="150" font-size="8.5" text-anchor="middle">Strict / Lax / None</text>
+
+  <line x1="550" y1="125" x2="570" y2="125" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ck8-ink)"/>
+
+  <rect class="ck8-out" x="574" y="92" width="126" height="66" rx="3"/>
+  <text class="ck8-t" x="637" y="118" font-size="9.5" text-anchor="middle">三关都过</text>
+  <text class="ck8-s" x="637" y="140" font-size="9" text-anchor="middle">随请求自动带上</text>
+
+  <text class="ck8-s" x="40" y="182" font-size="9.5">任何一关不过就不带 —— 「登录了但接口 401」的排查顺序，就是这三关倒着走</text>
+  <text class="ck8-s" x="40" y="202" font-size="9.5">起配线：HttpOnly + Secure + SameSite=Lax</text>
+  <text class="ck8-s" x="40" y="222" font-size="9.5">缺一个就多一类攻击面：XSS 偷走 / 明文链路嗅探 / CSRF 冒用身份</text>
+</svg>

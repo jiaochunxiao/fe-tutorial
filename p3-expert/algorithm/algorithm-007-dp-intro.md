@@ -82,71 +82,9 @@ function climbStairs(n) {
 // ⭐ 心法: "最后一步"分析法 —— 盯住【到达终点的最后一步】从哪来
 ```
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 260" width="100%" role="img" aria-label="爬楼梯 DP 表逐格填充">
-  <defs>
-    <marker id="dp7-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <text x="30" y="34" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">dp[i] = dp[i-1] + dp[i-2]，初始 dp[0] = dp[1] = 1 —— 表格从左到右逐格点亮：</text>
-  <g>
-    <rect x="40" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="72" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">1<animate attributeName="opacity" from="0" to="1" begin="0.2s" dur="0.35s" fill="freeze"/></text>
-    <rect x="112" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="0.6s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="144" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">1<animate attributeName="opacity" from="0" to="1" begin="0.6s" dur="0.35s" fill="freeze"/></text>
-    <rect x="184" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="216" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">2<animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.35s" fill="freeze"/></text>
-    <rect x="256" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="288" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">3<animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.35s" fill="freeze"/></text>
-    <rect x="328" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="360" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">5<animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.35s" fill="freeze"/></text>
-    <rect x="400" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="432" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">8<animate attributeName="opacity" from="0" to="1" begin="2.2s" dur="0.35s" fill="freeze"/></text>
-    <rect x="472" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="504" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">13<animate attributeName="opacity" from="0" to="1" begin="2.6s" dur="0.35s" fill="freeze"/></text>
-    <rect x="544" y="60" width="64" height="56" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="576" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" fill="#1C1A17" opacity="0">21<animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.35s" fill="freeze"/></text>
-    <rect x="616" y="60" width="64" height="56" rx="6" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.35s" fill="freeze"/>
-    </rect>
-    <text x="648" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="15" font-weight="700" fill="#B03A2E" opacity="0">34<animate attributeName="opacity" from="0" to="1" begin="3.4s" dur="0.35s" fill="freeze"/></text>
-  </g>
-  <g font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">
-    <text x="72" y="140" text-anchor="middle">dp[0]</text>
-    <text x="144" y="140" text-anchor="middle">dp[1]</text>
-    <text x="216" y="140" text-anchor="middle">dp[2]</text>
-    <text x="288" y="140" text-anchor="middle">dp[3]</text>
-    <text x="360" y="140" text-anchor="middle">dp[4]</text>
-    <text x="432" y="140" text-anchor="middle">dp[5]</text>
-    <text x="504" y="140" text-anchor="middle">dp[6]</text>
-    <text x="576" y="140" text-anchor="middle">dp[7]</text>
-    <text x="648" y="140" text-anchor="middle">dp[8]</text>
-  </g>
-  <path d="M 504 56 C 540 20 600 20 640 52" fill="none" stroke="#B03A2E" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#dp7-red)"/>
-  <path d="M 576 56 C 596 32 620 28 646 50" fill="none" stroke="#6E675A" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#dp7-red)"/>
-  <text x="648" y="184" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">dp[8] = dp[7] + dp[6] = 34</text>
-  <text x="30" y="184" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">初始两格直接点亮；</text>
-  <text x="30" y="206" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">之后每格 = 前两格之和</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · DP 表的逐格点亮——红框格就是答案 dp[8]；空间可压成两个滚动变量</figcaption>
-</figure>
+![爬楼梯 DP 表逐格填充](../../assets/svg/algorithm-007-dp-intro.svg)
+
+*图 · DP 表的逐格点亮——红框格就是答案 dp[8]；空间可压成两个滚动变量*
 
 ### 题②：零钱兑换（LC 322）——「选择」型 DP
 
@@ -215,6 +153,10 @@ fib 三版本的进化即 DP 的完整叙事：**重复子问题=病根，记忆
 **1. 面试答题骨架**：「动态规划适用于有重叠子问题与最优子结构的场景，核心是把子问题答案存表避免重复计算。设计五步：定义状态——dp 数组每一位的确切含义是最关键一步；写转移方程——用最后一步分析法，枚举到达当前状态的所有来源；初始化边界；确定遍历顺序保证依赖先行；明确答案位置。爬楼梯是斐波那契同型的线性递推；零钱兑换枚举最后一枚硬币是完全背包原型；最长上升子序列以 i 结尾定义状态、答案取全表最大而非末位。实现上先写记忆化搜索不易错，再优化为递推并可做空间压缩。」
 
 ## 图解总结
+
+![五步法是骨架，三范式是模板：认出类型比背公式重要](../../assets/svg/algorithm-007-five-steps.svg)
+
+*图 · 五步法是骨架，三范式是模板：认出类型比背公式重要*
 
 ```
 DP = 重叠子问题(存表) + 最优子结构(可组装) —— 空间换时间

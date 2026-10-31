@@ -135,6 +135,10 @@ document.querySelector('cool-modal').addEventListener('close', (e) => {});
 
 ## 图解总结
 
+![三件套各管一段：谁收发、发什么、怎么发](../../assets/svg/dom-events-005-custom-events.svg)
+
+*图 · 三件套各管一段：谁收发、发什么、怎么发*
+
 ```
 EventTarget（收发器）── Event/CustomEvent（消息）── dispatchEvent（同步投递）
    │                        │ detail 载荷 / bubbles / cancelable

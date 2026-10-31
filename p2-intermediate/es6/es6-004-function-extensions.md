@@ -178,6 +178,10 @@ function h(a, b = 1, ...c) {}   // h.length === 1
 
 ## 图解总结
 
+![形参列表的四个位置，以及箭头函数的四个「没有」](../../assets/svg/es6-004-params.svg)
+
+*图 · length 数到第一个默认值就停，后面写了什么它都不管*
+
 ```
 function f(a, b = a * 2, { x = 1 } = {}, ...rest) {}
    │    │    │        │          │

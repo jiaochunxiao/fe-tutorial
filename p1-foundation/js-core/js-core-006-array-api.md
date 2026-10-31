@@ -32,6 +32,10 @@ backup[0].name = 'x';                    // 嵌套对象还是共享的……
 
 先立总纲（可变性地图的详细版在《es6-005》——本文是它的前置阅读，覆盖基础全集）：
 
+![数组方法的可变性地图：改原数组与返回新结果](../../assets/svg/js-core-006-array-mutability.svg)
+
+*图 · 数组方法的可变性地图：改原数组与返回新结果*
+
 ```
 会改原数组（9 个）── push pop shift unshift splice sort reverse fill copyWithin
 返回新结果 ──────── slice concat map filter join/find/reduce 等其余全部
@@ -162,6 +166,10 @@ function groupBy(arr, key) {
 **3. 手写 map/reduce/filter** 是手写题富矿：核心是「回调 + thisArg + 跳过空位」三细节（《handwritten-006》思考题 3 同款思路）。
 
 ## 图解总结
+
+![数组方法按「改不改原数组」分成两枝](../../assets/svg/js-core-006-array-methods.svg)
+
+*图 · 先问改不改原数组，再问返回什么，选型就定了*
 
 ```
                  ┌ 会改原数组 ─────────────────────────────┐

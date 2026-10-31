@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 30 740 250" width="100%" role="img" aria-labelledby="ca7t ca7d">
+  <title id="ca7t">call、apply、bind 的分工</title>
+  <desc id="ca7d">三个方法都是为了手动指定 this。call 和 apply 立即执行，区别只在参数：call 逐个传，apply 打包成数组。bind 不执行，返回一个 this 被永久锁定、还可以预置参数的新函数。它们的机制本质是把函数临时挂到 ctx 上再调用，也就是隐式绑定的手动版。</desc>
+
+  <style>
+    .ca7-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .ca7-top{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.6}
+    .ca7-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ca7-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ca7-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="ca7-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <rect class="ca7-top" x="290" y="40" width="160" height="44" rx="3"/>
+  <text class="ca7-t" x="370" y="67" font-size="11.5" text-anchor="middle">想手动指定 this</text>
+
+  <path d="M370 84 V112" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M110 112 H630" fill="none" stroke="#1C1A17" stroke-width="1.4"/>
+  <path d="M110 112 V132" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ca7-ink)"/>
+  <path d="M370 112 V132" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ca7-ink)"/>
+  <path d="M630 112 V132" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#ca7-ink)"/>
+
+  <rect class="ca7-box" x="40" y="136" width="140" height="76" rx="3"/>
+  <text class="ca7-mono" x="110" y="164" font-size="9.5" text-anchor="middle">fn.call(ctx, a, b)</text>
+  <text class="ca7-s" x="110" y="184" font-size="9" text-anchor="middle">立即执行</text>
+  <text class="ca7-s" x="110" y="200" font-size="9" text-anchor="middle">参数逐个传</text>
+
+  <rect class="ca7-box" x="300" y="136" width="140" height="76" rx="3"/>
+  <text class="ca7-mono" x="370" y="164" font-size="9.5" text-anchor="middle">fn.apply(ctx, [a,b])</text>
+  <text class="ca7-s" x="370" y="184" font-size="9" text-anchor="middle">立即执行</text>
+  <text class="ca7-s" x="370" y="200" font-size="9" text-anchor="middle">参数打包成数组</text>
+
+  <rect class="ca7-box" x="560" y="136" width="140" height="76" rx="3"/>
+  <text class="ca7-mono" x="630" y="164" font-size="9.5" text-anchor="middle">fn.bind(ctx, a, b)</text>
+  <text class="ca7-s" x="630" y="184" font-size="9" text-anchor="middle">不执行，返回新函数</text>
+  <text class="ca7-s" x="630" y="200" font-size="9" text-anchor="middle">this 永久锁定</text>
+
+  <text class="ca7-s" x="370" y="242" font-size="9.5" text-anchor="middle">机制本质：把函数临时挂到 ctx 上再调用，也就是「隐式绑定的手动版」</text>
+
+</svg>

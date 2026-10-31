@@ -50,6 +50,10 @@ counter.count;  counter.double;  counter.increment();   // 一种访问方式
 
 **为什么需要状态管理？**——当「多个组件共享 + 频繁变化」的状态超出父子传递能力（props 层层 drilling、事件层层冒泡），需要一个**全局的单例响应式仓库**：
 
+![判据不是「数据多」，是「同一份数据被多个不相邻的组件读写」](../../assets/svg/vue-007-store.svg)
+
+*图 · 判据不是「数据多」，是「同一份数据被多个不相邻的组件读写」*
+
 ```
 组件 A ──写──▶ ┌──────────────┐ ──通知──▶ 组件 B/C/D 自动更新
                │ Store（响应式单例）│
@@ -153,6 +157,10 @@ Vuex 时代的 modules（嵌套模块树）在 Pinia 被抛弃：**多个平级�
 **2. 一道实战题**：「购物车 store + 持久化 + 多标签页同步」——$subscribe 写 localStorage + storage 事件广播，30 行内可完成。
 
 ## 图解总结
+
+![Pinia 的创建链，与 Vuex 的五件套对照](../../assets/svg/vue-007-pinia.svg)
+
+*图 · 一个工厂函数被调一次，就变成全局单例*
 
 ```
 defineStore(id, setup)

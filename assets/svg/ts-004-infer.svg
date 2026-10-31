@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 298" width="100%" role="img" aria-labelledby="t4t t4d">
+  <title id="t4t">infer 是类型正则的捕获组，递归是基例加自调用</title>
+  <desc id="t4d">顶部是条件类型的公式：T extends 含 infer R 的模式，问号后面用 R，否则 never。infer R 相当于在返回值的位置挖了一个坑，编译器匹配时把真实类型填进去。中间四个落点：函数签名里提取返回值与参数，得到 ReturnType 与 Parameters；Promise 里提取内部值，是 Awaited 的本体；元组里拆头拆尾，得到 Flatten 与 Reverse；模板字面量里按分隔符切分字符串字面量类型。再往下以 Awaited 为例演示递归：Promise 套 Promise 套 string，每匹配一次就剥掉一层，直到不再是 Promise 时命中基例返回 string。底部红线：团队读不懂或者编译时间明显变长，就该退回显式类型声明。</desc>
+
+  <style>
+    .t4-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .t4-c{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .t4-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .t4-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .t4-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="t4-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="t4-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="t4-t" x="30" y="24" font-size="8.5">infer = 类型层面的正则捕获组</text>
+
+  <rect class="t4-c" x="30" y="36" width="680" height="46" rx="2"/>
+  <text class="t4-mono" x="44" y="58" font-size="9">T extends (...args: any[]) =&gt; infer R ? R : never</text>
+  <text class="t4-s" x="44" y="74" font-size="7.5" style="fill:#B03A2E">infer R 在返回值的位置挖了个坑 —— 匹配时编译器把真实类型填进去</text>
+
+  <text class="t4-t" x="30" y="102" font-size="8.5">四个落点：坑能挖在哪</text>
+
+  <rect class="t4-b" x="30" y="110" width="160" height="40" rx="2"/>
+  <text class="t4-t" x="42" y="126" font-size="8">函数签名</text>
+  <text class="t4-mono" x="42" y="141" font-size="7" style="fill:#6E675A">(...a) =&gt; infer R</text>
+
+  <rect class="t4-b" x="202" y="110" width="160" height="40" rx="2"/>
+  <text class="t4-t" x="214" y="126" font-size="8">Promise 内值</text>
+  <text class="t4-mono" x="214" y="141" font-size="7" style="fill:#6E675A">Promise&lt;infer V&gt;</text>
+
+  <rect class="t4-b" x="374" y="110" width="160" height="40" rx="2"/>
+  <text class="t4-t" x="386" y="126" font-size="8">元组首尾</text>
+  <text class="t4-mono" x="386" y="141" font-size="7" style="fill:#6E675A">[infer F, ...infer R]</text>
+
+  <rect class="t4-b" x="546" y="110" width="164" height="40" rx="2"/>
+  <text class="t4-t" x="558" y="126" font-size="8">字符串字面量</text>
+  <text class="t4-mono" x="558" y="141" font-size="7" style="fill:#6E675A">`${infer A}-${infer B}`</text>
+
+  <text class="t4-t" x="30" y="172" font-size="8.5">递归 = 基例 + 自调用（以 Awaited 剥壳为例）</text>
+
+  <rect class="t4-b" x="30" y="180" width="160" height="40" rx="2"/>
+  <text class="t4-mono" x="110" y="204" font-size="7.5" text-anchor="middle">Promise&lt;Promise&lt;string&gt;&gt;</text>
+  <line x1="190" y1="200" x2="200" y2="200" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#t4-ink)"/>
+
+  <rect class="t4-b" x="202" y="180" width="160" height="40" rx="2"/>
+  <text class="t4-mono" x="282" y="204" font-size="7.5" text-anchor="middle">Awaited&lt;Promise&lt;string&gt;&gt;</text>
+  <line x1="362" y1="200" x2="372" y2="200" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#t4-ink)"/>
+
+  <rect class="t4-b" x="374" y="180" width="160" height="40" rx="2"/>
+  <text class="t4-mono" x="454" y="204" font-size="7.5" text-anchor="middle">Awaited&lt;string&gt;</text>
+  <line x1="534" y1="200" x2="544" y2="200" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#t4-red)"/>
+
+  <rect class="t4-b" x="546" y="180" width="164" height="40" rx="2"/>
+  <text class="t4-mono" x="628" y="204" font-size="8" text-anchor="middle" style="fill:#B03A2E">string</text>
+
+  <text class="t4-s" x="546" y="236" font-size="7" style="fill:#B03A2E">不是 Promise 了 → 命中基例</text>
+  <text class="t4-s" x="546" y="250" font-size="7">每匹配一次剥一层，靠基例停下来</text>
+
+  <rect x="30" y="264" width="680" height="24" fill="#E7DEC8" opacity="0.55"/>
+  <text class="t4-s" x="42" y="280" font-size="7.5">红线：团队读不懂 / 编译时间明显变长 → 拆掉，退回显式类型；type-challenge 才是练习场</text>
+</svg>

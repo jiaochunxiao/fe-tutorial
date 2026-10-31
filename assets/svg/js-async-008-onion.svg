@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 228" width="100%" role="img" aria-labelledby="ja8t ja8d">
+  <title id="ja8t">包装的洋葱模型与竞态治理的两把锁</title>
+  <desc id="ja8d">生产级异步是层层包装出来的：最外层是 withRetry，负责失败重试，带指数退避与幂等判定；中间层是 withTimeout，负责超时快速失败；最内层才是真实任务，以工厂形式传入，可以接收取消信号。右边是竞态治理的两把锁：序号守卫在结果回来时判断 id 还是不是最新的，不是就丢弃；AbortController 更彻底，直接取消旧请求，连回来都不让它回来。</desc>
+
+  <style>
+    .ja8-ring{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .ja8-in{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .ja8-chip{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .ja8-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .ja8-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .ja8-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="ja8-t" x="40" y="26" font-size="8.5">模式都是积木 —— 外面套洋葱，中间挡竞态</text>
+
+  <rect class="ja8-ring" x="50" y="48" width="280" height="148" rx="3"/>
+  <text class="ja8-mono" x="62" y="66" font-size="8.5">withRetry</text>
+  <text class="ja8-s" x="62" y="78" font-size="7.5">外层：失败重试 · 指数退避 + 抖动 · 幂等判定</text>
+
+  <rect class="ja8-ring" x="62" y="88" width="256" height="96" rx="3"/>
+  <text class="ja8-mono" x="74" y="106" font-size="8.5">withTimeout</text>
+  <text class="ja8-s" x="74" y="118" font-size="7.5">中层：race 抢时间，超时即快速失败</text>
+
+  <rect class="ja8-in" x="74" y="128" width="232" height="44" rx="3"/>
+  <text class="ja8-mono" x="86" y="146" font-size="8.5">task(signal)</text>
+  <text class="ja8-s" x="86" y="160" font-size="7.5">内层：真实任务，可接收取消信号</text>
+
+  <text class="ja8-t" x="380" y="52" font-size="8.5">竞态治理：两把锁</text>
+
+  <rect class="ja8-chip" x="380" y="62" width="320" height="48" rx="2"/>
+  <text class="ja8-t" x="392" y="80" font-size="8.5">① 序号守卫</text>
+  <text class="ja8-s" x="392" y="94" font-size="7.5">回来时 id 已不是最新 → 丢弃结果，不渲染</text>
+
+  <rect class="ja8-chip" x="380" y="120" width="320" height="48" rx="2"/>
+  <text class="ja8-t" x="392" y="138" font-size="8.5">② AbortController</text>
+  <text class="ja8-s" x="392" y="152" font-size="7.5">更彻底：直接 abort 旧请求，连回来都不让</text>
+
+  <text class="ja8-s" x="380" y="192" font-size="7.5">超时用 race 只是「不再等」；</text>
+  <text class="ja8-s" x="380" y="206" font-size="7.5">配上 signal 才是「真取消」。</text>
+
+  <text class="ja8-t" x="40" y="220" font-size="8.5" style="fill:#B03A2E">两把锁一起用：序号守卫兜底渲染，AbortController 省掉无用的流量。</text>
+</svg>

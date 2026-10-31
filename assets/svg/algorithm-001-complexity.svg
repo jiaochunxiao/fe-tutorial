@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 20 740 288" width="100%" role="img" aria-labelledby="cx1t cx1d">
+  <title id="cx1t">五种常见复杂度的增长曲线（纵轴对数刻度）</title>
+  <desc id="cx1d">横轴是数据量，纵轴是操作次数、取对数刻度，所以每条曲线在这个坐标系里都接近直线，斜率直接反映增长速度。O(1) 是平的，O(log n) 几乎贴着底，O(n) 斜一档，O(n log n) 再陡一点，O(n²) 最陡。</desc>
+
+  <style>
+    .cx1-axis{stroke:#1C1A17;stroke-width:1.2}
+    .cx1-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .cx1-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="cx1-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <line class="cx1-axis" x1="70" y1="246" x2="700" y2="246" marker-end="url(#cx1-ink)"/>
+  <line class="cx1-axis" x1="70" y1="246" x2="70" y2="26" marker-end="url(#cx1-ink)"/>
+  <text class="cx1-s" x="696" y="266" font-size="9" text-anchor="end">数据量 n（1 → 1000）</text>
+  <text class="cx1-s" x="56" y="150" font-size="9" text-anchor="middle" transform="rotate(-90 56 150)">操作次数（对数刻度）</text>
+
+  <path d="M74 246 H630" fill="none" stroke="#6E675A" stroke-width="1.6"/>
+  <text class="cx1-mono" x="642" y="250" font-size="9.5">O(1)</text>
+
+  <path d="M74 246 C300 236 480 220 630 208" fill="none" stroke="#6E675A" stroke-width="1.6"/>
+  <text class="cx1-mono" x="642" y="212" font-size="9.5">O(log n)</text>
+
+  <path d="M74 246 L630 138" fill="none" stroke="#1C1A17" stroke-width="1.6"/>
+  <text class="cx1-mono" x="642" y="142" font-size="9.5">O(n)</text>
+
+  <path d="M74 246 C300 206 480 152 630 100" fill="none" stroke="#1C1A17" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text class="cx1-mono" x="642" y="104" font-size="9.5">O(n log n)</text>
+
+  <path d="M74 246 L630 30" fill="none" stroke="#B03A2E" stroke-width="1.8"/>
+  <text class="cx1-mono" x="642" y="34" font-size="9.5" style="fill:#B03A2E">O(n²)</text>
+
+  <text class="cx1-s" x="70" y="292" font-size="9.5">斜率就是增长速度：n = 10⁶ 时，1 秒约 1 亿次运算，线性还撑得住，平方级早超时了</text>
+
+</svg>

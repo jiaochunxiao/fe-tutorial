@@ -44,6 +44,10 @@ el.style.color = 'red';    // 这行代码之后，屏幕上的像素经历了�
 
 ### 第①②站：解析与样式计算 ⭐⭐
 
+![合成之前先做减法：看不见的节点根本不进这棵树](../../assets/svg/rendering-001-render-tree.svg)
+
+*图 · 合成之前先做减法：看不见的节点根本不进这棵树*
+
 ```
 HTML ──解析──▶ DOM 树
 CSS  ──解析──▶ CSSOM
@@ -92,46 +96,9 @@ Paint 输出的不是像素，是【绘制指令清单】（display list）：
   不触发 Style/Layout/Paint —— GPU 重新合成即可 ⭐⭐
 ```
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 280" width="100%" role="img" aria-label="渲染管线五站与性能阶梯">
-  <defs>
-    <marker id="r1-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="r1-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="20" y="52" width="128" height="52" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="84" y="74" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#1C1A17">Style</text>
-  <text x="84" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">最终样式</text>
-  <rect x="164" y="52" width="128" height="52" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="228" y="74" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#1C1A17">Layout</text>
-  <text x="228" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">几何计算</text>
-  <rect x="308" y="52" width="128" height="52" rx="8" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.5"/>
-  <text x="372" y="74" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#1C1A17">Paint</text>
-  <text x="372" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">绘制指令</text>
-  <rect x="452" y="52" width="128" height="52" rx="8" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.8"/>
-  <text x="516" y="74" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">Composite</text>
-  <text x="516" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">GPU 合成上屏</text>
-  <path d="M 148 78 H 158" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#r1-ink)"/>
-  <path d="M 292 78 H 302" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#r1-ink)"/>
-  <path d="M 436 78 H 446" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#r1-ink)"/>
-  <path d="M 120 40 H 440" fill="none" stroke="#B03A2E" stroke-width="2" marker-end="url(#r1-red)"/>
-  <text x="280" y="30" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">改 transform/opacity：跨过前三站直奔合成 ⭐</text>
-  <text x="84" y="132" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">改宽高/位置：</text>
-  <text x="84" y="150" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">全链重排 💰💰💰</text>
-  <text x="372" y="132" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">改颜色/背景：</text>
-  <text x="372" y="150" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">从 Paint 起 💰💰</text>
-  <text x="516" y="132" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">动画用这俩属性</text>
-  <text x="516" y="150" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">= 性能铁律 💰</text>
-  <path d="M 20 200 H 700" stroke="#CDC4AF" stroke-width="1"/>
-  <text x="20" y="230" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#1C1A17">五站之外的补充：</text>
-  <text x="20" y="256" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#6E675A">光栅化（指令→像素）在光栅线程/GPU 上进行，合成在合成线程完成——</text>
-  <text x="20" y="280" font-family="Noto Sans SC,sans-serif" font-size="13" fill="#6E675A">主线程卡死时，已光栅化图层的滚动与 transform 动画仍可由合成线程推进。</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 渲染管线五站——性能优化的本质是把改动沿管线往右推，能走合成就不走重排</figcaption>
-</figure>
+![渲染管线五站与性能阶梯](../../assets/svg/rendering-001-rendering-pipeline.svg)
+
+*图 · 渲染管线五站——性能优化的本质是把改动沿管线往右推，能走合成就不走重排*
 
 ### 性能阶梯（全篇最重要的一张图）⭐⭐⭐
 
@@ -164,6 +131,10 @@ rAF 回调 → Style → Layout → Paint → Composite → 上屏
 **2. 观察工具**：DevTools → Performance → Layers 面板（看分层）；Rendering 面板的 Paint flashing（重绘区域高亮）、Layout Shift Regions。
 
 ## 图解总结
+
+![渲染管线按线程分成三段](../../assets/svg/rendering-001-pipeline-threads.svg)
+
+*图 · 每换一次线程，主线程就松一口气*
 
 ```
 HTML→DOM ┐

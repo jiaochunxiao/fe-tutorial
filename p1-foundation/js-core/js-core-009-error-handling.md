@@ -30,6 +30,10 @@ try {
 
 ## 现象与直觉解释
 
+![同步错误进入 catch，异步错误从网眼漏到全局](../../assets/svg/js-core-009-two-paths.svg)
+
+*图 · 漏掉的原因不是 catch 写错了，是抛错时 try 已经跑完了*
+
 ```
 try {} catch (e) {} finally {}
    │       │          │

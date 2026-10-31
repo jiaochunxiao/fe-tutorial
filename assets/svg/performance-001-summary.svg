@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 274" width="100%" role="img" aria-labelledby="p1st p1sd">
+  <title id="p1st">体感三问对应核心三件套</title>
+  <desc id="p1sd">用户其实只关心三件事：内容出来了吗、点了有反应吗、内容跳不跳。这三问正好对应三个核心指标：LCP 小于 2.5 秒，INP 小于 200 毫秒，CLS 小于 0.1。每个指标背后都有明确的元凶——LCP 看四段时间里哪段最长，INP 的元凶是长任务，CLS 的元凶是没有尺寸的图、动态插入和字体替换。辅助指标还有 FCP 和 TTFB，而所有指标都按 75 分位看，因为性能是长尾分布，目标是消灭糟糕体验而不是拉高平均。</desc>
+
+  <style>
+    .p1s-q{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1.1}
+    .p1s-m{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .p1s-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p1s-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .p1s-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="p1s-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="p1s-s" x="40" y="24" font-size="8">用户其实只问三句话</text>
+  <text class="p1s-s" x="330" y="24" font-size="8">对应的指标（P75 口径）</text>
+  <text class="p1s-s" x="560" y="24" font-size="8">元凶在哪</text>
+
+  <rect class="p1s-q" x="40" y="34" width="240" height="34" rx="3"/>
+  <text class="p1s-t" x="54" y="55" font-size="8.5">内容出来了吗？</text>
+  <line x1="280" y1="51" x2="322" y2="51" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1s-red)"/>
+  <rect class="p1s-m" x="326" y="34" width="210" height="34" rx="3"/>
+  <text class="p1s-t" x="340" y="55" font-size="8.5">LCP &lt; 2.5s</text>
+  <text class="p1s-s" x="556" y="55" font-size="7.5">TTFB / 发现 / 加载 / 渲染</text>
+
+  <rect class="p1s-q" x="40" y="86" width="240" height="34" rx="3"/>
+  <text class="p1s-t" x="54" y="107" font-size="8.5">点了有反应吗？</text>
+  <line x1="280" y1="103" x2="322" y2="103" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1s-red)"/>
+  <rect class="p1s-m" x="326" y="86" width="210" height="34" rx="3"/>
+  <text class="p1s-t" x="340" y="107" font-size="8.5">INP &lt; 200ms</text>
+  <text class="p1s-s" x="556" y="107" font-size="7.5">长任务占住主线程</text>
+
+  <rect class="p1s-q" x="40" y="138" width="240" height="34" rx="3"/>
+  <text class="p1s-t" x="54" y="159" font-size="8.5">内容跳不跳？</text>
+  <line x1="280" y1="155" x2="322" y2="155" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1s-red)"/>
+  <rect class="p1s-m" x="326" y="138" width="210" height="34" rx="3"/>
+  <text class="p1s-t" x="340" y="159" font-size="8.5">CLS &lt; 0.1</text>
+  <text class="p1s-s" x="556" y="159" font-size="7.5">无尺寸图 / 插入 / 字体</text>
+
+  <line x1="40" y1="192" x2="700" y2="192" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="p1s-t" x="40" y="214" font-size="8.5">辅助</text>
+  <text class="p1s-s" x="110" y="214" font-size="8">FCP &lt; 1.8s（首次内容）　·　TTFB &lt; 0.8s（首字节）</text>
+
+  <text class="p1s-t" x="40" y="240" font-size="8.5" style="fill:#B03A2E">口径</text>
+  <text class="p1s-s" x="110" y="240" font-size="8">一律看 P75 分位 —— 性能是长尾分布，平均好看不代表没人卡成 PPT。</text>
+
+  <text class="p1s-s" x="40" y="264" font-size="8.5">目标不是「把平均拉高」，是「把最差的那 25% 拉进可接受范围」。</text>
+</svg>

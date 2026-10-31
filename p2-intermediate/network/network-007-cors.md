@@ -60,6 +60,10 @@ No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
 触发条件（任一）：方法是 PUT/DELETE/PATCH 等；Content-Type 是 `application/json`（**前端最常撞上的就是它**）；带自定义头（`Authorization`、`X-Token`…）。
 
+![CORS 预检请求的两次往返](../../assets/svg/network-007-cors-preflight.svg)
+
+*图 · 两条路径：简单请求直接走 ③④；其余请求要先过 ①② 的 OPTIONS 预检，清单对上了才放行真实请求*
+
 ```
 浏览器                                     服务器
   │ ── OPTIONS /api/user ────────────────▶ │  ① 预检：探路
@@ -132,6 +136,10 @@ Set-Cookie: sid=abc; SameSite=None; Secure
 **2. JSONP 原理 60 秒版**：`<script src="https://api.com?cb=callback">` + 服务器返回 `callback({...})`——script 不受同源限制，加载即执行全局回调。局限 GET-only、无错误处理、信任服务端代码。
 
 ## 图解总结
+
+![预检多一次往返，带 Cookie 多三个条件](../../assets/svg/network-007-cors.svg)
+
+*图 · 预检多一次往返，带 Cookie 多三个条件*
 
 ```
 简单请求:  ──请求+Origin──▶ 服务器 ──200+Allow-Origin──▶ 浏览器校验 ✅

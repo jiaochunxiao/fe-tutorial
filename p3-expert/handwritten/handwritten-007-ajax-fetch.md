@@ -227,6 +227,10 @@ http.use('response', (data) => {
 
 ## 图解总结
 
+![上排是状态机，下排是补上三件套之后的流水线](../../assets/svg/handwritten-007-xhr-http.svg)
+
+*图 · 上排是状态机，下排是补上三件套之后的流水线*
+
 ```
 XHR: open → setRequestHeader → send → readyState 0→4 状态机 → status 判定
      (2xx resolve | 4xx/5xx reject | 0 = CORS) + ontimeout/onerror/onabort

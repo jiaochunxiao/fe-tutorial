@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 56 740 210" width="100%" role="img" aria-labelledby="cp3t cp3d">
+  <title id="cp3t">computed 的 dirty 状态机：变化只标脏，取值才重算</title>
+  <desc id="cp3d">computed 内部只有一个 dirty 标志。依赖变化时 scheduler 只把 dirty 置为 true，并不执行 getter；等到真的有人取值，才跑一次 getter 把结果写进缓存、把 dirty 复位，然后返回。如果 dirty 已经是 false，取值直接返回缓存，一次计算都不做。这就是惰性的全部含义。</desc>
+
+  <style>
+    .cp3-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .cp3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .cp3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .cp3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="cp3-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="cp3-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="cp3-box" x="100" y="96" width="240" height="84" rx="3"/>
+  <text class="cp3-mono" x="114" y="122" font-size="10">dirty = false</text>
+  <text class="cp3-s" x="114" y="142" font-size="9">缓存有效</text>
+  <text class="cp3-t" x="114" y="164" font-size="9">取值 → 直接返回，零计算</text>
+
+  <rect class="cp3-box" x="460" y="96" width="240" height="84" rx="3"/>
+  <text class="cp3-mono" x="474" y="122" font-size="10">dirty = true</text>
+  <text class="cp3-s" x="474" y="142" font-size="9">缓存作废</text>
+  <text class="cp3-t" x="474" y="164" font-size="9">取值 → 跑 getter 并写回</text>
+
+  <path d="M340 112 C380 74 420 74 460 112" fill="none" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#cp3-red)"/>
+  <text class="cp3-s" x="400" y="70" font-size="9" text-anchor="middle" style="fill:#B03A2E">依赖变化 → 只标脏，不重算</text>
+
+  <path d="M460 164 C420 202 380 202 340 164" fill="none" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#cp3-ink)"/>
+  <text class="cp3-s" x="400" y="216" font-size="9" text-anchor="middle">取值完成 → 写缓存 → 复位</text>
+
+  <text class="cp3-s" x="40" y="248" font-size="9.5">重算发生在「取值」那一刻，不在「变化」那一刻 —— 如果一直没人取，这次变化就白标了</text>
+</svg>

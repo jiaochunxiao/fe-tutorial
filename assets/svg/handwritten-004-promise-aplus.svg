@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 22 740 390" width="100%" role="img" aria-labelledby="pa4t pa4d">
+  <title id="pa4t">Promise A+ 的 then 三段：参数清洗、新建 promise2、resolvePromise 三分支</title>
+  <desc id="pa4d">左边是 then 的三段竖链。第一段参数清洗：onFulfilled 和 onRejected 如果不是函数，就换成 v 等于 v 的透传函数和抛出错误的函数，这是值穿透的落点。第二段新建 promise2，所有回调统一包一层 queueMicrotask，保证异步。第三段拿到回调的返回值 x，交给 resolvePromise。右边是 resolvePromise 的三个分支：x 等于 promise2 时抛 TypeError 表示循环引用；x 是 thenable 时用 called 标志做防护并递归展开；x 是原始值时直接 resolve。底部是官方测试套件 872 个用例通过。</desc>
+
+  <style>
+    .pa4-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .pa4-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .pa4-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .pa4-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+    .pa4-mt{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="pa4-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="pa4-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="pa4-mt" x="700" y="34" font-size="9" text-anchor="end" style="fill:#B03A2E">promises-aplus-tests · 872 passing</text>
+
+  <rect class="pa4-box" x="50" y="40" width="250" height="40" rx="3"/>
+  <text class="pa4-mt" x="64" y="65" font-size="9.5">then(onFulfilled, onRejected)</text>
+  <line x1="175" y1="80" x2="175" y2="98" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pa4-ink)"/>
+
+  <rect class="pa4-box" x="50" y="100" width="250" height="48" rx="3"/>
+  <text class="pa4-t" x="64" y="120" font-size="9.5">① 参数清洗</text>
+  <text class="pa4-mono" x="64" y="137" font-size="8.5">非函数 → v =&gt; v ／ r =&gt; throw r</text>
+  <line x1="175" y1="148" x2="175" y2="166" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pa4-ink)"/>
+
+  <rect class="pa4-box" x="50" y="168" width="250" height="48" rx="3"/>
+  <text class="pa4-t" x="64" y="188" font-size="9.5">② 新建 promise2</text>
+  <text class="pa4-s" x="64" y="205" font-size="8.5">回调统一包 queueMicrotask</text>
+  <line x1="175" y1="216" x2="175" y2="234" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pa4-ink)"/>
+
+  <rect class="pa4-box" x="50" y="236" width="250" height="48" rx="3"/>
+  <text class="pa4-t" x="64" y="256" font-size="9.5">③ 拿到回调返回值 x</text>
+  <text class="pa4-s" x="64" y="273" font-size="8.5">交给 resolvePromise 分流</text>
+
+  <path d="M300 260 C360 260 356 204 416 204" fill="none" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pa4-ink)"/>
+  <path d="M300 260 H416" fill="none" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pa4-ink)"/>
+  <path d="M300 260 C360 260 356 308 416 308" fill="none" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pa4-ink)"/>
+
+  <rect class="pa4-box" x="420" y="182" width="280" height="44" rx="3"/>
+  <text class="pa4-mono" x="434" y="201" font-size="9">x === promise2</text>
+  <text class="pa4-t" x="434" y="217" font-size="8.5" style="fill:#B03A2E">抛 TypeError —— 循环引用</text>
+
+  <rect class="pa4-box" x="420" y="234" width="280" height="44" rx="3"/>
+  <text class="pa4-mono" x="434" y="253" font-size="9">x 是 thenable</text>
+  <text class="pa4-t" x="434" y="269" font-size="8.5">called 防护 + 递归展开，至多一次</text>
+
+  <rect class="pa4-box" x="420" y="286" width="280" height="44" rx="3"/>
+  <text class="pa4-mono" x="434" y="305" font-size="9">原始值</text>
+  <text class="pa4-t" x="434" y="321" font-size="8.5">直接 resolve(x)，落地</text>
+
+  <line x1="40" y1="364" x2="40" y2="396" stroke="#B03A2E" stroke-width="2.4"/>
+  <text class="pa4-t" x="54" y="376" font-size="9">参数清洗就是「值穿透」的落点：空 then() 不该吞掉值，也不该吞掉错误</text>
+  <text class="pa4-s" x="54" y="392" font-size="8.5">called 标志挡住恶意 thenable —— 它可能把 resolve 和 reject 各调一次，谁先到算谁</text>
+</svg>

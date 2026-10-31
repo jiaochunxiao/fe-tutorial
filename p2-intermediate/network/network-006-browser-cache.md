@@ -27,6 +27,10 @@ createdAt: 2026-10-26
 
 直觉模型：浏览器对每个 URL 的请求先过一道「**缓存闸门**」，闸门分两级：
 
+![浏览器缓存的两级闸门](../../assets/svg/network-006-cache-gate.svg)
+
+*图 · 强缓存能在本地拍板，连请求都不发；协商缓存只省下响应体，请求仍要走一趟*
+
 ```
 请求一个资源
    │
@@ -115,45 +119,15 @@ Cache-Control: max-age=31536000
   └─ 200 + 新资源 ──────▶ 使用新副本，按响应头重新入库
 ```
 
+![强缓存省整个请求，协商缓存只省响应体](../../assets/svg/network-006-cache-chain.svg)
+
+*图 · 强缓存省整个请求，协商缓存只省响应体*
+
 补充两站：**Service Worker** 的可编程缓存排在 HTTP 缓存**之前**（PWA 的离线能力）；**CDN（共享缓存）** 挡在浏览器与源站之间（`s-maxage` 管它）。完整层次：Service Worker → memory → disk → 协商 → CDN → 源站。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 320" width="100%" role="img" aria-label="浏览器缓存决策链">
-  <defs>
-    <marker id="cc6-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="cc6-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="40" y="40" width="180" height="52" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="130" y="62" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">发起请求</text>
-  <text x="130" y="82" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6E675A">浏览器要一个资源</text>
-  <rect x="270" y="40" width="180" height="52" rx="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="360" y="62" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">强缓存检查</text>
-  <text x="360" y="82" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">max-age 未过期？</text>
-  <path d="M 220 66 H 264" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#cc6-ink)"/>
-  <text x="242" y="56" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#1C1A17">命中</text>
-  <rect x="270" y="106" width="180" height="44" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.4" stroke-dasharray="6 4"/>
-  <text x="360" y="133" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#1C1A17">✓ 直接用副本，连请求都不发</text>
-  <path d="M 360 92 V 170" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#cc6-ink)"/>
-  <text x="452" y="136" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#6E675A">过期 / no-cache ↓</text>
-  <rect x="270" y="172" width="180" height="52" rx="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="360" y="194" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">协商缓存</text>
-  <text x="360" y="214" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#6E675A">If-None-Match / If-Modified-Since</text>
-  <path d="M 450 198 H 520" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#cc6-ink)"/>
-  <text x="485" y="188" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#1C1A17">问服务器</text>
-  <rect x="522" y="120" width="158" height="52" rx="10" fill="#FBF8F1" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="601" y="142" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">未变 → 304</text>
-  <text x="601" y="162" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6E675A">复用本地副本（无 body）</text>
-  <rect x="522" y="196" width="158" height="52" rx="10" fill="#FBF8F1" stroke="#B03A2E" stroke-width="1.6"/>
-  <text x="601" y="218" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#B03A2E">变了 → 200 + 新资源</text>
-  <text x="601" y="238" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6E675A">新内容 + 新指纹入库</text>
-  <path d="M 360 224 V 258 H 516" fill="none" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#cc6-red)"/>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 缓存决策链——强缓存本地拍板，协商缓存带指纹问服务器，红框是唯一会重新下载的分支</figcaption>
-</figure>
+![浏览器缓存决策链](../../assets/svg/network-006-browser-cache.svg)
+
+*图 · 缓存决策链——强缓存本地拍板，协商缓存带指纹问服务器，红框是唯一会重新下载的分支*
 
 ### 四、发版策略：缓存的工程正解 ⭐
 
@@ -182,6 +156,10 @@ Cache-Control: public, max-age=31536000, immutable
 **3. 面试答题骨架**：「浏览器缓存分强缓存与协商缓存两级——强缓存由 Cache-Control 的 max-age（旧标准 Expires）控制，未过期直接用本地副本不发请求；过期或 no-cache 后进入协商缓存，带 If-None-Match(ETag) 或 If-Modified-Since(Last-Modified) 询问服务器，未变回 304 复用副本、变了回 200 给新资源，ETag 按内容判变且优先于时间戳。工程上 HTML 用 no-cache、带内容哈希的资源用 max-age 一年加 immutable，兼顾即时更新与永久缓存。」
 
 ## 图解总结
+
+![三道闸门，越往下代价越高](../../assets/svg/network-006-cache-summary.svg)
+
+*图 · 三道闸门，越往下代价越高*
 
 ```
 请求 ──▶ [Service Worker 可编程缓存]

@@ -160,6 +160,10 @@ bound.call({ value: 3 }); // 2 —— bind 优先级高于 call
 
 ## 图解总结
 
+![call、apply、bind 的分工](../../assets/svg/js-deep-007-call-apply-bind.svg)
+
+*图 · 前两个当场执行，第三个只是把 this 焊死再还给你*
+
 ```
                  想手动指定 this
                        │

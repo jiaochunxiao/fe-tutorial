@@ -28,6 +28,10 @@ import { debounce } from 'lodash-es';
 
 **核心思想**：打包器在**编译期**画出「哪些导出被使用了」——没被使用的导出整体剔除。
 
+![枯叶的判定不是「有没有用」，是「有没有引用边」](../../assets/svg/engineering-007-shake.svg)
+
+*图 · 枯叶的判定不是「有没有用」，是「有没有引用边」*
+
 ```
 一棵"模块树"：
 moduleA { export a, b, c }
@@ -51,6 +55,10 @@ if (dev) require('./devtools');    // 条件引入！
 ## 深入原理
 
 ### 一、摇树的完整判定链 ⭐⭐⭐
+
+![Tree Shaking 的四步判定链](../../assets/svg/engineering-007-tree-shaking.svg)
+
+*图 · 前三步只做标记，真正的删除发生在压缩期*
 
 ```
 ① 依赖图：从入口解析全部 import（ESM 静态）
@@ -117,6 +125,10 @@ lodash 引一个函数打包全家的原因：**老 lodash 是 CJS**——requir
 **2. 一道排障题**：「上线后发现图标样式全丢」——排查到某工具函数包声明了 sideEffects: false，而它顺带 import 了一份全局样式——**声明的承诺与事实不符**，修复为数组排除样式文件。
 
 ## 图解总结
+
+![四步判定，每一步问的问题都不一样](../../assets/svg/engineering-007-summary.svg)
+
+*图 · 四步判定，每一步问的问题都不一样*
 
 ```
 前提: ESM 静态结构（import 顶层、路径字面量）──编译期可画完整依赖图

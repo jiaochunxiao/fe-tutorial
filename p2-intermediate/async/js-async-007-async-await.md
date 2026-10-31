@@ -184,6 +184,10 @@ const user = await Promise.race([getUser(1), timeout(3000)]); // race 保住 awa
 
 ## 图解总结
 
+![await 把函数劈成同步段与微任务恢复段](../../assets/svg/js-async-007-await-desugar.svg)
+
+*图 · await 把函数劈成同步段与微任务恢复段*
+
 ```
 async function main() {          run(内置执行器)
   A;                    ──同步──▶ 执行 A

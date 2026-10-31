@@ -132,6 +132,10 @@ console.log(s1 === s2, o[s2], Object.keys(o).length, Reflect.ownKeys(o).length);
 
 ## 图解总结
 
+![三种用法，一个安全边界](../../assets/svg/es6-006-symbol.svg)
+
+*图 · 三种用法，一个安全边界*
+
 ```
 Symbol() ─── 私有唯一键 ──▶ 防撞/内部标记（枚举隐身）
 Symbol.for() ─ 全局注册表 ──▶ 跨模块共享

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 20 740 322" width="100%" role="img" aria-labelledby="pg3t pg3d">
+  <title id="pg3t">手写 Promise 的三段结构：订阅、发布、采用</title>
+  <desc id="pg3d">实例上只有 status、value、reason 三个字段和两个回调数组。pending 时调用 then 把回调压进数组，这是订阅；resolve 或 reject 让状态定格并遍历数组执行，这是发布。每个回调的返回值交给 resolvePromise：原始值直接落定 promise2，thenable 则等它落定再落定并递归展开，抛错就拒绝 promise2 让错误沿链冒泡。</desc>
+
+  <style>
+    .pg3-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .pg3-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .pg3-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .pg3-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="pg3-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="pg3-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="pg3-mono" x="200" y="40" font-size="10.5" text-anchor="middle">then(fn)</text>
+  <text class="pg3-s" x="200" y="54" font-size="9" text-anchor="middle">pending 时入数组</text>
+  <line x1="200" y1="60" x2="200" y2="76" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#pg3-ink)"/>
+
+  <text class="pg3-mono" x="520" y="40" font-size="10.5" text-anchor="middle">resolve(v) / reject(r)</text>
+  <text class="pg3-s" x="520" y="54" font-size="9" text-anchor="middle">状态定格，遍历数组</text>
+  <line x1="520" y1="60" x2="520" y2="76" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#pg3-red)"/>
+
+  <rect class="pg3-box" x="110" y="78" width="520" height="108" rx="3"/>
+
+  <text class="pg3-mono" x="130" y="106" font-size="11">status / value / reason</text>
+  <text class="pg3-mono" x="130" y="132" font-size="10">onFulfilledCallbacks: [fn, fn, …]</text>
+  <text class="pg3-s" x="350" y="132" font-size="9">多次 then 在这里排队</text>
+  <text class="pg3-mono" x="130" y="156" font-size="10">onRejectedCallbacks:  [fn, fn, …]</text>
+  <text class="pg3-s" x="350" y="156" font-size="9">落定之后按顺序放出去</text>
+
+  <text class="pg3-s" x="110" y="202" font-size="9.5">then 每次都返回一个新的 promise2</text>
+  <line x1="370" y1="186" x2="370" y2="206" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#pg3-ink)"/>
+  <text class="pg3-s" x="382" y="200" font-size="9">回调的返回值 x</text>
+
+  <rect class="pg3-box" x="280" y="210" width="180" height="32" rx="3"/>
+  <text class="pg3-mono" x="370" y="231" font-size="10.5" text-anchor="middle">resolvePromise(x)</text>
+
+  <line x1="370" y1="242" x2="370" y2="252" stroke="#1C1A17" stroke-width="1.6"/>
+  <line x1="147" y1="252" x2="593" y2="252" stroke="#1C1A17" stroke-width="1.6"/>
+  <line x1="147" y1="252" x2="147" y2="268" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pg3-ink)"/>
+  <line x1="370" y1="252" x2="370" y2="268" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pg3-ink)"/>
+  <line x1="593" y1="252" x2="593" y2="268" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#pg3-ink)"/>
+
+  <rect class="pg3-box" x="44" y="270" width="206" height="52" rx="3"/>
+  <text class="pg3-t" x="147" y="290" font-size="10" text-anchor="middle">原始值</text>
+  <text class="pg3-s" x="147" y="308" font-size="9" text-anchor="middle">直接落定 promise2</text>
+
+  <rect class="pg3-box" x="267" y="270" width="206" height="52" rx="3"/>
+  <text class="pg3-mono" x="370" y="290" font-size="10" text-anchor="middle">thenable</text>
+  <text class="pg3-s" x="370" y="308" font-size="9" text-anchor="middle">等它落定，递归展开</text>
+
+  <rect class="pg3-box" x="490" y="270" width="206" height="52" rx="3"/>
+  <text class="pg3-t" x="593" y="290" font-size="10" text-anchor="middle">抛错</text>
+  <text class="pg3-s" x="593" y="308" font-size="9" text-anchor="middle">拒绝 promise2，沿链冒泡</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="e6st e6sd">
+  <title id="e6st">AST 工具链：一条流水线，四个借用者</title>
+  <desc id="e6sd">源码经 parse 变成 AST，经 transform 变成 AST′，再经 generate 变回字符串。transform 那一段唯一的入口是访问者，操作方式是按节点类型改结构，所以不受字符串形态影响。plugin 是单个转换、preset 是套餐，执行时 plugin 先于 preset，preset 内部从后往前。Babel 只管语法，运行时 API 交给 core-js。ESLint、Prettier、Terser、Vue 编译器全都是这条流水线的不同借用者。</desc>
+
+  <style>
+    .e6s-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .e6s-vis{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .e6s-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e6s-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e6s-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="e6s-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="e6s-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="e6s-box" x="40" y="28" width="140" height="40" rx="3"/>
+  <text class="e6s-mono" x="110" y="53" font-size="9" text-anchor="middle">source</text>
+  <line x1="180" y1="48" x2="226" y2="48" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#e6s-ink)"/>
+  <text class="e6s-s" x="203" y="42" font-size="7.5" text-anchor="middle">parse</text>
+
+  <rect class="e6s-box" x="230" y="28" width="120" height="40" rx="3"/>
+  <text class="e6s-mono" x="290" y="53" font-size="9" text-anchor="middle">AST</text>
+  <line x1="350" y1="48" x2="396" y2="48" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#e6s-red)"/>
+  <text class="e6s-s" x="373" y="42" font-size="7.5" text-anchor="middle" style="fill:#B03A2E">transform</text>
+
+  <rect class="e6s-box" x="400" y="28" width="120" height="40" rx="3"/>
+  <text class="e6s-mono" x="460" y="53" font-size="9" text-anchor="middle">AST′</text>
+  <line x1="520" y1="48" x2="566" y2="48" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#e6s-ink)"/>
+  <text class="e6s-s" x="543" y="42" font-size="7.5" text-anchor="middle">generate</text>
+
+  <rect class="e6s-box" x="570" y="28" width="140" height="40" rx="3"/>
+  <text class="e6s-mono" x="640" y="48" font-size="9" text-anchor="middle">output</text>
+  <text class="e6s-s" x="640" y="62" font-size="7.5" text-anchor="middle">+ source map</text>
+
+  <path d="M460 68 V88" fill="none" stroke="#B03A2E" stroke-width="1.5" marker-end="url(#e6s-red)"/>
+  <rect class="e6s-vis" x="270" y="90" width="380" height="46" rx="3"/>
+  <text class="e6s-mono" x="284" y="110" font-size="8">Visitor: CallExpression(path) { … }</text>
+  <text class="e6s-mono" x="284" y="126" font-size="8">Identifier(path) { … }</text>
+  <text class="e6s-s" x="480" y="118" font-size="7.5">transform 唯一的入口</text>
+
+  <line x1="40" y1="158" x2="700" y2="158" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="e6s-s" x="40" y="180" font-size="8.5">操作</text>
+  <text class="e6s-mono" x="110" y="180" font-size="8">path.replaceWith / path.remove / path.parentPath</text>
+  <text class="e6s-t" x="470" y="180" font-size="8" style="fill:#B03A2E">结构级精确，字符串免疫</text>
+
+  <text class="e6s-s" x="40" y="204" font-size="8.5">顺序</text>
+  <text class="e6s-t" x="110" y="204" font-size="8">plugin（单个转换）先于 preset（套餐）；preset 内部从后往前</text>
+
+  <text class="e6s-s" x="40" y="228" font-size="8.5">分工</text>
+  <text class="e6s-t" x="110" y="228" font-size="8">Babel 转【语法】　｜　core-js 补【运行时 API】（usage 按需注入）</text>
+
+  <line x1="40" y1="246" x2="700" y2="246" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="e6s-t" x="40" y="268" font-size="8.5">同构</text>
+  <text class="e6s-s" x="110" y="268" font-size="8">ESLint 检查　·　Prettier 格式化　·　Terser 压代码　·　Vue 编译模板 → render</text>
+  <text class="e6s-t" x="110" y="288" font-size="8.5" style="fill:#B03A2E">一切「读代码的工具」都活在 AST 上 —— 这句话能串起半个前端工具链</text>
+</svg>

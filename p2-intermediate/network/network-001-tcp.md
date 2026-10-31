@@ -42,6 +42,10 @@ TCP 是**面向连接的可靠传输协议**。「面向连接」的意思是：
 
 ### 一、三次握手：报文与时序 ⭐
 
+![TCP 三次握手时序](../../assets/svg/network-001-handshake.svg)
+
+*图 · 三次握手的报文与时序：左侧是客户端状态机，右侧是服务端状态机*
+
 ```
 客户端                          服务端
   │ ── SYN, seq=x ────────────▶ │  ① 我要建立连接，我的序号是 x
@@ -59,42 +63,9 @@ TCP 是**面向连接的可靠传输协议**。「面向连接」的意思是：
 | ② 收到 SYN+ACK | 对方能发、我能收；**我发的对方收到了** | — |
 | ③ 服务端收到 ACK | — | **我发的对方收到了** ✅ 双向闭环 |
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 300" width="100%" role="img" aria-label="三次握手与四次挥手时序图">
-  <defs>
-    <marker id="tcp-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="tcp-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="60" y="36" width="130" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="125" y="61" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">客户端</text>
-  <rect x="530" y="36" width="130" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="595" y="61" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">服务端</text>
-  <path d="M 125 76 V 270" stroke="#1C1A17" stroke-width="1.2"/>
-  <path d="M 595 76 V 270" stroke="#1C1A17" stroke-width="1.2"/>
-  <path d="M 125 100 H 591" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#tcp-ink)"/>
-  <text x="358" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">SYN seq=x</text>
-  <path d="M 595 130 H 129" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#tcp-ink)"/>
-  <text x="358" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">SYN+ACK seq=y ack=x+1</text>
-  <path d="M 125 160 H 591" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#tcp-ink)"/>
-  <text x="358" y="152" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#1C1A17">ACK ack=y+1</text>
-  <text x="358" y="184" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">── 连接建立，开始传数据 ──</text>
-  <path d="M 125 214 H 591" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#tcp-red)"/>
-  <text x="358" y="206" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">FIN（数据发完）</text>
-  <path d="M 595 242 H 129" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#tcp-red)"/>
-  <text x="358" y="234" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">ACK</text>
-  <path d="M 595 268 H 129" stroke="#B03A2E" stroke-width="1.6" marker-end="url(#tcp-red)"/>
-  <text x="430" y="262" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">FIN（服务端也发完了）</text>
-  <text x="300" y="292" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11.5" fill="#B03A2E">ACK → TIME_WAIT 2MSL</text>
-  <circle r="5" fill="#1C1A17">
-    <animate attributeName="opacity" values="1;0;1" dur="2.8s" repeatCount="indefinite"/>
-  </circle>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · 三次握手（上）与四次挥手（下）——墨线建立，红线拆除</figcaption>
-</figure>
+![三次握手与四次挥手时序图](../../assets/svg/network-001-tcp.svg)
+
+*图 · 三次握手（上）与四次挥手（下）——墨线建立，红线拆除*
 
 ### 二、为什么不能两次？（正问与反问都考）⭐⭐
 
@@ -114,6 +85,10 @@ TCP 是**面向连接的可靠传输协议**。「面向连接」的意思是：
 一句话：**第三次握手给了客户端「否决历史连接」的机会**——这是「为什么不是两次」的标准答案核心。
 
 ### 三、四次挥手：为什么多一次？
+
+![TCP 四次挥手时序](../../assets/svg/network-001-teardown.svg)
+
+*图 · 四次挥手：中间那段灰底就是「半关闭」，也是挥手比握手多一次的原因*
 
 ```
 客户端（主动关闭方）                服务端（被动关闭方）

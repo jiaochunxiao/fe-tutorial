@@ -125,6 +125,10 @@ console.log(count); // 1 ✅ 导入的是「绑定」——指向同一变量
 
 **import/export 必须写在顶层、不能放函数里、路径必须是字符串字面量**——这些「限制」换来的是：**不运行代码就能画出完整依赖图**。
 
+![静态不是风格，是后面所有优化的入场券](../../assets/svg/es6-010-modules.svg)
+
+*图 · 静态不是风格，是后面所有优化的入场券*
+
 ```
 静态依赖图的三级火箭：
 ① 编译期分析 ──▶ ② tree-shaking（未用到的导出整体剔除，《engineering-007》）
@@ -172,6 +176,10 @@ console.log(Object.keys(A.prototype)); // [] —— 方法不可枚举
 ```
 
 ## 图解总结
+
+![class 继承建立的两条链](../../assets/svg/es6-010-class-chain.svg)
+
+*图 · extends 同时连出两条链：构造函数之间一条（静态成员靠它继承），原型对象之间一条（实例查找靠它走）*
 
 ```
 class Dog extends Animal 真实结构：

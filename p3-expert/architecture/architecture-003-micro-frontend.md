@@ -90,43 +90,9 @@ const fakeWindow = new Proxy({}, {
 方案C: 约定（BEM 命名/CSS Modules/前缀）——零成本但靠人 ⭐ 多数团队的现实选择
 ```
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 320" width="100%" role="img" aria-label="Proxy 沙箱：读兜底真 window，写只进假 window">
-  <defs>
-    <marker id="mf3-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="mf3-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="30" y="60" width="170" height="110" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="115" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">子应用 A 的代码</text>
-  <text x="115" y="120" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">window.x = 1（写）</text>
-  <text x="115" y="146" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">window.x（读）</text>
-  <rect x="250" y="46" width="210" height="140" rx="10" fill="#FBF8F1" stroke="#B03A2E" stroke-width="2"/>
-  <text x="355" y="74" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#B03A2E">fakeWindow（Proxy）</text>
-  <text x="355" y="100" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#1C1A17">get: 自己有 → 返回自己的</text>
-  <text x="355" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#1C1A17">get: 没有 → 兜底真 window</text>
-  <text x="355" y="152" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#B03A2E">set: 只写进自己 ⭐</text>
-  <rect x="530" y="60" width="160" height="110" rx="10" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="610" y="92" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="700" fill="#1C1A17">真 window</text>
-  <text x="610" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6E675A">document · polyfill · API</text>
-  <text x="610" y="140" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">其他子应用的隔离区</text>
-  <path d="M 200 100 H 244" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#mf3-ink)"/>
-  <path d="M 460 88 C 490 78 500 76 524 84" stroke="#1C1A17" stroke-width="1.5" fill="none" marker-end="url(#mf3-ink)"/>
-  <text x="494" y="62" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6E675A">没有的属性，兜底去真 window</text>
-  <path d="M 460 146 C 492 168 520 164 524 152" stroke="#B03A2E" stroke-width="1.8" fill="none" marker-end="url(#mf3-red)"/>
-  <path d="M 546 172 C 560 190 580 196 604 176" stroke="#6E675A" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/>
-  <line x1="560" y1="196" x2="640" y2="160" stroke="#B03A2E" stroke-width="2"/>
-  <text x="648" y="204" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#B03A2E">写入被挡在假 window，</text>
-  <text x="648" y="222" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#B03A2E">真 window 不受污染 ⭐</text>
-  <rect x="250" y="230" width="210" height="44" rx="8" fill="none" stroke="#1C1A17" stroke-width="1.4" stroke-dasharray="6 4"/>
-  <text x="355" y="250" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">子应用 B 也有一个独立 fakeWindow</text>
-  <text x="355" y="268" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#6E675A">→ 多实例互不可见 ✅</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · Proxy 沙箱——读兜底真 window（保功能），写只进假 window（保隔离），多实例各有一个假 window</figcaption>
-</figure>
+![Proxy 沙箱：读兜底真 window，写只进假 window](../../assets/svg/architecture-003-micro-frontend.svg)
+
+*图 · Proxy 沙箱——读兜底真 window（保功能），写只进假 window（保隔离），多实例各有一个假 window*
 
 ### 二、公共依赖：去重与共享 ⭐⭐
 
@@ -161,6 +127,10 @@ MF 的颗粒是【模块】不是应用: 跨应用共享组件/函数级代码�
 ```
 
 ### 五、「要不要微前端」的判断表 ⭐⭐⭐
+
+![先数信号，再算代价 —— 三个信号中不了两条就别拆](../../assets/svg/architecture-003-adopt.svg)
+
+*图 · 先数信号，再算代价 —— 三个信号中不了两条就别拆*
 
 ```
 适合: 多团队（≥3）并行、巨石发版互相拖累、技术栈需渐进替换（老 jQuery → Vue 渐迁）

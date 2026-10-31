@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 244" width="100%" role="img" aria-labelledby="r5st r5sd">
+  <title id="r5st">三种让页面不动的成因，症状与解法各不相同</title>
+  <desc id="r5sd">长任务超过五十毫秒会占住主线程，表现是跳拍与输入排队，解法是把任务拆碎并主动让出。微任务死循环更严重，因为微任务会在渲染前被清空，一旦不结束连渲染机会都没有，整页冻结，解法是别用循环等状态、改用宏任务让路。页面切到后台时 rAF 不再调度、定时器被降频，解法是不要在后台依赖帧节拍，改成 visibilitychange 时批量上报。</desc>
+
+  <style>
+    .r5s-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .r5s-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .r5s-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .r5s-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="r5s-t" x="40" y="26" font-size="8.5">页面「不动」有三种成因，别都当成掉帧</text>
+
+  <rect class="r5s-b" x="40" y="42" width="200" height="34" rx="2"/>
+  <text class="r5s-t" x="140" y="63" font-size="8" text-anchor="middle">长任务 &gt; 50ms</text>
+  <rect class="r5s-b" x="270" y="42" width="200" height="34" rx="2"/>
+  <text class="r5s-t" x="370" y="63" font-size="8" text-anchor="middle">微任务死循环</text>
+  <rect class="r5s-b" x="500" y="42" width="200" height="34" rx="2"/>
+  <text class="r5s-t" x="600" y="63" font-size="8" text-anchor="middle">切到后台标签页</text>
+
+  <rect class="r5s-q" x="40" y="86" width="200" height="52" rx="2"/>
+  <text class="r5s-s" x="52" y="102" font-size="6.5">症状</text>
+  <text class="r5s-t" x="52" y="116" font-size="7">跳拍、动画跳变</text>
+  <text class="r5s-t" x="52" y="130" font-size="7">点击回调排队 → INP 变差</text>
+
+  <rect class="r5s-q" x="270" y="86" width="200" height="52" rx="2"/>
+  <text class="r5s-s" x="282" y="102" font-size="6.5">症状</text>
+  <text class="r5s-t" x="282" y="116" font-size="7">连渲染机会都没有</text>
+  <text class="r5s-t" x="282" y="130" font-size="7">整页冻结，输入无响应</text>
+
+  <rect class="r5s-q" x="500" y="86" width="200" height="52" rx="2"/>
+  <text class="r5s-s" x="512" y="102" font-size="6.5">症状</text>
+  <text class="r5s-t" x="512" y="116" font-size="7">rAF 不再调度</text>
+  <text class="r5s-t" x="512" y="130" font-size="7">定时器被降频到秒级</text>
+
+  <rect class="r5s-b" x="40" y="148" width="200" height="52" rx="2"/>
+  <text class="r5s-s" x="52" y="164" font-size="6.5">解法</text>
+  <text class="r5s-t" x="52" y="178" font-size="7">拆任务 + scheduler.yield</text>
+  <text class="r5s-t" x="52" y="192" font-size="7">每块之间让出主线程</text>
+
+  <rect class="r5s-b" x="270" y="148" width="200" height="52" rx="2"/>
+  <text class="r5s-s" x="282" y="164" font-size="6.5">解法</text>
+  <text class="r5s-t" x="282" y="178" font-size="7">别用循环等状态</text>
+  <text class="r5s-t" x="282" y="192" font-size="7">改宏任务让路，交出控制权</text>
+
+  <rect class="r5s-b" x="500" y="148" width="200" height="52" rx="2"/>
+  <text class="r5s-s" x="512" y="164" font-size="6.5">解法</text>
+  <text class="r5s-t" x="512" y="178" font-size="7">别在后台依赖帧节拍</text>
+  <text class="r5s-t" x="512" y="192" font-size="7">visibilitychange 时批量上报</text>
+
+  <text class="r5s-s" x="40" y="222" font-size="7.5">共同的判断口径：打开 Performance 面板看这一拍到底有没有「渲染」那一行 —— 有但很慢是长任务，</text>
+  <text class="r5s-s" x="40" y="236" font-size="7.5">根本没有那一行才要怀疑微任务没清空，或者页面压根不可见。</text>
+</svg>

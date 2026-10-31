@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 300" width="100%" role="img" aria-labelledby="e8rt e8rd">
+  <title id="e8rt">发布顺序：先传资源，后切 HTML</title>
+  <desc id="e8rd">错误顺序是先上 HTML 再传资源：新 HTML 已经指向 app.77aa.js，但那个文件还没传完或者还没同步到 CDN，用户一访问就是 404 白屏。正确顺序是先把全部新资源传到 CDN，这时候没有任何在线用户引用它们，所以完全无影响；确认就绪之后再把 HTML 切过去。交替期里老用户跑旧资源、新用户拉新资源，两套并存互不冲突。</desc>
+
+  <style>
+    .e8r-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.3}
+    .e8r-bad{fill:#FBF7EE;stroke:#B03A2E;stroke-width:1.3}
+    .e8r-good{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.3}
+    .e8r-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e8r-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e8r-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="e8r-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="e8r-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="e8r-t" x="40" y="28" font-size="8.5" style="fill:#B03A2E">✕ 错误顺序</text>
+
+  <text class="e8r-s" x="40" y="66" font-size="8">T0</text>
+  <rect class="e8r-bad" x="80" y="48" width="200" height="34" rx="3"/>
+  <text class="e8r-t" x="94" y="69" font-size="8">新 HTML 先上线</text>
+  <text class="e8r-mono" x="200" y="69" font-size="7.5">引用 app.77aa.js</text>
+
+  <text class="e8r-s" x="40" y="116" font-size="8">T1</text>
+  <rect class="e8r-bad" x="80" y="98" width="200" height="34" rx="3"/>
+  <text class="e8r-t" x="94" y="119" font-size="8">用户访问</text>
+  <line x1="280" y1="115" x2="330" y2="115" stroke="#B03A2E" stroke-width="1.5" marker-end="url(#e8r-red)"/>
+  <rect class="e8r-bad" x="334" y="98" width="230" height="34" rx="3"/>
+  <text class="e8r-t" x="348" y="119" font-size="8" style="fill:#B03A2E">77aa 还没传完 / 没同步到 CDN</text>
+  <text class="e8r-t" x="580" y="119" font-size="8.5" style="fill:#B03A2E">→ 404、白屏</text>
+
+  <line x1="40" y1="152" x2="700" y2="152" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="e8r-t" x="40" y="178" font-size="8.5">✓ 正确顺序</text>
+
+  <text class="e8r-s" x="40" y="212" font-size="8">T0</text>
+  <rect class="e8r-good" x="80" y="194" width="200" height="34" rx="3"/>
+  <text class="e8r-t" x="94" y="215" font-size="8">传齐全部新资源</text>
+  <text class="e8r-s" x="292" y="215" font-size="8">没人引用它们，对线上零影响</text>
+
+  <text class="e8r-s" x="40" y="252" font-size="8">T1</text>
+  <rect class="e8r-box" x="80" y="234" width="200" height="34" rx="3"/>
+  <text class="e8r-t" x="94" y="255" font-size="8">确认资源全部就绪</text>
+  <line x1="280" y1="251" x2="330" y2="251" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#e8r-ink)"/>
+  <rect class="e8r-good" x="334" y="234" width="170" height="34" rx="3"/>
+  <text class="e8r-t" x="348" y="255" font-size="8">再切 HTML</text>
+  <text class="e8r-s" x="516" y="255" font-size="8">指针一动，全量生效</text>
+
+  <text class="e8r-s" x="40" y="284" font-size="8.5">交替期：老用户跑旧 HTML + 旧 chunk，新用户拉新资源 —— 两套并存，互不冲突。</text>
+</svg>

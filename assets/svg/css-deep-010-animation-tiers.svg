@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 286" width="100%" role="img" aria-labelledby="cd10t cd10d">
+  <title id="cd10t">三类动画属性各自从渲染管线的哪一段开始跑</title>
+  <desc id="cd10d">渲染管线是布局、绘制、合成三段，代价依次递减。改宽度、位置、外边距这类几何属性属于重排级，三段全要跑，最贵；改颜色、背景、阴影属于重绘级，不动几何但要逐像素重画，从绘制段开始；改 transform 和 opacity 属于合成级，只影响最后一段，GPU 直接处理，最便宜。所以位移动画用 translate 不用 left 和 top，显隐用 opacity 不用 display，缩放用 scale 不用宽高。</desc>
+
+  <style>
+    .cd10-on{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.2}
+    .cd10-off{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .cd10-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .cd10-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .cd10-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <text class="cd10-t" x="40" y="26" font-size="8.5">改哪个属性，决定要从管线的哪一段开始跑</text>
+
+  <text class="cd10-s" x="336" y="62" font-size="7.5" text-anchor="middle">Layout 重排</text>
+  <text class="cd10-s" x="648" y="62" font-size="7.5">代价</text>
+  <text class="cd10-s" x="456" y="62" font-size="7.5" text-anchor="middle">Paint 重绘</text>
+  <text class="cd10-s" x="576" y="62" font-size="7.5" text-anchor="middle">Composite 合成</text>
+
+  <!-- 重排级：三段全跑 -->
+  <text class="cd10-t" x="40" y="92" font-size="8.5">重排级</text>
+  <text class="cd10-mono" x="40" y="104" font-size="7">width · top · left · margin · font-size</text>
+  <rect class="cd10-on" x="280" y="78" width="112" height="32" rx="1"/>
+  <rect class="cd10-on" x="400" y="78" width="112" height="32" rx="1"/>
+  <rect class="cd10-on" x="520" y="78" width="112" height="32" rx="1"/>
+  <text class="cd10-t" x="648" y="98" font-size="8">贵</text>
+
+  <!-- 重绘级：从 Paint 起 -->
+  <text class="cd10-t" x="40" y="128" font-size="8.5">重绘级</text>
+  <text class="cd10-mono" x="40" y="140" font-size="7">color · background · box-shadow</text>
+  <rect class="cd10-off" x="280" y="114" width="112" height="32" rx="1"/>
+  <rect class="cd10-on" x="400" y="114" width="112" height="32" rx="1"/>
+  <rect class="cd10-on" x="520" y="114" width="112" height="32" rx="1"/>
+  <text class="cd10-s" x="648" y="134" font-size="8">中</text>
+
+  <!-- 合成级：只最后一段 -->
+  <text class="cd10-t" x="40" y="164" font-size="8.5">合成级</text>
+  <text class="cd10-mono" x="40" y="176" font-size="7">transform · opacity</text>
+  <rect class="cd10-off" x="280" y="150" width="112" height="32" rx="1"/>
+  <rect class="cd10-off" x="400" y="150" width="112" height="32" rx="1"/>
+  <rect class="cd10-on" x="520" y="150" width="112" height="32" rx="1"/>
+  <text class="cd10-t" x="648" y="170" font-size="8">便宜</text>
+
+  <text class="cd10-t" x="40" y="206" font-size="8.5">工程铁律：入场越靠右越便宜 —— 所以动画只碰最右那一列</text>
+
+  <rect class="cd10-off" x="40" y="216" width="200" height="40" rx="2"/>
+  <text class="cd10-t" x="140" y="232" font-size="8.5" text-anchor="middle">位移 → translate</text>
+  <text class="cd10-s" x="140" y="247" font-size="7.5" text-anchor="middle">不用 left / top</text>
+
+  <rect class="cd10-off" x="256" y="216" width="200" height="40" rx="2"/>
+  <text class="cd10-t" x="356" y="232" font-size="8.5" text-anchor="middle">显隐 → opacity</text>
+  <text class="cd10-s" x="356" y="247" font-size="7.5" text-anchor="middle">display 根本不能过渡</text>
+
+  <rect class="cd10-off" x="472" y="216" width="200" height="40" rx="2"/>
+  <text class="cd10-t" x="572" y="232" font-size="8.5" text-anchor="middle">缩放 → scale</text>
+  <text class="cd10-s" x="572" y="247" font-size="7.5" text-anchor="middle">不用 width / height</text>
+
+  <text class="cd10-t" x="40" y="276" font-size="8.5" style="fill:#B03A2E">will-change 只给确认卡顿的元素 —— 每提升一层都占显存，滥用反而更慢。</text>
+</svg>

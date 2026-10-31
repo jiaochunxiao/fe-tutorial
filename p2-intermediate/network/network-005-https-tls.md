@@ -35,6 +35,10 @@ HTTPS = HTTP + TLS：在 TCP 连接（已通线路，《network-001》）之上�
 
 ### 一、TLS 1.3 握手全过程（现代主流）⭐⭐
 
+![TLS 1.3 握手时序](../../assets/svg/network-005-tls13.svg)
+
+*图 · TLS 1.3 把「商量密钥」压进一个往返：客户端先押上临时公钥，服务端回完密钥参数就紧跟一个加密 flight，第二个往返只剩客户端一句 Finished*
+
 ```
 客户端                                                     服务端
   │ ── ClientHello ──────────────────────────────────────▶ │
@@ -53,37 +57,9 @@ HTTPS = HTTP + TLS：在 TCP 连接（已通线路，《network-001》）之上�
 
 TLS 1.3 只需 **1 RTT**（ClientHello 发出时已带 key_share，双方基于各自随机数 + 对方公钥独立算出相同密钥——ECDHE 的数学魔法）。握手后的每条应用数据都带 **AEAD 认证标签**——改一个比特都会校验失败（防篡改）。
 
-<figure style="margin:2.2em 0">
-<svg viewBox="0 0 720 320" width="100%" role="img" aria-label="TLS 1.3 握手时序：1-RTT 建立加密通道">
-  <defs>
-    <marker id="t5-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1C1A17"/>
-    </marker>
-    <marker id="t5-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#B03A2E"/>
-    </marker>
-  </defs>
-  <rect x="50" y="30" width="140" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="120" y="55" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">客户端</text>
-  <rect x="530" y="30" width="140" height="40" rx="6" fill="#EFE8D8" stroke="#1C1A17" stroke-width="1.6"/>
-  <text x="600" y="55" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="13" font-weight="700" fill="#1C1A17">服务器</text>
-  <path d="M 120 70 V 286" stroke="#1C1A17" stroke-width="1.2"/>
-  <path d="M 600 70 V 286" stroke="#1C1A17" stroke-width="1.2"/>
-  <path d="M 120 96 H 596" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t5-ink)"/>
-  <text x="358" y="88" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#1C1A17">ClientHello：随机数 + 套件 + 临时公钥</text>
-  <path d="M 600 130 H 124" stroke="#1C1A17" stroke-width="1.6" marker-end="url(#t5-ink)"/>
-  <text x="358" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#1C1A17">ServerHello + 证书 + 签名（私钥自证）</text>
-  <rect x="120" y="150" width="480" height="44" rx="8" fill="#EFE8D8" stroke="#B03A2E" stroke-width="1.6"/>
-  <text x="360" y="172" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12.5" font-weight="700" fill="#B03A2E">双方各自：ECDHE(我的私钥, 对方公钥) + 随机数 → 相同的会话密钥</text>
-  <text x="360" y="190" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6E675A">私钥从不传输 → 窃听者拿到全部报文也算不出 → 前向保密</text>
-  <path d="M 120 236 H 596" stroke="#1C1A17" stroke-width="1.6" stroke-dasharray="8 5" marker-end="url(#t5-red)"/>
-  <text x="358" y="228" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#1C1A17">Finished（握手校验）→ 应用数据全用对称加密 + AEAD 完整性</text>
-  <path d="M 70 96 H 84" stroke="#B03A2E" stroke-width="2"/>
-  <path d="M 70 236 H 84" stroke="#B03A2E" stroke-width="2"/>
-  <text x="60" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#B03A2E">1-RTT</text>
-</svg>
-<figcaption style="font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#6E675A;text-align:center;margin-top:10px">图 · TLS 1.3 握手——传输握手与密钥协商一步完成，会话密钥由双方各自推导、私钥从不上网</figcaption>
-</figure>
+![TLS 1.3 握手时序：1-RTT 建立加密通道](../../assets/svg/network-005-https-tls.svg)
+
+*图 · TLS 1.3 握手——传输握手与密钥协商一步完成，会话密钥由双方各自推导、私钥从不上网*
 
 ### 二、证书与 CA：信任的传递链 ⭐
 
@@ -92,6 +68,10 @@ TLS 1.3 只需 **1 RTT**（ClientHello 发出时已带 key_share，双方基于�
 1. 服务器向 **CA（证书颁发机构）** 申请证书：CA 验证域名所有权后，用 **CA 的私钥**对「站点信息 + 站点公钥」签名，颁发证书；
 2. 浏览器/操作系统内置了一批**根 CA 证书**（信任的起点）；
 3. 握手时服务器出示证书，浏览器沿「根 CA → 中间 CA → 站点证书」**逐级验签**（用上级公钥解下级签名）——只要链条顶端可信，整条链可信。
+
+![签发往下走，验签往上走 —— 方向别弄反](../../assets/svg/network-005-cert-chain.svg)
+
+*图 · 签发往下走，验签往上走 —— 方向别弄反*
 
 ```
 根CA(Root, 内置系统) ──签发──▶ 中间CA ──签发──▶ 站点证书
@@ -132,6 +112,10 @@ TLS 1.3 只需 **1 RTT**（ClientHello 发出时已带 key_share，双方基于�
 **3. 面试答题骨架**：「HTTPS 在 TCP 之上先做 TLS 握手——客户端发 ClientHello（随机数+支持的套件+临时公钥），服务器回证书并用私钥签名自证；双方基于 ECDHE 各自算出会话密钥（私钥从不上网），之后全程对称加密 + AEAD 完整性校验。非对称只用于握手是因为慢；证书链由内置根 CA 逐级验签，挡住中间人；TLS 1.3 压缩到 1-RTT 并强制前向保密。」
 
 ## 图解总结
+
+![非对称只用来谈钥匙，谈完就退场](../../assets/svg/network-005-tls.svg)
+
+*图 · 非对称只用来谈钥匙，谈完就退场*
 
 ```
 TCP 连接建立（《network-001》三次握手）

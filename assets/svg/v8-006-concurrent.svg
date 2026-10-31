@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 240" width="100%" role="img" aria-labelledby="v6ct v6cd">
+  <title id="v6ct">并发标记把大头搬到后台，主线程只留两个极短的段</title>
+  <desc id="v6cd">主线程上只有启动快照与终局核查两小段，分别五毫秒与三毫秒，中间是 JS 自由运行的时间。标记的大头在后台线程跑，与 JS 同时进行，靠写屏障维护标记一致性。清扫也分两种：并发清理在后台做空闲列表的清扫，并行清理是主线程与辅助线程在停顿窗口里合力扫。新生代同样并发化，复制存活对象搬到后台 worker，主线程只做必要的翻转；必须主线程参与的那一小段用多线程并行压到最短。</desc>
+
+  <style>
+    .v6c-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .v6c-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .v6c-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .v6c-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <text class="v6c-t" x="40" y="26" font-size="8.5">并发标记：把大头搬到后台，主线程只留两个短段</text>
+
+  <text class="v6c-s" x="40" y="54" font-size="7">主线程</text>
+  <rect class="v6c-q" x="110" y="40" width="80" height="28" rx="1"/>
+  <text class="v6c-t" x="150" y="59" font-size="6.5" text-anchor="middle">启动快照 5ms</text>
+  <rect class="v6c-b" x="194" y="40" width="330" height="28" rx="1" stroke-dasharray="4 3"/>
+  <text class="v6c-s" x="359" y="59" font-size="6.5" text-anchor="middle">JS 自由跑</text>
+  <rect class="v6c-q" x="528" y="40" width="90" height="28" rx="1"/>
+  <text class="v6c-t" x="573" y="59" font-size="6.5" text-anchor="middle">终局核查 3ms</text>
+
+  <text class="v6c-s" x="40" y="106" font-size="7">后台线程</text>
+  <rect class="v6c-b" x="110" y="92" width="508" height="28" rx="1"/>
+  <text class="v6c-t" x="364" y="111" font-size="6.5" text-anchor="middle">════════ 标记工作（与 JS 同时进行）════════</text>
+
+  <line x1="150" y1="70" x2="150" y2="90" stroke="#CDC4AF" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="573" y1="70" x2="573" y2="90" stroke="#CDC4AF" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <text class="v6c-t" x="40" y="146" font-size="8">清扫的两种姿势</text>
+  <rect class="v6c-b" x="40" y="154" width="320" height="30" rx="2"/>
+  <text class="v6c-t" x="54" y="173" font-size="7">并发清理：后台扫空闲列表</text>
+  <text class="v6c-s" x="250" y="173" font-size="6.5">主线程不管</text>
+  <rect class="v6c-b" x="380" y="154" width="320" height="30" rx="2"/>
+  <text class="v6c-t" x="394" y="173" font-size="7">并行清理：停顿窗口内多线程合力</text>
+  <text class="v6c-s" x="620" y="173" font-size="6.5">把窗口压短</text>
+
+  <text class="v6c-s" x="40" y="204" font-size="7.5">注意：后台标的同时 JS 还在改对象 —— 标记一致性靠写屏障维持，这也是为什么不能「纯后台」。</text>
+  <text class="v6c-s" x="40" y="220" font-size="7.5">新生代同样并发化：复制存活对象搬去 worker，主线程只做翻转；必须主线程参与的那一段用并行压缩到最短。</text>
+</svg>

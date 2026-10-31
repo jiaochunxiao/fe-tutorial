@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 268" width="100%" role="img" aria-labelledby="e7st e7sd">
+  <title id="e7st">Tree Shaking：摇掉的是没被 import 的导出</title>
+  <desc id="e7sd">模块 moduleA 导出了 a、b、c 三样东西。使用方只 import 了 a，所以 a 有一条实实在在的引用边，而 b 和 c 没有任何出口，被判定为枯叶摇掉。要注意摇掉的是「这个导出」，不是「这个文件」——只有当整个文件都没被任何地方引用时，文件才会一起消失。</desc>
+
+  <style>
+    .e7s-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .e7s-chip{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1.1}
+    .e7s-dead{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1.1;stroke-dasharray:4 3}
+    .e7s-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .e7s-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .e7s-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="e7s-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="e7s-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <rect class="e7s-box" x="40" y="44" width="240" height="152" rx="3"/>
+  <text class="e7s-mono" x="54" y="66" font-size="9">moduleA</text>
+
+  <rect class="e7s-chip" x="56" y="80" width="208" height="24" rx="2"/>
+  <text class="e7s-mono" x="68" y="96" font-size="8.5">export const a = 1</text>
+  <path d="M264 92 C300 92 320 106 348 114" fill="none" stroke="#1C1A17" stroke-width="1.5" marker-end="url(#e7s-ink)"/>
+  <text class="e7s-s" x="292" y="86" font-size="7.5">用到</text>
+
+  <rect class="e7s-dead" x="56" y="112" width="208" height="24" rx="2"/>
+  <text class="e7s-mono" x="68" y="128" font-size="8.5" style="fill:#6E675A">export const b = 2</text>
+  <line x1="264" y1="124" x2="290" y2="124" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <path d="M292 116 L306 132 M306 116 L292 132" stroke="#B03A2E" stroke-width="1.6" fill="none"/>
+  <text class="e7s-s" x="314" y="128" font-size="7.5" style="fill:#B03A2E">没有出口 → 枯叶</text>
+
+  <rect class="e7s-dead" x="56" y="144" width="208" height="24" rx="2"/>
+  <text class="e7s-mono" x="68" y="160" font-size="8.5" style="fill:#6E675A">export const c = 3</text>
+  <line x1="264" y1="156" x2="290" y2="156" stroke="#CDC4AF" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <path d="M292 148 L306 164 M306 148 L292 164" stroke="#B03A2E" stroke-width="1.6" fill="none"/>
+  <text class="e7s-s" x="314" y="160" font-size="7.5" style="fill:#B03A2E">没有出口 → 枯叶</text>
+
+  <rect class="e7s-box" x="420" y="96" width="200" height="46" rx="3"/>
+  <text class="e7s-mono" x="434" y="116" font-size="8.5">import { a } from './A'</text>
+  <text class="e7s-s" x="434" y="132" font-size="8">使用方：只要 a</text>
+
+  <text class="e7s-t" x="420" y="164" font-size="8.5" style="fill:#B03A2E">摇掉的边界要看清</text>
+  <text class="e7s-s" x="420" y="182" font-size="8">摇掉的是「这个导出」，不是「这个文件」</text>
+
+  <line x1="40" y1="220" x2="700" y2="220" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="e7s-s" x="40" y="240" font-size="8.5">整文件都没人引用时，文件才会一起消失；只要还有一处 import，文件就还在 —— 只是里面少了几片叶子。</text>
+  <text class="e7s-s" x="40" y="258" font-size="8.5">前提是 ESM 的静态结构：import 写在顶层、路径是字面量，编译期才能把整张图一次画完。</text>
+</svg>

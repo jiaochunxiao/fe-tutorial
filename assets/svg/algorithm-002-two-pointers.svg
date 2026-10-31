@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 350" width="100%" role="img" aria-labelledby="tp2t tp2d">
+  <title id="tp2t">双指针的三个套路：对撞、快慢、滑窗</title>
+  <desc id="tp2d">三行泳道，每行都是同一个数组，只是指针的站法不同。对撞指针一左一右向中间逼近，每一步丢掉一端，被丢掉的那一端整批配对作废。快慢指针同向不同速，快指针先走 k 步或走两倍速，用速度差制造出倒数第 k 个、中点、以及判环的追及。滑动窗口用 l 和 r 圈出一段连续区间，r 向右扩张并入状态，窗口不合法时 l 向右收缩吐出状态，两个指针各自最多走 n 步，所以看似双层循环其实是均摊线性。</desc>
+
+  <style>
+    .tp2-cell{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.2}
+    .tp2-win{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .tp2-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .tp2-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .tp2-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="tp2-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="tp2-grey" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#6E675A"/>
+    </marker>
+    <marker id="tp2-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="tp2-t" x="40" y="78" font-size="9.5">对撞</text>
+  <text class="tp2-mono" x="40" y="92" font-size="8.5">l ↔ r</text>
+
+  <rect class="tp2-cell" x="160" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="208" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="256" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="304" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="352" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="400" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="448" y="64" width="48" height="28"/>
+  <rect class="tp2-cell" x="496" y="64" width="48" height="28"/>
+  <text class="tp2-s" x="184" y="82" font-size="8.5" text-anchor="middle">0</text>
+  <text class="tp2-s" x="232" y="82" font-size="8.5" text-anchor="middle">1</text>
+  <text class="tp2-s" x="280" y="82" font-size="8.5" text-anchor="middle">2</text>
+  <text class="tp2-s" x="328" y="82" font-size="8.5" text-anchor="middle">3</text>
+  <text class="tp2-s" x="376" y="82" font-size="8.5" text-anchor="middle">4</text>
+  <text class="tp2-s" x="424" y="82" font-size="8.5" text-anchor="middle">5</text>
+  <text class="tp2-s" x="472" y="82" font-size="8.5" text-anchor="middle">6</text>
+  <text class="tp2-s" x="520" y="82" font-size="8.5" text-anchor="middle">7</text>
+
+  <line x1="184" y1="40" x2="184" y2="54" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-mono" x="184" y="34" font-size="8.5" text-anchor="middle">l</text>
+  <line x1="520" y1="40" x2="520" y2="54" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-mono" x="520" y="34" font-size="8.5" text-anchor="middle">r</text>
+  <line x1="194" y1="47" x2="320" y2="47" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#tp2-red)"/>
+  <line x1="510" y1="47" x2="384" y2="47" stroke="#B03A2E" stroke-width="1.4" marker-end="url(#tp2-red)"/>
+  <text class="tp2-s" x="352" y="50" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">逼近</text>
+
+  <text class="tp2-t" x="566" y="76" font-size="9" style="fill:#B03A2E">每步丢一端</text>
+  <text class="tp2-s" x="566" y="90" font-size="8.5">被丢的那端整批作废</text>
+
+  <text class="tp2-t" x="40" y="166" font-size="9.5">快慢</text>
+  <text class="tp2-mono" x="40" y="180" font-size="8.5">slow / fast</text>
+
+  <rect class="tp2-cell" x="160" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="208" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="256" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="304" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="352" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="400" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="448" y="152" width="48" height="28"/>
+  <rect class="tp2-cell" x="496" y="152" width="48" height="28"/>
+  <text class="tp2-s" x="184" y="170" font-size="8.5" text-anchor="middle">0</text>
+  <text class="tp2-s" x="232" y="170" font-size="8.5" text-anchor="middle">1</text>
+  <text class="tp2-s" x="280" y="170" font-size="8.5" text-anchor="middle">2</text>
+  <text class="tp2-s" x="328" y="170" font-size="8.5" text-anchor="middle">3</text>
+  <text class="tp2-s" x="376" y="170" font-size="8.5" text-anchor="middle">4</text>
+  <text class="tp2-s" x="424" y="170" font-size="8.5" text-anchor="middle">5</text>
+  <text class="tp2-s" x="472" y="170" font-size="8.5" text-anchor="middle">6</text>
+  <text class="tp2-s" x="520" y="170" font-size="8.5" text-anchor="middle">7</text>
+
+  <line x1="280" y1="132" x2="280" y2="146" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-mono" x="280" y="126" font-size="8.5" text-anchor="middle">slow</text>
+  <line x1="424" y1="132" x2="424" y2="146" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-mono" x="424" y="126" font-size="8.5" text-anchor="middle">fast</text>
+
+  <text class="tp2-t" x="566" y="164" font-size="9" style="fill:#B03A2E">速度差</text>
+  <text class="tp2-s" x="566" y="178" font-size="8.5">追及必相遇</text>
+
+  <text class="tp2-t" x="40" y="254" font-size="9.5">滑窗</text>
+  <text class="tp2-mono" x="40" y="268" font-size="8.5">l … r</text>
+
+  <rect class="tp2-cell" x="160" y="240" width="48" height="28"/>
+  <rect class="tp2-cell" x="208" y="240" width="48" height="28"/>
+  <rect class="tp2-win" x="256" y="240" width="192" height="28"/>
+  <rect class="tp2-cell" x="448" y="240" width="48" height="28"/>
+  <rect class="tp2-cell" x="496" y="240" width="48" height="28"/>
+  <text class="tp2-s" x="184" y="258" font-size="8.5" text-anchor="middle">0</text>
+  <text class="tp2-s" x="232" y="258" font-size="8.5" text-anchor="middle">1</text>
+  <text class="tp2-s" x="280" y="258" font-size="8.5" text-anchor="middle">2</text>
+  <text class="tp2-s" x="328" y="258" font-size="8.5" text-anchor="middle">3</text>
+  <text class="tp2-s" x="376" y="258" font-size="8.5" text-anchor="middle">4</text>
+  <text class="tp2-s" x="424" y="258" font-size="8.5" text-anchor="middle">5</text>
+  <text class="tp2-s" x="472" y="258" font-size="8.5" text-anchor="middle">6</text>
+  <text class="tp2-s" x="520" y="258" font-size="8.5" text-anchor="middle">7</text>
+
+  <line x1="280" y1="220" x2="280" y2="234" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-mono" x="280" y="214" font-size="8.5" text-anchor="middle">l</text>
+  <line x1="424" y1="220" x2="424" y2="234" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-mono" x="424" y="214" font-size="8.5" text-anchor="middle">r</text>
+
+  <text class="tp2-t" x="566" y="252" font-size="9" style="fill:#B03A2E">右进左出</text>
+  <text class="tp2-s" x="566" y="266" font-size="8.5">不合法才收缩</text>
+
+  <line x1="424" y1="286" x2="472" y2="286" stroke="#B03A2E" stroke-width="1.8" marker-end="url(#tp2-red)"/>
+  <text class="tp2-s" x="448" y="302" font-size="8.5" text-anchor="middle" style="fill:#B03A2E">r 右移 → 并入</text>
+  <line x1="232" y1="286" x2="276" y2="286" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#tp2-ink)"/>
+  <text class="tp2-s" x="254" y="302" font-size="8.5" text-anchor="middle">l 右移 → 吐出</text>
+
+  <text class="tp2-t" x="40" y="334" font-size="9">虚拟列表的 [start, end] 就是一对窗口指针 —— 前端每天都在用</text>
+</svg>

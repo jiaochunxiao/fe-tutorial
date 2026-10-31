@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 186" width="100%" role="img" aria-labelledby="p1lt p1ld">
+  <title id="p1lt">LCP 的四个时间瓶颈段</title>
+  <desc id="p1ld">最大内容绘制的时间可以拆成四段相加：第一段是首字节时间，服务器慢就卡在这里；第二段是资源被发现得太晚，因为没有预加载，要等 HTML 解析到才知道要下载；第三段是资源本身的下载耗时，图片太大就慢；第四段是渲染耗时，主线程被 JS 占住就出不来。四段各自对应完全不同的优化手段，先测出哪段最长，再动手。</desc>
+
+  <style>
+    .p1l-a{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .p1l-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .p1l-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p1l-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .p1l-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="p1l-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="p1l-t" x="40" y="26" font-size="8.5">LCP = 这四段之和，先找出最长的那一段</text>
+
+  <rect class="p1l-a" x="40" y="44" width="150" height="34" rx="2"/>
+  <text class="p1l-t" x="115" y="65" font-size="8.5" text-anchor="middle">TTFB</text>
+  <rect class="p1l-b" x="190" y="44" width="150" height="34" rx="2"/>
+  <text class="p1l-t" x="265" y="65" font-size="8.5" text-anchor="middle">资源发现</text>
+  <rect class="p1l-a" x="340" y="44" width="180" height="34" rx="2"/>
+  <text class="p1l-t" x="430" y="65" font-size="8.5" text-anchor="middle">资源下载</text>
+  <rect class="p1l-b" x="520" y="44" width="180" height="34" rx="2"/>
+  <text class="p1l-t" x="610" y="65" font-size="8.5" text-anchor="middle">渲染</text>
+
+  <text class="p1l-s" x="40" y="96" font-size="7.5">服务器慢 / 无 CDN</text>
+  <text class="p1l-s" x="190" y="96" font-size="7.5">没预加载，解析到才知道</text>
+  <text class="p1l-s" x="340" y="96" font-size="7.5">图片太大 / 没压缩</text>
+  <text class="p1l-s" x="520" y="96" font-size="7.5">JS 阻塞主线程</text>
+
+  <line x1="40" y1="112" x2="700" y2="112" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="p1l-t" x="40" y="130" font-size="8">对应的手段</text>
+  <text class="p1l-s" x="130" y="130" font-size="7.5">CDN / 缓存 / 服务端提速</text>
+  <text class="p1l-s" x="290" y="130" font-size="7.5">preload / 提前扫到</text>
+  <text class="p1l-s" x="430" y="130" font-size="7.5">AVIF·WebP / 按需尺寸</text>
+  <text class="p1l-s" x="560" y="130" font-size="7.5">拆包 / 延后非关键 JS</text>
+
+  <text class="p1l-s" x="40" y="156" font-size="8">同一张图，四段里换一段最长，优化方案就完全不同 —— 所以别猜，先量。</text>
+  <text class="p1l-t" x="40" y="176" font-size="8.5" style="fill:#B03A2E">LCP 慢只是症状，四段里哪一段慢才是病因。</text>
+</svg>

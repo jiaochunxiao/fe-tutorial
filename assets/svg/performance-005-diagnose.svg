@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 244" width="100%" role="img" aria-labelledby="pr5dt pr5dd">
+  <title id="pr5dt">Performance 面板诊断：四条线索与对应结论</title>
+  <desc id="pr5dd">录制动画后看 Main 轨的四条线索：紫色 Layout 块又高又密说明是重排驱动，去查有没有在读或写几何属性；绿色 Paint 块大说明是重绘驱动，去查大面积背景、阴影与滤镜；紫色块前面有很长的 Recalculate Style 说明样式重算本身很重，去查选择器复杂度与节点数量；掉帧并且 Layout 块标着 Forced reflow 警告，说明是强制同步布局，直接就能定位到读写交错的那段代码。</desc>
+
+  <style>
+    .pr5d-cell{fill:#FBF7EE;stroke:#CDC4AF;stroke-width:1}
+    .pr5d-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .pr5d-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .pr5d-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="pr5d-t" x="40" y="26" font-size="8.5">录制动画，只看 Main 轨的四条线索</text>
+
+  <text class="pr5d-s" x="52" y="46" font-size="7.5">Main 轨看到什么</text>
+  <text class="pr5d-s" x="336" y="46" font-size="7.5">判定</text>
+  <text class="pr5d-s" x="476" y="46" font-size="7.5">于是去查什么</text>
+
+  <rect class="pr5d-cell" x="40" y="54" width="660" height="32" rx="1"/>
+  <text class="pr5d-s" x="52" y="74" font-size="8">紫色 Layout 块又高又密</text>
+  <text class="pr5d-t" x="336" y="74" font-size="8">重排驱动</text>
+  <text class="pr5d-s" x="476" y="74" font-size="8">是否在读 / 写几何属性</text>
+
+  <rect class="pr5d-cell" x="40" y="90" width="660" height="32" rx="1"/>
+  <text class="pr5d-s" x="52" y="110" font-size="8">绿色 Paint 块大</text>
+  <text class="pr5d-t" x="336" y="110" font-size="8">重绘驱动</text>
+  <text class="pr5d-s" x="476" y="110" font-size="8">大面积背景 / 阴影 / 滤镜</text>
+
+  <rect class="pr5d-cell" x="40" y="126" width="660" height="32" rx="1"/>
+  <text class="pr5d-s" x="52" y="146" font-size="8">紫块前有 Recalculate Style 长条</text>
+  <text class="pr5d-t" x="336" y="146" font-size="8">样式重算重</text>
+  <text class="pr5d-s" x="476" y="146" font-size="8">选择器太复杂 / 节点太多</text>
+
+  <rect class="pr5d-cell" x="40" y="162" width="660" height="32" rx="1"/>
+  <text class="pr5d-s" x="52" y="182" font-size="8">掉帧 + Forced reflow 警告</text>
+  <text class="pr5d-t" x="336" y="182" font-size="8" style="fill:#B03A2E">强制同步布局</text>
+  <text class="pr5d-s" x="476" y="182" font-size="8" style="fill:#B03A2E">直接定位读写交错的代码</text>
+
+  <line x1="328" y1="54" x2="328" y2="194" stroke="#CDC4AF" stroke-width="1"/>
+  <line x1="468" y1="54" x2="468" y2="194" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="pr5d-t" x="40" y="218" font-size="8.5">先认块的颜色，再看块前有没有长条，最后才去翻代码 —— 别一上来就读源码。</text>
+  <text class="pr5d-t" x="40" y="236" font-size="8.5" style="fill:#B03A2E">带 Forced reflow 标记的那一条是唯一能一步定位到具体函数的，优先级最高。</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 246" width="100%" role="img" aria-labelledby="h9tt h9td">
+  <title id="h9tt">依赖账本的三层结构，放大了看就是一个具体例子</title>
+  <desc id="h9td">账本是三层嵌套：最外层 WeakMap 的键是原对象，第二层 Map 的键是属性名，最内层 Set 装的是依赖这个属性的 effect。拿 state 这个响应式对象举例：它的 count 属性被渲染 effect 和另一个 effect 同时依赖，所以 Set 里有两个成员；title 属性只有渲染 effect 依赖。用 WeakMap 做最外层，是为了对象销毁时整本账能被自动回收。</desc>
+
+  <style>
+    .h9t-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .h9t-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .h9t-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .h9t-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .h9t-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="h9t-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="h9t-t" x="40" y="26" font-size="8.5">「哪个对象的哪个属性，被哪些 effect 依赖」—— 天然是三维索引</text>
+
+  <rect class="h9t-q" x="40" y="46" width="150" height="44" rx="2"/>
+  <text class="h9t-m" x="115" y="66" font-size="8" text-anchor="middle">WeakMap</text>
+  <text class="h9t-s" x="115" y="80" font-size="6.5" text-anchor="middle">键 = 原对象</text>
+
+  <line x1="192" y1="68" x2="222" y2="68" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h9t-ink)"/>
+
+  <rect class="h9t-b" x="228" y="46" width="150" height="44" rx="2"/>
+  <text class="h9t-m" x="303" y="66" font-size="8" text-anchor="middle">state</text>
+  <text class="h9t-s" x="303" y="80" font-size="6.5" text-anchor="middle">reactive 过的那个对象</text>
+
+  <line x1="380" y1="68" x2="410" y2="68" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h9t-ink)"/>
+
+  <rect class="h9t-b" x="416" y="46" width="130" height="44" rx="2"/>
+  <text class="h9t-m" x="481" y="66" font-size="8" text-anchor="middle">Map</text>
+  <text class="h9t-s" x="481" y="80" font-size="6.5" text-anchor="middle">键 = 属性名</text>
+
+  <rect class="h9t-b" x="416" y="100" width="130" height="24" rx="1"/>
+  <text class="h9t-m" x="481" y="116" font-size="7" text-anchor="middle">count</text>
+  <rect class="h9t-b" x="416" y="130" width="130" height="24" rx="1"/>
+  <text class="h9t-m" x="481" y="146" font-size="7" text-anchor="middle">title</text>
+  <line x1="546" y1="62" x2="560" y2="62" stroke="#CDC4AF" stroke-width="1"/>
+  <text class="h9t-s" x="566" y="65" font-size="7">两个属性，两条链</text>
+
+  <line x1="548" y1="112" x2="576" y2="112" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h9t-ink)"/>
+  <rect class="h9t-q" x="582" y="98" width="118" height="30" rx="2"/>
+  <text class="h9t-m" x="641" y="112" font-size="7" text-anchor="middle">Set&lt;effect&gt;</text>
+  <text class="h9t-s" x="641" y="123" font-size="6" text-anchor="middle">渲染 + 另一个 effect</text>
+
+  <line x1="548" y1="142" x2="576" y2="142" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h9t-ink)"/>
+  <rect class="h9t-q" x="582" y="128" width="118" height="30" rx="2"/>
+  <text class="h9t-m" x="641" y="142" font-size="7" text-anchor="middle">Set&lt;effect&gt;</text>
+  <text class="h9t-s" x="641" y="153" font-size="6" text-anchor="middle">只有渲染 effect</text>
+
+  <text class="h9t-s" x="40" y="182" font-size="7.5">track 时：targetMap.get(target) 没有就建 Map，再按 key 建 Set，把当前 effect 塞进去。</text>
+  <text class="h9t-s" x="40" y="200" font-size="7.5">trigger 时：顺着同一条路把 Set 取出来，逐个执行。</text>
+
+  <text class="h9t-t" x="40" y="230" font-size="8.5" style="fill:#B03A2E">最外层用 WeakMap，是为了对象销毁后整本账能被自动回收 —— 不留一张永远不释放的表。</text>
+</svg>

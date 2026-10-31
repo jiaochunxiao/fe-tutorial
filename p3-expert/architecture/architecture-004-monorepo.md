@@ -82,6 +82,10 @@ Turborepo（或 Nx）的两个武器:
 
 ### 三、分包策略：边界比工具更重要 ⭐⭐⭐
 
+![monorepo 的分包结构：apps 是部署单元，packages 按变化原因切](../../assets/svg/architecture-004-monorepo.svg)
+
+*图 · 切分的依据不是「它是什么」，是「它跟谁一起变」*
+
 ```
 常见结构（按"变化原因"分层 ⭐）:
 monorepo/
@@ -137,6 +141,10 @@ Changesets 工作流:
 **2. 一道设计题**：把「主站 + 运营后台 + 组件库 + 图标 + 请求封装」规划成 Monorepo 结构——画出目录、写三个 package.json 关键片段、配置一条 turbo 任务链。
 
 ## 图解总结
+
+![三道地基 + 一条分包纪律，比目录结构更能决定成败](../../assets/svg/architecture-004-ground.svg)
+
+*图 · 三道地基 + 一条分包纪律，比目录结构更能决定成败*
 
 ```
 pnpm workspace: workspace:* 本地直链(联调零成本) │ 发版自动替换版本

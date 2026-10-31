@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 236" width="100%" role="img" aria-labelledby="h6dt h6dd">
+  <title id="h6dt">直接调用与发布订阅：多出来的那个中间人就是解耦</title>
+  <desc id="h6dd">上面一条是传统调用：组件 A 直接调用组件 B，A 必须知道 B 存在，两个兄弟模块互相 import 就成环。下面一条是发布订阅：A 只对事件中心 emit，事件中心再 notify 所有订阅者，A 不知道 B 存在，B 也不需要在 A 的 import 列表里。多出来的这个中间人就是 EventEmitter，Node 的 events、Vue2 的 $on/$emit、各种总线内核都是同一套。</desc>
+
+  <style>
+    .h6d-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .h6d-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .h6d-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .h6d-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="h6d-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+    <marker id="h6d-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="h6d-t" x="40" y="26" font-size="8.5">两个兄弟模块想通信，可它们不能互相 import</text>
+
+  <text class="h6d-s" x="40" y="58" font-size="7.5">传统调用</text>
+  <rect class="h6d-b" x="120" y="42" width="90" height="32" rx="2"/>
+  <text class="h6d-t" x="165" y="62" font-size="8" text-anchor="middle">组件 A</text>
+  <line x1="212" y1="58" x2="356" y2="58" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h6d-ink)"/>
+  <text class="h6d-s" x="284" y="52" font-size="7" text-anchor="middle">直接调</text>
+  <rect class="h6d-b" x="362" y="42" width="90" height="32" rx="2"/>
+  <text class="h6d-t" x="407" y="62" font-size="8" text-anchor="middle">组件 B</text>
+  <text class="h6d-s" x="468" y="62" font-size="7.5" style="fill:#B03A2E">A 必须知道 B 存在 —— 成环的源头</text>
+
+  <text class="h6d-s" x="40" y="126" font-size="7.5">发布订阅</text>
+  <rect class="h6d-b" x="120" y="106" width="90" height="32" rx="2"/>
+  <text class="h6d-t" x="165" y="126" font-size="8" text-anchor="middle">组件 A</text>
+  <line x1="212" y1="122" x2="272" y2="122" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h6d-ink)"/>
+  <text class="h6d-s" x="242" y="116" font-size="7" text-anchor="middle">emit</text>
+
+  <rect class="h6d-q" x="278" y="100" width="110" height="44" rx="2"/>
+  <text class="h6d-t" x="333" y="120" font-size="8" text-anchor="middle">事件中心</text>
+  <text class="h6d-s" x="333" y="134" font-size="7" text-anchor="middle">EventEmitter</text>
+
+  <line x1="390" y1="122" x2="450" y2="122" stroke="#1C1A17" stroke-width="1.1" marker-end="url(#h6d-ink)"/>
+  <text class="h6d-s" x="420" y="116" font-size="7" text-anchor="middle">notify</text>
+  <rect class="h6d-b" x="456" y="106" width="90" height="32" rx="2"/>
+  <text class="h6d-t" x="501" y="126" font-size="8" text-anchor="middle">组件 B</text>
+  <text class="h6d-s" x="556" y="126" font-size="7.5" style="fill:#B03A2E">A 不知道 B 存在</text>
+
+  <line x1="333" y1="150" x2="333" y2="176" stroke="#B03A2E" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#h6d-red)"/>
+  <text class="h6d-s" x="333" y="192" font-size="7" text-anchor="middle" style="fill:#B03A2E">B 只在这里登记一个回调，A 永远不 import B</text>
+
+  <text class="h6d-t" x="40" y="222" font-size="8.5" style="fill:#B03A2E">多出来的中间人不是绕路，是把「谁认识谁」变成「谁订阅了什么」。</text>
+</svg>

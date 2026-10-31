@@ -138,6 +138,10 @@ a.addEventListener('click', (e) => {
 
 ## 图解总结
 
+![事件对象像一张快递单：身份、信息、干预、合成四栏](../../assets/svg/dom-events-003-event-object.svg)
+
+*图 · 四栏各管一件事，混着记必然记串*
+
 ```
 事件对象 e = 快递单
  ├ 身份: target(案发现场,不变) | currentTarget(当前办案局,随传播变) | this===currentTarget

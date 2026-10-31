@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 230" width="100%" role="img" aria-labelledby="h5bt h5bd">
+  <title id="h5bt">同一秒里的十次触发：防抖执行一次，节流执行四次</title>
+  <desc id="h5bd">一秒内每 100 毫秒触发一次，共十次，wait 与 interval 都是 300 毫秒。防抖只在最后一次触发后静默满 300 毫秒才执行，所以整段只有一次执行；节流按固定间隔放行，在 0、300、600、900 毫秒各执行一次，共四次。两者不是快慢之分，而是「按静默结算」与「按节拍结算」的区别。</desc>
+
+  <style>
+    .h5b-b{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .h5b-q{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .h5b-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .h5b-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .h5b-m{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <text class="h5b-t" x="40" y="26" font-size="8.5">1 秒内每 100ms 触发一次（共 10 次），wait / interval = 300ms</text>
+
+  <text class="h5b-t" x="40" y="62" font-size="8.5">防抖</text>
+  <text class="h5b-s" x="40" y="76" font-size="7">静默后一次</text>
+
+  <line x1="60" y1="64" x2="690" y2="64" stroke="#B5AC9C" stroke-width="1"/>
+
+  <line x1="60" y1="52" x2="60" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="105" y1="52" x2="105" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="150" y1="52" x2="150" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="195" y1="52" x2="195" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="240" y1="52" x2="240" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="285" y1="52" x2="285" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="330" y1="52" x2="330" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="375" y1="52" x2="375" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="420" y1="52" x2="420" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="465" y1="52" x2="465" y2="64" stroke="#1C1A17" stroke-width="1.1"/>
+
+  <circle cx="645" cy="64" r="5" fill="#B03A2E"/>
+  <text class="h5b-t" x="656" y="67" font-size="7.5" style="fill:#B03A2E">只此一次</text>
+  <text class="h5b-s" x="60" y="92" font-size="7">十次触发全部作废，只在最后一次静默满 300ms 后执行</text>
+
+  <text class="h5b-t" x="40" y="130" font-size="8.5">节流</text>
+  <text class="h5b-s" x="40" y="144" font-size="7">固定间隔</text>
+
+  <line x1="60" y1="132" x2="690" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+
+  <line x1="60" y1="120" x2="60" y2="132" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="105" y1="120" x2="105" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+  <line x1="150" y1="120" x2="150" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+  <line x1="195" y1="120" x2="195" y2="132" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="240" y1="120" x2="240" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+  <line x1="285" y1="120" x2="285" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+  <line x1="330" y1="120" x2="330" y2="132" stroke="#1C1A17" stroke-width="1.1"/>
+  <line x1="375" y1="120" x2="375" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+  <line x1="420" y1="120" x2="420" y2="132" stroke="#B5AC9C" stroke-width="1"/>
+  <line x1="465" y1="120" x2="465" y2="132" stroke="#1C1A17" stroke-width="1.1"/>
+
+  <circle cx="60" cy="132" r="4" fill="#B03A2E"/>
+  <circle cx="195" cy="132" r="4" fill="#B03A2E"/>
+  <circle cx="330" cy="132" r="4" fill="#B03A2E"/>
+  <circle cx="465" cy="132" r="4" fill="#B03A2E"/>
+  <text class="h5b-t" x="476" y="136" font-size="7.5" style="fill:#B03A2E">共 4 次</text>
+  <text class="h5b-s" x="60" y="160" font-size="7">每满 300ms 放行一次，超频的触发直接丢弃</text>
+
+  <line x1="60" y1="182" x2="690" y2="182" stroke="#1C1A17" stroke-width="1"/>
+  <text class="h5b-m" x="60" y="196" font-size="7" text-anchor="middle">0</text>
+  <text class="h5b-m" x="465" y="196" font-size="7" text-anchor="middle">900ms</text>
+  <text class="h5b-m" x="645" y="196" font-size="7" text-anchor="middle">1300ms</text>
+
+  <text class="h5b-t" x="40" y="220" font-size="8.5" style="fill:#B03A2E">一个按「静默」结算，一个按「节拍」结算 —— 不是快慢之分，是结算方式之分。</text>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 212" width="100%" role="img" aria-labelledby="jc6t jc6d">
+  <title id="jc6t">数组方法的可变性地图</title>
+  <desc id="jc6d">二十多个数组方法先按改不改原数组分成两堆。会改原数组的有九个：push、pop、shift、unshift、splice、sort、reverse、fill、copyWithin。其余全部返回新结果，原数组不动，比如 slice、concat、map、filter、reduce、find、join、flat。另外 shift 和 unshift 是线性复杂度，因为要整体搬移，而 push 和 pop 是常数复杂度。</desc>
+
+  <style>
+    .jc6-p{fill:none;stroke:#CDC4AF;stroke-width:1}
+    .jc6-mut{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .jc6-new{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .jc6-more{fill:#FBF7EE;stroke:#6E675A;stroke-width:1;stroke-dasharray:3 2.5}
+    .jc6-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .jc6-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .jc6-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <text class="jc6-t" x="40" y="24" font-size="8.5">先分两堆 —— 改不改原数组，比「返回什么」更值得先记</text>
+
+  <rect class="jc6-p" x="40" y="34" width="300" height="146" rx="2"/>
+  <text class="jc6-t" x="52" y="52" font-size="8.5">会改原数组（9 个）</text>
+
+  <rect class="jc6-mut" x="52" y="60" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="95" y="77" font-size="8" text-anchor="middle">push</text>
+  <rect class="jc6-mut" x="146" y="60" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="189" y="77" font-size="8" text-anchor="middle">pop</text>
+  <rect class="jc6-mut" x="240" y="60" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="283" y="77" font-size="8" text-anchor="middle">shift</text>
+
+  <rect class="jc6-mut" x="52" y="92" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="95" y="109" font-size="8" text-anchor="middle">unshift</text>
+  <rect class="jc6-mut" x="146" y="92" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="189" y="109" font-size="8" text-anchor="middle">splice</text>
+  <rect class="jc6-mut" x="240" y="92" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="283" y="109" font-size="8" text-anchor="middle">sort</text>
+
+  <rect class="jc6-mut" x="52" y="124" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="95" y="141" font-size="8" text-anchor="middle">reverse</text>
+  <rect class="jc6-mut" x="146" y="124" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="189" y="141" font-size="8" text-anchor="middle">fill</text>
+  <rect class="jc6-mut" x="240" y="124" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="283" y="141" font-size="8" text-anchor="middle">copyWithin</text>
+
+  <text class="jc6-s" x="52" y="170" font-size="7">shift / unshift 是 O(n) 整体搬移，push / pop 是 O(1)</text>
+
+  <rect class="jc6-p" x="380" y="34" width="320" height="146" rx="2"/>
+  <text class="jc6-t" x="392" y="52" font-size="8.5">返回新结果（其余全部）</text>
+
+  <rect class="jc6-new" x="392" y="60" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="435" y="77" font-size="8" text-anchor="middle">slice</text>
+  <rect class="jc6-new" x="486" y="60" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="529" y="77" font-size="8" text-anchor="middle">concat</text>
+  <rect class="jc6-new" x="580" y="60" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="623" y="77" font-size="8" text-anchor="middle">map</text>
+
+  <rect class="jc6-new" x="392" y="92" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="435" y="109" font-size="8" text-anchor="middle">filter</text>
+  <rect class="jc6-new" x="486" y="92" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="529" y="109" font-size="8" text-anchor="middle">reduce</text>
+  <rect class="jc6-new" x="580" y="92" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="623" y="109" font-size="8" text-anchor="middle">find</text>
+
+  <rect class="jc6-new" x="392" y="124" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="435" y="141" font-size="8" text-anchor="middle">join</text>
+  <rect class="jc6-new" x="486" y="124" width="86" height="26" rx="2"/>
+  <text class="jc6-mono" x="529" y="141" font-size="8" text-anchor="middle">flat</text>
+  <rect class="jc6-more" x="580" y="124" width="86" height="26" rx="2"/>
+  <text class="jc6-s" x="623" y="141" font-size="7.5" text-anchor="middle">以及其余</text>
+
+  <text class="jc6-s" x="392" y="170" font-size="7">浅拷贝一层 —— 嵌套的引用仍然共享</text>
+
+  <text class="jc6-t" x="40" y="200" font-size="8.5" style="fill:#B03A2E">第二问才是「拷贝拷几层」—— 不改原数组，不代表深拷贝。</text>
+</svg>

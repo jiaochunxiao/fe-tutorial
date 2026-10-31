@@ -196,6 +196,10 @@ window.setTimeout(foo, 0); // 回调里的 this ?
 
 **答案要点**：
 
+![三条线性质不同：两条是普通属性，一条是内部槽](../../assets/svg/js-deep-012-triangle.svg)
+
+*图 · 三条线性质不同：两条是普通属性，一条是内部槽*
+
 ```
 f.[[Prototype]] ─────▶ F.prototype
 F.prototype.constructor ─────▶ F

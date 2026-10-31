@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 244" width="100%" role="img" aria-labelledby="p1ct p1cd">
+  <title id="p1ct">CLS 的四大惯犯与对应修法</title>
+  <desc id="p1cd">布局偏移几乎总是这四个原因。图片和视频没写尺寸，浏览器不知道要留多大位置，加载完就往下推；动态插入的内容比如广告和弹窗把正文挤走；Web 字体加载完字宽变了，整段文字重排；懒加载的占位高度和真实内容不一致。每一种都有对应的修法：给尺寸或宽高比、给广告位预留空间、用 font-display 配 size-adjust 预调字宽、让骨架屏和真实内容一样高。</desc>
+
+  <style>
+    .p1c-num{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.1}
+    .p1c-fix{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.1}
+    .p1c-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .p1c-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .p1c-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#6E675A}
+  </style>
+
+  <defs>
+    <marker id="p1c-red" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#B03A2E"/>
+    </marker>
+  </defs>
+
+  <text class="p1c-t" x="40" y="26" font-size="8.5">惯犯</text>
+  <text class="p1c-t" x="380" y="26" font-size="8.5" style="fill:#B03A2E">修法</text>
+
+  <circle class="p1c-num" cx="54" cy="56" r="11"/>
+  <text class="p1c-t" x="54" y="59" font-size="8" text-anchor="middle">1</text>
+  <text class="p1c-t" x="76" y="53" font-size="8.5">图片 / 视频没有尺寸</text>
+  <text class="p1c-s" x="76" y="67" font-size="7.5">浏览器不知道要留多大位置，加载完就往下推</text>
+  <line x1="340" y1="56" x2="372" y2="56" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1c-red)"/>
+  <rect class="p1c-fix" x="376" y="40" width="300" height="32" rx="2"/>
+  <text class="p1c-mono" x="390" y="60" font-size="7.5">width / height 或 aspect-ratio 占位</text>
+
+  <circle class="p1c-num" cx="54" cy="104" r="11"/>
+  <text class="p1c-t" x="54" y="107" font-size="8" text-anchor="middle">2</text>
+  <text class="p1c-t" x="76" y="101" font-size="8.5">动态插入的内容</text>
+  <text class="p1c-s" x="76" y="115" font-size="7.5">广告、弹窗把正文整体挤下去</text>
+  <line x1="340" y1="104" x2="372" y2="104" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1c-red)"/>
+  <rect class="p1c-fix" x="376" y="88" width="300" height="32" rx="2"/>
+  <text class="p1c-mono" x="390" y="108" font-size="7.5">预留空间 / 绝对定位浮层</text>
+
+  <circle class="p1c-num" cx="54" cy="152" r="11"/>
+  <text class="p1c-t" x="54" y="155" font-size="8" text-anchor="middle">3</text>
+  <text class="p1c-t" x="76" y="149" font-size="8.5">Web 字体替换</text>
+  <text class="p1c-s" x="76" y="163" font-size="7.5">字体一换字宽变了，整段文字重排</text>
+  <line x1="340" y1="152" x2="372" y2="152" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1c-red)"/>
+  <rect class="p1c-fix" x="376" y="136" width="300" height="32" rx="2"/>
+  <text class="p1c-mono" x="390" y="156" font-size="7.5">font-display + size-adjust 预调</text>
+
+  <circle class="p1c-num" cx="54" cy="200" r="11"/>
+  <text class="p1c-t" x="54" y="203" font-size="8" text-anchor="middle">4</text>
+  <text class="p1c-t" x="76" y="197" font-size="8.5">懒加载占位缺失</text>
+  <text class="p1c-s" x="76" y="211" font-size="7.5">占位高度和真实内容对不上</text>
+  <line x1="340" y1="200" x2="372" y2="200" stroke="#B03A2E" stroke-width="1.3" marker-end="url(#p1c-red)"/>
+  <rect class="p1c-fix" x="376" y="184" width="300" height="32" rx="2"/>
+  <text class="p1c-mono" x="390" y="204" font-size="7.5">骨架屏用真实高度</text>
+
+  <text class="p1c-s" x="40" y="236" font-size="8.5">判断标准是「用户会不会想点，却点到了别处」—— 只要位移发生在首屏可视区且没人交互，就会计入。</text>
+</svg>

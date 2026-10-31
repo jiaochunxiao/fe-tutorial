@@ -145,6 +145,10 @@ window.addEventListener('resize', setRootFont);
 
 ## 图解总结
 
+![三层像素与视口是前提，下面五层各管一档，别指望一套机制包打天下](../../assets/svg/css-deep-009-layers.svg)
+
+*图 · 三层像素与视口是前提，下面五层各管一档，别指望一套机制包打天下*
+
 ```
 适配分层：
  物理像素 ←DPR×→ CSS 像素 ←meta viewport→ 布局视口

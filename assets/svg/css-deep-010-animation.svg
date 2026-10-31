@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 40 740 264" width="100%" role="img" aria-labelledby="an10t an10d">
+  <title id="an10t">transition 与 animation 的区别，以及动画属性的三级代价</title>
+  <desc id="an10d">上面一行对比：transition 只有起点和终点两个状态，属性值变了才被动开始；animation 由 keyframes 定义多个关键帧，主动播放且可循环。下面一行按渲染管线分三级：改 width、left、margin 要走重排、重绘、合成三步，最贵；改 color、background 跳过重排，走两步；改 transform、opacity 只走合成一步，由 GPU 独立完成，最便宜。</desc>
+
+  <style>
+    .an10-box{fill:#FBF7EE;stroke:#1C1A17;stroke-width:1.4}
+    .an10-hot{fill:#E7DEC8;stroke:#1C1A17;stroke-width:1.4}
+    .an10-skip{fill:none;stroke:#CDC4AF;stroke-width:1.2;stroke-dasharray:5 4}
+    .an10-t{font-family:'Inter','Noto Sans SC',sans-serif;fill:#1C1A17}
+    .an10-s{font-family:'Inter','Noto Sans SC',sans-serif;fill:#6E675A}
+    .an10-mono{font-family:'JetBrains Mono','SF Mono',Menlo,monospace;fill:#1C1A17}
+  </style>
+
+  <defs>
+    <marker id="an10-ink" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#1C1A17"/>
+    </marker>
+  </defs>
+
+  <text class="an10-mono" x="40" y="58" font-size="10.5">transition</text>
+  <text class="an10-s" x="118" y="58" font-size="9">只有起点和终点，属性变了才动</text>
+  <path d="M56 100 C140 100 220 72 320 72" fill="none" stroke="#1C1A17" stroke-width="1.6"/>
+  <circle cx="56" cy="100" r="4" fill="#1C1A17"/>
+  <circle cx="320" cy="72" r="4" fill="#1C1A17"/>
+  <text class="an10-s" x="40" y="120" font-size="9">被动：两态之间补一段缓动</text>
+
+  <text class="an10-mono" x="400" y="58" font-size="10.5">animation</text>
+  <text class="an10-s" x="476" y="58" font-size="9">多帧主动播放，可循环</text>
+  <path d="M400 84 C430 62 470 62 500 84 C530 106 570 106 600 84 C630 62 670 62 700 84" fill="none" stroke="#1C1A17" stroke-width="1.6"/>
+  <circle cx="400" cy="84" r="4" fill="#1C1A17"/>
+  <circle cx="500" cy="84" r="4" fill="#1C1A17"/>
+  <circle cx="600" cy="84" r="4" fill="#1C1A17"/>
+  <circle cx="700" cy="84" r="4" fill="#1C1A17"/>
+  <text class="an10-s" x="400" y="104" font-size="9" text-anchor="middle">0%</text>
+  <text class="an10-s" x="500" y="104" font-size="9" text-anchor="middle">33%</text>
+  <text class="an10-s" x="600" y="104" font-size="9" text-anchor="middle">66%</text>
+  <text class="an10-s" x="700" y="104" font-size="9" text-anchor="middle">100%</text>
+  <text class="an10-s" x="400" y="120" font-size="9">主动：每一帧都写死，循环由 iteration 决定</text>
+
+  <line x1="40" y1="130" x2="700" y2="130" stroke="#CDC4AF" stroke-width="1"/>
+
+  <text class="an10-mono" x="40" y="160" font-size="9.5">width / left / margin</text>
+  <rect class="an10-box" x="216" y="140" width="120" height="32" rx="3"/>
+  <text class="an10-t" x="276" y="160" font-size="9.5" text-anchor="middle">重排 Layout</text>
+  <line x1="338" y1="156" x2="354" y2="156" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#an10-ink)"/>
+  <rect class="an10-box" x="358" y="140" width="120" height="32" rx="3"/>
+  <text class="an10-t" x="418" y="160" font-size="9.5" text-anchor="middle">重绘 Paint</text>
+  <line x1="480" y1="156" x2="496" y2="156" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#an10-ink)"/>
+  <rect class="an10-box" x="500" y="140" width="120" height="32" rx="3"/>
+  <text class="an10-t" x="560" y="160" font-size="9.5" text-anchor="middle">合成 Composite</text>
+  <text class="an10-s" x="636" y="160" font-size="9.5">3 步 · 最贵</text>
+
+  <text class="an10-mono" x="40" y="202" font-size="9.5">color / background</text>
+  <rect class="an10-skip" x="216" y="182" width="120" height="32" rx="3"/>
+  <text class="an10-s" x="276" y="202" font-size="9.5" text-anchor="middle">跳过</text>
+  <rect class="an10-box" x="358" y="182" width="120" height="32" rx="3"/>
+  <text class="an10-t" x="418" y="202" font-size="9.5" text-anchor="middle">重绘 Paint</text>
+  <line x1="480" y1="198" x2="496" y2="198" stroke="#1C1A17" stroke-width="1.4" marker-end="url(#an10-ink)"/>
+  <rect class="an10-box" x="500" y="182" width="120" height="32" rx="3"/>
+  <text class="an10-t" x="560" y="202" font-size="9.5" text-anchor="middle">合成 Composite</text>
+  <text class="an10-s" x="636" y="202" font-size="9.5">2 步 · 居中</text>
+
+  <text class="an10-mono" x="40" y="244" font-size="9.5">transform / opacity</text>
+  <rect class="an10-skip" x="216" y="224" width="120" height="32" rx="3"/>
+  <text class="an10-s" x="276" y="244" font-size="9.5" text-anchor="middle">跳过</text>
+  <rect class="an10-skip" x="358" y="224" width="120" height="32" rx="3"/>
+  <text class="an10-s" x="418" y="244" font-size="9.5" text-anchor="middle">跳过</text>
+  <rect class="an10-hot" x="500" y="224" width="120" height="32" rx="3"/>
+  <text class="an10-t" x="560" y="244" font-size="9.5" text-anchor="middle">合成 Composite</text>
+  <text class="an10-s" x="636" y="244" font-size="9.5">1 步 · 最省</text>
+
+  <text class="an10-s" x="40" y="274" font-size="9.5">入场越早，要跑的段数越多 —— 所以动 transform / opacity</text>
+  <text class="an10-s" x="40" y="292" font-size="9">实线框＝必须跑　虚线框＝跳过　｜　位移 translate · 显隐 opacity · 提层 will-change 慎用</text>
+</svg>

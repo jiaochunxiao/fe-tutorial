@@ -188,6 +188,10 @@ const hasEmoji = (v) => /\p{Extended_Pictographic}/u.test(v);
 
 ## 图解总结
 
+![两次 test 之间多出来的那个 lastIndex，就是「时真时假」的全部原因](../../assets/svg/js-core-008-lastindex.svg)
+
+*图 · 两次 test 之间多出来的那个 lastIndex，就是「时真时假」的全部原因*
+
 ```
 字符串切片: slice(负数ok) | substring(换序/负归0) | substr(按长度, 遗留)
 替换: replace(默认只第一处) | g 全局 | $1/$2 分组引用 | 函数动态替换 | replaceAll
