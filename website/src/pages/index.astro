@@ -1,93 +1,251 @@
 ---
 import { getCollection } from 'astro:content';
-import Chrome from '../layouts/Chrome.astro';
-import { SERIES, STAGES, PATH_FLOWS, FEATURED, type SeriesMeta } from '../data/series';
+import Base from '../layouts/Base.astro';
+import { SERIES, STAGES, FEATURED } from '../data/series';
+import '../styles/home-book.css';
 
 const entries = await getCollection('articles');
 const total = entries.length;
 
 const countBySeries = new Map<string, number>();
 const countByStage = new Map<string, number>();
-for (const e of entries) {
-  countBySeries.set(e.data.seriesId, (countBySeries.get(e.data.seriesId) ?? 0) + 1);
-  const s = SERIES.find((m) => m.id === e.data.seriesId)?.stage;
-  if (s) countByStage.set(s, (countByStage.get(s) ?? 0) + 1);
+for (const entry of entries) {
+  countBySeries.set(entry.data.seriesId, (countBySeries.get(entry.data.seriesId) ?? 0) + 1);
+  const stage = SERIES.find((series) => series.id === entry.data.seriesId)?.stage;
+  if (stage) countByStage.set(stage, (countByStage.get(stage) ?? 0) + 1);
 }
 
-const stageName = Object.fromEntries(STAGES.map((s) => [s.key, s.name]));
-const stageTag = { P1: 'p1', P2: 'p2', P3: 'p3' } as const;
+const seriesLabels: Record<string, string> = {
+  'js-deep': 'JavaScript 深入',
+  'js-core': 'JavaScript 核心',
+  'css-deep': 'CSS 深入',
+  'dom-events': 'DOM 与事件',
+  'browser-basic': '浏览器基础',
+  'js-async': '异步编程',
+  'es6': 'ES6+',
+  'network': '网络与浏览器',
+  'vue': 'Vue 原理',
+  'react': 'React 原理',
+  'engineering': '前端工程化',
+  'performance': '性能优化',
+  'v8': 'V8 与底层',
+  'rendering': '渲染原理',
+  'handwritten': '手写源码',
+  'ts': 'TypeScript',
+  'architecture': '前端架构',
+  'security': '前端安全',
+  'algorithm': '算法与数据结构',
+};
 
+const stageVisuals = {
+  P1: {
+    han: '壹',
+    intro: '把「会用」变成「懂原理」。五大基础系列，面完再往上走。',
+    routeHref: '/path#fast-track',
+    routeLabel: '进入第一阶段路线',
+  },
+  P2: {
+    han: '贰',
+    intro: '异步、网络、框架原理与工程化，组成社招面试的四梁八柱。',
+    routeHref: '/path#part-time',
+    routeLabel: '进入社招进阶路线',
+  },
+  P3: {
+    han: '叁',
+    intro: '引擎、渲染、架构与安全。把原理连接到真实工程判断。',
+    routeHref: '/path#full',
+    routeLabel: '查看系统学习路线',
+  },
+} as const;
+
+const featuredEntry = entries.find((entry) => entry.data.id === FEATURED.id);
+const featuredMinutes = featuredEntry?.data.readingTime ?? 18;
+const featuredNo = FEATURED.id.split('-').pop();
 const featuredHref = `/articles/${FEATURED.id}/`;
-const diagram = `    function foo() {              ┌──────────────────┐
-      var a = 2;                  │   bar 函数对象    │
-      function bar() {…} ─创建─▶  │ [[Environment]]┐ │
-      return bar;                 └────────────────┼─┘
-    }                                              ▼
-    // foo() 出栈，词法环境仍被引用，无法回收`;
+const featuredTitleIndex = FEATURED.title.indexOf('之');
+
+const diagramBefore = `function foo() {
+  var a = 2;
+  function bar() { console.log(a); }
+  return bar;
+}
+
+const baz = foo();
+// foo 已出栈，但 a 仍被
+// `;
+const diagramAfter = ` 引用，无法回收。`;
 ---
-<Chrome title="首页" desc="19 个系列、158 篇、300+ 张原理图。从「执行上下文」走到「架构权衡」，每篇都能讲给面试官听。">
-<div class="wrap">
+<Base title="课程书目" desc="一套按顺序读的前端课程：19 个系列、158 篇文章、300+ 张原理图，从执行上下文走到架构权衡。">
+  <div class="home-book">
+    <header class="book-nav-wrap">
+      <div class="book-shell book-nav" data-home-nav>
+        <a class="book-brand" href="/" aria-label="前端进阶之路首页">
+          <span class="book-brand-mark" aria-hidden="true">进</span>
+          <span>前端进阶之路</span>
+        </a>
 
-  <section class="hero">
-    <h1>前端进阶之路</h1>
-    <p class="sub">19 个系列、158 篇、300+ 张原理图。从「执行上下文」走到「架构权衡」，每篇都能讲给面试官听。</p>
-    <div class="chips">
-      <span class="chip"><b>{countBySeries.size}</b> 系列</span>
-      <span class="chip"><b>{total}</b> 篇</span>
-      <span class="chip"><b>300+</b> 原理图</span>
-      <span class="chip"><b>{STAGES.length}</b> 阶段</span>
-      <a class="chip link" href="/path#fast-track"><b>25</b> 篇校招速通路线 ↓</a>
-    </div>
-  </section>
+        <button
+          class="book-menu"
+          type="button"
+          aria-label="打开导航"
+          aria-expanded="false"
+          aria-controls="book-site-nav"
+          data-home-menu
+        >
+          <span></span><span></span><span></span>
+        </button>
 
-  {PATH_FLOWS.map((flow) => {
-    const meta = SERIES.find((m) => m.id === Object.keys({}) ) ; void meta;
-    const stageMeta = STAGES.find((s) => s.key === flow.stage)!;
-    return (
-      <section class={`stage-block ${stageTag[flow.stage]}`} id={flow.stage === 'P1' ? 'path' : undefined}>
-        <div class="stage-head">
-          <span class="tag">{stageMeta.en}</span>
-          <h2>{stageMeta.name}</h2>
-          <small>{countByStage.get(flow.stage) ?? 0} 篇 · {countBySeries.size >= 0 ? SERIES.filter((m) => m.stage === flow.stage).length : 0} 系列</small>
+        <nav class="book-nav-links" id="book-site-nav" aria-label="主导航">
+          <a href="/path">学习路线</a>
+          <a href="/search">搜索</a>
+          <a href="#feature">本周精读</a>
+          <a href="#directory">系列目录</a>
+          <a href="/about">关于</a>
+          <a class="book-offer" href="https://max.jiaochunxiao.cn" target="_blank" rel="noopener">上岸offer 题库 ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="book-shell">
+      <section class="book-hero" aria-labelledby="home-title">
+        <div>
+          <div class="book-kicker">一套按顺序读的前端课程</div>
+          <h1 id="home-title">前端这条路，<br><em>按顺序读。</em></h1>
+          <p class="book-hero-copy">一套写给前端开发者的进阶书目。每篇从机制推演讲到面试表达，读完能讲清楚，也能写出来。</p>
+          <div class="book-hero-actions">
+            <a class="book-btn" href="/articles/js-deep-001/">从第一篇开始</a>
+            <a class="book-text-link" href="/search">搜索想补的知识点</a>
+          </div>
+          <div class="book-metrics" aria-label="课程概况">
+            <span><b>{SERIES.length}</b> 个系列</span>
+            <span><b>{total}</b> 篇文章</span>
+            <span><b>300+</b> 张原理图</span>
+            <span><b>{STAGES.length}</b> 个阶段</span>
+          </div>
         </div>
-        <div class="flow">
-          {flow.nodes.map((n, i) => (
-            <>
-              {i > 0 && <div class="conn"></div>}
-              <a class="node" href={n.href}><b>{n.label}</b><small>{n.sub}</small></a>
-            </>
-          ))}
+
+        <aside class="book-start" id="path" aria-label="选择学习路线">
+          <a class="book-route-entry" href="/path#fast-track">
+            <span class="book-route-no">壹</span>
+            <span>
+              <span class="book-route-name">校招速通</span>
+              <span class="book-route-desc">按面试权重，优先补齐最高频的机制题。</span>
+            </span>
+            <span class="book-route-count">25 篇<small>6–8 周</small></span>
+          </a>
+          <a class="book-route-entry" href="/path#part-time">
+            <span class="book-route-no">贰</span>
+            <span>
+              <span class="book-route-name">社招进阶</span>
+              <span class="book-route-desc">面向工程化、框架原理与性能深度。</span>
+            </span>
+            <span class="book-route-count">+30 篇<small>约 3 个月</small></span>
+          </a>
+          <a class="book-route-entry" href="/path#full">
+            <span class="book-route-no">叁</span>
+            <span>
+              <span class="book-route-name">系统学习</span>
+              <span class="book-route-desc">从基础到高级，按完整课程顺序推进。</span>
+            </span>
+            <span class="book-route-count">{total} 篇<small>全量</small></span>
+          </a>
+          <p class="book-note">不知道从哪开始？先读「执行上下文」和「闭包」。它们是后面半个课程的地基。</p>
+        </aside>
+      </section>
+
+      <section class="book-section" id="feature" aria-labelledby="feature-title">
+        <div class="book-anchor" aria-hidden="true">
+          <span id="stages"></span>
+        </div>
+        <div class="book-section-head">
+          <h2 id="feature-title">本周精读</h2>
+          <p>不用一次读完 158 篇。先把一个机制真正讲透。</p>
+        </div>
+        <article class="book-featured">
+          <div class="book-feature-copy">
+            <div class="book-feature-kicker">精读 {featuredNo}｜{featuredMinutes} 分钟</div>
+            <h3>
+              {featuredTitleIndex > -1 ? (
+                <>{FEATURED.title.slice(0, featuredTitleIndex + 1)}<br />{FEATURED.title.slice(featuredTitleIndex + 1)}</>
+              ) : FEATURED.title}
+            </h3>
+            <div class="book-feature-meta">面试高频，作用域链与内存管理</div>
+            <p>{FEATURED.desc}</p>
+            <a class="book-text-link" href={featuredHref}>开始阅读</a>
+          </div>
+          <div class="book-diagram">
+            <div class="book-diagram-label">机制摘录</div>
+            <pre class="book-pre">{diagramBefore}<b>[[Environment]]</b>{diagramAfter}</pre>
+          </div>
+        </article>
+      </section>
+
+      <section class="book-section" id="directory" aria-labelledby="directory-title">
+        <div class="book-anchor" aria-hidden="true">
+          <span id="all"></span>
+          <span id="toc"></span>
+        </div>
+        <div class="book-section-head">
+          <h2 id="directory-title">课程目录</h2>
+          <p>同一阶段内可以按兴趣跳读；跨阶段建议先补基础。</p>
+        </div>
+        <div class="book-directory">
+          {STAGES.map((stage) => {
+            const visual = stageVisuals[stage.key];
+            const stageSeries = SERIES.filter((series) => series.stage === stage.key);
+            return (
+              <div>
+                <h3 class="book-stage-title">
+                  <span class="book-han">{visual.han}</span>
+                  <strong>{stage.name}</strong>
+                  <small>{countByStage.get(stage.key) ?? 0} 篇</small>
+                </h3>
+                <p class="book-stage-intro">{visual.intro}</p>
+                {stageSeries.map((series) => (
+                  <a class="book-series-row" href={`/series/${series.id}/`}>
+                    <span>{seriesLabels[series.id] ?? series.en}</span>
+                    <small>{countBySeries.get(series.id) ?? 0}</small>
+                  </a>
+                ))}
+                <a class="book-stage-foot" href={visual.routeHref}>{visual.routeLabel}</a>
+              </div>
+            );
+          })}
         </div>
       </section>
-    );
-  })}
+    </main>
 
-  <section class="feature" id="feature">
-    <div class="txt">
-      <span class="kind">本周精读 · JS-DEEP-005</span>
-      <h2>{FEATURED.title}</h2>
-      <div class="meta">{FEATURED.meta}</div>
-      <p>{FEATURED.desc}</p>
-      <a class="go" href={featuredHref}>开始阅读 →</a>
-    </div>
-    <div class="diagram">{diagram}</div>
-  </section>
-
-  <div class="section-h" id="all"><h2>全部系列</h2><span>19 SERIES · {total} POSTS</span></div>
-  <div class="grid">
-    {SERIES.map((m: SeriesMeta) => (
-      <a class="card" href={`/series/${m.id}/`}>
-        <span class="ic">
-          {m.icon.type === 'logo'
-            ? <img src={`/logos/${m.icon.file}.svg`} alt={m.icon.name} style="width:22px;height:22px;filter:invert(1)" />
-            : m.icon.char}
-        </span>
-        <div><b>{m.id === 'js-deep' ? 'JavaScript 深入系列' : m.id === 'js-core' ? 'JavaScript 核心系列' : m.id === 'js-async' ? '异步编程系列' : m.id === 'es6' ? 'ES6+ 系列' : m.id === 'network' ? '网络与浏览器系列' : m.id === 'vue' ? 'Vue 原理系列' : m.id === 'react' ? 'React 原理系列' : m.id === 'engineering' ? '前端工程化系列' : m.id === 'performance' ? '性能优化系列' : m.id === 'v8' ? 'V8 与底层系列' : m.id === 'rendering' ? '渲染原理系列' : m.id === 'handwritten' ? '手写源码系列' : m.id === 'ts' ? 'TypeScript 系列' : m.id === 'architecture' ? '前端架构系列' : m.id === 'security' ? '前端安全系列' : m.id === 'algorithm' ? '算法与数据结构' : m.id === 'css-deep' ? 'CSS 深入系列' : m.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</b>
-          <small>{m.en} · {m.blurb}</small></div>
-        <span class="n">{countBySeries.get(m.id) ?? 0}</span>
-      </a>
-    ))}
+    <footer class="book-shell book-footer">
+      <div><b>前端进阶之路</b>｜与小程序「前端面试刷题助手 上岸offer」题库联动</div>
+      <div>{SERIES.length} 个系列，{total} 篇，300+ 原理图</div>
+    </footer>
   </div>
 
-</div>
-</Chrome>
+  <script is:inline>
+    (() => {
+      const nav = document.querySelector('[data-home-nav]');
+      const menu = document.querySelector('[data-home-menu]');
+      if (!nav || !menu) return;
+
+      const closeMenu = () => {
+        nav.classList.remove('book-nav-open');
+        menu.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-label', '打开导航');
+      };
+
+      menu.addEventListener('click', () => {
+        const open = nav.classList.toggle('book-nav-open');
+        menu.setAttribute('aria-expanded', String(open));
+        menu.setAttribute('aria-label', open ? '关闭导航' : '打开导航');
+      });
+
+      nav.querySelectorAll('.book-nav-links a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu();
+      });
+    })();
+  </script>
+</Base>

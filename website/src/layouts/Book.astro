@@ -1,0 +1,98 @@
+---
+import Base from './Base.astro';
+import '../styles/book-site.css';
+
+interface Props {
+  title: string;
+  desc?: string;
+  active?: 'path' | 'search' | 'about' | 'directory';
+  reading?: boolean;
+  mainClass?: string;
+}
+
+const { title, desc, active, reading = false, mainClass = '' } = Astro.props;
+
+const navItems = [
+  { key: 'path', label: '学习路线', href: '/path' },
+  { key: 'directory', label: '系列目录', href: '/#directory' },
+  { key: 'search', label: '搜索', href: '/search' },
+  { key: 'about', label: '关于', href: '/about' },
+] as const;
+---
+<Base title={title} desc={desc}>
+  <div class:list={['book-site', reading && 'book-site-reading']}>
+    <header class="book-site-nav-wrap">
+      <div class="book-shell book-site-nav" data-book-nav>
+        <a class="book-site-brand" href="/" aria-label="前端进阶之路首页">
+          <span class="book-site-brand-mark" aria-hidden="true">进</span>
+          <span>前端进阶之路</span>
+        </a>
+
+        <button
+          class="book-site-menu"
+          type="button"
+          aria-label="打开导航"
+          aria-expanded="false"
+          aria-controls="book-site-links"
+          data-book-menu
+        >
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="book-site-links" id="book-site-links" aria-label="主导航">
+          {navItems.map((item) => (
+            <a
+              class="book-nav-link"
+              href={item.href}
+              aria-current={active === item.key ? 'page' : undefined}
+            >{item.label}</a>
+          ))}
+          <a class="book-nav-offer" href="https://max.jiaochunxiao.cn" target="_blank" rel="noopener">
+            上岸offer 题库 ↗
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class:list={['book-shell', 'book-site-main', mainClass]}>
+      <slot />
+    </main>
+
+    <footer class="book-shell book-site-footer">
+      <div><b>前端进阶之路</b>｜与小程序「前端面试刷题助手 上岸offer」题库联动</div>
+      <div>19 个系列，158 篇，300+ 原理图</div>
+    </footer>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const nav = document.querySelector('[data-book-nav]');
+      const menu = document.querySelector('[data-book-menu]');
+      if (!nav || !menu) return;
+
+      const closeMenu = () => {
+        nav.classList.remove('is-open');
+        menu.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-label', '打开导航');
+      };
+
+      menu.addEventListener('click', () => {
+        const open = menu.getAttribute('aria-expanded') === 'true';
+        nav.classList.toggle('is-open', !open);
+        menu.setAttribute('aria-expanded', String(!open));
+        menu.setAttribute('aria-label', open ? '打开导航' : '关闭导航');
+      });
+
+      nav.querySelectorAll('.book-site-links a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+          closeMenu();
+          menu.focus();
+        }
+      });
+    })();
+  </script>
+</Base>

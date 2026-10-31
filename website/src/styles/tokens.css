@@ -1,21 +1,28 @@
-/* 设计令牌 —— 双页面语言
-   夜航路径（主视觉）：暗底 + 琥珀路径节点
-   墨纸书卷（阅读页）：暖纸 + 衬线 + 朱砂一点 */
+/* 全站设计令牌：暖纸课程书目。 */
 :root{
-  /* 夜航路径（chrome） */
-  --c-bg:#0F141B; --c-panel:#171E27; --c-panel2:#0B0F15; --c-line:#2A323C;
-  --c-text:#E9ECEF; --c-muted:#A6ADB5; --c-amber:#F3C93F; --c-sky:#A9C9F2; --c-rose:#F3B8CE;
-  --c-ink:#16181D;
-  /* 墨纸书卷（reading） */
-  --r-paper:#F4EFE4; --r-paper-deep:#EFE8D8; --r-ink:#1C1A17; --r-cinnabar:#B03A2E;
-  --r-hair:#CDC4AF; --r-muted:#6E675A; --r-inkblock:#141210;
-  /* 字体 */
-  --f-sans:'Inter','Noto Sans SC',-apple-system,sans-serif;
-  --f-serif:'Noto Serif SC',serif;
-  --f-mono:'JetBrains Mono',monospace;
+  --paper:#f4efe4;
+  --paper-deep:#ede5d6;
+  --paper-white:#fdfaf3;
+  --ink:#211e18;
+  --muted:#6f685b;
+  --hair:#c8bfae;
+  --cinnabar:#a33b2b;
+
+  /* 旧页面别名统一映射到新书目色，避免残留暗色主题。 */
+  --c-bg:var(--paper); --c-panel:var(--paper-white); --c-panel2:var(--paper-deep);
+  --c-line:var(--hair); --c-text:var(--ink); --c-muted:var(--muted);
+  --c-amber:var(--cinnabar); --c-sky:var(--ink); --c-rose:var(--cinnabar); --c-ink:var(--ink);
+  --r-paper:var(--paper); --r-paper-deep:var(--paper-deep);
+  --r-ink:var(--ink); --r-cinnabar:var(--cinnabar);
+  --r-hair:var(--hair); --r-muted:var(--muted); --r-inkblock:#211f1a;
+
+  --f-sans:"PingFang SC","Hiragino Sans GB","Noto Sans SC",-apple-system,sans-serif;
+  --f-serif:"Songti SC","Noto Serif SC","STSong",serif;
+  --f-mono:"SFMono-Regular","Menlo","JetBrains Mono",monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{background:var(--paper);color:var(--ink)}
 img,svg{display:block}
 a{color:inherit;text-decoration:none}
-::selection{background:var(--c-amber);color:var(--c-ink)}
+::selection{background:var(--cinnabar);color:var(--paper-white)}

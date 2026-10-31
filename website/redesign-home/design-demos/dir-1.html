@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>课程书目 · 前端进阶之路</title>
+<style>
+:root{
+  --paper:#f4efe4; --paper-2:#ede5d6; --ink:#211e18; --muted:#6f685b;
+  --hair:#c8bfae; --cinnabar:#a33b2b; --white:#fdfaf3;
+  --serif:"Songti SC","STSong",serif;
+  --sans:"PingFang SC","Hiragino Sans GB",sans-serif;
+  --mono:"SFMono-Regular","Menlo",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;font-synthesis:none}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+::selection{background:var(--cinnabar);color:var(--white)}
+.shell{width:min(1180px,calc(100% - 72px));margin:0 auto}
+.nav{min-height:84px;border-bottom:1px solid var(--hair);display:flex;align-items:center;gap:34px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:700;font-size:18px;letter-spacing:.02em}
+.brand-mark{width:30px;height:38px;border:1px solid var(--ink);display:grid;place-items:center;position:relative}
+.brand-mark::after{content:"";position:absolute;width:8px;height:8px;background:var(--cinnabar);right:-4px;top:-4px}
+.nav-links{display:flex;align-items:center;gap:26px;margin-left:auto;color:var(--muted);font-size:14px}
+.nav-links a{min-height:44px;display:flex;align-items:center;border-bottom:1px solid transparent}
+.nav-links a:hover{color:var(--ink);border-bottom-color:var(--cinnabar)}
+.offer{padding:8px 13px;border:1px solid var(--ink);color:var(--ink)!important;font-size:14px}
+.menu{display:none;margin-left:auto;border:0;background:transparent;width:44px;height:44px;color:var(--ink);cursor:pointer}
+.menu span{display:block;width:21px;height:1px;background:currentColor;margin:5px auto}
+.hero{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.8fr);gap:86px;padding:76px 0 64px;border-bottom:1px solid var(--hair)}
+.kicker{font-family:var(--sans);font-size:14px;letter-spacing:.03em;color:var(--cinnabar);margin-bottom:22px}
+h1{font-family:var(--serif);font-size:clamp(52px,6vw,82px);line-height:1.13;letter-spacing:-.035em;font-weight:900;max-width:700px}
+h1 em{font-style:normal;color:var(--cinnabar)}
+.hero-copy{max-width:570px;margin-top:28px;font-size:17px;color:var(--muted);line-height:1.95}
+.hero-actions{display:flex;align-items:center;gap:24px;margin-top:34px}
+.btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center;padding:0 22px;background:var(--ink);color:var(--white);font-weight:600;font-size:14px}
+.btn:hover{background:var(--cinnabar)}
+.text-link{font-size:14px;border-bottom:1px solid var(--ink);padding-bottom:3px}
+.text-link:hover{color:var(--cinnabar);border-color:var(--cinnabar)}
+.metrics{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px;color:var(--muted);font-size:14px}
+.metrics span{display:inline-flex;align-items:baseline;gap:5px}
+.metrics b{font-family:var(--sans);font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
+.start-book{position:relative;align-self:start;padding-top:10px}
+.start-book::before{content:"从这里开始";position:absolute;right:0;top:-19px;font-family:var(--sans);font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.start-book::after{content:"";position:absolute;left:0;right:0;top:12px;border-top:2px solid var(--ink)}
+.route-entry{display:grid;grid-template-columns:36px 1fr auto;gap:14px;align-items:start;padding:19px 0 18px;border-bottom:1px solid var(--hair)}
+.route-entry:first-of-type{padding-top:30px}
+.route-entry:hover .route-name{color:var(--cinnabar)}
+.route-no{font-family:var(--sans);font-size:12px;color:var(--cinnabar);padding-top:3px}
+.route-name{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.35}
+.route-desc{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.6}
+.route-count{font-family:var(--sans);font-size:14px;white-space:nowrap;padding-top:3px;color:var(--ink)}
+.route-count small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);text-align:right}
+.book-note{margin-top:26px;padding-left:16px;border-left:2px solid var(--cinnabar);font-family:var(--serif);font-size:14px;color:var(--muted);line-height:1.8}
+.section{padding:68px 0 0}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;border-bottom:1px solid var(--ink);padding-bottom:14px;margin-bottom:30px}
+.section-head h2{font-family:var(--serif);font-size:35px;line-height:1.2;font-weight:700;letter-spacing:-.02em}
+.section-head p{font-size:14px;color:var(--muted);max-width:380px;text-align:right}
+.featured{display:grid;grid-template-columns:1.15fr 1fr;min-height:330px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.feature-copy{padding:40px 48px 40px 0}
+.feature-kicker{font-family:var(--sans);font-size:12px;color:var(--cinnabar);letter-spacing:.08em}
+.feature-copy h3{font-family:var(--serif);font-size:42px;line-height:1.25;font-weight:900;margin:14px 0 12px}
+.feature-meta{font-size:14px;color:var(--muted);margin-bottom:20px}
+.feature-copy p{font-size:15px;color:#504a40;line-height:1.9;max-width:56ch}
+.feature-copy .text-link{display:inline-block;margin-top:26px}
+.diagram{background:var(--white);border-left:1px solid var(--hair);padding:34px 0 34px 38px;display:flex;flex-direction:column;justify-content:center}
+.diagram-label{font-size:12px;letter-spacing:.12em;color:var(--muted);margin-bottom:16px}
+pre{font-family:var(--mono);font-size:14px;line-height:1.8;white-space:pre-wrap;color:#302c25;tab-size:2}
+pre b{color:var(--cinnabar);font-weight:600}
+.directory{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.stage-title{display:flex;align-items:baseline;gap:11px;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:8px}
+.stage-title .han{font-family:var(--serif);font-size:31px;color:var(--cinnabar);line-height:1}
+.stage-title b{font-family:var(--serif);font-size:18px}
+.stage-title small{font-family:var(--sans);font-size:12px;color:var(--muted);margin-left:auto}
+.stage-intro{font-size:14px;color:var(--muted);margin:8px 0 15px;line-height:1.7}
+.series-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+.series-row:hover span:first-child{color:var(--cinnabar)}
+.series-row span:first-child{font-size:14px;font-weight:500}
+.series-row small{font-family:var(--sans);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stage-foot{display:inline-block;margin-top:18px;font-size:14px;border-bottom:1px solid var(--ink);padding-bottom:2px}
+.footer{margin-top:76px;border-top:1px solid var(--hair);padding:28px 0 38px;display:flex;justify-content:space-between;gap:24px;color:var(--muted);font-size:12px}
+.footer b{font-family:var(--serif);font-size:14px;color:var(--ink)}
+@media(max-width:900px){
+  .shell{width:min(100% - 40px,740px)}
+  .nav-links{display:none;position:absolute;left:20px;right:20px;top:78px;z-index:20;background:var(--paper);border:1px solid var(--hair);flex-direction:column;align-items:stretch;gap:0;padding:10px 18px}
+  .nav.nav-open .nav-links{display:flex}
+  .nav-links a{padding:12px 0;border-bottom:1px solid var(--hair)}
+  .menu{display:block}
+  .offer{display:none}
+  .hero{grid-template-columns:1fr;gap:44px;padding-top:52px}
+  .hero-copy{max-width:640px}
+  .start-book{max-width:620px}
+  .featured{grid-template-columns:1fr}
+  .feature-copy{padding:32px 0}
+  .diagram{border-left:0;border-top:1px solid var(--hair);padding:30px 0}
+  .directory{grid-template-columns:1fr;gap:42px}
+}
+@media(max-width:600px){
+  .shell{width:calc(100% - 36px)}
+  .nav{min-height:70px}
+  .brand{font-size:16px}
+  h1{font-size:42px}
+  .hero{padding:38px 0 48px}
+  .hero-copy{font-size:15.5px;margin-top:22px}
+  .hero-actions{align-items:flex-start;flex-direction:column;gap:18px;margin-top:28px}
+  .metrics{gap:10px 16px}
+  .start-book::before{top:-22px}
+  .section{padding-top:52px}
+  .section-head{align-items:flex-start;flex-direction:column;gap:8px}
+  .section-head h2{font-size:29px}
+  .section-head p{text-align:left}
+  .feature-copy h3{font-size:32px}
+  pre{font-size:11.5px;line-height:1.75}
+  .footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header class="shell nav" id="nav">
+  <a class="brand" href="/"><span class="brand-mark">进</span><span>前端进阶之路</span></a>
+  <button class="menu" aria-label="打开导航" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav class="nav-links">
+    <a href="/path">学习路线</a>
+    <a href="/search">搜索</a>
+    <a href="#feature">本周精读</a>
+    <a href="#directory">系列目录</a>
+    <a href="/about">关于</a>
+    <a class="offer" href="https://max.jiaochunxiao.cn" target="_blank" rel="noopener">上岸offer 题库 ↗</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div>
+      <div class="kicker">一套按顺序读的前端课程</div>
+      <h1>前端这条路，<br><em>按顺序读。</em></h1>
+      <p class="hero-copy">一套写给前端开发者的进阶书目。每篇从机制推演讲到面试表达，读完能讲清楚，也能写出来。</p>
+      <div class="hero-actions">
+        <a class="btn" href="/articles/js-deep-001/">从第一篇开始</a>
+        <a class="text-link" href="/search">搜索想补的知识点</a>
+      </div>
+      <div class="metrics">
+        <span><b>19</b> 个系列</span>
+        <span><b>158</b> 篇文章</span>
+        <span><b>300+</b> 张原理图</span>
+        <span><b>3</b> 个阶段</span>
+      </div>
+    </div>
+
+    <aside class="start-book" aria-label="选择学习路线">
+      <a class="route-entry" href="/path#fast-track">
+        <span class="route-no">壹</span>
+        <span><span class="route-name">校招速通</span><span class="route-desc">按面试权重，优先补齐最高频的机制题。</span></span>
+        <span class="route-count">25 篇<small>6–8 周</small></span>
+      </a>
+      <a class="route-entry" href="/path#part-time">
+        <span class="route-no">贰</span>
+        <span><span class="route-name">社招进阶</span><span class="route-desc">面向工程化、框架原理与性能深度。</span></span>
+        <span class="route-count">+30 篇<small>约 3 个月</small></span>
+      </a>
+      <a class="route-entry" href="/path#full">
+        <span class="route-no">叁</span>
+        <span><span class="route-name">系统学习</span><span class="route-desc">从基础到高级，按完整课程顺序推进。</span></span>
+        <span class="route-count">158 篇<small>全量</small></span>
+      </a>
+      <p class="book-note">不知道从哪开始？先读「执行上下文」和「闭包」。它们是后面半个课程的地基。</p>
+    </aside>
+  </section>
+
+  <section class="section" id="feature">
+    <div class="section-head">
+      <h2>本周精读</h2>
+      <p>不用一次读完 158 篇。先把一个机制真正讲透。</p>
+    </div>
+    <div class="featured">
+      <div class="feature-copy">
+        <div class="feature-kicker">精读 05｜18 分钟</div>
+        <h3>JavaScript 深入之<br>闭包</h3>
+        <div class="feature-meta">面试高频，作用域链与内存管理</div>
+        <p>从一段 for + setTimeout 的输出题切入，用 [[Environment]] 内部槽讲清闭包的机制本质，再走到内存代价与四类真实应用。</p>
+        <a class="text-link" href="/articles/js-deep-005/">开始阅读</a>
+      </div>
+      <div class="diagram">
+        <div class="diagram-label">机制摘录</div>
+        <pre>function foo() {
+  var a = 2;
+  function bar() { console.log(a); }
+  return bar;
+}
+
+const baz = foo();
+// foo 已出栈，但 a 仍被
+// <b>[[Environment]]</b> 引用，无法回收。</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="directory">
+    <div class="section-head">
+      <h2>课程目录</h2>
+      <p>同一阶段内可以按兴趣跳读；跨阶段建议先补基础。</p>
+    </div>
+    <div class="directory">
+      <div>
+        <div class="stage-title"><span class="han">壹</span><b>夯实基础</b><small>43 篇</small></div>
+        <p class="stage-intro">把「会用」变成「懂原理」。五大基础系列，面完再往上走。</p>
+        <a class="series-row" href="/series/js-deep/"><span>JavaScript 深入</span><small>12</small></a>
+        <a class="series-row" href="/series/js-core/"><span>JavaScript 核心</span><small>9</small></a>
+        <a class="series-row" href="/series/css-deep/"><span>CSS 深入</span><small>10</small></a>
+        <a class="series-row" href="/series/dom-events/"><span>DOM 与事件</span><small>6</small></a>
+        <a class="series-row" href="/series/browser-basic/"><span>浏览器基础</span><small>6</small></a>
+        <a class="stage-foot" href="/path#fast-track">进入第一阶段路线</a>
+      </div>
+      <div>
+        <div class="stage-title"><span class="han">贰</span><b>知识进阶</b><small>60 篇</small></div>
+        <p class="stage-intro">异步、网络、框架原理与工程化，组成社招面试的四梁八柱。</p>
+        <a class="series-row" href="/series/js-async/"><span>异步编程</span><small>8</small></a>
+        <a class="series-row" href="/series/es6/"><span>ES6+</span><small>10</small></a>
+        <a class="series-row" href="/series/network/"><span>网络与浏览器</span><small>10</small></a>
+        <a class="series-row" href="/series/vue/"><span>Vue 原理</span><small>8</small></a>
+        <a class="series-row" href="/series/react/"><span>React 原理</span><small>8</small></a>
+        <a class="series-row" href="/series/engineering/"><span>前端工程化</span><small>8</small></a>
+        <a class="series-row" href="/series/performance/"><span>性能优化</span><small>8</small></a>
+        <a class="stage-foot" href="/path#part-time">进入社招进阶路线</a>
+      </div>
+      <div>
+        <div class="stage-title"><span class="han">叁</span><b>高级进阶</b><small>55 篇</small></div>
+        <p class="stage-intro">引擎、渲染、架构与安全。把原理连接到真实工程判断。</p>
+        <a class="series-row" href="/series/v8/"><span>V8 与底层</span><small>8</small></a>
+        <a class="series-row" href="/series/rendering/"><span>渲染原理</span><small>6</small></a>
+        <a class="series-row" href="/series/handwritten/"><span>手写源码</span><small>12</small></a>
+        <a class="series-row" href="/series/ts/"><span>TypeScript</span><small>8</small></a>
+        <a class="series-row" href="/series/architecture/"><span>前端架构</span><small>6</small></a>
+        <a class="series-row" href="/series/security/"><span>前端安全</span><small>5</small></a>
+        <a class="series-row" href="/series/algorithm/"><span>算法与数据结构</span><small>10</small></a>
+        <a class="stage-foot" href="/path#full">查看系统学习路线</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="shell footer">
+  <div><b>前端进阶之路</b>｜与小程序「前端面试刷题助手 上岸offer」题库联动</div>
+  <div>19 个系列，158 篇，300+ 原理图</div>
+</footer>
+<script>
+  const nav=document.querySelector('.nav');
+  const menu=document.querySelector('.menu');
+  menu?.addEventListener('click',()=>{const open=nav.classList.toggle('nav-open');menu.setAttribute('aria-expanded',String(open));});
+</script>
+</body>
+</html>

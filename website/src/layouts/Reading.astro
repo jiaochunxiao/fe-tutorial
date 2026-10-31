@@ -1,30 +1,31 @@
 ---
-import Base from './Base.astro';
-interface Props { title: string; seriesName?: string; seriesHref?: string }
-const { title, seriesName, seriesHref } = Astro.props;
+import Book from './Book.astro';
+
+interface Props {
+  title: string;
+  desc?: string;
+  seriesName?: string;
+  seriesHref?: string;
+}
+
+const { title, desc, seriesName, seriesHref } = Astro.props;
 ---
-<Base title={title} desc={title + ' —— 前端进阶之路'}>
-  <div class="read-shell">
-    <div class="brand-strip">
-      <a class="mark" href="/">前端进阶之路</a>
-      <span>
-        {seriesName && seriesHref && <a href={seriesHref}>{seriesName}</a>}
-        <a href="/about" style="margin-left:18px">关于</a>
-      </span>
+<Book title={title} desc={desc} reading mainClass="reading-main">
+  <div class="reading-page">
+    <div class="reading-topline">
+      <nav class="reading-crumb" aria-label="面包屑">
+        <a href="/">课程书目</a>
+        <span aria-hidden="true">/</span>
+        {seriesName && seriesHref
+          ? <a href={seriesHref} aria-current="page">{seriesName}</a>
+          : <span>编者说明</span>}
+      </nav>
+      <nav class="reading-shortcuts" aria-label="阅读页面导航">
+        <a href="/#directory">系列目录</a>
+        <a href="/path">学习路线</a>
+        <a href="/about">关于</a>
+      </nav>
     </div>
-    <div class="binding"></div>
-    <div class="read-wrap">
-      <header class="masthead">
-        <a class="crumb" href={seriesHref ?? '/'}>{seriesName ?? '前端进阶之路'}</a>
-        <nav><a href="/#toc">目录</a><a href="/#stages">三阶段</a><a href="/about">关于</a></nav>
-      </header>
-      <main>
-        <slot />
-      </main>
-      <footer class="read-footer">
-        <div><b>前端进阶之路</b> · 一套写给前端开发者的进阶课程</div>
-        <div>题库联动：小程序「前端面试刷题助手 上岸offer」</div>
-      </footer>
-    </div>
+    <slot />
   </div>
-</Base>
+</Book>

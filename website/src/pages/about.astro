@@ -1,33 +1,190 @@
 ---
-import Reading from '../layouts/Reading.astro';
+import { getCollection } from 'astro:content';
+import Book from '../layouts/Book.astro';
 import { SERIES } from '../data/series';
+import { CHAPTER_HAN, seriesName } from '../utils/series';
+
+const entries = await getCollection('articles');
+const countBySeries = new Map<string, number>();
+for (const entry of entries) {
+  countBySeries.set(entry.data.seriesId, (countBySeries.get(entry.data.seriesId) ?? 0) + 1);
+}
 ---
-<Reading title="关于">
-  <article>
-    <header class="article-head">
-      <div class="kicker">ABOUT · 2026</div>
-      <h1>关于「前端进阶之路」</h1>
-      <div class="meta">
-        <span>19 系列</span><span>158 篇</span><span>300+ 张原理图</span><span>3 个阶段</span>
-      </div>
-    </header>
-
-    <div class="prose">
-      <h2>这是什么</h2>
-      <p>一套面向前端开发者的<strong>体系化进阶课程</strong>，风格对标「冴羽的博客」深入系列：例子先行、由浅入深、剖析原理、面向面试。全部内容产自本仓库 <code>frontend-mastery/</code> 的 158 篇 Markdown 源文，站点由 Astro 构建为纯静态站点。</p>
-
-      <h2>怎么读</h2>
-      <p>三条人群路线（见<a href="/#path">学习路线</a>）：<strong>校招速通</strong>约 25 篇、6~8 周；<strong>社招进阶</strong>约 30 篇、3 个月；或按 roadmap 顺序系统学习。每篇文章末尾有思考题，解析同步录入小程序题库——<strong>读完即练</strong>。</p>
-
-      <h2>题库联动</h2>
-      <p>本站与小程序「<strong>前端面试刷题助手 上岸offer</strong>」共用内容源：文章元数据见 <code>/api/index.json</code>，思考题语料见 <code>/api/questions.json</code>——两个端共享同一份真相。</p>
-
-      <h2>全部系列</h2>
-      <ul>
-        {SERIES.map((m) => (
-          <li><a href={`/series/${m.id}/`}>{m.id === 'js-deep' ? 'JavaScript 深入系列' : m.id === 'js-core' ? 'JavaScript 核心系列' : m.id === 'js-async' ? '异步编程系列' : m.id === 'es6' ? 'ES6+ 系列' : m.id === 'network' ? '网络与浏览器系列' : m.id === 'vue' ? 'Vue 原理系列' : m.id === 'react' ? 'React 原理系列' : m.id === 'engineering' ? '前端工程化系列' : m.id === 'performance' ? '性能优化系列' : m.id === 'v8' ? 'V8 与底层系列' : m.id === 'rendering' ? '渲染原理系列' : m.id === 'handwritten' ? '手写源码系列' : m.id === 'ts' ? 'TypeScript 系列' : m.id === 'architecture' ? '前端架构系列' : m.id === 'security' ? '前端安全系列' : m.id === 'algorithm' ? '算法与数据结构' : m.id === 'css-deep' ? 'CSS 深入系列' : m.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</a></li>
-        ))}
-      </ul>
+<Book title="关于" desc="关于《前端进阶之路》：一套面向前端开发者的体系化进阶课程。" active="about">
+  <header class="book-page-head about-head">
+    <div>
+      <div class="book-kicker">EDITOR'S NOTE · 编者说明</div>
+      <h1 class="book-page-title">关于这套<br>前端课程</h1>
+      <p class="book-page-lede">
+        一套按顺序读的进阶书目。例子先行、由浅入深、剖析原理，再把原理连接到面试表达与真实工程判断。
+      </p>
     </div>
-  </article>
-</Reading>
+    <aside class="book-aside-note">
+      <b>当前书目</b>
+      {SERIES.length} 个系列 · {entries.length} 篇文章 · 300+ 张原理图 · 3 个学习阶段。
+      内容由仓库中的 Markdown 源文构建为纯静态站点。
+    </aside>
+  </header>
+
+  <div class="about-layout">
+    <aside class="about-toc" aria-label="本页目录">
+      <span>本页目录</span>
+      <a href="#what"><b>壹</b>这是什么</a>
+      <a href="#how"><b>贰</b>怎么读</a>
+      <a href="#questions"><b>叁</b>题库联动</a>
+      <a href="#series"><b>肆</b>全部系列</a>
+    </aside>
+
+    <article class="prose about-prose">
+      <section id="what">
+        <div class="about-section-no">{CHAPTER_HAN[0]}</div>
+        <h2>这是什么</h2>
+        <p>
+          这是一套面向前端开发者的<strong>体系化进阶课程</strong>，风格对标「冴羽的博客」深入系列：
+          从例子进入问题，逐层剖析原理，最后落到面试表达。全部内容来自仓库
+          <code>frontend-mastery/</code> 的 {entries.length} 篇 Markdown 源文，站点由 Astro 构建为纯静态站点。
+        </p>
+        <p>
+          课程分成三个阶段：夯实基础、知识进阶、高级进阶。它不是零散文章合集，
+          而是一条可以从执行上下文一直走到架构权衡的阅读顺序。
+        </p>
+      </section>
+
+      <section id="how">
+        <div class="about-section-no">{CHAPTER_HAN[1]}</div>
+        <h2>怎么读</h2>
+        <p>
+          有三种进入方式：<a href="/path#fast-track">校招速通</a>按面试权重挑约 25 篇；
+          <a href="/path#part-time">社招进阶</a>在校招路线之上按方向追加；
+          <a href="/path#full">系统学习</a>则沿完整书目读完所有篇目。
+        </p>
+        <p>
+          如果只是查一个知识点，可以直接使用<a href="/search">全文搜索</a>。
+          每篇文章末尾都有思考题，先自己作答，再回到正文核对推理过程。
+        </p>
+      </section>
+
+      <section id="questions">
+        <div class="about-section-no">{CHAPTER_HAN[2]}</div>
+        <h2>题库联动</h2>
+        <p>
+          本站与小程序「<strong>前端面试刷题助手 上岸offer</strong>」共用内容源：
+          文章元数据见 <code>/api/index.json</code>，思考题语料见 <code>/api/questions.json</code>。
+          两个端共享同一份真相，避免文章与题库长期分叉。
+        </p>
+        <p class="about-marginal">
+          题库用于读完后的自测；文章仍然是完整讲解的主入口。
+        </p>
+      </section>
+
+      <section id="series">
+        <div class="about-section-no">{CHAPTER_HAN[3]}</div>
+        <h2>全部系列</h2>
+        <p>按阶段归档的全部 {SERIES.length} 个系列。每个系列都有独立的篇目目录。</p>
+        <div class="about-series">
+          {SERIES.map((meta) => (
+            <a href={`/series/${meta.id}/`}>
+              <span class="about-series-stage">{meta.stage}</span>
+              <b>{seriesName(meta.id)}</b>
+              <small>{countBySeries.get(meta.id) ?? 0} 篇</small>
+            </a>
+          ))}
+        </div>
+      </section>
+    </article>
+  </div>
+</Book>
+
+<style>
+  .about-head .book-page-title{font-size:clamp(46px,5.8vw,72px)}
+  .about-layout{
+    display:grid;
+    grid-template-columns:190px minmax(0,1fr);
+    gap:74px;
+    align-items:start;
+    padding-top:56px;
+  }
+  .about-toc{
+    position:sticky;
+    top:24px;
+    display:grid;
+    border-top:2px solid var(--book-ink);
+  }
+  .about-toc > span{
+    padding:9px 0;
+    border-bottom:1px solid var(--book-hair);
+    color:var(--book-muted);
+    font-family:var(--book-mono);
+    font-size:10px;
+    letter-spacing:.1em;
+  }
+  .about-toc a{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:7px;
+    align-items:baseline;
+    padding:9px 0;
+    border-bottom:1px solid var(--book-hair);
+    color:var(--book-muted);
+    font-size:12.5px;
+  }
+  .about-toc a b{color:var(--book-cinnabar);font-family:var(--book-serif);font-size:13px}
+  .about-toc a:hover{color:var(--book-ink)}
+
+  .about-prose{max-width:760px;font-size:16px;line-height:2}
+  .about-prose section{padding-bottom:66px;scroll-margin-top:24px}
+  .about-prose section:last-child{padding-bottom:0}
+  .about-section-no{
+    margin-bottom:5px;
+    color:var(--book-cinnabar);
+    font-family:var(--book-serif);
+    font-size:15px;
+  }
+  .about-prose h2{margin-top:0}
+  .about-prose p{color:#423d34}
+  .about-prose strong{color:var(--book-ink)}
+  .about-marginal{
+    margin-top:24px;
+    padding-left:16px;
+    border-left:2px solid var(--book-cinnabar);
+    color:var(--book-muted)!important;
+    font-family:var(--book-serif);
+    font-size:14px!important;
+  }
+  .about-series{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:32px;
+    margin-top:24px;
+    border-top:1px solid var(--book-ink);
+  }
+  .about-series a{
+    display:grid;
+    grid-template-columns:32px minmax(0,1fr) auto;
+    gap:10px;
+    align-items:baseline;
+    min-height:53px;
+    padding:10px 0;
+    border-bottom:1px solid var(--book-hair);
+    text-decoration:none;
+  }
+  .about-series-stage{color:var(--book-muted);font-family:var(--book-mono);font-size:10px}
+  .about-series b{font-family:var(--book-serif);font-size:14px;line-height:1.5}
+  .about-series small{color:var(--book-muted);font-family:var(--book-mono);font-size:10px;white-space:nowrap}
+  .about-series a:hover b{color:var(--book-cinnabar)}
+
+  @media (max-width:900px){
+    .about-layout{grid-template-columns:1fr;gap:36px;padding-top:42px}
+    .about-toc{position:static;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--book-hair)}
+    .about-toc > span{display:none}
+    .about-toc a{grid-template-columns:1fr;padding:8px 0;border-bottom:0;text-align:center}
+  }
+
+  @media (max-width:600px){
+    .about-layout{padding-top:34px}
+    .about-prose section{padding-bottom:52px}
+    .about-series{grid-template-columns:1fr}
+    .about-toc a{font-size:11px}
+    .about-toc a b{display:block;margin-bottom:2px}
+  }
+</style>

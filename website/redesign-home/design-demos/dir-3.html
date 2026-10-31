@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>轻进度路线 · 前端进阶之路</title>
+<style>
+:root{
+  --bg:#ea8fb6; --paper:#fffafc; --ink:#2a1820; --muted:#40202f;
+  --line:#ead2dd; --green:#98345f; --green-dark:#6d2047; --mint:#f3dce7;
+  --mint-light:#faf1f5; --sand:#fff4e8;
+  --sans:"PingFang SC","Hiragino Sans GB",sans-serif;
+  --latin:"Avenir Next","Helvetica Neue",sans-serif;
+  --display:"Hiragino Sans GB","PingFang SC",sans-serif;
+  --mono:"SFMono-Regular","Menlo",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);overflow-x:clip;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;font-synthesis:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--green);color:var(--paper)}
+.shell{width:min(1160px,calc(100% - 72px));margin:0 auto}
+.nav{height:86px;display:flex;align-items:center;gap:30px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:800 15px/1 var(--latin);transform:rotate(-3deg)}
+.navlinks{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:14px}
+.navlinks a{min-height:44px;padding:0 12px;display:flex;align-items:center;border-radius:999px}
+.navlinks a:hover{background:var(--mint)}
+.navlinks .exam{padding:0 16px;background:var(--ink);color:var(--paper);font-weight:700;margin-left:5px}
+.navlinks .exam:hover{background:var(--green-dark)}
+.menu{display:none;margin-left:auto;width:44px;height:44px;border:0;border-radius:12px;background:var(--paper);cursor:pointer;box-shadow:0 3px 0 rgba(42,24,32,.1)}
+.menu i{display:block;width:20px;height:2px;border-radius:2px;background:var(--ink);margin:4px auto}
+.hero{padding:43px 0 55px;position:relative;overflow:clip}
+.hero::before{content:"";position:absolute;z-index:-1;width:520px;height:520px;right:-160px;top:-90px;border-radius:50%;background:var(--mint);opacity:.55}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(400px,.96fr);gap:74px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 12px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--green-dark)}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+h1{font-family:var(--display);font-size:clamp(48px,5.4vw,76px);line-height:1.14;letter-spacing:-.06em;font-weight:800;margin-top:23px;max-width:680px}
+h1 em{font-style:normal;color:var(--green)}
+.lede{font-size:17px;line-height:1.9;color:var(--muted);max-width:585px;margin-top:23px}
+.quick-actions{display:flex;align-items:center;gap:22px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 21px;border-radius:13px;background:var(--green);color:var(--paper);font-size:14px;font-weight:700;box-shadow:0 4px 0 var(--green-dark);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--green-dark)}
+.btn:active{transform:translateY(4px);box-shadow:none}
+.quiet-link{font-size:14px;font-weight:600;color:var(--green-dark);border-bottom:1px solid #c89bb0;padding-bottom:2px}
+.quiet-link:hover{border-color:var(--green)}
+.mini-facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
+.mini-facts span{font-size:14px;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.7);padding:5px 9px;border-radius:999px}
+.picker{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 16px 40px rgba(73,30,49,.09),0 2px 0 rgba(73,30,49,.08)}
+.picker-top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:0 5px 13px}
+.picker-top b{font-size:14px}
+.picker-top span{font:500 12px/1 var(--sans);color:var(--muted);letter-spacing:.04em}
+.tabs{display:grid;gap:7px}
+.tab{width:100%;min-height:56px;border:1px solid transparent;background:var(--mint-light);border-radius:13px;padding:8px 12px;display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;text-align:left;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
+.tab:hover{background:#faedf3}
+.tab[aria-selected="true"]{background:var(--mint);border-color:#d9a9be;transform:translateX(3px)}
+.tab-radio{width:27px;height:27px;border:1px solid #d7b1c1;border-radius:50%;display:grid;place-items:center;font:600 12px/1 var(--latin);color:var(--green-dark);background:var(--paper)}
+.tab[aria-selected="true"] .tab-radio{background:var(--green);border-color:var(--green);color:var(--paper)}
+.tab-name{font-size:14px;font-weight:700}
+.tab-count{font:600 12px/1 var(--sans);color:var(--muted);white-space:nowrap}
+.route-detail{margin-top:16px;padding:19px;border-radius:17px;background:var(--sand);border:1px solid #eee4ce}
+.detail-label{font:500 12px/1 var(--sans);letter-spacing:.06em;color:var(--green)}
+.route-detail h2{font-size:21px;line-height:1.4;letter-spacing:-.03em;margin-top:9px}
+.route-detail p{font-size:14px;line-height:1.75;color:var(--muted);margin-top:7px;min-height:46px}
+.detail-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid #e6dcc8}
+.detail-meta{display:flex;gap:7px;flex-wrap:wrap}
+.detail-meta span{font-size:14px;font-weight:600;background:var(--paper);border:1px solid #e5ddcc;border-radius:999px;padding:4px 8px}
+.detail-go{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:800;color:var(--green-dark);white-space:nowrap}
+.detail-go:hover{gap:12px}
+.section{padding:0 0 68px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:22px}
+.section-kicker{font:500 12px/1 var(--sans);letter-spacing:.06em;color:var(--green-dark);margin-bottom:8px}
+.section-head h2{font-family:var(--display);font-size:34px;line-height:1.25;letter-spacing:-.045em}
+.section-head p{font-size:14px;line-height:1.7;color:var(--muted);max-width:390px}
+.feature{display:grid;grid-template-columns:1.02fr .98fr;min-height:340px;border:1px solid var(--line);border-radius:23px;overflow:hidden;background:var(--paper)}
+.feature-copy{padding:34px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.feature-tag{font:500 12px/1 var(--sans);letter-spacing:.06em;color:var(--green-dark);background:var(--mint);padding:7px 9px;border-radius:8px}
+.feature h3{font-family:var(--display);font-size:42px;line-height:1.18;letter-spacing:-.055em;margin-top:18px}
+.feature-meta{font-size:14px;color:var(--muted);margin-top:12px}
+.feature p{font-size:14px;line-height:1.85;color:var(--muted);margin-top:14px;max-width:480px}
+.feature-cta{display:inline-flex;align-items:center;gap:9px;margin-top:20px;min-height:44px;font-size:14px;font-weight:800;color:var(--green-dark);border-bottom:1px solid #c89bb0}
+.feature-visual{background:var(--mint);padding:27px;display:flex;flex-direction:column;justify-content:center}
+.lesson-card{background:var(--paper);border-radius:17px;padding:23px;box-shadow:0 7px 0 rgba(152,52,95,.13);transform:rotate(1.2deg)}
+.lesson-card-top{display:flex;justify-content:space-between;align-items:center;font:500 12px/1 var(--sans);color:var(--muted)}
+.lesson-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:5px}
+.lesson-card pre{font:14px/1.85 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;margin:21px 0}
+.lesson-card pre b{color:var(--green-dark)}
+.lesson-takeaway{border-top:1px solid var(--line);padding-top:14px;font-size:14px;line-height:1.7;color:var(--muted)}
+.directory{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.stage{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:10px 20px 16px}
+.stage:nth-child(2){background:var(--mint-light)}
+.stage-top{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px 0 15px;border-bottom:1px solid var(--line)}
+.stage-label{font:500 12px/1 var(--sans);color:var(--green);letter-spacing:.06em}
+.stage h3{font-family:var(--display);font-size:20px;line-height:1.3;letter-spacing:-.03em;margin-top:6px}
+.stage-number{font:700 24px/1 var(--latin);color:var(--green-dark);white-space:nowrap}
+.stage-number small{font:400 12px/1 var(--sans);color:var(--muted);display:block;margin-top:4px;text-align:right}
+.stage > p{font-size:14px;line-height:1.7;color:var(--muted);margin:13px 0 8px}
+.series{display:flex;align-items:center;justify-content:space-between;min-height:39px;border-bottom:1px solid var(--line);font-size:14px}
+.series:hover{color:var(--green)}
+.series:last-of-type{border-bottom:0}
+.series em{font-style:normal;font:500 12px/1 var(--sans);color:var(--muted)}
+.stage-link{display:flex;align-items:center;justify-content:space-between;min-height:45px;border-radius:9px;margin-top:9px;padding:0 10px;background:var(--mint);font-size:14px;font-weight:700;color:var(--green-dark)}
+.stage-link:hover{background:#edd4df}
+.footer{border-top:1px solid var(--line);padding:24px 0 36px;display:flex;justify-content:space-between;gap:30px;font-size:14px;color:var(--muted)}
+.footer b{color:var(--ink)}
+@media(max-width:980px){
+  .shell{width:calc(100% - 48px)}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .picker{max-width:600px}
+  .feature{grid-template-columns:1fr}
+  .feature-visual{min-height:310px}
+  .directory{grid-template-columns:1fr}
+  .stage > p{min-height:0}
+}
+@media(max-width:700px){
+  .shell{width:calc(100% - 34px)}
+  .nav{height:70px}
+  .navlinks{display:none;position:absolute;top:70px;left:0;right:0;z-index:30;background:var(--bg);padding:12px 17px 18px;box-shadow:0 10px 24px rgba(42,24,32,.1);flex-direction:column;align-items:stretch;gap:2px}
+  .nav-open .navlinks{display:flex}
+  .navlinks a{min-height:48px;border-radius:10px}
+  .navlinks .exam{margin:6px 0 0;justify-content:center}
+  .menu{display:block}
+  .hero{padding:30px 0 45px}
+  .hero::before{width:330px;height:330px;right:-170px;top:-70px}
+  .hero-grid{gap:32px}
+  h1{font-family:var(--display);font-size:clamp(43px,12.7vw,57px);line-height:1.14;margin-top:18px}
+  .lede{font-size:16px;line-height:1.85;margin-top:20px}
+  .quick-actions{align-items:flex-start;flex-direction:column;gap:17px;margin-top:23px}
+  .mini-facts{gap:6px;margin-top:21px}
+  .picker{padding:14px;border-radius:20px}
+  .picker-top{padding:0 3px 12px}
+  .tab{grid-template-columns:32px 1fr;min-height:61px}
+  .tab-count{grid-column:2;font-size:14px;margin-top:-5px}
+  .tab[aria-selected="true"]{transform:none}
+  .route-detail{padding:17px}
+  .route-detail h2{font-size:19px}
+  .route-detail p{min-height:0}
+  .detail-foot{align-items:flex-start;flex-direction:column;gap:12px}
+  .section-head{align-items:flex-start;flex-direction:column;gap:9px}
+  .section-head h2{font-family:var(--display);font-size:29px}
+  .feature-copy{padding:25px 20px}
+  .feature h3{font-family:var(--display);font-size:37px}
+  .feature-visual{padding:18px}
+  .lesson-card{padding:19px;transform:none}
+  .lesson-card pre{font-size:14px}
+  .stage{padding:9px 17px 14px}
+  .footer{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+<header class="shell nav" id="nav">
+  <a class="brand" href="/" aria-label="前端进阶之路首页"><span class="brand-mark">FE</span><span>前端进阶之路</span></a>
+  <button class="menu" type="button" aria-label="打开导航" aria-expanded="false"><i></i><i></i></button>
+  <nav class="navlinks" aria-label="主导航">
+    <a href="/path">学习路线</a>
+    <a href="/search">搜索</a>
+    <a href="#feature">本周精读</a>
+    <a href="#directory">系列目录</a>
+    <a href="/about">关于</a>
+    <a class="exam" href="https://max.jiaochunxiao.cn" target="_blank" rel="noopener">上岸offer 题库 ↗</a>
+  </nav>
+</header>
+
+<main>
+  <section class="shell hero" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">写给 0–3 年经验的前端开发者</div>
+        <h1 id="hero-title">前端学习，<br>不用一次读完<br>所有。</h1>
+        <p class="lede">先选一条适合当前目标的路线。我们会把 19 个系列、158 篇文章，收束成一段清楚的下一步。</p>
+        <div class="quick-actions">
+          <a class="btn" href="/articles/js-deep-001/">从第一篇开始 <span>→</span></a>
+          <a class="quiet-link" href="/path">查看全部学习路线</a>
+        </div>
+        <div class="mini-facts" aria-label="课程概况"><span>19 个系列</span><span>158 篇文章</span><span>300+ 原理图</span></div>
+      </div>
+
+      <aside class="picker" aria-label="选择学习路线">
+        <div class="picker-top"><b>你现在要准备什么？</b><span>选择一条路线</span></div>
+        <div class="tabs" role="tablist" aria-label="学习路线">
+          <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="route-panel" data-route="campus">
+            <span class="tab-radio">1</span><span class="tab-name">校招速通</span><span class="tab-count">约 25 篇，6–8 周</span>
+          </button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="route-panel" data-route="social">
+            <span class="tab-radio">2</span><span class="tab-name">社招进阶</span><span class="tab-count">追加约 30 篇，约 3 个月</span>
+          </button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="route-panel" data-route="system">
+            <span class="tab-radio">3</span><span class="tab-name">系统学习</span><span class="tab-count">全量 158 篇</span>
+          </button>
+        </div>
+        <div class="route-detail" id="route-panel" role="tabpanel" aria-live="polite">
+          <div class="detail-label" id="detail-label">校招准备路线</div>
+          <h2 id="detail-title">先把基础与高频原理补扎实。</h2>
+          <p id="detail-copy">从 JavaScript 基础、CSS 与浏览器开始，优先覆盖面试中最常见的机制题，再进入异步和网络。</p>
+          <div class="detail-foot">
+            <div class="detail-meta"><span id="detail-count">约 25 篇</span><span id="detail-time">6–8 周</span></div>
+            <a class="detail-go" id="detail-link" href="/path#fast-track">进入这条路线 <span>→</span></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="shell section" id="feature" aria-labelledby="feature-title">
+    <div class="section-head">
+      <div><div class="section-kicker">重点精读</div><h2 id="feature-title">先读透一篇</h2></div>
+      <p>不追阅读数量。把一篇真正读懂，下一道题和下一次面试都会更稳。</p>
+    </div>
+    <article class="feature">
+      <div class="feature-copy">
+        <span class="feature-tag">精读 05｜18 分钟</span>
+        <h3>JavaScript 深入之<br>闭包</h3>
+        <div class="feature-meta">面试高频，作用域链与内存管理</div>
+        <p>从一段 for + setTimeout 的输出题切入，用 [[Environment]] 内部槽讲清闭包的机制本质，再走到内存代价与四类真实应用。</p>
+        <a class="feature-cta" href="/articles/js-deep-005/">开始阅读 <span>→</span></a>
+      </div>
+      <div class="feature-visual">
+        <div class="lesson-card">
+          <div class="lesson-card-top"><span><i class="lesson-dot"></i>机制摘录</span><span>JavaScript 核心</span></div>
+          <pre>function foo() {
+  var a = 2;
+  function bar() { console.log(a); }
+  return bar;
+}
+
+const baz = foo();
+// foo 已出栈，但 a 仍被
+// <b>[[Environment]]</b> 引用。</pre>
+          <div class="lesson-takeaway">函数在哪里创建，就记住了哪里的词法环境。</div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="shell section" id="directory" aria-labelledby="directory-title">
+    <div class="section-head">
+      <div><div class="section-kicker">完整课程地图</div><h2 id="directory-title">完整课程地图</h2></div>
+      <p>需要深入时再展开。三个阶段、19 个系列都在这里，不必一次记住。</p>
+    </div>
+    <div class="directory">
+      <section class="stage">
+        <div class="stage-top"><div><div class="stage-label">第一阶段，基础</div><h3>夯实基础</h3></div><div class="stage-number">43<small>篇</small></div></div>
+        <p>把“会用”变成“懂原理”。</p>
+        <a class="series" href="/series/js-deep/"><span>JavaScript 深入</span><em>12</em></a>
+        <a class="series" href="/series/js-core/"><span>JavaScript 核心</span><em>9</em></a>
+        <a class="series" href="/series/css-deep/"><span>CSS 深入</span><em>10</em></a>
+        <a class="series" href="/series/dom-events/"><span>DOM 与事件</span><em>6</em></a>
+        <a class="series" href="/series/browser-basic/"><span>浏览器基础</span><em>6</em></a>
+        <a class="stage-link" href="/path#fast-track"><span>进入第一阶段</span><span>→</span></a>
+      </section>
+      <section class="stage">
+        <div class="stage-top"><div><div class="stage-label">第二阶段，进阶</div><h3>知识进阶</h3></div><div class="stage-number">60<small>篇</small></div></div>
+        <p>异步、网络、框架原理与工程化。</p>
+        <a class="series" href="/series/js-async/"><span>异步编程</span><em>8</em></a>
+        <a class="series" href="/series/es6/"><span>ES6+</span><em>10</em></a>
+        <a class="series" href="/series/network/"><span>网络与浏览器</span><em>10</em></a>
+        <a class="series" href="/series/vue/"><span>Vue 原理</span><em>8</em></a>
+        <a class="series" href="/series/react/"><span>React 原理</span><em>8</em></a>
+        <a class="series" href="/series/engineering/"><span>前端工程化</span><em>8</em></a>
+        <a class="series" href="/series/performance/"><span>性能优化</span><em>8</em></a>
+        <a class="stage-link" href="/path#part-time"><span>进入社招进阶</span><span>→</span></a>
+      </section>
+      <section class="stage">
+        <div class="stage-top"><div><div class="stage-label">第三阶段，深入</div><h3>高级进阶</h3></div><div class="stage-number">55<small>篇</small></div></div>
+        <p>引擎、渲染、架构与安全。</p>
+        <a class="series" href="/series/v8/"><span>V8 与底层</span><em>8</em></a>
+        <a class="series" href="/series/rendering/"><span>渲染原理</span><em>6</em></a>
+        <a class="series" href="/series/handwritten/"><span>手写源码</span><em>12</em></a>
+        <a class="series" href="/series/ts/"><span>TypeScript</span><em>8</em></a>
+        <a class="series" href="/series/architecture/"><span>前端架构</span><em>6</em></a>
+        <a class="series" href="/series/security/"><span>前端安全</span><em>5</em></a>
+        <a class="series" href="/series/algorithm/"><span>算法与数据结构</span><em>10</em></a>
+        <a class="stage-link" href="/path#full"><span>查看系统学习路线</span><span>→</span></a>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer class="shell footer">
+  <div><b>前端进阶之路</b>｜与小程序「前端面试刷题助手 上岸offer」题库联动</div>
+  <div>19 个系列，158 篇，300+ 原理图</div>
+</footer>
+
+<script>
+  // 路线选择器只改变当前建议与跳转目标，不伪造任何学习进度。
+  const routes = {
+    campus: {
+      label: '校招准备路线',
+      title: '先把基础与高频原理补扎实。',
+      copy: '从 JavaScript 基础、CSS 与浏览器开始，优先覆盖面试中最常见的机制题，再进入异步和网络。',
+      count: '约 25 篇', time: '6–8 周', href: '/path#fast-track', link: '进入这条路线'
+    },
+    social: {
+      label: '社招进阶路线',
+      title: '在基础上补齐工程与原理深度。',
+      copy: '适合已有工作经验、准备跳槽的开发者。重点追加异步、框架原理、性能优化与工程化。',
+      count: '追加约 30 篇', time: '约 3 个月', href: '/path#part-time', link: '进入这条路线'
+    },
+    system: {
+      label: '系统学习路线',
+      title: '沿完整课程，从基础走到高级。',
+      copy: '不按面试权重删减，完整学习 19 个系列。适合希望建立长期知识体系的前端开发者。',
+      count: '全量 158 篇', time: '完整体系', href: '/path#full', link: '查看系统路线'
+    }
+  };
+  const tabs = [...document.querySelectorAll('.tab')];
+  const nodes = {
+    label: document.querySelector('#detail-label'), title: document.querySelector('#detail-title'),
+    copy: document.querySelector('#detail-copy'), count: document.querySelector('#detail-count'),
+    time: document.querySelector('#detail-time'), link: document.querySelector('#detail-link')
+  };
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    const item = routes[tab.dataset.route];
+    tabs.forEach(t => { t.setAttribute('aria-selected', String(t === tab)); t.tabIndex = t === tab ? 0 : -1; });
+    nodes.label.textContent = item.label;
+    nodes.title.textContent = item.title;
+    nodes.copy.textContent = item.copy;
+    nodes.count.textContent = item.count;
+    nodes.time.textContent = item.time;
+    nodes.link.href = item.href;
+    nodes.link.innerHTML = `${item.link} <span>→</span>`;
+  }));
+  tabs.forEach((tab, index) => tab.addEventListener('keydown', event => {
+    if (!['ArrowDown','ArrowUp','Home','End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + tabs.length) % tabs.length;
+    tabs[next].focus(); tabs[next].click();
+  }));
+
+  // 手机端导航。
+  const nav = document.querySelector('#nav');
+  const menu = document.querySelector('.menu');
+  menu?.addEventListener('click', () => {
+    const open = nav.classList.toggle('nav-open');
+    menu.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-label', open ? '关闭导航' : '打开导航');
+  });
+</script>
+</body>
+</html>

@@ -1,86 +1,151 @@
 ---
-import Chrome from '../layouts/Chrome.astro';
+import Book from '../layouts/Book.astro';
 ---
-<Chrome title="搜索" desc="搜索《前端进阶之路》158 篇文章——支持中文全文检索。">
-<div class="wrap">
+<Book title="搜索" desc="搜索《前端进阶之路》158 篇文章——支持中文全文检索。" active="search">
+  <header class="book-page-head search-head">
+    <div>
+      <div class="book-kicker">INDEX · 全文检索</div>
+      <h1 class="book-page-title">在 158 篇里，<br>找到那一节。</h1>
+      <p class="book-page-lede">
+        标题、正文、代码与思考题都在同一份索引里。输入一个概念，按相关度找到文章，
+        再回到对应的系列继续读。
+      </p>
+    </div>
+    <aside class="book-aside-note">
+      <b>检索范围</b>
+      19 个系列 · 158 篇文章。支持中文概念、英文术语、代码关键字与思考题内容。
+    </aside>
+  </header>
 
-  <section class="search-hero">
-    <h1>搜索</h1>
-    <p class="sub">158 篇文章全文检索：标题、正文、代码与思考题都在索引里。输入即搜，结果按相关度排序。</p>
+  <section class="search-console" aria-label="文章搜索">
+    <label for="q">检索词</label>
+    <div class="search-input-wrap">
+      <input
+        id="q"
+        type="search"
+        placeholder="闭包、事件循环、BFC、Fiber…"
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <span aria-hidden="true">即搜</span>
+    </div>
+    <p class="search-help">输入即搜 · 最多显示前 20 条 · 按 Pagefind 相关度排序</p>
   </section>
 
-  <div class="searchbar">
-    <input id="q" type="search" placeholder="搜索文章：闭包、事件循环、BFC、Fiber…" autocomplete="off" autofocus>
+  <div class="search-workbench">
+    <section class="result-panel" aria-labelledby="results-title">
+      <header class="result-head">
+        <h2 id="results-title">检索结果</h2>
+        <span id="result-count">尚未检索</span>
+      </header>
+
+      <div id="results" class="result-list" aria-live="polite">
+        <div class="search-empty">
+          <span class="empty-mark" aria-hidden="true">检</span>
+          <div>
+            <h3>还没有输入检索词</h3>
+            <p>可以直接搜索一个概念，也可以输入系列名，例如「React 原理」。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="search-guide" aria-labelledby="guide-title">
+      <div class="guide-block">
+        <h2 id="guide-title">常用检索</h2>
+        <div class="query-list">
+          <a href="/search?q=闭包"><span>闭包</span><small>作用域与内存</small></a>
+          <a href="/search?q=事件循环"><span>事件循环</span><small>异步与宏微任务</small></a>
+          <a href="/search?q=垃圾回收"><span>垃圾回收</span><small>V8 与内存</small></a>
+          <a href="/search?q=nextTick"><span>nextTick</span><small>Vue 更新机制</small></a>
+        </div>
+      </div>
+
+      <div class="guide-block guide-note">
+        <h2>不知道怎么搜？</h2>
+        <p>从系列目录进入，先看每篇的标题与难度，再决定从哪一章开始。</p>
+        <a class="book-text-link" href="/#directory">打开系列目录</a>
+      </div>
+    </aside>
   </div>
-  <div id="results" aria-live="polite"></div>
-
-  <div class="tips">
-    <span class="tips-h">试试这些</span>
-    <a class="chip" href="/search?q=闭包">闭包</a>
-    <a class="chip" href="/search?q=事件循环">事件循环</a>
-    <a class="chip" href="/search?q=垃圾回收">垃圾回收</a>
-    <a class="chip" href="/search?q=nextTick">nextTick</a>
-  </div>
-
-</div>
-
-<style>
-  .search-hero{padding:52px 0 26px}
-  .search-hero h1{font-weight:900;font-size:42px;letter-spacing:-1px;color:#F2F4F6}
-  .search-hero .sub{font-size:15px;color:var(--c-muted);margin-top:10px;max-width:600px}
-  .searchbar input{width:100%;background:var(--c-panel2);border:1.5px solid var(--c-line);
-    border-radius:12px;color:var(--c-text);font-family:var(--f-sans);font-size:17px;
-    padding:16px 20px;outline:none}
-  .searchbar input:focus{border-color:var(--c-amber)}
-  .searchbar input::placeholder{color:var(--c-muted)}
-  #results{margin-top:18px}
-  #results .qrow{margin-bottom:10px}
-  #results .qrow b{flex:none;max-width:46%}
-  #results .ex{font-size:13px;color:var(--c-muted);line-height:1.9;display:-webkit-box;
-    -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  #results .ex mark{background:rgba(243,201,63,.22);color:var(--c-amber);padding:0 2px;border-radius:3px}
-  #results .none{color:var(--c-muted);font-size:14px;padding:18px 0}
-  .tips{display:flex;gap:10px;align-items:center;margin-top:26px;flex-wrap:wrap}
-  .tips-h{font-family:var(--f-mono);font-size:12px;letter-spacing:2px;color:var(--c-muted)}
-  .tips .chip{border:1px solid var(--c-line);border-radius:999px;padding:5px 14px;font-size:12.5px;
-    background:var(--c-panel);color:var(--c-text)}
-  .tips .chip:hover{border-color:var(--c-amber);color:var(--c-amber)}
-</style>
+</Book>
 
 <script is:inline type="module">
-  // Pagefind 运行时由构建期生成在 /pagefind/（浏览器原生加载，绕开打包）
+  // Pagefind 运行时由构建期生成在 /pagefind/，浏览器原生加载。
   const pagefind = await import('/pagefind/pagefind.js');
   await pagefind.options({ baseUrl: '/' });
 
   const input = document.getElementById('q');
   const out = document.getElementById('results');
+  const count = document.getElementById('result-count');
   let timer = null;
 
-  function esc(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const emptyMarkup = `
+    <div class="search-empty">
+      <span class="empty-mark" aria-hidden="true">检</span>
+      <div>
+        <h3>还没有输入检索词</h3>
+        <p>可以直接搜索一个概念，也可以输入系列名，例如「React 原理」。</p>
+      </div>
+    </div>`;
+
+  function esc(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function syncUrl(q) {
+    const url = new URL(location.href);
+    if (q) url.searchParams.set('q', q);
+    else url.searchParams.delete('q');
+    history.replaceState(null, '', url);
   }
 
   async function run() {
     const q = input.value.trim();
     clearTimeout(timer);
-    if (!q) { out.innerHTML = ''; return; }
-    out.innerHTML = '<p class="none">正在搜索「' + esc(q) + '」…</p>';
-    const r = await pagefind.search(q);
-    const top = r.results.slice(0, 20);
-    const items = await Promise.all(top.map((res) => res.data()));
-    out.innerHTML = '';
-    if (!items.length) {
-      out.innerHTML = '<p class="none">没有找到与「' + esc(q) + '」相关的文章。</p>';
+    syncUrl(q);
+
+    if (!q) {
+      out.innerHTML = emptyMarkup;
+      count.textContent = '尚未检索';
       return;
     }
-    for (const item of items) {
-      const a = document.createElement('a');
-      a.className = 'qrow';
-      a.href = item.url;
-      a.innerHTML = '<b>' + esc(item.meta.title) + '</b>' +
-        '<span class="ex">' + item.excerpt + '</span>' +
-        '<span class="n">' + esc(item.meta.word_count ?? '') + '</span>';
-      out.appendChild(a);
+
+    out.innerHTML = '<p class="search-status">正在检索「' + esc(q) + '」…</p>';
+    count.textContent = '检索中';
+
+    try {
+      const response = await pagefind.search(q);
+      const top = response.results.slice(0, 20);
+      const items = await Promise.all(top.map((result) => result.data()));
+
+      if (!items.length) {
+        out.innerHTML = '<p class="search-status">没有找到与「' + esc(q) + '」相关的文章。换一个概念或系列名试试。</p>';
+        count.textContent = '0 条结果';
+        return;
+      }
+
+      count.textContent = response.results.length > 20
+        ? '显示前 20 / ' + response.results.length + ' 条'
+        : items.length + ' 条结果';
+
+      out.innerHTML = items.map((item, index) => `
+        <a class="search-result" href="${esc(item.url)}">
+          <span class="result-no">${String(index + 1).padStart(2, '0')}</span>
+          <span class="result-copy">
+            <b>${esc(item.meta.title ?? '未命名文章')}</b>
+            <span class="result-excerpt">${item.excerpt}</span>
+          </span>
+          <span class="result-arrow" aria-hidden="true">→</span>
+        </a>`).join('');
+    } catch (error) {
+      console.warn('[search] pagefind_error', error);
+      out.innerHTML = '<p class="search-status">搜索暂时不可用，请稍后重试。</p>';
+      count.textContent = '检索失败';
     }
   }
 
@@ -89,19 +154,189 @@ import Chrome from '../layouts/Chrome.astro';
     timer = setTimeout(run, 120);
   });
 
-  const q0 = new URLSearchParams(location.search).get('q');
-  if (q0) { input.value = q0; run(); }
-</script>
-</Chrome>
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      input.value = '';
+      run();
+      input.focus();
+    }
+  });
 
-<style>
-  /* 移动端适配 */
+  const initialQuery = new URLSearchParams(location.search).get('q');
+  if (initialQuery) {
+    input.value = initialQuery;
+    run();
+  }
+</script>
+
+<style is:global>
+  .search-head .book-page-title{font-size:clamp(46px,5.6vw,70px)}
+  .search-console{padding:38px 0 32px;border-bottom:1px solid var(--book-ink)}
+  .search-console label{
+    display:block;
+    margin-bottom:9px;
+    color:var(--book-muted);
+    font-family:var(--book-mono);
+    font-size:11px;
+    letter-spacing:.12em;
+  }
+  .search-input-wrap{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    border-bottom:2px solid var(--book-ink);
+  }
+  .search-input-wrap:focus-within{border-bottom-color:var(--book-cinnabar)}
+  .search-input-wrap input{
+    width:100%;
+    min-height:66px;
+    padding:8px 0;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:var(--book-ink);
+    font-family:var(--book-serif);
+    font-size:clamp(24px,3.1vw,36px);
+    line-height:1.4;
+  }
+  .search-input-wrap input::placeholder{color:#9b9282;opacity:1}
+  .search-input-wrap input:focus-visible{outline:0}
+  .search-input-wrap:has(input:focus-visible) input{outline:0}
+  .search-input-wrap > span{
+    padding-left:20px;
+    color:var(--book-muted);
+    font-family:var(--book-mono);
+    font-size:15px;
+  }
+  .search-help{margin-top:10px;color:var(--book-muted);font-size:12px}
+
+  .search-workbench{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 310px;
+    gap:76px;
+    align-items:start;
+    padding-top:42px;
+  }
+  .result-panel{min-width:0}
+  .result-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:20px;
+    padding-bottom:11px;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .result-head h2{font-family:var(--book-serif);font-size:20px}
+  .result-head span{color:var(--book-muted);font-family:var(--book-mono);font-size:10.5px}
+  .result-list{min-height:340px}
+
+  .search-empty{
+    display:grid;
+    grid-template-columns:72px minmax(0,1fr);
+    gap:22px;
+    align-items:start;
+    padding:50px 0;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .empty-mark{
+    width:56px;
+    height:72px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--book-ink);
+    color:var(--book-cinnabar);
+    font-family:var(--book-serif);
+    font-size:24px;
+    position:relative;
+  }
+  .empty-mark::after{
+    content:"";
+    position:absolute;
+    top:-4px;
+    right:-4px;
+    width:8px;
+    height:8px;
+    background:var(--book-cinnabar);
+  }
+  .search-empty h3{font-family:var(--book-serif);font-size:22px}
+  .search-empty p{max-width:480px;margin-top:8px;color:var(--book-muted);font-size:14px;line-height:1.8}
+
+  .search-status{
+    margin:30px 0;
+    padding:20px 0;
+    border-bottom:1px solid var(--book-hair);
+    color:var(--book-muted);
+    font-size:14px;
+  }
+  .search-result{
+    display:grid;
+    grid-template-columns:38px minmax(0,1fr) 22px;
+    gap:16px;
+    align-items:start;
+    padding:20px 0;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .result-no{
+    padding-top:3px;
+    color:var(--book-cinnabar);
+    font-family:var(--book-mono);
+    font-size:10.5px;
+  }
+  .result-copy b{
+    display:block;
+    font-family:var(--book-serif);
+    font-size:17px;
+    line-height:1.6;
+  }
+  .result-excerpt{
+    display:-webkit-box;
+    margin-top:6px;
+    overflow:hidden;
+    color:var(--book-muted);
+    font-size:13px;
+    line-height:1.8;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+  }
+  .result-excerpt mark{
+    padding:0 2px;
+    background:#e7c6b7;
+    color:var(--book-ink);
+  }
+  .result-arrow{color:var(--book-muted);font-family:var(--book-mono);font-size:13px;transition:transform .18s ease}
+  .search-result:hover .result-copy b{color:var(--book-cinnabar)}
+  .search-result:hover .result-arrow{transform:translateX(4px);color:var(--book-cinnabar)}
+
+  .search-guide{border-top:2px solid var(--book-ink)}
+  .guide-block{padding:17px 0 24px;border-bottom:1px solid var(--book-hair)}
+  .guide-block h2{font-family:var(--book-serif);font-size:17px}
+  .query-list{margin-top:10px}
+  .query-list a{
+    display:flex;
+    min-height:51px;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .query-list a:last-child{border-bottom:0}
+  .query-list span{font-size:13.5px}
+  .query-list small{color:var(--book-muted);font-size:10.5px;text-align:right}
+  .query-list a:hover span{color:var(--book-cinnabar)}
+  .guide-note p{margin:9px 0 17px;color:var(--book-muted);font-size:13px;line-height:1.8}
+
+  @media (max-width:900px){
+    .search-workbench{grid-template-columns:1fr;gap:42px}
+    .search-guide{max-width:100%}
+  }
+
   @media (max-width:600px){
-    .search-hero{padding:36px 0 20px}
-    .search-hero h1{font-size:30px}
-    .search-hero .sub{font-size:14.5px}
-    .searchbar input{font-size:15px;padding:13px 16px}
-    #results .qrow{flex-direction:column;align-items:flex-start;gap:6px;padding:14px 16px}
-    #results .qrow b{max-width:100%}
+    .search-console{padding:28px 0 24px}
+    .search-input-wrap input{min-height:60px;font-size:25px}
+    .search-workbench{padding-top:30px;gap:34px}
+    .search-empty{grid-template-columns:1fr;gap:22px;padding:36px 0}
+    .search-result{grid-template-columns:28px minmax(0,1fr);gap:10px}
+    .result-arrow{display:none}
+    .result-head{align-items:flex-start;flex-direction:column;gap:3px}
   }
 </style>

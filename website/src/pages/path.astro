@@ -1,157 +1,409 @@
 ---
 import { getCollection } from 'astro:content';
-import Chrome from '../layouts/Chrome.astro';
+import Book from '../layouts/Book.astro';
 import { SERIES, STAGES } from '../data/series';
+import { CHAPTER_HAN, STAGE_HAN, STAGE_NAMES, padNo, seriesName } from '../utils/series';
 
 const entries = await getCollection('articles');
-const byId = new Map(entries.map((e) => [e.data.id, e]));
+const total = entries.length;
 
-// 校招速通路线（roadmap.md 路径 A 的可点击版，约 25 篇 + 两个二选一）
+const countBySeries = new Map<string, number>();
+for (const entry of entries) {
+  countBySeries.set(entry.data.seriesId, (countBySeries.get(entry.data.seriesId) ?? 0) + 1);
+}
+
+// 校招速通路线：保留原有每一篇文章与系列入口，只把横向节点改成纵向篇目。
 const FAST_TRACK = [
-  { group: '① JavaScript 深入 · 12 篇全刷', note: '面试的脊柱，先啃完', hrefs: [
-    ['执行上下文栈', 'js-deep-001'], ['变量对象与提升', 'js-deep-002'], ['词法作用域', 'js-deep-003'],
-    ['作用域链', 'js-deep-004'], ['闭包 ★', 'js-deep-005'], ['this', 'js-deep-006'],
-    ['call/apply/bind', 'js-deep-007'], ['new', 'js-deep-008'], ['原型与原型链', 'js-deep-009'],
-    ['继承', 'js-deep-010'], ['总串讲', 'js-deep-011'], ['面试题精讲', 'js-deep-012'],
-  ]},
-  { group: '② 异步与事件循环 · 3 篇', note: '手写 Promise 前必读', hrefs: [
-    ['Promise 基础', 'js-async-002'], ['手写 Promise', 'js-async-003'], ['事件循环 ★', 'js-async-005'],
-  ]},
-  { group: '③ 网络三连 · 3 篇', note: '缓存与跨域是必考', hrefs: [
-    ['浏览器缓存', 'network-006'], ['跨域 CORS', 'network-007'], ['HTTP/2', 'network-003'],
-  ]},
-  { group: '④ ES6 两连 · 2 篇', hrefs: [
-    ['Proxy 与 Reflect', 'es6-008'], ['Set 与 Map', 'es6-007'],
-  ]},
-  { group: '⑤ 框架二选一', hrefs: [
-    ['Vue 原理系列', '@series:vue'], ['React 原理系列', '@series:react'],
-  ]},
-  { group: '⑥ 手写六连 · 6 篇', hrefs: [
-    ['call/apply/bind', 'handwritten-001'], ['new/instanceof', 'handwritten-002'],
-    ['深拷贝', 'handwritten-003'], ['Promise/A+', 'handwritten-004'],
-    ['防抖节流', 'handwritten-005'], ['EventEmitter', 'handwritten-006'],
-  ]},
-  { group: '⑦ 收官二选一', hrefs: [
-    ['URL 到页面（基础版）', 'browser-basic-003'], ['URL 到页面（完整版）', 'network-010'],
-  ]},
+  {
+    group: 'JavaScript 深入',
+    badge: '12 篇全刷',
+    note: '面试的脊柱，先啃完',
+    hrefs: [
+      ['执行上下文栈', 'js-deep-001'], ['变量对象与提升', 'js-deep-002'], ['词法作用域', 'js-deep-003'],
+      ['作用域链', 'js-deep-004'], ['闭包 ★', 'js-deep-005'], ['this', 'js-deep-006'],
+      ['call/apply/bind', 'js-deep-007'], ['new', 'js-deep-008'], ['原型与原型链', 'js-deep-009'],
+      ['继承', 'js-deep-010'], ['总串讲', 'js-deep-011'], ['面试题精讲', 'js-deep-012'],
+    ],
+  },
+  {
+    group: '异步与事件循环',
+    badge: '3 篇',
+    note: '手写 Promise 前必读',
+    hrefs: [
+      ['Promise 基础', 'js-async-002'], ['手写 Promise', 'js-async-003'], ['事件循环 ★', 'js-async-005'],
+    ],
+  },
+  {
+    group: '网络三连',
+    badge: '3 篇',
+    note: '缓存与跨域是必考',
+    hrefs: [
+      ['浏览器缓存', 'network-006'], ['跨域 CORS', 'network-007'], ['HTTP/2', 'network-003'],
+    ],
+  },
+  {
+    group: 'ES6 两连',
+    badge: '2 篇',
+    note: '理解语言的新能力',
+    hrefs: [
+      ['Proxy 与 Reflect', 'es6-008'], ['Set 与 Map', 'es6-007'],
+    ],
+  },
+  {
+    group: '框架二选一',
+    badge: '整个系列',
+    note: '按目标岗位选择一条',
+    hrefs: [
+      ['Vue 原理系列', '@series:vue'], ['React 原理系列', '@series:react'],
+    ],
+  },
+  {
+    group: '手写六连',
+    badge: '6 篇',
+    note: '把原理落到代码',
+    hrefs: [
+      ['call/apply/bind', 'handwritten-001'], ['new/instanceof', 'handwritten-002'],
+      ['深拷贝', 'handwritten-003'], ['Promise/A+', 'handwritten-004'],
+      ['防抖节流', 'handwritten-005'], ['EventEmitter', 'handwritten-006'],
+    ],
+  },
+  {
+    group: '收官二选一',
+    badge: '1 篇',
+    note: '串起 URL 到页面的全链路',
+    hrefs: [
+      ['URL 到页面（基础版）', 'browser-basic-003'], ['URL 到页面（完整版）', 'network-010'],
+    ],
+  },
 ];
 
-const stageName = { P1: '夯实基础', P2: '知识进阶', P3: '高级进阶' };
-const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
+const PART_TIME = [
+  { id: 'js-async', scope: '全系列' },
+  { id: 'network', scope: '全系列' },
+  { id: 'vue', scope: '全系列' },
+  { id: 'react', scope: '全系列' },
+  { id: 'engineering', scope: '全系列' },
+  { id: 'performance', scope: '001–006', count: 6 },
+  { id: 'rendering', scope: '001–003', count: 3 },
+];
 
-function titleOf(meta, id) {
-  const names = {
-    'js-deep': 'JavaScript 深入系列', 'js-core': 'JavaScript 核心系列', 'css-deep': 'CSS 深入系列',
-    'dom-events': 'DOM 与事件系列', 'browser-basic': '浏览器基础系列', 'js-async': '异步编程系列',
-    'es6': 'ES6+ 系列', 'network': '网络与浏览器系列', 'vue': 'Vue 原理系列', 'react': 'React 原理系列',
-    'engineering': '前端工程化系列', 'performance': '性能优化系列', 'v8': 'V8 与底层系列',
-    'rendering': '渲染原理系列', 'handwritten': '手写源码系列', 'ts': 'TypeScript 系列',
-    'architecture': '前端架构系列', 'security': '前端安全系列', 'algorithm': '算法与数据结构',
-  };
-  return names[meta.id] ?? meta.id;
-}
-const nameOf = (sid) => { const m = SERIES.find((x) => x.id === sid); return m ? titleOf(m, sid) : sid; };
+const refLabel = (ref: string) => ref.startsWith('@series:') ? '系列' : ref.split('-').pop();
+const routeTarget = (ref: string) => ref.startsWith('@series:') ? `/series/${ref.slice(8)}/` : `/articles/${ref}/`;
 ---
-<Chrome title="学习路线" desc="三条走法：校招速通约 25 篇、社招进阶约 30 篇追加、系统学习全量 158 篇——每条路都有可点击的每一篇。">
-<div class="wrap">
+<Book
+  title="学习路线"
+  desc="三条走法：校招速通约 25 篇、社招进阶约 30 篇追加、系统学习全量 158 篇——每条路都有可点击的每一篇。"
+  active="path"
+>
+  <header class="book-page-head route-head">
+    <div>
+      <div class="book-kicker">READING PATHS · 三种走法</div>
+      <h1 class="book-page-title">学习路线</h1>
+      <p class="book-page-lede">
+        同一套内容，不必从第一页硬读。按目标与时间选择一条路线：
+        <strong>校招速通</strong>先抓面试权重，<strong>社招进阶</strong>再补工程纵深，
+        也可以沿完整书目系统读完 {total} 篇。
+      </p>
+    </div>
 
-  <section class="hero">
-    <h1>学习路线</h1>
-    <p class="sub">同一套内容，三种走法。<b style="color:var(--c-amber)">校招速通</b>按面试权重挑约 25 篇；<b style="color:var(--c-amber)">社招进阶</b>在校招之上按方向追加；<b style="color:var(--c-amber)">系统学习</b>从第一篇走到第 158 篇。</p>
-    <div class="chips">
-      <a class="chip link" href="#fast-track"><b>25</b> 篇校招速通</a>
-      <a class="chip" href="#part-time"><b>+30</b> 篇社招追加</a>
-      <a class="chip" href="#full"><b>158</b> 篇系统全量</a>
+    <nav class="route-index" aria-label="路线索引">
+      <a href="#fast-track">
+        <span class="route-index-no">壹</span>
+        <span><b>校招速通</b><small>约 25 篇 · 6–8 周</small></span>
+      </a>
+      <a href="#part-time">
+        <span class="route-index-no">贰</span>
+        <span><b>社招进阶</b><small>追加约 30 篇 · 3 个月</small></span>
+      </a>
+      <a href="#full">
+        <span class="route-index-no">叁</span>
+        <span><b>系统学习</b><small>{total} 篇 · 按序全读</small></span>
+      </a>
+    </nav>
+  </header>
+
+  <section class="route-section" id="fast-track" aria-labelledby="fast-track-title">
+    <div class="book-section-head route-section-head">
+      <div>
+        <div class="book-kicker">壹 · FAST TRACK</div>
+        <h2 id="fast-track-title">校招速通</h2>
+      </div>
+      <p>约 25 篇 · 6–8 周 · 按面试权重排序。先读文章，再用文末思考题检验表达。</p>
+    </div>
+
+    <div class="route-chapters">
+      {FAST_TRACK.map((group, index) => (
+        <section class="route-chapter" aria-labelledby={`fast-group-${index}`}>
+          <header class="route-chapter-head">
+            <span class="route-chapter-no">{CHAPTER_HAN[index]}</span>
+            <div>
+              <h3 id={`fast-group-${index}`}>{group.group}</h3>
+              <p>{group.badge} · {group.note}</p>
+            </div>
+          </header>
+          <div class="route-list">
+            {group.hrefs.map(([label, ref]) => (
+              <a class="route-item" href={routeTarget(ref)}>
+                <span class="route-item-title">{label}</span>
+                <span class="route-item-ref">{refLabel(ref)}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   </section>
 
-  <section class="stage-block" id="fast-track">
-    <div class="stage-head"><span class="tag p1">FAST TRACK</span><h2>校招速通</h2><small>约 25 篇 · 6~8 周 · 面试权重排序</small></div>
-    {FAST_TRACK.map((g) => (
-      <div class="pgroup">
-        <div class="pg-h"><b>{g.group}</b><span>{g.note ?? ''}</span></div>
-        <div class="flow">
-          {g.hrefs.map(([label, ref]) => (
-            ref.startsWith('@series:')
-              ? <a class="node choice" href={`/series/${ref.slice(7)}/`}><b>{label}</b><small>整个系列 · 二选一</small></a>
-              : <a class="node" href={`/articles/${ref}/`}><b>{label}</b><small>{ref}</small></a>
+  <section class="route-section" id="part-time" aria-labelledby="part-time-title">
+    <div class="book-section-head route-section-head">
+      <div>
+        <div class="book-kicker">贰 · PART-TIME</div>
+        <h2 id="part-time-title">社招进阶</h2>
+      </div>
+      <p>在校招路线之上追加约 30 篇。工程化、框架原理、性能与渲染，是社招面试的纵深。</p>
+    </div>
+
+    <div class="appendix-layout">
+      <p class="appendix-note">
+        这不是另一套从零开始的课程。先完成速通路线，再按目标岗位从下列章节中补读；
+        每个入口都直达对应系列的完整篇目。
+      </p>
+      <div class="appendix-list">
+        {PART_TIME.map((item, index) => {
+          const count = item.count ?? countBySeries.get(item.id) ?? 0;
+          return (
+            <a class="appendix-item" href={`/series/${item.id}/`}>
+              <span class="appendix-no">{padNo(index + 1)}</span>
+              <span class="appendix-title">{seriesName(item.id)}</span>
+              <span class="appendix-scope">{item.scope}</span>
+              <span class="appendix-count">{count} 篇</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="route-section" id="full" aria-labelledby="full-title">
+    <div class="book-section-head route-section-head">
+      <div>
+        <div class="book-kicker">叁 · FULL ROUTE</div>
+        <h2 id="full-title">系统学习全路线</h2>
+      </div>
+      <p>全部 {total} 篇按阶段与系列归档。点击任一章节即可展开篇目，读完再走下一篇。</p>
+    </div>
+
+    {STAGES.map((stage, stageIndex) => (
+      <section class="full-stage" aria-labelledby={`full-stage-${stage.key}`}>
+        <header class="full-stage-head">
+          <span>{STAGE_HAN[stage.key]}</span>
+          <h3 id={`full-stage-${stage.key}`}>{stage.key} · {STAGE_NAMES[stage.key]}</h3>
+          <small>
+            {entries.filter((entry) => SERIES.find((meta) => meta.id === entry.data.seriesId)?.stage === stage.key).length} 篇
+          </small>
+        </header>
+
+        <div class="full-series-list">
+          {SERIES.filter((meta) => meta.stage === stage.key).map((meta) => (
+            <details class="full-series">
+              <summary>
+                <span class="full-series-no">{padNo(SERIES.findIndex((item) => item.id === meta.id) + 1)}</span>
+                <span class="full-series-name">{seriesName(meta.id)}</span>
+                <span class="full-series-en">{meta.en}</span>
+                <span class="full-series-count">{countBySeries.get(meta.id) ?? 0} 篇</span>
+              </summary>
+              <div class="full-series-articles">
+                {entries
+                  .filter((entry) => entry.data.seriesId === meta.id)
+                  .sort((a, b) => a.data.id.localeCompare(b.data.id))
+                  .map((entry, articleIndex) => (
+                    <a href={`/articles/${entry.data.id}/`}>
+                      <span>{padNo(articleIndex + 1)}</span>
+                      <b>{entry.data.title}</b>
+                      <small>{entry.data.readingTime} 分钟</small>
+                    </a>
+                  ))}
+              </div>
+            </details>
           ))}
         </div>
-      </div>
+      </section>
     ))}
   </section>
-
-  <section class="stage-block" id="part-time">
-    <div class="stage-head"><span class="tag p2">PART-TIME</span><h2>社招进阶</h2><small>校招路线之上 · 约 30 篇追加 · 3 个月</small></div>
-    <div class="addcard">
-      <p>在速通路线之上，按方向追加四个全系列与一组渲染三篇——社招面试必问<b>工程化</b>与<b>框架原理</b>，性能与渲染是高级感来源。</p>
-      <div class="addgrid">
-        <a class="node" href="/series/js-async/"><b>异步编程 · 全系列</b><small>js-async · 8 篇</small></a>
-        <a class="node" href="/series/network/"><b>网络与浏览器 · 全系列</b><small>network · 10 篇</small></a>
-        <a class="node" href="/series/vue/"><b>Vue 原理 · 全系列</b><small>vue · 8 篇</small></a>
-        <a class="node" href="/series/react/"><b>React 原理 · 全系列</b><small>react · 8 篇</small></a>
-        <a class="node" href="/series/engineering/"><b>前端工程化 · 全系列</b><small>engineering · 8 篇</small></a>
-        <a class="node" href="/series/performance/"><b>性能优化 · 001-006</b><small>performance · 6 篇</small></a>
-        <a class="node" href="/series/rendering/"><b>渲染原理 · 001-003</b><small>rendering · 3 篇</small></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="stage-block" id="full">
-    <div class="stage-head"><span class="tag p3">FULL ROUTE</span><h2>系统学习全路线</h2><small>158 篇 · 按序读完 · 每篇思考题做完再走</small></div>
-
-    {STAGES.map((stage) => (
-      <div>
-        <div class="fs-h"><b>{stage.key} · {stage.name}</b></div>
-        {SERIES.filter((m) => m.stage === stage.key).map((meta) => (
-          <div class="fs-series">
-            <div class="fs-sh"><a href={`/series/${meta.id}/`}>{nameOf(meta)}</a><span>{meta.en}</span></div>
-            {entries
-              .filter((e) => e.data.seriesId === meta.id)
-              .sort((a, b) => a.data.id.localeCompare(b.data.id))
-              .map((e) => (
-                <a class="qrow" href={`/articles/${e.data.id}/`}>
-                  <span class="no">{e.data.id}</span>
-                  <b>{e.data.title}</b>
-                  <span class="stars">{stars(e.data.difficulty)}</span>
-                  <span class="t">{e.data.readingTime} min</span>
-                </a>
-              ))}
-          </div>
-        ))}
-      </div>
-    ))}
-  </section>
-
-</div>
-</Chrome>
+</Book>
 
 <style>
-  .pgroup{margin-bottom:26px}
-  .pg-h{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
-  .pg-h b{font-size:15px;font-weight:800;color:#F2F4F6}
-  .pg-h span{font-family:var(--f-mono);font-size:11.5px;color:var(--c-muted)}
-  .node.choice{background:var(--c-panel2)}
-  .node.choice b{color:var(--c-sky)}
-  .addcard{background:var(--c-panel);border:1.5px solid var(--c-line);border-radius:14px;padding:26px 30px}
-  .addcard p{font-size:14px;color:#C8D2DC;max-width:640px;margin-bottom:20px}
-  .addcard p b{color:var(--c-amber)}
-  .addgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
-  .fs-h{font-family:var(--f-mono);font-size:12px;letter-spacing:2px;color:var(--c-amber);
-    border-top:1px solid var(--c-line);padding:26px 0 4px}
-  .fs-series{margin-bottom:26px}
-  .fs-sh{display:flex;justify-content:space-between;align-items:baseline;margin:10px 0 10px}
-  .fs-sh a{font-weight:900;font-size:19px;color:#F2F4F6}
-  .fs-sh a:hover{color:var(--c-amber)}
-  .fs-sh span{font-family:var(--f-mono);font-size:11px;color:var(--c-muted);letter-spacing:2px}
-</style>
+  .route-head{align-items:start}
+  .route-head .book-page-lede strong{color:var(--book-ink);font-weight:600}
+  .route-index{display:grid;border-top:2px solid var(--book-ink)}
+  .route-index a{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:12px;
+    align-items:center;
+    min-height:78px;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .route-index a:hover .route-index-no{background:var(--book-cinnabar)}
+  .route-index-no{
+    width:30px;
+    height:30px;
+    display:grid;
+    place-items:center;
+    background:var(--book-ink);
+    color:var(--book-white);
+    font-family:var(--book-serif);
+    font-size:13px;
+    transition:background .18s ease;
+  }
+  .route-index b{
+    display:block;
+    font-family:var(--book-serif);
+    font-size:17px;
+    line-height:1.4;
+  }
+  .route-index small{display:block;color:var(--book-muted);font-size:12px}
 
-<style>
-  /* 移动端适配 */
+  .route-section{padding-top:76px;scroll-margin-top:24px}
+  .route-section-head{margin-bottom:34px}
+  .route-chapters{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:36px 52px;
+  }
+  .route-chapter{border-top:1px solid var(--book-ink);padding-top:17px}
+  .route-chapter-head{
+    display:grid;
+    grid-template-columns:40px 1fr;
+    gap:12px;
+    align-items:start;
+    padding-bottom:14px;
+  }
+  .route-chapter-no{
+    color:var(--book-cinnabar);
+    font-family:var(--book-serif);
+    font-size:25px;
+    line-height:1.25;
+  }
+  .route-chapter h3{font-family:var(--book-serif);font-size:20px;line-height:1.45}
+  .route-chapter-head p{margin-top:2px;color:var(--book-muted);font-size:12.5px;line-height:1.6}
+  .route-list{border-top:1px solid var(--book-hair)}
+  .route-item{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:16px;
+    align-items:baseline;
+    min-height:43px;
+    padding:8px 0;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .route-item-title{font-size:14.5px;line-height:1.55}
+  .route-item-ref{color:var(--book-muted);font-family:var(--book-mono);font-size:11px}
+  .route-item:hover .route-item-title{color:var(--book-cinnabar)}
+  .route-item:hover .route-item-ref{color:var(--book-ink)}
+
+  .appendix-layout{
+    display:grid;
+    grid-template-columns:minmax(220px,.7fr) minmax(0,1.3fr);
+    gap:70px;
+    align-items:start;
+  }
+  .appendix-note{
+    padding-left:17px;
+    border-left:2px solid var(--book-cinnabar);
+    color:var(--book-muted);
+    font-family:var(--book-serif);
+    font-size:15px;
+    line-height:1.9;
+  }
+  .appendix-list{border-top:2px solid var(--book-ink)}
+  .appendix-item{
+    display:grid;
+    grid-template-columns:38px minmax(0,1fr) auto 56px;
+    gap:14px;
+    align-items:baseline;
+    min-height:58px;
+    padding:12px 0;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .appendix-no,.appendix-count,.appendix-scope{color:var(--book-muted);font-family:var(--book-mono);font-size:11px}
+  .appendix-title{font-family:var(--book-serif);font-size:16px;font-weight:700}
+  .appendix-count{text-align:right}
+  .appendix-item:hover .appendix-title{color:var(--book-cinnabar)}
+
+  .full-stage{margin-top:52px}
+  .full-stage-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    padding-bottom:12px;
+    border-bottom:2px solid var(--book-ink);
+  }
+  .full-stage-head > span{color:var(--book-cinnabar);font-family:var(--book-serif);font-size:31px;line-height:1}
+  .full-stage-head h3{font-family:var(--book-serif);font-size:21px}
+  .full-stage-head small{margin-left:auto;color:var(--book-muted);font-family:var(--book-mono);font-size:11px}
+  .full-series-list{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:52px;
+  }
+  .full-series{border-bottom:1px solid var(--book-hair)}
+  .full-series summary{
+    position:relative;
+    display:grid;
+    grid-template-columns:34px minmax(0,1fr) auto 44px 22px;
+    gap:10px;
+    align-items:center;
+    min-height:61px;
+    padding:9px 0;
+    cursor:pointer;
+    list-style:none;
+  }
+  .full-series summary::-webkit-details-marker{display:none}
+  .full-series summary::after{
+    content:"+";
+    color:var(--book-cinnabar);
+    font-family:var(--book-mono);
+    font-size:18px;
+    text-align:right;
+    transition:transform .18s ease;
+  }
+  .full-series[open] summary::after{transform:rotate(45deg)}
+  .full-series-no,.full-series-en,.full-series-count{color:var(--book-muted);font-family:var(--book-mono);font-size:10.5px}
+  .full-series-name{font-family:var(--book-serif);font-size:15.5px;font-weight:700;line-height:1.45}
+  .full-series-count{text-align:right}
+  .full-series summary:hover .full-series-name{color:var(--book-cinnabar)}
+  .full-series-articles{padding:0 0 14px 34px}
+  .full-series-articles a{
+    display:grid;
+    grid-template-columns:28px minmax(0,1fr) auto;
+    gap:10px;
+    align-items:baseline;
+    min-height:40px;
+    padding:7px 0;
+    border-top:1px solid var(--book-hair);
+  }
+  .full-series-articles a > span,
+  .full-series-articles a > small{color:var(--book-muted);font-family:var(--book-mono);font-size:10px}
+  .full-series-articles a > b{font-size:13.5px;font-weight:500;line-height:1.6}
+  .full-series-articles a:hover > b{color:var(--book-cinnabar)}
+
+  @media (max-width:900px){
+    .route-chapters{grid-template-columns:1fr;gap:32px}
+    .appendix-layout{grid-template-columns:1fr;gap:30px}
+    .full-series-list{grid-template-columns:1fr;column-gap:0}
+  }
+
   @media (max-width:600px){
-    .pg-h{flex-wrap:wrap;row-gap:2px}
-    .addcard{padding:20px 18px}
-    .addgrid{grid-template-columns:1fr}
-    .hero h1{font-size:32px}
+    .route-section{padding-top:54px}
+    .route-section-head{margin-bottom:24px}
+    .route-chapter-head{grid-template-columns:32px 1fr}
+    .appendix-item{grid-template-columns:30px minmax(0,1fr) auto;gap:10px}
+    .appendix-scope{display:none}
+    .full-stage{margin-top:38px}
+    .full-stage-head > span{font-size:26px}
+    .full-series summary{grid-template-columns:28px minmax(0,1fr) 38px 18px;gap:8px}
+    .full-series-en{display:none}
+    .full-series-articles{padding-left:28px}
   }
 </style>

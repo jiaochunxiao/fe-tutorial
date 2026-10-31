@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>首页重设计 · 六候选</title>
+<style>
+:root{
+  --bg:#f2f2ef; --paper:#fff; --ink:#1b1c1a; --muted:#666a65;
+  --line:#d7d8d2; --red:#a33b2b; --blue:#173dcc; --pink:#98345f;
+  --sans:"PingFang SC","Hiragino Sans GB",sans-serif;
+  --serif:"Songti SC","STSong",serif;
+  --mono:"SFMono-Regular","Menlo",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6}
+.shell{width:min(1340px,calc(100% - 64px));margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;padding:44px 0 25px;border-bottom:1px solid var(--ink)}
+header h1{font-family:var(--serif);font-size:44px;line-height:1.16;letter-spacing:-.025em;font-weight:700}
+header p{font-size:14px;color:var(--muted);max-width:430px;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;padding:30px 0 46px}
+.card{min-width:0}
+.preview{position:relative;display:block;aspect-ratio:16/10;border:1px solid var(--line);background:var(--paper);overflow:hidden;border-radius:3px;box-shadow:0 8px 25px rgba(27,28,26,.06)}
+.preview iframe{width:1440px;height:900px;border:0;transform:scale(.2917);transform-origin:0 0;pointer-events:none;display:block}
+.preview.live::after{content:"完整版";position:absolute;right:9px;top:9px;background:var(--ink);color:var(--paper);padding:4px 8px;font-size:12px;font-weight:600;letter-spacing:.03em}
+.preview.alt::after{content:"备选";position:absolute;right:9px;top:9px;background:rgba(255,255,255,.9);border:1px solid var(--line);color:var(--ink);padding:4px 8px;font-size:12px;font-weight:600}
+.meta{display:grid;grid-template-columns:38px 1fr;gap:11px;padding-top:14px}
+.no{font:600 12px/1.8 var(--mono);color:var(--muted);padding-top:2px}
+.meta h2{font-size:17px;line-height:1.35;font-weight:700;letter-spacing:-.015em}
+.meta p{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.65}
+.tag{display:inline-block;margin-top:7px;font-size:12px;font-weight:600;color:var(--muted)}
+.tag.full{color:var(--ink);border-bottom:1px solid var(--ink)}
+footer{display:flex;justify-content:space-between;gap:30px;padding:19px 0 35px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+footer b{color:var(--ink)}
+
+/* 备选缩略图用纯 CSS 画出版式，不依赖额外页面。 */
+.mini{width:100%;height:100%;position:relative;overflow:hidden}
+.editorial{background:#fff;padding:28px 32px}
+.editorial .one-line{font-size:10px;font-weight:700;letter-spacing:.12em}
+.editorial .huge{font-size:46px;line-height:1.03;letter-spacing:-.06em;font-weight:900;width:52%;margin-top:30px}
+.editorial .accent{width:34px;height:6px;background:#ff3f2f;margin-top:17px}
+.editorial .routes{position:absolute;right:30px;top:88px;width:172px;border-top:4px solid #111}
+.editorial .routes div{display:flex;justify-content:space-between;border-bottom:1px solid #d3d3d3;padding:10px 0;font-size:11px;font-weight:700}
+.editorial .foot{position:absolute;left:32px;bottom:24px;font-size:10px;color:#666}
+.friendly{background:#fff8e9;padding:25px 30px;color:#252018}
+.friendly .cloud{position:absolute;left:-40px;right:-40px;bottom:-170px;height:290px;border-radius:50%;background:#ffe3b7}
+.friendly .nav{display:flex;justify-content:space-between;font-size:10px;font-weight:700}
+.friendly .title{font-size:40px;line-height:1.08;font-weight:800;letter-spacing:-.055em;margin-top:32px;max-width:270px}
+.friendly .copy{font-size:12px;color:#736b5c;margin-top:14px;max-width:265px}
+.friendly .buttons{display:flex;gap:8px;margin-top:18px;position:relative;z-index:1}
+.friendly .buttons span{display:block;border-radius:999px;padding:8px 13px;background:#ff6b48;color:#fff;font-size:10px;font-weight:700}
+.friendly .buttons span+span{background:#fff;color:#252018;border:1px solid #dfd3bd}
+.friendly .cards{position:absolute;right:22px;bottom:38px;display:flex;gap:6px;z-index:1}
+.friendly .cards i{display:block;width:42px;height:78px;border-radius:11px;background:#fff;border:1px solid #e5dac6;box-shadow:0 4px 0 #eadcc4;transform:rotate(-3deg)}
+.friendly .cards i:nth-child(2){transform:translateY(8px) rotate(3deg)}
+.magazine{background:#ebe8df;padding:22px 25px;color:#1b1a18}
+.magazine .mast{display:flex;justify-content:space-between;border-bottom:4px solid #1b1a18;padding-bottom:8px;font:700 9px/1 var(--mono);letter-spacing:.08em}
+.magazine h3{font-family:var(--serif);font-size:38px;line-height:1.08;letter-spacing:-.06em;margin-top:16px;position:relative;z-index:1}
+.magazine .lead{font-size:11px;line-height:1.6;color:#5f5b53;max-width:225px;margin-top:9px}
+.magazine .map{position:absolute;right:24px;top:69px;display:grid;grid-template-columns:repeat(3,40px);gap:4px}
+.magazine .map i{display:flex;align-items:flex-end;padding:4px;height:38px;border:1px solid #aaa79e;font:700 8px/1 var(--mono);font-style:normal;background:#f6f2e9}
+.magazine .map i:nth-child(2){height:53px;background:#1b1a18;color:#fff}
+.magazine .map i:nth-child(3){height:31px;background:#d34a32;color:#fff}
+.magazine .map i:nth-child(5){height:48px;background:#c9c3b4}
+.magazine .lines{position:absolute;left:25px;right:25px;bottom:20px}
+.magazine .lines div{display:flex;justify-content:space-between;border-top:1px solid #b6b1a7;padding:5px 0;font-size:9px}
+.magazine .lines b{font-family:var(--mono)}
+@media(max-width:900px){
+  .shell{width:calc(100% - 34px)}
+  header{align-items:flex-start;flex-direction:column;gap:12px;padding-top:30px}
+  header h1{font-size:34px}
+  header p{text-align:left}
+  .grid{grid-template-columns:1fr;gap:30px}
+  .preview iframe{transform:scale(.237);width:1440px;height:900px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <h1>首页重设计<br>六个候选，三种完整方向</h1>
+    <p>共同解决两件事：不再用压暗的背景，首屏不再一次铺开全部课程。三张标注“完整版”的稿都可点开细看。</p>
+  </header>
+
+  <main class="grid">
+    <article class="card">
+      <a class="preview live" href="dir-1.html"><iframe src="dir-1.html" title="课程书目缩略图" loading="eager"></iframe></a>
+      <div class="meta"><span class="no">01</span><div><h2>课程书目</h2><p>暖纸、宋体、细线与朱砂批注。把 158 篇当成一本按顺序读的书。</p><span class="tag full">完整版 · 阅读优先</span></div></div>
+    </article>
+
+    <article class="card">
+      <a class="preview alt" href="#" onclick="return false"><div class="mini editorial">
+        <div class="one-line">FRONTEND / 158 NOTES</div>
+        <div class="huge">从哪一页<br>开始？</div><div class="accent"></div>
+        <div class="routes"><div><span>校招速通</span><span>25 篇</span></div><div><span>社招进阶</span><span>+30 篇</span></div><div><span>系统学习</span><span>158 篇</span></div></div>
+        <div class="foot">THE SHORTEST WAY IN</div>
+      </div></a>
+      <div class="meta"><span class="no">02</span><div><h2>一页入口</h2><p>纯白与墨黑，一个问题占半屏，另一半只有路线。更克制，品牌记忆点更强。</p><span class="tag">备选 · 极简编辑</span></div></div>
+    </article>
+
+    <article class="card">
+      <a class="preview live" href="dir-2.html"><iframe src="dir-2.html" title="讲义台缩略图" loading="eager"></iframe></a>
+      <div class="meta"><span class="no">03</span><div><h2>讲义台</h2><p>明亮蓝纸、粗规则线与清晰网格。像一份能快速取用的课程讲义。</p><span class="tag full">完整版 · 结构优先</span></div></div>
+    </article>
+
+    <article class="card">
+      <a class="preview alt" href="#" onclick="return false"><div class="mini friendly">
+        <div class="nav"><b>前端进阶之路</b><span>学习路线　搜索　关于</span></div>
+        <div class="title">今天想学<br>哪一块？</div>
+        <div class="copy">从一条路线开始，不用先看完一整张知识地图。</div>
+        <div class="buttons"><span>开始学习 →</span><span>先看看目录</span></div>
+        <div class="cards"><i></i><i></i><i></i></div>
+        <div class="cloud"></div>
+      </div></a>
+      <div class="meta"><span class="no">04</span><div><h2>友好课程导览</h2><p>暖白底、轻松字体与更直白的语气，降低技术站的距离感。</p><span class="tag">备选 · 降低门槛</span></div></div>
+    </article>
+
+    <article class="card">
+      <a class="preview live" href="dir-3.html"><iframe src="dir-3.html" title="轻进度路线缩略图" loading="eager"></iframe></a>
+      <div class="meta"><span class="no">05</span><div><h2>轻进度路线</h2><p>玫粉底与三档选择器。首页先问目标，再把课程收束成一个下一步。</p><span class="tag full">完整版 · 行动优先</span></div></div>
+    </article>
+
+    <article class="card">
+      <a class="preview alt" href="#" onclick="return false"><div class="mini magazine">
+        <div class="mast"><span>FRONTEND MASTERY</span><span>目录 / 19 SERIES</span></div>
+        <h3>前端<br>课程地图</h3>
+        <div class="lead">三阶段，十九个系列。按知识关系读，而不是按发布时间读。</div>
+        <div class="map"><i>P1<br>基础</i><i>P2<br>进阶</i><i>P3<br>深入</i><i>JS</i><i>CSS</i><i>V8</i></div>
+        <div class="lines"><div><span>JavaScript 深入</span><b>12</b></div><div><span>异步编程</span><b>8</b></div><div><span>V8 与底层</span><b>8</b></div></div>
+      </div></a>
+      <div class="meta"><span class="no">06</span><div><h2>日式杂志密排</h2><p>高密度表格、信息格与批注。信息丰富，但与“降低复杂度”的目标冲突。</p><span class="tag">备选 · 信息密集</span></div></div>
+    </article>
+  </main>
+
+  <footer>
+    <div><b>前端进阶之路</b>｜首页方向探索</div>
+    <div>验收尺寸 1440 × 900 / 375 × 812　·　三版均使用真实站内内容</div>
+  </footer>
+</div>
+</body>
+</html>

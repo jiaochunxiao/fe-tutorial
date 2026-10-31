@@ -1,66 +1,184 @@
 ---
 import { getCollection } from 'astro:content';
-import Chrome from '../../layouts/Chrome.astro';
+import Book from '../../layouts/Book.astro';
 import { SERIES } from '../../data/series';
+import { STAGE_NAMES, padNo, seriesName } from '../../utils/series';
 
 export async function getStaticPaths() {
   const entries = await getCollection('articles');
   const bySeries = new Map<string, typeof entries>();
-  for (const e of entries) {
-    const list = bySeries.get(e.data.seriesId) ?? [];
-    list.push(e);
-    bySeries.set(e.data.seriesId, list);
+  for (const entry of entries) {
+    const list = bySeries.get(entry.data.seriesId) ?? [];
+    list.push(entry);
+    bySeries.set(entry.data.seriesId, list);
   }
-  return SERIES.map((meta, i) => ({
+
+  return SERIES.map((meta, index) => ({
     params: { seriesId: meta.id },
     props: {
       meta,
-      count: bySeries.get(meta.id)?.length ?? 0,
+      index,
       articles: (bySeries.get(meta.id) ?? []).sort((a, b) =>
         a.data.id.localeCompare(b.data.id)),
-      prev: SERIES[i - 1] ?? null,
-      next: SERIES[i + 1] ?? null,
+      prev: SERIES[index - 1] ?? null,
+      next: SERIES[index + 1] ?? null,
     },
   }));
 }
 
-const { meta, count, articles, prev, next } = Astro.props;
-const stageNames = { P1: '夯实基础', P2: '知识进阶', P3: '高级进阶' };
+const { meta, index, articles, prev, next } = Astro.props;
+const name = seriesName(meta.id);
+const totalMinutes = articles.reduce((sum, article) => sum + article.data.readingTime, 0);
 const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
 ---
-<Chrome title={meta.id === 'js-deep' ? 'JavaScript 深入系列' : meta.id === 'js-core' ? 'JavaScript 核心系列' : meta.id === 'js-async' ? '异步编程系列' : meta.id === 'es6' ? 'ES6+ 系列' : meta.id === 'network' ? '网络与浏览器系列' : meta.id === 'vue' ? 'Vue 原理系列' : meta.id === 'react' ? 'React 原理系列' : meta.id === 'engineering' ? '前端工程化系列' : meta.id === 'performance' ? '性能优化系列' : meta.id === 'v8' ? 'V8 与底层系列' : meta.id === 'rendering' ? '渲染原理系列' : meta.id === 'handwritten' ? '手写源码系列' : meta.id === 'ts' ? 'TypeScript 系列' : meta.id === 'architecture' ? '前端架构系列' : meta.id === 'security' ? '前端安全系列' : meta.id === 'algorithm' ? '算法与数据结构' : meta.id === 'css-deep' ? 'CSS 深入系列' : meta.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}
-      desc={meta.intro}>
-<div class="wrap">
+<Book title={name} desc={meta.intro}>
+  <header class="book-page-head series-head">
+    <div>
+      <div class="book-kicker">
+        系列 {padNo(index + 1)} / {padNo(SERIES.length)} · {meta.stage} {STAGE_NAMES[meta.stage]} · {meta.en}
+      </div>
+      <h1 class="book-page-title">{name}</h1>
+      <p class="book-page-lede">{meta.intro}</p>
+    </div>
 
-  <section class="series-hero">
-    <span class="kind">{meta.en} · {meta.stage} {stageNames[meta.stage]}</span>
-    <h1>{meta.id === 'js-deep' ? 'JavaScript 深入系列' : meta.id === 'js-core' ? 'JavaScript 核心系列' : meta.id === 'js-async' ? '异步编程系列' : meta.id === 'es6' ? 'ES6+ 系列' : meta.id === 'network' ? '网络与浏览器系列' : meta.id === 'vue' ? 'Vue 原理系列' : meta.id === 'react' ? 'React 原理系列' : meta.id === 'engineering' ? '前端工程化系列' : meta.id === 'performance' ? '性能优化系列' : meta.id === 'v8' ? 'V8 与底层系列' : meta.id === 'rendering' ? '渲染原理系列' : meta.id === 'handwritten' ? '手写源码系列' : meta.id === 'ts' ? 'TypeScript 系列' : meta.id === 'architecture' ? '前端架构系列' : meta.id === 'security' ? '前端安全系列' : meta.id === 'algorithm' ? '算法与数据结构' : meta.id === 'css-deep' ? 'CSS 深入系列' : meta.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</h1>
-    <p>{meta.intro}</p>
-    <div class="counts">
-      <span class="chip"><b>{count}</b> 篇</span>
-      <span class="chip"><b>{meta.stage}</b> {stageNames[meta.stage]}</span>
+    <dl class="series-facts">
+      <div><dt>所属阶段</dt><dd>{meta.stage} · {STAGE_NAMES[meta.stage]}</dd></div>
+      <div><dt>本系列篇数</dt><dd>{articles.length} 篇</dd></div>
+      <div><dt>标注阅读时长</dt><dd>{totalMinutes} 分钟</dd></div>
+      <div><dt>学习方法</dt><dd>按序阅读，完成文末思考题</dd></div>
+    </dl>
+  </header>
+
+  <section class="series-catalog" aria-labelledby="catalog-title">
+    <div class="book-section-head series-catalog-head">
+      <div>
+        <div class="book-kicker">CONTENTS · 篇目</div>
+        <h2 id="catalog-title">本系列目录</h2>
+      </div>
+      <p>难度来自课程标注，阅读时长为源文标注值。点击篇名进入正文。</p>
+    </div>
+
+    <div class="catalog-table">
+      <div class="catalog-labels" aria-hidden="true">
+        <span>篇目</span><span>难度</span><span>阅读</span>
+      </div>
+      {articles.map((article, articleIndex) => (
+        <a class="catalog-row" href={`/articles/${article.data.id}/`}>
+          <span class="catalog-no">{padNo(articleIndex + 1)}</span>
+          <span class="catalog-title">{article.data.title}</span>
+          <span class="catalog-stars" aria-label={`难度 ${article.data.difficulty} / 5`}>
+            {stars(article.data.difficulty)}
+          </span>
+          <span class="catalog-time">{article.data.readingTime} 分钟</span>
+        </a>
+      ))}
     </div>
   </section>
 
-  <div class="qlist">
-    {articles.map((a, i) => (
-      <a class="qrow" href={`/articles/${a.data.id}/`}>
-        <span class="no">{String(i + 1).padStart(2, '0')}</span>
-        <b>{a.data.title}</b>
-        <span class="stars">{stars(a.data.difficulty)}</span>
-        <span class="t">{a.data.readingTime} min</span>
+  <nav class="series-pager" aria-label="系列翻页">
+    {prev ? (
+      <a class="series-pager-prev" href={`/series/${prev.id}/`}>
+        <span>← 上一个系列</span>
+        <b>{seriesName(prev.id)}</b>
       </a>
-    ))}
-  </div>
+    ) : <span class="series-pager-empty">已经是第一个系列</span>}
+    {next ? (
+      <a class="series-pager-next" href={`/series/${next.id}/`}>
+        <span>下一个系列 →</span>
+        <b>{seriesName(next.id)}</b>
+      </a>
+    ) : <span class="series-pager-empty series-pager-next">已经是最后一个系列</span>}
+  </nav>
 
-  <div class="series-nav">
-    {prev
-      ? <a href={`/series/${prev.id}/`}><span>← 上一个系列</span><b>{prev.id === 'js-deep' ? 'JavaScript 深入系列' : prev.id === 'js-core' ? 'JavaScript 核心系列' : prev.id === 'js-async' ? '异步编程系列' : prev.id === 'es6' ? 'ES6+ 系列' : prev.id === 'network' ? '网络与浏览器系列' : prev.id === 'vue' ? 'Vue 原理系列' : prev.id === 'react' ? 'React 原理系列' : prev.id === 'engineering' ? '前端工程化系列' : prev.id === 'performance' ? '性能优化系列' : prev.id === 'v8' ? 'V8 与底层系列' : prev.id === 'rendering' ? '渲染原理系列' : prev.id === 'handwritten' ? '手写源码系列' : prev.id === 'ts' ? 'TypeScript 系列' : prev.id === 'architecture' ? '前端架构系列' : prev.id === 'security' ? '前端安全系列' : prev.id === 'algorithm' ? '算法与数据结构' : prev.id === 'css-deep' ? 'CSS 深入系列' : prev.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</b></a>
-      : <span />}
-    {next
-      ? <a href={`/series/${next.id}/`}><span>下一个系列 →</span><b>{next.id === 'js-deep' ? 'JavaScript 深入系列' : next.id === 'js-core' ? 'JavaScript 核心系列' : next.id === 'js-async' ? '异步编程系列' : next.id === 'es6' ? 'ES6+ 系列' : next.id === 'network' ? '网络与浏览器系列' : next.id === 'vue' ? 'Vue 原理系列' : next.id === 'react' ? 'React 原理系列' : next.id === 'engineering' ? '前端工程化系列' : next.id === 'performance' ? '性能优化系列' : next.id === 'v8' ? 'V8 与底层系列' : next.id === 'rendering' ? '渲染原理系列' : next.id === 'handwritten' ? '手写源码系列' : next.id === 'ts' ? 'TypeScript 系列' : next.id === 'architecture' ? '前端架构系列' : next.id === 'security' ? '前端安全系列' : next.id === 'algorithm' ? '算法与数据结构' : next.id === 'css-deep' ? 'CSS 深入系列' : next.id === 'dom-events' ? 'DOM 与事件系列' : '浏览器基础系列'}</b></a>
-      : <span />}
+  <div class="series-back">
+    <a class="book-text-link" href="/#directory">返回全部系列目录</a>
   </div>
+</Book>
 
-</div>
-</Chrome>
+<style>
+  .series-head .book-page-title{font-size:clamp(44px,5.4vw,68px)}
+  .series-facts{border-top:2px solid var(--book-ink)}
+  .series-facts > div{
+    display:grid;
+    grid-template-columns:100px minmax(0,1fr);
+    gap:14px;
+    padding:10px 0;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .series-facts dt{color:var(--book-muted);font-size:12px}
+  .series-facts dd{font-family:var(--book-serif);font-size:13.5px;font-weight:700;line-height:1.6}
+
+  .series-catalog{padding-top:68px}
+  .series-catalog-head{margin-bottom:20px}
+  .catalog-table{border-top:2px solid var(--book-ink)}
+  .catalog-labels{
+    display:grid;
+    grid-template-columns:52px minmax(0,1fr) 92px 80px;
+    gap:18px;
+    padding:8px 0;
+    border-bottom:1px solid var(--book-hair);
+    color:var(--book-muted);
+    font-family:var(--book-mono);
+    font-size:10px;
+    letter-spacing:.08em;
+  }
+  .catalog-labels span:first-child{grid-column:1 / 3}
+  .catalog-labels span:nth-child(2){grid-column:3}
+  .catalog-labels span:nth-child(3){grid-column:4;text-align:right}
+  .catalog-row{
+    display:grid;
+    grid-template-columns:52px minmax(0,1fr) 92px 80px;
+    gap:18px;
+    align-items:baseline;
+    min-height:60px;
+    padding:12px 0;
+    border-bottom:1px solid var(--book-hair);
+  }
+  .catalog-no{color:var(--book-muted);font-family:var(--book-mono);font-size:11px}
+  .catalog-title{font-family:var(--book-serif);font-size:16.5px;font-weight:700;line-height:1.6}
+  .catalog-stars{color:var(--book-cinnabar);font-size:11px;letter-spacing:.04em;white-space:nowrap}
+  .catalog-time{color:var(--book-muted);font-family:var(--book-mono);font-size:11px;text-align:right;white-space:nowrap}
+  .catalog-row:hover .catalog-title{color:var(--book-cinnabar)}
+
+  .series-pager{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+    margin-top:64px;
+    padding-top:16px;
+    border-top:1px solid var(--book-ink);
+  }
+  .series-pager a{display:block;min-height:62px}
+  .series-pager a > span{display:block;color:var(--book-muted);font-size:12px}
+  .series-pager a > b{
+    display:block;
+    margin-top:5px;
+    font-family:var(--book-serif);
+    font-size:16px;
+    line-height:1.55;
+  }
+  .series-pager a:hover > b{color:var(--book-cinnabar)}
+  .series-pager-next{text-align:right}
+  .series-pager-empty{
+    display:flex;
+    min-height:62px;
+    align-items:flex-start;
+    color:var(--book-muted);
+    font-size:13px;
+  }
+  .series-back{margin-top:30px}
+
+  @media (max-width:700px){
+    .catalog-labels{display:none}
+    .catalog-row{grid-template-columns:36px minmax(0,1fr) auto;gap:12px;min-height:66px;padding:13px 0}
+    .catalog-stars{display:none}
+    .catalog-title{font-size:15.5px}
+    .series-pager{grid-template-columns:1fr;gap:16px}
+    .series-pager-next{text-align:left}
+  }
+
+  @media (max-width:600px){
+    .series-catalog{padding-top:52px}
+    .series-facts > div{grid-template-columns:90px minmax(0,1fr)}
+  }
+</style>
